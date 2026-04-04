@@ -8,72 +8,73 @@
 
 platforms:
   instagram:
-    active: false           # ¿La marca publica aquí?
-    handle: ""
-    url: ""
-    formats:                # Formatos activos en esta plataforma
+    active: true
+    handle: "@lacuenteriacl"
+    url: "https://www.instagram.com/lacuenteriacl"
+    formats:
       - type: "reel"
         active: true
         specs:
-          duration: "35-45s"        # Duración ideal
+          duration: "30-60s"
           aspect_ratio: "9:16"
           max_hashtags: 5
-        frequency: ""               # ej: "2/día"
+        frequency: "1-2/semana"
 
       - type: "carousel"
         active: true
         specs:
           slides: 10
-          aspect_ratio: "1:1"       # o "4:5"
-          max_text_per_slide: 18    # palabras
-          max_hashtags: 10
-        frequency: ""
+          aspect_ratio: "4:5"         # 1080x1350px
+          max_text_per_slide: 30      # palabras
+          max_hashtags: 8
+        frequency: "3-4/semana"
 
       - type: "story"
         active: true
         specs:
           duration: "15s"
           aspect_ratio: "9:16"
-        frequency: ""               # ej: "3/día"
+        frequency: "diario"
 
       - type: "static_post"
         active: true
         specs:
           aspect_ratio: "1:1"
-          max_hashtags: 10
-        frequency: ""
+          max_hashtags: 8
+        frequency: "1/semana"
 
     posting_schedule:
-      best_days: []                 # ej: ["martes", "jueves", "sábado"]
-      best_hours: []                # ej: ["08:00", "12:00", "20:00"]
-      source: ""                    # ej: "IG Insights marzo 2026"
+      best_days: ["jueves", "viernes", "sábado"]   # Validado con IG Insights (barras de actividad más altas)
+      best_hours: ["09:00", "12:00", "20:00"]      # IG Insights: actividad crece desde 6h, meseta 9h-21h, picos 18h-21h
+      source: "IG Insights export manual 2026-04-03 (período 4 mar - 2 abr)"
 
   tiktok:
     active: false
-    handle: ""
-    url: ""
+    handle: "@lacuenteria.cl"
+    url: "https://www.tiktok.com/@lacuenteria.cl"
+    status: "canal creado, sin contenido publicado — prioridad futura después de consolidar IG"
     formats:
       - type: "video"
         active: true
         specs:
-          duration: "15-60s"
+          duration: "30-60s"
           aspect_ratio: "9:16"
           max_hashtags: 5
-        frequency: ""
+        frequency: "2-3/semana (objetivo)"
     posting_schedule:
-      best_days: []
-      best_hours: []
-      source: ""
+      best_days: ["martes", "jueves", "domingo"]    # Estimación basada en nicho crianza/parenting en LATAM
+      best_hours: ["12:00", "20:00"]                # Peak mamás: almuerzo + post-acostar-niños
+      source: "estimación basada en benchmarks del nicho — ajustar con TikTok Analytics cuando haya contenido"
 
   linkedin:
     active: false
-    handle: ""
+    handle: ""                  # No creado — potencial futuro para ángulo edtech/emprendimiento
     url: ""
     formats:
       - type: "post"
         active: true
         specs:
-          max_length: 3000          # caracteres
+          max_length: 3000
           max_hashtags: 5
         frequency: ""
 
@@ -95,7 +96,7 @@ platforms:
 
   facebook:
     active: false
-    handle: ""
+    handle: ""                  # Meta Ads corren sin página FB activa — solo como plataforma de ads
     url: ""
     formats:
       - type: "post"
@@ -117,24 +118,25 @@ platforms:
       source: ""
 
   youtube_shorts:
-    active: false
-    handle: ""
-    url: ""
+    active: true
+    handle: "@lacuenteriacl"
+    url: "https://www.youtube.com/@lacuenteriacl"
+    status: "canal creado, sin contenido aún — reutilizar reels de IG como shorts"
     formats:
       - type: "short"
         active: true
         specs:
           duration: "30-60s"
           aspect_ratio: "9:16"
-        frequency: ""
+        frequency: "1/semana (objetivo)"
     posting_schedule:
-      best_days: []
-      best_hours: []
-      source: ""
+      best_days: ["miércoles", "sábado"]            # Estimación para nicho parenting YouTube
+      best_hours: ["13:00", "20:00"]
+      source: "estimación — ajustar con YouTube Analytics cuando haya contenido"
 
   x:
     active: false
-    handle: ""
+    handle: ""                  # No prioridad — audiencia target no está en X
     url: ""
     formats:
       - type: "tweet"

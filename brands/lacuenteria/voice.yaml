@@ -7,58 +7,80 @@
 
 # Personalidad de marca (3-5 adjetivos)
 personality:
-  - ""                      # ej: "cercana"
-  - ""                      # ej: "empática"
-  - ""                      # ej: "experta sin ser pedante"
+  - "cercana y cálida"
+  - "empática sin ser condescendiente"
+  - "experta con respaldo científico"
+  - "honesta y transparente"
+  - "inspiradora sin exagerar"
 
 # Tono general
-tone: ""                    # ej: "conversacional, cálido, directo"
+tone: "conversacional, cálido, directo, con base científica pero lenguaje accesible"
 
 # Nivel de formalidad (1-5, donde 1=muy informal, 5=muy formal)
-formality: 3
+formality: 2
 
 # Persona narrativa
-narrator: ""                # ej: "primera persona plural (nosotros)", "la marca como amiga"
+narrator: "primera persona plural (nosotros) para la marca, segunda persona singular (tú) para dirigirse al lector"
 
 # Cómo se dirige a la audiencia
-addressing: ""              # ej: "tú (informal)", "usted", "mamá/papá directamente"
+addressing: "tú (informal), dirigiéndose a mamá/papá directamente — 'cuando le lees a tu hijo', 'tu próximo cuento'"
 
 # Vocabulario
 vocabulary:
-  preferred_words:          # Palabras que la marca usa frecuentemente
-    - ""
-  avoided_words:            # Palabras que la marca NO usa
-    - ""
-  jargon_level: ""          # "ninguno" / "bajo" / "medio" / "alto"
-  emoji_usage: ""           # "nunca" / "moderado" / "frecuente"
-  hashtag_style: ""         # "branded" / "trending" / "mix" / "ninguno"
+  preferred_words:
+    - "cuento personalizado"
+    - "protagonista"
+    - "lectura compartida"
+    - "neurociencia"
+    - "crianza consciente"
+    - "biblioterapia"
+    - "vínculo"
+    - "momento de lectura"
+    - "ilustraciones únicas"
+    - "colegio" # NO "escuela"
+  avoided_words:
+    - "template"
+    - "plantilla"
+    - "barato"
+    - "inteligencia artificial" # sin contexto, suena frío
+    - "robot"
+    - "automático"
+    - "consumidor"
+    - "compre ahora"
+  jargon_level: "bajo"         # términos científicos siempre explicados con analogías
+  emoji_usage: "moderado"      # en redes sí, en blog no
+  hashtag_style: "mix"         # branded + nicho + trending cuando aplica
 
 # Ejemplos de voz (frases reales o ideales de la marca)
 examples:
-  good:                     # Así SÍ suena la marca
-    - ""
-    - ""
-  bad:                      # Así NO suena la marca
-    - ""
-    - ""
+  good:
+    - "Cuando le lees un cuento donde ella es la protagonista, no solo está escuchando una historia — literalmente estás esculpiendo su cerebro."
+    - "Suena exagerado, pero la neurociencia lo respalda: 15 minutos de lectura compartida activan las mismas zonas cerebrales que un abrazo."
+    - "No necesitas ser experta en crianza. Solo necesitas un cuento y ganas de leerlo juntos."
+    - "¿Sabías que un niño que se ve reflejado en un cuento desarrolla más empatía? No lo decimos nosotros — lo dice Oxford."
+  bad:
+    - "¡¡COMPRA AHORA tu libro personalizado con IA!! 🔥🔥🔥"
+    - "Los estudios demuestran inequívocamente que la metacognición narrativa facilita la resiliencia ontogenética."
+    - "Si no le lees a tu hijo, estás perdiendo una oportunidad crucial de desarrollo."
+    - "Nuestro producto utiliza algoritmos de inteligencia artificial de última generación."
 
 # Adaptación por plataforma
 platform_adjustments:
   instagram:
-    tone_shift: ""          # ej: "más emocional y visual"
-    max_caption_length: 300 # caracteres ideales para caption
+    tone_shift: "más emocional y visual, hooks provocativos, datos que sorprendan"
+    max_caption_length: 300
   tiktok:
-    tone_shift: ""          # ej: "más directo y rápido"
-    max_hook_words: 10      # palabras máximas en el hook
+    tone_shift: "más directo y rápido, storytelling personal, ganchos en 2 segundos"
+    max_hook_words: 8
   linkedin:
-    tone_shift: ""          # ej: "más profesional, datos y insights"
+    tone_shift: "más profesional, datos duros, ángulo emprendimiento/edtech/impacto social"
     max_post_length: 500
   facebook:
-    tone_shift: ""
+    tone_shift: "más comunitario, preguntas abiertas, compartir experiencias"
     max_post_length: 400
   youtube_shorts:
-    tone_shift: ""
+    tone_shift: "educativo-emocional, tips rápidos de crianza con dato científico"
     max_hook_words: 8
   x:
-    tone_shift: ""
+    tone_shift: "opiniones punzantes sobre crianza, hilos educativos, datos que generen RT"
     max_post_length: 280

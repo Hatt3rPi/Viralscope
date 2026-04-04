@@ -6,60 +6,45 @@
 # ============================================================
 
 # Fecha de última actualización
-last_updated: ""            # YYYY-MM-DD
+last_updated: "2026-04-03"      # Fuente: daily report + GA4 + Meta Ads + IG API
 
 # Métricas generales de la marca
 general:
   total_followers:
-    instagram: 0
-    tiktok: 0
-    linkedin: 0
-    facebook: 0
-    youtube: 0
-    x: 0
-  website_monthly_sessions: 0
-  email_subscribers: 0
+    instagram: 1006             # IG API 2026-04-02
+    tiktok: 0                   # No activo aún con contenido regular
+    linkedin: 0                 # No activo
+    facebook: 0                 # No activo
+    youtube: 0                  # Canal creado pero sin contenido
+    x: 0                        # No activo
+  website_monthly_sessions: 1265  # GA4: ~42 sesiones/día promedio 30d
+  email_subscribers: 72           # Usuarios registrados en plataforma (no newsletter separada)
 
 # Métricas de contenido por plataforma
 content_metrics:
   instagram:
-    avg_engagement_rate: 0.0        # ej: 2.5 (porcentaje)
-    avg_reach_per_post: 0
-    avg_likes: 0
-    avg_comments: 0
-    avg_shares: 0
-    avg_saves: 0
-    avg_reel_views: 0
-    avg_reel_retention: 0.0         # porcentaje
-    followers_growth_monthly: 0
-    best_performing_format: ""      # ej: "carrusel"
-    worst_performing_format: ""
-    top_3_posts_last_month:         # Los 3 mejores posts del último mes
-      - topic: ""
-        format: ""
-        engagement_rate: 0.0
-        why_worked: ""              # Hipótesis de por qué funcionó
-      - topic: ""
-        format: ""
-        engagement_rate: 0.0
-        why_worked: ""
-      - topic: ""
-        format: ""
-        engagement_rate: 0.0
-        why_worked: ""
-    bottom_3_posts_last_month:      # Los 3 peores posts
-      - topic: ""
-        format: ""
-        engagement_rate: 0.0
-        why_failed: ""
-      - topic: ""
-        format: ""
-        engagement_rate: 0.0
-        why_failed: ""
-      - topic: ""
-        format: ""
-        engagement_rate: 0.0
-        why_failed: ""
+    # IG Insights export manual (período 4 mar - 2 abr 2026)
+    accounts_reached: 59279     # +926.5% vs período anterior
+    reach_from_ads: "86.6%"
+    reach_followers_vs_non: { "followers": "6.5%", "non_followers": "93.5%" }
+    reach_by_format: { "publicaciones": "45.1%", "reels": "44.5%", "historias": "10.4%" }
+    audience_gender: { "F": "79.8%", "M": "20.2%" }
+    audience_age_top: { "35-44": "49.7%", "25-34": "27.6%", "45-54": "10.9%" }
+    audience_country_top: { "Chile": "98.4%", "Colombia": "0.4%", "España": "0.3%" }
+    avg_engagement_rate: 0.0    # Pendiente: calcular con datos de posts individuales
+    avg_reach_per_post: 3487    # 59,279 reach / 17 posts (estimación simple)
+    avg_likes: 0                # Pendiente: datos por post
+    avg_comments: 0             # Pendiente: datos por post
+    avg_shares: 0               # Pendiente: datos por post
+    avg_saves: 0                # Pendiente: datos por post
+    avg_reel_views: 0           # Pendiente: datos por post
+    avg_reel_retention: 0.0     # Pendiente: datos por post
+    followers_growth_monthly: 600  # 600 nuevos en 30d (2026-03-04 a 2026-04-02)
+    best_performing_format: "publicaciones y reels casi iguales (45.1% vs 44.5% del reach)"
+    worst_performing_format: "historias (10.4% del reach)"
+    media_count: 17
+    top_3_posts_last_month: []  # Pendiente: datos individuales por post
+    bottom_3_posts_last_month: []
 
   tiktok:
     avg_views: 0
@@ -68,26 +53,61 @@ content_metrics:
     avg_shares: 0
     avg_retention: 0.0
     followers_growth_monthly: 0
+    notes: "Canal no activo con contenido regular aún"
 
   linkedin:
     avg_impressions: 0
     avg_engagement_rate: 0.0
     avg_clicks: 0
     connections_growth_monthly: 0
+    notes: "No activo"
 
 # Métricas de conversión
 conversion:
-  website_conversion_rate: 0.0      # porcentaje
-  social_to_website_rate: 0.0       # % de tráfico social → web
-  top_conversion_source: ""         # ej: "instagram stories"
-  avg_monthly_revenue_from_social: 0
+  website_conversion_rate: 0.0    # Pendiente: funnel tracking en progreso
+  social_to_website_rate: 7.1     # ~2 sesiones IG social de 28 totales (dato de 1 día, poco representativo)
+  top_conversion_source: "meta/cpc"  # Meta Ads es la principal fuente de tráfico pagado
+  avg_monthly_revenue_from_social: 90146  # CLP, últimos 30 días (11 transacciones)
+
+# Métricas de Meta Ads (fuente: daily report 30d avg)
+meta_ads:
+  avg_daily_spend: 3564          # CLP/día promedio 30d
+  monthly_spend_estimated: 106912  # CLP/mes estimado
+  avg_daily_registrations: 13.3  # Registros/día promedio 30d
+  cpa: 105                       # CLP por registro (promedio 30d)
+  roas: 0.84                     # Retorno sobre gasto (promedio 30d) — NO rentable
+  campaigns:
+    - name: "Campaña Ventas Publico Objetivo"
+      objective: "ventas"
+    - name: "Atracción público IG"
+      objective: "seguidores"
+
+# Métricas de GA4 (fuente: daily report)
+ga4:
+  avg_daily_sessions: 42
+  avg_session_duration_seconds: 351
+  device_split:
+    mobile: "64%"                # 18/28 sesiones
+    desktop: "36%"               # 10/28 sesiones
+  top_traffic_sources:
+    - source: "meta/cpc"
+      share: "32%"
+    - source: "google/organic"
+      share: "18%"
+    - source: "(direct)/(none)"
+      share: "7%"
+    - source: "ig/social + facebook.com/referral"
+      share: "7%"
 
 # Histórico mensual (para detectar tendencias)
-# Agregar una entrada por mes
 monthly_history:
-  - month: ""               # YYYY-MM
-    followers_ig: 0
-    engagement_rate_ig: 0.0
-    posts_published: 0
-    best_post_topic: ""
-    notes: ""                # Observaciones del mes
+  - month: "2026-03"
+    followers_ig: 1006
+    followers_growth: 600
+    engagement_rate_ig: 0.0       # Pendiente
+    posts_published: 17           # Total acumulado (cuenta empezó en este período)
+    revenue_clp: 90146
+    ad_spend_clp: 106912
+    roas: 0.84
+    registrations_total: 399      # ~13.3/día * 30
+    notes: "Primer mes con campañas Meta Ads activas. Crecimiento agresivo de seguidores (~20/día) pero ROAS bajo 1.0. 72 usuarios registrados en plataforma."

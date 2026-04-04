@@ -2,46 +2,278 @@
 # COMPETITORS.YAML — Competidores y referentes
 # ============================================================
 # Define quién más opera en el mismo nicho.
-# Se usa para competitor tracking y para detectar oportunidades
-# de contenido que la competencia cubre y tú no (o viceversa).
+# Se usa para competitor tracking y para detectar oportunidades.
 # ============================================================
 
 competitors:
-  - name: ""                # Nombre de la marca/cuenta
-    type: "direct"          # "direct" (mismo nicho) / "indirect" (nicho adyacente) / "aspirational" (referente)
+  # === COMPETIDORES DIRECTOS (libros personalizados infantiles) ===
+
+  - name: "Wonderbly"
+    type: "direct"
     platforms:
       - platform: "instagram"
-        handle: ""          # ej: "@competidor"
-        url: ""
-        followers: ""       # Aproximado
-      - platform: "tiktok"
-        handle: ""
-        url: ""
-        followers: ""
-    website: ""
-    strengths: []           # Qué hacen bien
-    weaknesses: []          # Dónde flaquean
-    content_style: ""       # Descripción breve de su estilo de contenido
-    posting_frequency: ""   # ej: "5-7 posts/semana"
-    notes: ""               # Observaciones adicionales
+        handle: "@wonderbly"
+        url: "https://www.instagram.com/wonderbly"
+        followers: "~200K-250K"   # Estimación pre-2025, verificar en Social Blade
+    website: "https://www.wonderbly.com"
+    strengths:
+      - "Marca establecida internacionalmente (desde 2014, ex 'Lost My Name')"
+      - "Alta calidad de ilustraciones y producción fotográfica"
+      - "Presencia en múltiples idiomas"
+      - "Fuerte UGC (padres compartiendo fotos de niños con libros)"
+    weaknesses:
+      - "Modelo de templates con nombres insertados (no IA generativa)"
+      - "Precio más alto (~$30-50 USD)"
+      - "Español traducido, no nativo"
+      - "Sin entrega digital inmediata"
+    content_style: "emocional, premium, enfocado en gift-giving, alto uso de Reels y UGC"
+    posting_frequency: "4-7 posts/semana + Stories regulares"
+    notes: "Principal referente internacional. Líder de mercado. Compiten por el mismo buyer intent de regalo personalizado."
 
-  - name: ""
-    type: ""
+  - name: "Hooray Heroes"
+    type: "direct"
     platforms:
-      - platform: ""
-        handle: ""
-        url: ""
-        followers: ""
-    website: ""
-    strengths: []
-    weaknesses: []
-    content_style: ""
-    posting_frequency: ""
-    notes: ""
+      - platform: "instagram"
+        handle: "@hoorayheroes"
+        url: "https://www.instagram.com/hoorayheroes"
+        followers: "~100K-150K"   # Estimación pre-2025, verificar
+    website: "https://www.hoorayheroes.com"
+    strengths:
+      - "Buen SEO internacional"
+      - "Variedad de temas/ocasiones"
+      - "UI de personalización intuitiva"
+      - "Fuerte en mercado europeo (empresa eslovena)"
+    weaknesses:
+      - "Templates pre-diseñados, no IA generativa"
+      - "Español como idioma secundario"
+      - "Precios en USD/EUR"
+      - "Tiempos de envío largos a Chile"
+    content_style: "colorido, cartoon, mix de producto + unboxing + testimonios, humor para padres"
+    posting_frequency: "3-5 posts/semana"
+    notes: "Competidor directo en búsquedas de 'libros personalizados para niños'."
 
-# Referentes fuera del nicho (marcas que admiras por su contenido)
+  - name: "Story Spark"
+    type: "direct"
+    platforms:
+      - platform: "instagram"
+        handle: ""              # Presencia social mínima o inexistente
+        url: ""
+        followers: "<5K"
+    website: "https://www.storyspark.ai"
+    strengths:
+      - "Usa IA generativa (mismo approach tecnológico)"
+      - "Interfaz moderna"
+    weaknesses:
+      - "Solo en inglés"
+      - "Sin producto físico"
+      - "Marca menos establecida, presencia social mínima"
+    content_style: "tech-forward, showcase del proceso de IA"
+    posting_frequency: "irregular"
+    notes: "Competidor tech directo — mismo modelo de IA generativa pero solo en inglés y solo digital."
+
+  # === COMPETIDORES EN ESPAÑOL (no chilenos, pero compiten por keyword) ===
+
+  - name: "MiCuento"
+    type: "direct"
+    platforms:
+      - platform: "instagram"
+        handle: "@micuento"
+        url: "https://www.instagram.com/micuento"
+        followers: "~50K-80K"    # Estimación, verificar
+    website: "https://www.micuento.com"
+    strengths:
+      - "Marca española establecida con envío a LATAM"
+      - "Contenido en español nativo (España)"
+      - "Libros físicos de calidad"
+      - "Variedad de títulos y temáticas"
+    weaknesses:
+      - "Modelo de templates, no IA generativa"
+      - "Español de España (no chileno)"
+      - "Precios en EUR + envío internacional"
+      - "Sin entrega digital inmediata"
+    content_style: "story-driven, profesional, emocional"
+    posting_frequency: "3-5 posts/semana"
+    notes: "Compite por keywords en español. Disponible en Chile pero con fricción de envío y precio."
+
+  - name: "Mumablue"
+    type: "direct"
+    platforms:
+      - platform: "instagram"
+        handle: "@mumablue"
+        url: "https://www.instagram.com/mumablue"
+        followers: "~30K-50K"    # Estimación, verificar
+    website: "https://www.mumablue.com"
+    strengths:
+      - "Libros personalizados con niño como protagonista"
+      - "Contenido en español"
+      - "Buena presencia visual"
+    weaknesses:
+      - "Templates pre-diseñados"
+      - "Español de España"
+      - "Precios en EUR"
+    content_style: "visual, emocional, product-focused"
+    posting_frequency: "2-4 posts/semana"
+    notes: "Competidor en español. Mismo concepto de 'tu hijo es el protagonista' pero con templates."
+
+  # === COMPETIDORES LOCALES CHILENOS ===
+
+  - name: "Emotions"
+    type: "direct-local"
+    platforms:
+      - platform: "instagram"
+        handle: "@emotionschile"
+        url: "https://www.instagram.com/emotionschile"
+        followers: "~32K"
+      - platform: "facebook"
+        handle: "emotionschile"
+        url: "https://www.facebook.com/emotionschile"
+        followers: "~133.6K likes"
+      - platform: "tiktok"
+        handle: "@emotionschile"
+        url: "https://www.tiktok.com/@emotionschile"
+        followers: "bajo"
+    website: "https://emotions.cl"
+    strengths:
+      - "Marca chilena establecida con alta awareness (32K IG, 133K FB)"
+      - "Ecosistema amplio de productos (photobooks, regalos, calendarios)"
+      - "Logística nacional establecida (Correos de Chile, Chilexpress)"
+      - "Precio similar (~$20.990-$22.990 CLP para cuentos infantiles)"
+      - "Cross-sell entre productos (photobook → cuento personalizado)"
+    weaknesses:
+      - "Cuentos basados en templates con fotos insertadas, no IA generativa"
+      - "Los cuentos son producto secundario — no su foco principal"
+      - "Mala reputación en servicio al cliente (quejas en reclamos.cl: demoras, estafas)"
+      - "Sin entrega digital inmediata — solo producto físico"
+      - "Ilustraciones estáticas pre-hechas, no personalizadas al niño"
+      - "Sin profundidad educativa/emocional — historias genéricas de aventura"
+      - "No iteran ni permiten editar antes de imprimir"
+    content_style: "product-showcase, promocional con emojis y CTAs, enfocado en photobooks más que en cuentos"
+    posting_frequency: "2-4 posts/semana, heavy en Reels"
+    notes: "Competidor local por awareness de marca. Sus cuentos son producto secundario dentro de un catálogo de regalos personalizados. La CuenterIA gana en profundidad de personalización, velocidad (digital inmediato), y valor educativo."
+
+  - name: "Rasti"
+    type: "direct-local"
+    platforms:
+      - platform: "instagram"
+        handle: "@rasti_cl"
+        url: "https://www.instagram.com/rasti_cl"
+        followers: "bajo (cientos a bajo miles)"  # Startup muy temprana, sin indexación Google
+      - platform: "linkedin"
+        handle: "rasti-cl"
+        url: "https://www.linkedin.com/company/rasti-cl/"
+      - platform: "facebook"
+        url: "https://www.facebook.com/people/Rasti-CL/61575039291815"
+    website: "https://rasti.cl"
+    strengths:
+      - "Posicionamiento terapéutico: 'biblioterapia del desarrollo infantil'"
+      - "Contenido creado por especialistas (psicólogos/educadores) — genera confianza"
+      - "Concepto único de 'personajes puente' que espejean las emociones del niño"
+      - "Profundidad emocional: conecta la historia con rutinas, miedos y desafíos específicos del niño"
+      - "Posicionamiento de 'ritual de lectura familiar'"
+    weaknesses:
+      - "Muy early-stage — sitio no indexado en Google, visibilidad casi nula"
+      - "Sin IA ni automatización — historias creadas por especialistas, difícil escalar"
+      - "Problemas técnicos (SSL falla, solo HTTP — problema de confianza y SEO)"
+      - "Sin blog real (redirige a IG) — sin content marketing"
+      - "Precios no visibles públicamente"
+      - "Stack técnico inusual (htmx/fasthtml) que puede limitar velocidad de desarrollo"
+      - "Alcance social mínimo"
+    content_style: "cálido, emocional, centrado en desarrollo infantil — más terapéutico que entretenimiento"
+    posting_frequency: "bajo (early stage)"
+    notes: "Competidor local a vigilar. Su ángulo de biblioterapia + especialistas es potencialmente fuerte contra padres que desconfían de IA. La CuenterIA ya tiene posicionamiento similar (neurociencia, biblioterapia) pero con respaldo de IA + escalabilidad. ACCIÓN: reforzar credenciales científicas en contenido para bloquear este ángulo competitivo."
+
+  # === COMPETIDORES INDIRECTOS ===
+
+  - name: "ChatGPT / IA generativas genéricas"
+    type: "indirect"
+    threat_level: "high"
+    platforms: []
+    website: "https://chat.openai.com"
+    description: "Padres usan ChatGPT, Gemini o Claude para generar cuentos personalizados gratis"
+    why_competes: "Alternativa gratuita 'good enough' — texto personalizado sin costo, aunque sin ilustraciones ni producto físico"
+    our_advantage: "Ilustraciones AI únicas, libro físico, experiencia guiada (wizard), sin necesidad de saber hacer prompts, producto de regalo terminado"
+    notes: "Mayor amenaza a largo plazo por commoditización. La defensa es la experiencia completa (story + illustrations + physical book) que ChatGPT no puede replicar."
+
+  - name: "Oscar AI Stories"
+    type: "indirect"
+    threat_level: "medium"
+    platforms: []
+    website: "https://www.oscarstories.com"
+    description: "App de cuentos personalizados con IA donde el niño es protagonista"
+    why_competes: "Overlap directo: cuentos AI personalizados para niños, digital-only"
+    our_advantage: "Producto físico, español nativo chileno, mercado local"
+    notes: "~500K downloads, enfocado en US. Sin presencia en Chile."
+
+  - name: "Buscalibre"
+    type: "indirect"
+    threat_level: "medium"
+    platforms:
+      - platform: "instagram"
+        handle: "@buscalibre"
+        followers: "~200K+"
+    website: "https://www.buscalibre.cl"
+    description: "Librería online más grande de Chile con sección infantil extensa"
+    why_competes: "Destino default cuando un padre piensa 'quiero comprar un libro a mi hijo' — competidor por presupuesto"
+    our_advantage: "Personalización única vs libro genérico. Diferente categoría: experiencia vs producto"
+    notes: "~5M visitas/mes. No competidor directo pero sí por wallet share."
+
+  - name: "Lingokids"
+    type: "indirect"
+    threat_level: "low"
+    platforms: []
+    website: "https://www.lingokids.com"
+    description: "App educativa para niños 2-8 con historias, juegos y canciones"
+    why_competes: "Compite por presupuesto de 'contenido educativo para mi hijo' y tiempo de pantalla"
+    our_advantage: "Producto tangible (libro físico), momento de lectura compartida padre-hijo vs pantalla individual"
+    notes: "100M+ downloads, fuerte en LATAM."
+
+  - name: "Storybook App"
+    type: "indirect"
+    threat_level: "low"
+    platforms: []
+    website: "https://www.storybook.love"
+    description: "App de cuentos + técnicas de relajación para la rutina de dormir"
+    why_competes: "Compite por el momento de lectura antes de dormir (caso de uso clave de La CuenterIA)"
+    our_advantage: "Libro personalizado con nombre del niño vs contenido genérico de app"
+    notes: "1M+ downloads, foco LATAM."
+
+# Threat ranking resumen
+threat_ranking:
+  high:
+    - "ChatGPT/IA genéricas (free DIY alternative)"
+    - "Wonderbly / Hooray Heroes (marca establecida, global)"
+  medium:
+    - "Emotions (awareness local, logística chilena)"
+    - "MiCuento / Mumablue (español, templates)"
+    - "Buscalibre (wallet share de libros infantiles)"
+  low:
+    - "Story Spark (inglés, sin producto físico)"
+    - "Apps de lectura (Lingokids, Storybook, Papumba)"
+    - "Regalos personalizados genéricos"
+
+# Posición defensible de La CuenterIA:
+# La intersección de 3 cosas que ningún competidor combina:
+# (1) Cuentos + ilustraciones 100% generados con IA (no templates)
+# (2) Entrega digital inmediata + libro físico de calidad
+# (3) Español nativo chileno + logística local
+# Mayor riesgo: commoditización por IA gratuita (ChatGPT)
+
+# Referentes / inspiraciones de contenido
+# El usuario indicó que sus referentes son sus propios competidores directos
 inspirations:
-  - name: ""
-    platform: ""
-    handle: ""
-    why: ""                 # Qué admiras de su contenido
+  - name: "Wonderbly"
+    platform: "instagram"
+    handle: "@wonderbly"
+    why: "Referente de contenido emocional, UGC de padres/niños, producción de alta calidad"
+  - name: "MiCuento"
+    platform: "instagram"
+    handle: "@micuento"
+    why: "Referente de contenido en español, storytelling de producto"
+  - name: "Hooray Heroes"
+    platform: "instagram"
+    handle: "@hoorayheroes"
+    why: "Referente de humor para padres + showcase de personalización"
+  - name: "Emotions"
+    platform: "instagram"
+    handle: "@emotionschile"
+    why: "Referente local chileno de productos personalizados, awareness de marca"

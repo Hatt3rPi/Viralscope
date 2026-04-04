@@ -5,49 +5,87 @@
 # para toda generación de contenido.
 # ============================================================
 
-name: ""                    # Nombre de la marca
-tagline: ""                 # Frase corta que define la marca
-url: ""                     # URL del sitio web
-description: ""             # Descripción en 2-3 líneas
+name: "La Cuentería"
+tagline: "Cuentos infantiles personalizados con IA donde tu hijo es el protagonista"
+url: "https://lacuenteria.cl"
+description: >
+  Plataforma chilena que crea cuentos infantiles 100% personalizados con inteligencia artificial.
+  Cada historia es única: narrativa e ilustraciones generadas desde cero según el niño,
+  no templates con nombres insertados. Disponible en formato digital y libro físico de tapa dura.
 
 # Nicho y posicionamiento
-niche: ""                   # Nicho principal (ej: "crianza y lectura infantil")
-sub_niches:                 # Sub-nichos que cubre
-  - ""
-positioning: ""             # Cómo se diferencia de la competencia
+niche: "cuentos infantiles personalizados con IA"
+sub_niches:
+  - "biblioterapia y cuentos terapéuticos"
+  - "regalos personalizados para niños"
+  - "estimulación lectora temprana"
+  - "herramientas de crianza consciente"
+positioning: >
+  La única plataforma chilena que genera cuentos e ilustraciones 100% con IA (no son templates).
+  Precio accesible desde $9.990 CLP, entrega digital inmediata, español nativo chileno,
+  y respaldo científico en neurociencia de la lectura. Competimos contra plataformas
+  internacionales (Wonderbly, Hooray Heroes) con mejor precio, idioma nativo y personalización real.
 
 # Identidad visual
 visual:
   colors:
-    primary: ""             # Color principal (hex)
-    secondary: ""           # Color secundario (hex)
-    accent: ""              # Color de acento (hex)
-    background: ""          # Color de fondo (hex)
-    text: ""                # Color de texto (hex)
+    primary: "#7C3AED"       # Púrpura marca
+    secondary: "#6A1B9A"     # Púrpura oscuro
+    accent: "#F59E0B"        # Amber/dorado
+    background: "#F7F0FF"    # Lavanda suave
+    text: "#1F2937"          # Gris oscuro
   typography:
-    headings: ""            # Fuente para títulos
-    body: ""                # Fuente para cuerpo
-  style: ""                 # Estilo visual general (ej: "minimalista y cálido", "bold y moderno")
-  mood: ""                  # Mood board en palabras (ej: "acogedor, confiable, cercano")
+    headings: "Sour Gummy"   # Fuente display/lúdica de marca
+    body: "Poppins"          # Sans-serif limpia
+  style: "editorial, cálido y profesional — NO infantil, NO cartoon, NO clip art"
+  mood: "acogedor, confiable, premium accesible, como una revista de crianza consciente"
 
 # Producto/servicio
 offerings:
-  - name: ""                # Nombre del producto/servicio
-    type: ""                # producto / servicio / digital / físico
-    description: ""         # Descripción breve
-    url: ""                 # URL específica (si aplica)
-    price_range: ""         # Rango de precio (ej: "$5.000 - $15.000 CLP")
+  - name: "Libro Digital"
+    type: "digital"
+    description: "Cuento personalizado en flipbook interactivo + PDF descargable ilimitado"
+    url: "https://lacuenteria.cl"
+    price_range: "$9.990 CLP"
+
+  - name: "Libro Físico"
+    type: "físico"
+    description: "Tapa dura 24x24cm, papel de alto gramaje, incluye versión digital"
+    url: "https://lacuenteria.cl"
+    price_range: "$29.990 CLP"
+
+  - name: "Copia Adicional Libro Físico"
+    type: "físico"
+    description: "Copia extra del mismo cuento en formato físico"
+    url: "https://lacuenteria.cl"
+    price_range: "$15.990 CLP"
 
 # Ubicación y mercado
 market:
-  country: "CL"            # Código ISO del país principal
-  language: "es-CL"        # Idioma + variante regional
-  currency: "CLP"          # Moneda
-  regions: []              # Regiones específicas (si aplica)
+  country: "CL"
+  language: "es-CL"
+  currency: "CLP"
+  regions:
+    - "Santiago (retiro en Huechuraba o Padre Hurtado)"
+    - "Despacho nacional vía Starken/Chilexpress"
 
 # Restricciones de marca
 restrictions:
-  never_say: []             # Palabras/frases prohibidas
-  never_do: []              # Acciones prohibidas en contenido
-  sensitive_topics: []      # Temas que requieren cuidado especial
-  legal_notes: ""           # Notas legales relevantes (ej: YMYL, regulaciones)
+  never_say:
+    - "template"
+    - "plantilla"
+    - "solo cambiamos el nombre"
+    - "'inteligencia artificial' sin contexto positivo"
+    - "'barato' (usar 'accesible' o 'a buen precio')"
+  never_do:
+    - "Tono infantil/cartoon — el contenido va dirigido a ADULTOS (padres)"
+    - "Mencionar competidores por nombre en contenido orgánico"
+    - "Superlativos sin respaldo (el mejor, el único, etc.) sin dato que lo sustente"
+    - "Generar culpa o ansiedad en los padres"
+    - "Usar jerga académica sin explicarla"
+  sensitive_topics:
+    - "Duelo infantil — tratar con máxima empatía"
+    - "Separación de padres — sin juicios"
+    - "Necesidades especiales (TDAH, TEA) — sin prometer curas, posicionar como herramienta complementaria"
+    - "Comparaciones entre estilos de crianza"
+  legal_notes: "No somos terapeutas. Los cuentos terapéuticos son herramientas complementarias, no tratamiento clínico."

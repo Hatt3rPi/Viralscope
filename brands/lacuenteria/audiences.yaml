@@ -7,86 +7,216 @@
 
 # Persona principal (la más importante)
 primary:
-  name: ""                  # Nombre ficticio (ej: "Camila")
-  role: ""                  # Rol/descripción corta (ej: "Mamá primeriza")
-  age_range: ""             # ej: "28-35"
-  gender: ""                # ej: "mujer" / "hombre" / "mixto"
-  location: ""              # ej: "Santiago, Chile"
-  occupation: ""            # ej: "profesional joven, trabaja en oficina"
+  name: "Camila"
+  role: "Mamá de niño/a en edad preescolar"
+  age_range: "30-42"           # Ajustado: IG Insights muestra 56.6% mujeres en 35-44
+  gender: "mujer"
+  location: "Santiago, Chile"
+  occupation: "profesional joven, trabaja en oficina o remoto, busca equilibrio trabajo-crianza"
 
   # Comportamiento digital
   digital:
-    primary_platform: ""    # Plataforma donde más tiempo pasa
-    platforms:              # Todas las plataformas que usa
-      - platform: ""
-        usage: ""           # "heavy" / "moderate" / "light"
-        content_preference: "" # qué tipo de contenido consume ahí
-    screen_time: ""         # ej: "3-4 hrs/día en redes"
-    peak_hours: []          # ej: ["07:00-08:30", "21:00-23:00"]
-    content_consumption: "" # ej: "scrollea rápido, guarda lo útil, comparte lo emocional"
+    primary_platform: "instagram"
+    platforms:
+      - platform: "instagram"
+        usage: "heavy"
+        content_preference: "carruseles educativos, reels emocionales de crianza, tips prácticos"
+      - platform: "tiktok"
+        usage: "moderate"
+        content_preference: "videos cortos de crianza, hacks de mamá, datos sorprendentes"
+      - platform: "youtube"
+        usage: "light"
+        content_preference: "videos largos de crianza, reseñas de productos infantiles"
+    screen_time: "3-4 hrs/día en redes"
+    peak_hours: ["07:00-08:30", "12:00-13:00", "21:00-23:00"]
+    content_consumption: "scrollea rápido, guarda lo útil para después, comparte lo emocional con amigas/pareja"
 
   # Psicografía
   psycho:
-    pain_points:            # Dolores/problemas que tiene
-      - ""
-    desires:                # Qué quiere lograr
-      - ""
-    fears:                  # Qué le preocupa
-      - ""
-    values:                 # Qué valora
-      - ""
-    triggers:               # Qué la hace actuar (compartir, comprar, comentar)
-      - type: "share"       # share / buy / comment / save / follow
-        trigger: ""         # ej: "se identifica emocionalmente"
+    pain_points:
+      - "Siente que no le dedica suficiente tiempo de calidad a su hijo"
+      - "No sabe cómo manejar miedos, rabietas o transiciones de su hijo"
+      - "Quiere estimular a su hijo pero no sabe por dónde empezar"
+      - "Los regalos genéricos no le satisfacen — busca algo con sentido"
+      - "Se siente abrumada por la cantidad de información contradictoria sobre crianza"
+    desires:
+      - "Ser una buena mamá sin perder su identidad"
+      - "Crear momentos de conexión significativos con su hijo"
+      - "Que su hijo ame leer desde chico"
+      - "Encontrar herramientas prácticas respaldadas por la ciencia"
+      - "Regalar algo que realmente importe y sea único"
+    fears:
+      - "Que su hijo pase demasiado tiempo en pantallas"
+      - "No estimularlo lo suficiente en la etapa crítica"
+      - "Repetir patrones de crianza que no le gustaron"
+      - "Gastar dinero en algo que no vale la pena"
+    values:
+      - "Crianza consciente y respetuosa"
+      - "Educación y desarrollo temprano"
+      - "Calidad sobre cantidad"
+      - "Productos con propósito, no consumismo"
+      - "Lo hecho en Chile / emprendimiento local"
+    triggers:
+      - type: "share"
+        trigger: "se identifica emocionalmente con la situación descrita — 'esto me pasa a mí'"
       - type: "save"
-        trigger: ""         # ej: "siente que lo necesitará después"
+        trigger: "siente que es un tip práctico que necesitará después — 'esto lo voy a usar'"
       - type: "comment"
-        trigger: ""         # ej: "quiere contar su experiencia"
+        trigger: "quiere contar su experiencia similar o pedir consejo — 'a mi hijo le pasó lo mismo'"
+      - type: "buy"
+        trigger: "ve una demostración del producto que la emociona + precio accesible + urgencia temporal"
+      - type: "follow"
+        trigger: "encuentra contenido científico presentado de forma simple y emocional — 'esta cuenta sabe'"
 
   # Relación con la marca
   brand_relationship:
-    awareness: ""           # "no conoce" / "ha visto" / "sigue" / "cliente"
-    objections: []          # Objeciones para comprar/seguir
-    purchase_motivation: "" # Qué la motivaría a comprar
+    awareness: "ha visto"
+    objections:
+      - "¿Será realmente personalizado o es un template con el nombre?"
+      - "¿La calidad del libro físico justifica el precio?"
+      - "¿Es seguro/confiable comprar online en una marca que no conozco?"
+      - "No sé si a mi hijo le va a gustar"
+    purchase_motivation: "Ver un ejemplo real del producto (video de reacción de un niño), respaldo científico del beneficio de la personalización, y un precio que se sienta accesible"
 
 # Personas secundarias
 secondary:
-  - name: ""
-    role: ""
-    age_range: ""
-    gender: ""
-    location: ""
-    primary_platform: ""
-    usage: ""               # "heavy" / "moderate" / "light"
-    key_difference: ""      # Qué la distingue de la persona principal
+  - name: "Francisca"
+    role: "Abuela activa y conectada digitalmente"
+    age_range: "55-68"
+    gender: "mujer"
+    location: "Santiago / Regiones, Chile"
+    primary_platform: "facebook"
+    usage: "moderate"
+    key_difference: "Busca regalo especial para nietos. Menos familiarizada con tech pero dispuesta si el proceso es fácil. Valora lo tangible (libro físico)."
     triggers:
-      - type: ""
-        trigger: ""
+      - type: "buy"
+        trigger: "entiende el producto como regalo único para su nieto/a — 'esto no lo tiene nadie más'"
+      - type: "share"
+        trigger: "comparte con sus hijas/nueras como sugerencia de regalo"
 
-  - name: ""
-    role: ""
-    age_range: ""
-    gender: ""
-    location: ""
-    primary_platform: ""
-    usage: ""
-    key_difference: ""
+  - name: "Valentina"
+    role: "Profesional de educación infantil / fonoaudióloga / psicóloga"
+    age_range: "25-45"
+    gender: "mujer"
+    location: "Chile"
+    primary_platform: "instagram"
+    usage: "moderate"
+    key_difference: "Usa cuentos como herramienta profesional. Busca respaldo científico. Podría recomendar a sus pacientes/apoderados. Valoriza la biblioterapia."
     triggers:
-      - type: ""
-        trigger: ""
+      - type: "save"
+        trigger: "guarda contenido con respaldo científico para compartir con apoderados"
+      - type: "share"
+        trigger: "comparte como recurso profesional con colegas o apoderados"
+      - type: "follow"
+        trigger: "encuentra contenido que valida su enfoque profesional con datos"
 
-# Datos reales (pegados de IG Insights / GA4)
-# Actualizar mensualmente para calibrar personas
+  - name: "Tomás"
+    role: "Papá millennial involucrado en la crianza"
+    age_range: "30-40"
+    gender: "hombre"
+    location: "Santiago, Chile"
+    primary_platform: "instagram"
+    usage: "moderate"
+    key_difference: "Menos presencia en comunidades de crianza pero busca activamente ser un buen papá. Sensible al ángulo tecnológico/IA del producto."
+    triggers:
+      - type: "buy"
+        trigger: "le atrae lo tech + lo emocional — 'puedo crearle algo único a mi hijo con IA'"
+      - type: "share"
+        trigger: "comparte con su pareja como idea de regalo"
+
+# Datos reales
+# Fuente: reporte_usuarios (plataforma) + daily report (GA4/Meta/IG API) — abril 2026
+# NOTA: IG Insights demográficos no disponibles vía API actual (ig_demographics: {})
 real_data:
-  source: ""                # ej: "IG Insights marzo 2026"
-  date: ""                  # Fecha de los datos
-  demographics:
-    age_groups:             # ej: { "25-34": 42%, "35-44": 28% }
-    gender_split:           # ej: { "F": 72%, "M": 28% }
-    top_cities: []          # ej: ["Santiago", "Viña del Mar", "Concepción"]
-    top_countries: []       # ej: ["Chile 85%", "Argentina 5%", "México 4%"]
+  source: "Plataforma La Cuentería + GA4 + Meta Ads + IG API"
+  date: "2026-04-03"
+
+  # Datos de usuarios registrados en la plataforma (73 usuarios)
+  platform_users:
+    total: 73
+    gender_split: { "F": "62%", "M": "38%" }  # Estimado por nombre (45 identificados de 73)
+    registration_method: { "email": "64%", "google": "36%" }
+    user_segments:
+      champions: 10             # Uso intensivo + compras
+      compradores: 7            # Compraron al menos una vez
+      exploradores: 19          # Crearon personajes/cuentos sin comprar
+      curiosos: 16              # Registro sin actividad significativa
+      inactivos: 21             # Sin actividad reciente
+    conversion_rate: "17%"      # 13 compradores de 73 registrados
+    total_revenue_clp: 763026   # Revenue acumulado total
+    country: "100% Chile"       # Todos los usuarios son de Chile
+
+  # Datos de IG (API, no Insights completos)
+  instagram:
+    followers: 1006
+    growth_30d: 600             # ~20 nuevos/día promedio
+    media_count: 17
+    notes: "Cuenta en crecimiento rápido. IG Insights demográficos no disponibles vía API — requiere export manual desde app."
+
+  # Datos de GA4
+  ga4:
+    device_split: { "mobile": "64%", "desktop": "36%" }
+    top_traffic: ["meta/cpc 32%", "google/organic 18%", "direct 7%", "social 7%"]
+    avg_session_duration: "5:51 min"
+
+  # IG Insights (export manual 2026-04-03, período 4 mar - 2 abr)
+  ig_insights:
+    source: "IG Insights app export manual"
+    period: "2026-03-04 a 2026-04-02"
+
+    # Alcance
+    reach:
+      accounts_reached: 59279
+      reach_growth: "+926.5%"
+      from_ads: "86.6%"
+      from_followers: "6.5%"
+      from_non_followers: "93.5%"
+
+    # Reach por formato
+    reach_by_format:
+      publicaciones: "45.1%"
+      reels: "44.5%"
+      historias: "10.4%"
+
+    # Demografía — Todos
+    age_groups_all:
+      "13-17": "0%"
+      "18-24": "1.1%"
+      "25-34": "27.6%"
+      "35-44": "49.7%"          # Grupo dominante
+      "45-54": "10.9%"
+      "55-64": "7.7%"
+      "65+": "3.1%"
+
+    # Demografía — Solo Mujeres
+    age_groups_women:
+      "13-17": "0%"
+      "18-24": "1.6%"
+      "25-34": "30.8%"
+      "35-44": "56.6%"          # Grupo dominante en mujeres
+      "45-54": "7.7%"
+      "55-64": "2.2%"
+      "65+": "1.1%"
+
+    gender_split: { "F": "79.8%", "M": "20.2%" }
+
+    top_countries:
+      - "Chile 98.4%"
+      - "Colombia 0.4%"
+      - "España 0.3%"
+      - "Canadá 0.2%"
+      - "Estados Unidos 0.2%"
+
+    top_cities: []              # No disponible en screenshots — pedir export de "Ciudades"
+
+    # Actividad de seguidores
+    peak_activity:
+      notes: "Actividad crece desde las 6h, meseta entre 9h-21h, picos más altos entre 18h-21h"
+      best_hours_estimated: ["09:00", "12:00", "18:00-21:00"]
+      best_days_estimated: ["jueves", "viernes", "sábado"]  # Barras más altas en gráfico
+
   behavior:
-    avg_engagement_rate: "" # ej: "2.5%"
-    best_performing_format: "" # ej: "carruseles educativos"
-    peak_days: []           # ej: ["martes", "jueves"]
-    peak_hours: []          # ej: ["20:00-22:00"]
+    avg_engagement_rate: ""     # Pendiente: calcular con datos de posts individuales
+    best_performing_format: "publicaciones + reels casi iguales (45.1% vs 44.5% del reach)"
+    peak_days: ["jueves", "viernes", "sábado"]
+    peak_hours: ["09:00", "12:00", "18:00-21:00"]

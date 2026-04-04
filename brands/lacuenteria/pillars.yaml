@@ -6,46 +6,125 @@
 # ============================================================
 
 pillars:
-  - id: ""                  # Identificador corto (ej: "educativo")
-    name: ""                # Nombre del pilar (ej: "Educación y crianza")
-    description: ""         # Descripción en 1-2 líneas
-    weight: 0.0             # Peso en la parrilla (0.0-1.0, todos deben sumar 1.0)
-    topics:                 # Temas ejemplo dentro de este pilar
-      - ""
-      - ""
-    formats_preferred:      # Formatos que mejor funcionan para este pilar
-      - ""                  # ej: "carrusel", "reel", "post estático"
-    objective_alignment:    # Con qué objetivos se alinea mejor
-      - ""                  # ej: "engagement", "brand_awareness"
-    example_hooks:          # Ganchos ejemplo para este pilar
-      - ""
-      - ""
-
-  - id: ""
-    name: ""
-    description: ""
-    weight: 0.0
+  - id: "neurociencia"
+    name: "Neurociencia de la lectura"
+    description: "Datos científicos sobre cómo la lectura compartida impacta el desarrollo cerebral, cognitivo y emocional del niño"
+    weight: 0.25
     topics:
-      - ""
+      - "Qué pasa en el cerebro cuando le lees a tu hijo"
+      - "Lectura compartida y desarrollo del lenguaje"
+      - "Función ejecutiva y concentración a través de cuentos"
+      - "Lectura dialógica: la técnica respaldada por Harvard"
+      - "Alfabetización temprana y éxito académico"
+      - "Libros vs pantallas: lo que dice la ciencia"
     formats_preferred:
-      - ""
+      - "carrusel"
+      - "reel"
     objective_alignment:
-      - ""
+      - "awareness"
+      - "engagement"
+      - "followers_ig"
     example_hooks:
-      - ""
+      - "15 minutos de lectura activan las mismas zonas cerebrales que un abrazo"
+      - "Tu hijo NO necesita leer solo. Necesita que TÚ le leas."
+      - "¿Sabías que leerle antes de dormir literalmente esculpe su cerebro?"
 
-  - id: ""
-    name: ""
-    description: ""
-    weight: 0.0
+  - id: "emocional"
+    name: "Desarrollo emocional y biblioterapia"
+    description: "Cómo los cuentos ayudan a procesar emociones, enfrentar miedos, y manejar transiciones de vida"
+    weight: 0.25
     topics:
-      - ""
+      - "Cuentos terapéuticos para miedos nocturnos"
+      - "Regulación emocional a través de historias"
+      - "Llegada de un hermano/a"
+      - "Primer día de colegio"
+      - "Ansiedad por separación"
+      - "Autoestima y verse reflejado en un cuento"
+      - "Duelo y pérdida explicados con cuentos"
+      - "Dejar el pañal / el chupete / dormir solo"
     formats_preferred:
-      - ""
+      - "carrusel"
+      - "reel"
+      - "story"
     objective_alignment:
-      - ""
+      - "engagement"
+      - "awareness"
+      - "sales"
     example_hooks:
-      - ""
+      - "Tu hijo tiene miedo a la oscuridad. Un cuento puede cambiarlo."
+      - "El 70% de los niños enfrenta ansiedad al entrar al colegio. Hay una forma de prepararlo."
+      - "No le digas 'no pasa nada'. Léele un cuento donde SÍ pasa."
+
+  - id: "crianza"
+    name: "Crianza consciente y tips prácticos"
+    description: "Consejos prácticos para padres sobre lectura, hábitos, rutinas y momentos de calidad con los hijos"
+    weight: 0.20
+    topics:
+      - "Rutina de lectura antes de dormir"
+      - "Cómo fomentar el amor por la lectura"
+      - "Estimulación temprana desde casa"
+      - "Tiempo de calidad vs cantidad de tiempo"
+      - "Crianza respetuosa y comunicación emocional"
+      - "Tips por edad (0-2, 3-5, 6-8)"
+    formats_preferred:
+      - "carrusel"
+      - "reel"
+      - "static_post"
+    objective_alignment:
+      - "engagement"
+      - "followers_ig"
+    example_hooks:
+      - "5 minutos al día. Eso es todo lo que necesitas."
+      - "No necesitas ser experta en crianza. Solo necesitas un cuento."
+      - "La rutina que cambió las noches en nuestra casa"
+
+  - id: "producto"
+    name: "Producto y experiencia La Cuentería"
+    description: "Mostrar el producto, proceso de creación, testimonios, unboxing, y momentos de lectura reales"
+    weight: 0.20
+    topics:
+      - "Cómo funciona La Cuentería (proceso de creación)"
+      - "Unboxing del libro físico"
+      - "Testimonios y reacciones de niños"
+      - "Ideas de regalo personalizado"
+      - "Detrás de cámaras: cómo se genera cada cuento"
+      - "Comparativa con otras opciones del mercado"
+    formats_preferred:
+      - "reel"
+      - "story"
+      - "carrusel"
+    objective_alignment:
+      - "sales"
+      - "traffic"
+      - "awareness"
+    example_hooks:
+      - "Le regalé un cuento donde ella era la princesa. Su reacción me hizo llorar."
+      - "Esto es lo que pasa cuando un niño abre un libro y se ve a sí mismo"
+      - "De $9.990 para arriba. Un regalo que no va a terminar en un cajón."
+
+  - id: "ocasiones"
+    name: "Fechas especiales y regalos"
+    description: "Contenido vinculado a fechas comerciales, estacionales y momentos de regalo"
+    weight: 0.10
+    topics:
+      - "Regalos de cumpleaños personalizados"
+      - "Día de la Mamá / Papá"
+      - "Navidad"
+      - "Vuelta a clases"
+      - "Graduación de jardín/kinder"
+      - "Regalo de abuelos a nietos"
+      - "Regalos de último minuto (digital inmediato)"
+    formats_preferred:
+      - "reel"
+      - "story"
+      - "static_post"
+    objective_alignment:
+      - "sales"
+      - "traffic"
+    example_hooks:
+      - "¿Sin idea para el cumple? En 10 minutos tienes un regalo que va a recordar siempre."
+      - "El regalo de Navidad que no necesita pilas ni se rompe"
+      - "Lo que toda abuela quiere regalar (pero no sabe que existe)"
 
 # Validación: los weights deben sumar 1.0
-# El sistema alertará si no cuadran.
+# 0.25 + 0.25 + 0.20 + 0.20 + 0.10 = 1.0 ✓

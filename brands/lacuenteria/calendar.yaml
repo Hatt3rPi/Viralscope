@@ -3,7 +3,6 @@
 # ============================================================
 # Fechas que el sistema debe considerar al planificar la parrilla.
 # Incluye fechas nacionales, del nicho, y propias de la marca.
-# El contenido temático se genera automáticamente para estas fechas.
 # ============================================================
 
 # País base para feriados nacionales
@@ -11,86 +10,140 @@ country: "CL"
 
 # Fechas nacionales/comerciales importantes
 national:
-  - date: "01-01"           # Formato MM-DD
+  - date: "01-01"
     name: "Año Nuevo"
-    relevance: "low"        # "high" / "medium" / "low" para esta marca
-    content_angle: ""       # Ángulo sugerido (ej: "propósitos de año nuevo")
-    advance_days: 3         # Días antes para empezar a publicar contenido relacionado
+    relevance: "low"
+    content_angle: "Propósitos lectores para el año — 'este año léele 15 min al día'"
+    advance_days: 3
 
   - date: "02-14"
     name: "San Valentín"
-    relevance: ""
-    content_angle: ""
+    relevance: "medium"
+    content_angle: "El amor se construye leyendo juntos — regalo para hijos, no solo parejas"
     advance_days: 5
 
   - date: "03-08"
     name: "Día de la Mujer"
-    relevance: ""
-    content_angle: ""
+    relevance: "medium"
+    content_angle: "Cuentos con protagonistas femeninas fuertes, representación en la lectura"
     advance_days: 3
 
-  - date: "05-10"           # Segundo domingo de mayo (aproximado, ajustar por año)
+  - date: "05-11"
     name: "Día de la Mamá"
-    relevance: ""
-    content_angle: ""
-    advance_days: 7
+    relevance: "high"
+    content_angle: "El regalo que mamá realmente quiere: un momento de lectura juntos. Regalo desde la perspectiva del hijo hacia la mamá."
+    advance_days: 10
 
-  - date: "06-21"           # Tercer domingo de junio (aproximado)
+  - date: "06-22"
     name: "Día del Papá"
-    relevance: ""
-    content_angle: ""
+    relevance: "high"
+    content_angle: "Papás que leen: el impacto del padre en la lectura compartida. Regalar un cuento donde papá es parte de la historia."
+    advance_days: 10
+
+  - date: "08-10"
+    name: "Día del Niño"
+    relevance: "high"
+    content_angle: "El mejor regalo no se rompe ni necesita pilas — un cuento donde tu hijo es protagonista"
     advance_days: 7
 
   - date: "09-18"
     name: "Fiestas Patrias"
-    relevance: ""
-    content_angle: ""
-    advance_days: 7
+    relevance: "low"
+    content_angle: "Cuentos con elementos chilenos, identidad cultural"
+    advance_days: 5
 
   - date: "10-31"
     name: "Halloween"
-    relevance: ""
-    content_angle: ""
+    relevance: "medium"
+    content_angle: "Cuentos para vencer miedos — la versión positiva de Halloween"
     advance_days: 5
 
-  - date: "11-29"           # Último viernes de noviembre (aproximado)
-    name: "Black Friday"
-    relevance: ""
-    content_angle: ""
+  - date: "11-29"
+    name: "Black Friday / Cyber Monday"
+    relevance: "high"
+    content_angle: "Oferta especial en libros físicos. Contenido previo educando sobre regalos con sentido."
     advance_days: 7
 
   - date: "12-25"
     name: "Navidad"
-    relevance: ""
-    content_angle: ""
-    advance_days: 10
+    relevance: "high"
+    content_angle: "El regalo de Navidad que va a recordar siempre. Unboxing navideño, countdown de regalos."
+    advance_days: 14
 
 # Fechas específicas del nicho
 niche:
-  - date: ""                # MM-DD
-    name: ""                # ej: "Día del Libro"
-    relevance: ""
-    content_angle: ""
+  - date: "04-02"
+    name: "Día del Libro Infantil (Internacional)"
+    relevance: "high"
+    content_angle: "Por qué los cuentos personalizados son el futuro de la lectura infantil"
+    advance_days: 5
+
+  - date: "04-23"
+    name: "Día del Libro (UNESCO)"
+    relevance: "high"
+    content_angle: "La ciencia detrás de leerle a tu hijo — datos duros + CTA producto"
+    advance_days: 5
+
+  - date: "01-24"
+    name: "Día de la Educación (Internacional)"
+    relevance: "medium"
+    content_angle: "Lectura temprana como base de todo aprendizaje"
+    advance_days: 3
+
+  - date: "06-04"
+    name: "Día de los Niños Víctimas de Agresión"
+    relevance: "medium"
+    content_angle: "Biblioterapia: cómo los cuentos ayudan a niños a procesar experiencias difíciles"
+    advance_days: 3
+
+  - date: "11-20"
+    name: "Día Universal del Niño"
+    relevance: "medium"
+    content_angle: "Derechos del niño: el derecho a la imaginación y a verse representado"
+    advance_days: 5
+
+  - date: "09-08"
+    name: "Día de la Alfabetización (UNESCO)"
+    relevance: "medium"
+    content_angle: "Alfabetización temprana: cada cuento leído es un paso hacia la lectura autónoma"
     advance_days: 3
 
 # Fechas propias de la marca
 brand:
-  - date: ""                # MM-DD
-    name: ""                # ej: "Aniversario de la marca"
+  - date: "01-12"
+    name: "Aniversario La Cuentería"
     relevance: "high"
-    content_angle: ""
-    advance_days: 5
+    content_angle: "Retrospectiva del primer año, agradecimiento a la comunidad, cifras de impacto (cuentos creados, familias alcanzadas), ofertas especiales de aniversario"
+    advance_days: 7
 
 # Temporadas relevantes
 seasons:
-  - name: ""                # ej: "Vuelta a clases"
-    start: ""               # MM-DD
-    end: ""                 # MM-DD
-    relevance: ""
-    content_angle: ""
+  - name: "Vuelta a clases"
+    start: "02-15"
+    end: "03-15"
+    relevance: "high"
+    content_angle: "Cuentos para primer día de colegio, adaptación escolar, nuevos compañeros, dejar el miedo"
 
-  - name: ""                # ej: "Temporada navideña"
-    start: ""
-    end: ""
-    relevance: ""
-    content_angle: ""
+  - name: "Temporada de regalos navideños"
+    start: "11-15"
+    end: "12-25"
+    relevance: "high"
+    content_angle: "Push comercial fuerte. Gift guides, ideas de regalo, countdown, urgencia de despacho físico."
+
+  - name: "Vacaciones de invierno"
+    start: "07-01"
+    end: "07-21"
+    relevance: "medium"
+    content_angle: "Rutina de lectura en vacaciones, actividades en casa, cuentos para días lluviosos"
+
+  - name: "Vacaciones de verano"
+    start: "12-20"
+    end: "02-28"
+    relevance: "medium"
+    content_angle: "Lectura de verano, cuentos de viaje y aventura, desconexión de pantallas"
+
+  - name: "Graduaciones jardín/kinder"
+    start: "12-01"
+    end: "12-20"
+    relevance: "medium"
+    content_angle: "Regalo de graduación personalizado, cierre de etapa, recuerdo para toda la vida"
