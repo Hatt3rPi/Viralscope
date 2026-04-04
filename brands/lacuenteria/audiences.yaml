@@ -1,157 +1,2249 @@
 # ============================================================
-# AUDIENCES.YAML — Buyer personas y audiencias
+# AUDIENCES.YAML — Buyer personas expandidas (53 variantes)
 # ============================================================
 # Define quién consume el contenido. Las personas aquí definidas
 # se usan como base para la simulación de impacto.
+#
+# METODOLOGÍA DE PESOS:
+# Los pesos reflejan la representación real de cada segmento
+# según IG Insights (59,279 cuentas alcanzadas, 4 mar - 2 abr 2026),
+# datos de plataforma (73 usuarios registrados), y GA4.
+#
+# Cálculo base de demografía IG:
+#   Mujeres 35-44: 79.8% × 56.6% = 45.2%  (grupo dominante)
+#   Mujeres 25-34: 79.8% × 30.8% = 24.6%
+#   Mujeres 45-54: 79.8% × 7.7%  = 6.1%
+#   Mujeres 55-64: 79.8% × 2.2%  = 1.8%
+#   Mujeres 65+:   79.8% × 1.1%  = 0.9%
+#   Hombres (derivados = total - mujeres por tramo):
+#     25-34: 27.6% - 24.6% = 3.0%
+#     35-44: 49.7% - 45.2% = 4.5%
+#     45-54: 10.9% - 6.1%  = 4.8%
+#     55-64: 7.7% - 1.8%   = 5.9%
+#     65+:   3.1% - 0.9%   = 2.2%
+#
+# EXPANSIÓN A 53 PERSONAS:
+# Cada persona original se subdivide en variantes con peso
+# máximo de 0.02, diferenciadas por dimensiones reales:
+# edad exacta, ubicación, hijos, actitud IA, dispositivo, etc.
+#
+# | Segmento base  | Peso orig | Variantes | Distribución          |
+# |----------------|-----------|-----------|----------------------|
+# | Camila         | 0.20      | 10        | 10 × 0.02            |
+# | Macarena       | 0.14      | 7         | 7 × 0.02             |
+# | Catalina       | 0.10      | 5         | 5 × 0.02             |
+# | Javiera        | 0.11      | 6         | 5 × 0.02 + 1 × 0.01  |
+# | Constanza      | 0.07      | 4         | 3 × 0.02 + 1 × 0.01  |
+# | Patricia       | 0.05      | 3         | 2 × 0.02 + 1 × 0.01  |
+# | Francisca      | 0.03      | 2         | 1 × 0.02 + 1 × 0.01  |
+# | Valentina      | 0.04      | 2         | 2 × 0.02             |
+# | Carolina       | 0.02      | 1         | 1 × 0.02             |
+# | Andrea         | 0.04      | 2         | 2 × 0.02             |
+# | Tomás          | 0.07      | 4         | 3 × 0.02 + 1 × 0.01  |
+# | Rodrigo        | 0.04      | 2         | 2 × 0.02             |
+# | Eduardo        | 0.06      | 3         | 3 × 0.02             |
+# | Felipe         | 0.03      | 2         | 1 × 0.02 + 1 × 0.01  |
+# |----------------|-----------|-----------|----------------------|
+# | TOTAL          | 1.00      | 53        | 45 × 0.02 + 8 × 0.01 |
+# |                |           |           | = 0.90 + 0.10 = 1.00  |
 # ============================================================
 
-# Persona principal (la más importante)
-primary:
-  name: "Camila"
-  role: "Mamá de niño/a en edad preescolar"
-  age_range: "30-42"           # Ajustado: IG Insights muestra 56.6% mujeres en 35-44
-  gender: "mujer"
-  location: "Santiago, Chile"
-  occupation: "profesional joven, trabaja en oficina o remoto, busca equilibrio trabajo-crianza"
+personas:
 
-  # Comportamiento digital
-  digital:
-    primary_platform: "instagram"
-    platforms:
-      - platform: "instagram"
-        usage: "heavy"
-        content_preference: "carruseles educativos, reels emocionales de crianza, tips prácticos"
-      - platform: "tiktok"
-        usage: "moderate"
-        content_preference: "videos cortos de crianza, hacks de mamá, datos sorprendentes"
-      - platform: "youtube"
-        usage: "light"
-        content_preference: "videos largos de crianza, reseñas de productos infantiles"
-    screen_time: "3-4 hrs/día en redes"
-    peak_hours: ["07:00-08:30", "12:00-13:00", "21:00-23:00"]
-    content_consumption: "scrollea rápido, guarda lo útil para después, comparte lo emocional con amigas/pareja"
+  # ================================================================
+  # CAMILA — Mamá 35-42, regalo emocional (10 variantes = 0.20)
+  # ================================================================
 
-  # Psicografía
-  psycho:
-    pain_points:
-      - "Siente que no le dedica suficiente tiempo de calidad a su hijo"
-      - "No sabe cómo manejar miedos, rabietas o transiciones de su hijo"
-      - "Quiere estimular a su hijo pero no sabe por dónde empezar"
-      - "Los regalos genéricos no le satisfacen — busca algo con sentido"
-      - "Se siente abrumada por la cantidad de información contradictoria sobre crianza"
-    desires:
-      - "Ser una buena mamá sin perder su identidad"
-      - "Crear momentos de conexión significativos con su hijo"
-      - "Que su hijo ame leer desde chico"
-      - "Encontrar herramientas prácticas respaldadas por la ciencia"
-      - "Regalar algo que realmente importe y sea único"
-    fears:
-      - "Que su hijo pase demasiado tiempo en pantallas"
-      - "No estimularlo lo suficiente en la etapa crítica"
-      - "Repetir patrones de crianza que no le gustaron"
-      - "Gastar dinero en algo que no vale la pena"
-    values:
-      - "Crianza consciente y respetuosa"
-      - "Educación y desarrollo temprano"
-      - "Calidad sobre cantidad"
-      - "Productos con propósito, no consumismo"
-      - "Lo hecho en Chile / emprendimiento local"
-    triggers:
-      - type: "share"
-        trigger: "se identifica emocionalmente con la situación descrita — 'esto me pasa a mí'"
-      - type: "save"
-        trigger: "siente que es un tip práctico que necesitará después — 'esto lo voy a usar'"
-      - type: "comment"
-        trigger: "quiere contar su experiencia similar o pedir consejo — 'a mi hijo le pasó lo mismo'"
-      - type: "buy"
-        trigger: "ve una demostración del producto que la emociona + precio accesible + urgencia temporal"
-      - type: "follow"
-        trigger: "encuentra contenido científico presentado de forma simple y emocional — 'esta cuenta sabe'"
-
-  # Relación con la marca
-  brand_relationship:
-    awareness: "ha visto"
-    objections:
-      - "¿Será realmente personalizado o es un template con el nombre?"
-      - "¿La calidad del libro físico justifica el precio?"
-      - "¿Es seguro/confiable comprar online en una marca que no conozco?"
-      - "No sé si a mi hijo le va a gustar"
-    purchase_motivation: "Ver un ejemplo real del producto (video de reacción de un niño), respaldo científico del beneficio de la personalización, y un precio que se sienta accesible"
-
-# Personas secundarias
-secondary:
-  - name: "Francisca"
-    role: "Abuela activa y conectada digitalmente"
-    age_range: "55-68"
+  - name: "Camila"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 36
     gender: "mujer"
-    location: "Santiago / Regiones, Chile"
-    primary_platform: "facebook"
-    usage: "moderate"
-    key_difference: "Busca regalo especial para nietos. Menos familiarizada con tech pero dispuesta si el proceso es fácil. Valora lo tangible (libro físico)."
+    location: "Las Condes, Santiago"
+    mbti: "ENFJ"
+    occupation: "Abogada en estudio corporativo, jornada completa"
+    children: "1 hija (5 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "pinterest"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["21:30-23:00"]
+      behavior: "Scrollea después de acostar a su hija. Guarda reels de crianza, comparte por DM con su grupo de amigas del colegio."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "El cumpleaños número 6 de su hija es en mayo y quiere un regalo que no sea otro juguete plástico. Le atrae algo que demuestre que pensó en ella."
+    journey_stage: "consideration"
+
     triggers:
-      - type: "buy"
-        trigger: "entiende el producto como regalo único para su nieto/a — 'esto no lo tiene nadie más'"
-      - type: "share"
-        trigger: "comparte con sus hijas/nueras como sugerencia de regalo"
+      share: "Se identifica con la situación de otra mamá — 'esto me pasa a mí'"
+      save: "Tip sobre fomento lector que quiere revisar el fin de semana"
+      comment: "Pregunta sobre tiempos de entrega para el cumpleaños"
+      buy: "Ve demo del producto con reacción real de un niño + precio accesible"
+      follow: "Contenido de crianza con dato científico presentado con calidez"
+
+    key_objection: "¿Será realmente personalizado o es un template con el nombre pegado?"
+    pain_point: "Siente que llega cansada del trabajo y no le dedica suficiente tiempo de calidad a su hija"
+
+  - name: "Lorena"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 39
+    gender: "mujer"
+    location: "Viña del Mar"
+    mbti: "ESFJ"
+    occupation: "Profesora de educación básica, medio tiempo"
+    children: "2 hijos (7 y 4 años)"
+    marital_status: "casada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "facebook"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["12:00-13:00", "22:00-23:30"]
+      behavior: "Lee captions completas. Comparte contenido educativo en su grupo de apoderados por WhatsApp. Guarda mucho."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Busca regalo de Navidad para sus dos hijos que sea educativo y no una pantalla más. Como profesora, valora los libros pero quiere algo distinto a lo de siempre."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Dato educativo que puede usar en su sala de clases también"
+      save: "Carruseles con información sobre lectura y desarrollo"
+      comment: "Pregunta si se pueden hacer cuentos con dos protagonistas (sus dos hijos)"
+      buy: "Respaldo pedagógico del producto + poder personalizar para cada hijo"
+      follow: "Contenido que valida su enfoque como educadora y mamá"
+
+    key_objection: "¿La calidad literaria es suficiente comparada con un libro de autor?"
+    pain_point: "Quiere que sus hijos amen leer tanto como ella, pero compiten con tablets y YouTube"
+
+  - name: "Daniela"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 37
+    gender: "mujer"
+    location: "Ñuñoa, Santiago"
+    mbti: "ENFP"
+    occupation: "Diseñadora gráfica freelance"
+    children: "1 hijo (3 años)"
+    marital_status: "conviviente"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok", "pinterest"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["10:00-11:00", "21:00-22:30"]
+      behavior: "Muy visual. Evalúa estética antes de leer. Comparte reels con su pareja por DM. Le importa el diseño del producto."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Quiere un regalo estéticamente bonito para el cumple de su hijo. Le gusta la idea de personalización porque puede incluir detalles que solo ella sabe de él."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Producto visualmente hermoso que quiere mostrar en stories"
+      save: "Ideas de actividades creativas con niños"
+      comment: "Elogia el diseño o pregunta sobre las ilustraciones"
+      buy: "Las ilustraciones la convencen + el proceso es fluido desde el celular"
+      follow: "Estética cuidada del feed + tono cálido"
+
+    key_objection: "¿Las ilustraciones IA son realmente bonitas o se ven genéricas?"
+    pain_point: "Como diseñadora, todo lo visual la juzga con ojo crítico y le cuesta encontrar productos infantiles que cumplan su estándar estético"
+
+  - name: "Fernanda"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 41
+    gender: "mujer"
+    location: "Concepción"
+    mbti: "ISTJ"
+    occupation: "Contadora en empresa regional"
+    children: "2 hijas (6 y 9 años)"
+    marital_status: "casada"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "facebook"]
+      usage: "moderate"
+      device: "Android"
+      peak_hours: ["21:00-22:00"]
+      behavior: "Scrollea poco pero con intención. No comenta casi nunca. Guarda cosas que le interesan y vuelve después."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "bajo"
+      purchase_style: "espera_descuentos"
+      discovery: "recomendación"
+
+    motivation: "Una amiga le contó de La Cuentería y le pareció buena idea para el cumpleaños de su hija menor. Pero necesita entender bien qué es antes de gastar."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Solo comparte por WhatsApp con su amiga que se lo recomendó"
+      save: "Guarda el link para revisarlo con calma después"
+      comment: "No comenta en público"
+      buy: "Testimonio de alguien que conoce + precio razonable + claridad en qué incluye"
+      follow: "Difícilmente sigue — prefiere volver cuando necesite"
+
+    key_objection: "$29.990 por un libro que no puedo ver antes me parece arriesgado"
+    pain_point: "El presupuesto familiar es ajustado y cada compra debe justificarse"
+
+  - name: "Isidora"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 35
+    gender: "mujer"
+    location: "Providencia, Santiago"
+    mbti: "ENTJ"
+    occupation: "Gerenta de marketing en startup"
+    children: "1 hijo (4 años)"
+    marital_status: "separada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "linkedin", "tiktok"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["07:00-08:00", "22:00-23:30"]
+      behavior: "Consume contenido rápido entre reuniones. Toma decisiones de compra en la noche. Comparte descubrimientos de marcas innovadoras."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Quiere un regalo especial para su hijo que también demuestre que, aunque están separados con el papá, ella sigue creando momentos únicos. Le atrae la innovación del producto."
+    journey_stage: "purchase"
+
+    triggers:
+      share: "Marca innovadora chilena que quiere apoyar y mostrar"
+      save: "No guarda mucho — actúa rápido"
+      comment: "Podría comentar como profesional de marketing felicitando la propuesta"
+      buy: "Producto innovador + compra rápida desde celular + entrega digital inmediata"
+      follow: "Le interesa la marca como caso de negocio además de como mamá"
+
+    key_objection: "¿El cuento digital se siente suficientemente 'regalo' o necesito el físico?"
+    pain_point: "Ser mamá separada la hace querer compensar con experiencias significativas"
+
+  - name: "Josefa"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 38
+    gender: "mujer"
+    location: "La Florida, Santiago"
+    mbti: "ISFJ"
+    occupation: "Enfermera en hospital público, turnos rotativos"
+    children: "1 hija (6 años)"
+    marital_status: "casada"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "moderate"
+      device: "Android"
+      peak_hours: ["variable por turnos"]
+      behavior: "Scrollea en tiempos muertos del turno. Guarda todo lo que le interesa porque no sabe cuándo podrá volver. Compra poco online."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "bajo"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Vio un ad y le pareció lindo pero no entiende bien cómo funciona la IA. Quiere algo especial para el cumple de su hija pero necesita que sea simple de hacer en los pocos ratos libres que tiene."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Contenido emocional sobre hijos que la hace llorar en el turno de noche"
+      save: "Todo — guarda para ver después porque nunca sabe cuándo tendrá tiempo"
+      comment: "Pregunta básica sobre cómo funciona"
+      buy: "Proceso ultra simple + explicación clara paso a paso + confianza en la marca"
+      follow: "Contenido empático sobre maternidad real, no idealizada"
+
+    key_objection: "No entiendo bien qué es — ¿la IA escribe el cuento? ¿Es seguro?"
+    pain_point: "Sus horarios de turno la hacen sentir que se pierde la infancia de su hija"
+
+  - name: "Trinidad"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 40
+    gender: "mujer"
+    location: "Temuco"
+    mbti: "ESFP"
+    occupation: "Dueña de tienda de ropa infantil"
+    children: "3 hijos (8, 5 y 2 años)"
+    marital_status: "casada"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok", "facebook"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["13:00-14:00", "21:30-23:00"]
+      behavior: "Muy activa en redes por su negocio. Comparte todo lo que le gusta. Comenta y etiqueta amigas constantemente."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Quiere un regalo diferente para su hijo del medio que siempre recibe lo que ya tenía el mayor. Un cuento donde él sea el protagonista la emociona."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Etiqueta a 3 amigas mamás en cualquier post que le guste"
+      save: "Ideas de regalos por edad"
+      comment: "Cuenta su propia experiencia y pregunta si hay descuento por cantidad"
+      buy: "Ve que otras mamás lo compraron + puede hacer uno para cada hijo"
+      follow: "Contenido cercano, no corporativo"
+
+    key_objection: "¿Puedo hacer tres cuentos distintos? ¿Hay descuento por pack?"
+    pain_point: "Con tres hijos, el del medio siempre queda en segundo plano y le genera culpa"
+
+  - name: "Francisca M."
+    variant_of: "Camila"
+    weight: 0.02
+    age: 42
+    gender: "mujer"
+    location: "La Serena"
+    mbti: "INFJ"
+    occupation: "Psicóloga clínica, consulta privada"
+    children: "2 hijos (7 y 3 años)"
+    marital_status: "casada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["21:00-22:00"]
+      behavior: "Consume con ojo profesional. Lee todo. Casi nunca comenta pero guarda contenido de calidad."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Como psicóloga sabe del poder de los cuentos en el desarrollo emocional. Quiere uno personalizado para su hijo mayor pero necesita que la calidad narrativa sea real, no un texto genérico."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Contenido con respaldo científico sobre biblioterapia"
+      save: "Estudios y datos sobre lectura y cerebro infantil"
+      comment: "Solo si ve un error conceptual o quiere aportar como profesional"
+      buy: "Calidad narrativa comprobada + personalización genuina + respaldo profesional"
+      follow: "Contenido que demuestra conocimiento real de desarrollo infantil"
+
+    key_objection: "¿La IA puede crear una narrativa con arco emocional real o es solo relleno con el nombre del niño?"
+    pain_point: "Su estándar profesional la hace hipercrítica con productos que prometen beneficios emocionales sin respaldo"
+
+  - name: "Antonia"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 36
+    gender: "mujer"
+    location: "Maipú, Santiago"
+    mbti: "ESFJ"
+    occupation: "Administrativa en empresa, jornada completa"
+    children: "1 hijo (5 años)"
+    marital_status: "conviviente"
+    ses: "C3"
+
+    digital:
+      primary_platform: "facebook"
+      platforms: ["facebook", "instagram"]
+      usage: "moderate"
+      device: "Android"
+      peak_hours: ["20:00-21:30"]
+      behavior: "Más activa en Facebook que Instagram. Comparte mucho en grupos de mamás. Le gustan los sorteos y promociones."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "bajo"
+      purchase_style: "espera_descuentos"
+      discovery: "no_conoce"
+
+    motivation: "Quiere darle algo especial a su hijo para su cumpleaños pero $29.990 es un gasto importante. Necesita estar segura de que vale la pena."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Sorteos y promociones que comparte en Facebook"
+      save: "Ideas de regalos económicos para niños"
+      comment: "Pregunta por precio y si hay cuotas"
+      buy: "Descuento o promoción + formato digital ($9.990) + puede pagar con débito"
+      follow: "Contenido práctico y accesible, no aspiracional"
+
+    key_objection: "$29.990 es mucho — ¿el digital de $9.990 vale la pena?"
+    pain_point: "Quiere darle lo mejor a su hijo pero el presupuesto no siempre alcanza"
+
+  - name: "Magdalena"
+    variant_of: "Camila"
+    weight: 0.02
+    age: 38
+    gender: "mujer"
+    location: "Antofagasta"
+    mbti: "ESTJ"
+    occupation: "Ingeniera en minera, turnos 7x7"
+    children: "1 hijo (4 años), vive con su mamá cuando ella está en turno"
+    marital_status: "soltera"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["19:00-21:00"]
+      behavior: "Compra mucho online desde campamento. Consume reels cortos. Gasta en regalos para su hijo para compensar la distancia."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Trabaja en sistema de turnos y compensa con regalos significativos. Un cuento donde su hijo sea protagonista junto a ella le parece perfecto para mantener el vínculo a distancia."
+    journey_stage: "purchase"
+
+    triggers:
+      share: "Contenido sobre maternidad y trabajo que la emociona"
+      save: "No guarda — compra en el momento"
+      comment: "Rara vez, pero podría preguntar sobre envío a Antofagasta"
+      buy: "Impulso emocional + entrega digital inmediata mientras está en campamento"
+      follow: "Contenido que normaliza la maternidad no convencional"
+
+    key_objection: "¿Llega el libro físico a Antofagasta? ¿Cuánto demora?"
+    pain_point: "La culpa por estar lejos de su hijo la mitad del mes la impulsa a buscar gestos significativos"
+
+  # ================================================================
+  # MACARENA — Mamá 33-42, herramienta terapéutica (7 variantes = 0.14)
+  # ================================================================
+
+  - name: "Macarena"
+    variant_of: "Macarena"
+    weight: 0.02
+    age: 38
+    gender: "mujer"
+    location: "Providencia, Santiago"
+    mbti: "INFJ"
+    occupation: "Periodista freelance, trabaja desde casa"
+    children: "2 hijos (5 y 2 años)"
+    marital_status: "casada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "podcast apps"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["22:00-00:00"]
+      behavior: "Lee captions completas. Escucha podcasts de crianza. Guarda mucho contenido pero comparte poco en público. Investiga todo antes de comprar."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Su hijo mayor tiene miedos nocturnos desde que nació la hermana. Busca una herramienta narrativa para ayudarlo a procesar los celos y el miedo, pero no quiere algo superficial."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Contenido que nombra exactamente su situación — 'cuentos para la llegada de un hermano'"
+      save: "Guías sobre manejo emocional infantil"
+      comment: "Pide recomendación específica para miedos nocturnos"
+      buy: "Entiende que el cuento aborda la situación de su hijo + ve respaldo profesional"
+      follow: "Contenido sobre desarrollo emocional con profundidad real"
+
+    key_objection: "¿Un cuento generado por IA puede abordar algo tan delicado como los celos entre hermanos?"
+    pain_point: "Se siente culpable porque la llegada de su hija menor desestabilizó a su hijo mayor y no sabe cómo ayudarlo"
+
+  - name: "Gabriela"
+    variant_of: "Macarena"
+    weight: 0.02
+    age: 35
+    gender: "mujer"
+    location: "Ñuñoa, Santiago"
+    mbti: "INFP"
+    occupation: "Terapeuta ocupacional, media jornada"
+    children: "1 hija (4 años)"
+    marital_status: "separada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["21:00-22:30"]
+      behavior: "Busca contenido sobre crianza respetuosa. Sigue muchas cuentas de psicología infantil. Lee todo, comenta poco."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Se separó hace un año y su hija está procesando la nueva dinámica familiar. Quiere un cuento que normalice las familias con papás que viven en casas distintas."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Contenido que normaliza la separación sin dramatizar"
+      save: "Recursos sobre cómo hablar con niños sobre el divorcio"
+      comment: "Pregunta si se puede personalizar el tema del cuento"
+      buy: "Ve que puede crear un cuento específico sobre su situación familiar + tono respetuoso"
+      follow: "Contenido empático sobre familias diversas"
+
+    key_objection: "¿La IA maneja bien un tema tan sensible como la separación de los padres?"
+    pain_point: "Le angustia no saber si su hija entiende por qué papá ya no vive con ellas"
+
+  - name: "Bárbara"
+    variant_of: "Macarena"
+    weight: 0.02
+    age: 40
+    gender: "mujer"
+    location: "Las Condes, Santiago"
+    mbti: "ENFJ"
+    occupation: "Psicopedagoga en colegio particular"
+    children: "1 hijo (6 años) con diagnóstico TEA nivel 1"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "facebook"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["21:30-23:00"]
+      behavior: "Participa en grupos de Facebook sobre TEA. Consume mucho contenido especializado. Comparte recursos con otras mamás de la comunidad."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "recomendación"
+
+    motivation: "Su hijo tiene TEA y los cuentos son parte de su rutina terapéutica. Un cuento donde él sea protagonista con sus intereses específicos (trenes, dinosaurios) podría ser una herramienta poderosa."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Recursos que sirven para niños neurodivergentes"
+      save: "Todo lo relacionado con TEA y herramientas narrativas"
+      comment: "Pregunta si pueden incluir intereses específicos del niño"
+      buy: "Puede personalizar según los intereses hiperespecíficos de su hijo + resultado predecible y consistente"
+      follow: "Contenido inclusivo que considera neurodiversidad"
+
+    key_objection: "¿Puedo personalizar lo suficiente para que sirva como herramienta terapéutica real para TEA?"
+    pain_point: "Los materiales de lectura estándar no funcionan con su hijo y adaptarlos manualmente toma horas"
+
+  - name: "Rocío"
+    variant_of: "Macarena"
+    weight: 0.02
+    age: 33
+    gender: "mujer"
+    location: "Concepción"
+    mbti: "ISFJ"
+    occupation: "Educadora de párvulos"
+    children: "1 hijo (3 años), embarazada de 6 meses"
+    marital_status: "casada"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["20:00-22:00"]
+      behavior: "Consume mucho contenido de embarazo y preparación para hermano mayor. Guarda tips prácticos. Comenta cuando se identifica."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Está embarazada y le preocupa cómo su hijo de 3 años va a reaccionar. Busca un cuento donde él entienda que va a ser hermano mayor y que eso es algo lindo."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Contenido sobre preparar al hermano mayor para la llegada del bebé"
+      save: "Cuentos recomendados para la llegada de un hermano"
+      comment: "Cuenta que está embarazada y pregunta si hay cuentos para eso"
+      buy: "Ve un cuento específico sobre 'vas a ser hermano mayor' + puede personalizarlo con el nombre de su hijo"
+      follow: "Contenido sobre transiciones familiares con ternura"
+
+    key_objection: "Mi hijo tiene solo 3 años — ¿va a entender el cuento?"
+    pain_point: "Le da miedo que su hijo sienta que lo está reemplazando con el nuevo bebé"
+
+  - name: "Paulina"
+    variant_of: "Macarena"
+    weight: 0.02
+    age: 42
+    gender: "mujer"
+    location: "Vitacura, Santiago"
+    mbti: "INTJ"
+    occupation: "Directora de RRHH en multinacional"
+    children: "1 hijo (5 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "linkedin"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["22:00-23:00"]
+      behavior: "Poco tiempo para redes. Consume contenido curado y eficiente. No comenta. Compra rápido cuando decide."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "recomendación"
+
+    motivation: "Su hijo va a entrar a kínder y tiene ansiedad por la separación. Su psicóloga infantil le sugirió usar cuentos como preparación. Busca algo personalizado."
+    journey_stage: "purchase"
+
+    triggers:
+      share: "Solo comparte con su psicóloga infantil o su pareja"
+      save: "Recursos sobre ansiedad por separación en niños"
+      comment: "No comenta"
+      buy: "Recomendación profesional + producto que aborda específicamente ansiedad por separación"
+      follow: "No sigue — es compradora directa"
+
+    key_objection: "Necesito que esto realmente funcione como herramienta, no solo como regalo bonito"
+    pain_point: "Su hijo llora cada vez que lo deja en el jardín y siente que necesita herramientas concretas"
+
+  - name: "Sofía"
+    variant_of: "Macarena"
+    weight: 0.02
+    age: 36
+    gender: "mujer"
+    location: "Rancagua"
+    mbti: "ENFP"
+    occupation: "Fonoaudióloga independiente"
+    children: "2 hijos (4 y 7 años)"
+    marital_status: "conviviente"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["13:00-14:00", "21:00-23:00"]
+      behavior: "Crea contenido en TikTok sobre desarrollo del lenguaje. Consume y comparte recursos profesionales. Muy activa en comunidades de crianza."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Su hijo menor tiene retraso en el lenguaje y ella sabe profesionalmente que los cuentos personalizados pueden estimular vocabulario. Quiere probarlo tanto como mamá como profesional."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Contenido sobre estimulación del lenguaje a través de cuentos"
+      save: "Estudios sobre narrativa y desarrollo lingüístico"
+      comment: "Aporta datos profesionales sobre el tema"
+      buy: "Ve aplicación directa para la estimulación lingüística de su hijo + puede recomendar a pacientes"
+      follow: "Contenido con base en evidencia sobre desarrollo infantil"
+
+    key_objection: "¿El vocabulario del cuento generado por IA es apropiado para la edad y nivel de desarrollo?"
+    pain_point: "Como profesional sabe exactamente qué necesita su hijo pero no encuentra herramientas que se ajusten sin adaptación manual"
+
+  - name: "Claudia"
+    variant_of: "Macarena"
+    weight: 0.02
+    age: 39
+    gender: "mujer"
+    location: "Peñalolén, Santiago"
+    mbti: "ISFP"
+    occupation: "Artista visual, trabaja desde taller en casa"
+    children: "1 hija (5 años)"
+    marital_status: "soltera"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "moderate"
+      device: "Android"
+      peak_hours: ["22:30-00:00"]
+      behavior: "Consume contenido artístico y de crianza alternativa. Valora la autenticidad. Le molestan las marcas que se sienten falsas."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "bajo"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Su hija tiene miedo a la oscuridad y los cuentos tradicionales sobre el tema son muy genéricos. Quiere algo personalizado donde su hija enfrente su miedo específico como protagonista."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Arte genuino, no contenido corporativo"
+      save: "Recursos creativos para manejar miedos infantiles"
+      comment: "Solo si siente que la marca es auténtica"
+      buy: "Ve que el resultado es artísticamente digno + aborda el miedo específico de su hija"
+      follow: "Autenticidad en el tono y la estética — nada de stock ni genérico"
+
+    key_objection: "¿Las ilustraciones de IA tienen alma o son productos genéricos sin valor artístico?"
+    pain_point: "Como artista, le cuesta confiar en productos generados por IA y siente conflicto entre su escepticismo y la necesidad práctica"
+
+  # ================================================================
+  # CATALINA — Mamá 35-44, neurociencia y estimulación (5 variantes = 0.10)
+  # ================================================================
+
+  - name: "Catalina"
+    variant_of: "Catalina"
+    weight: 0.02
+    age: 37
+    gender: "mujer"
+    location: "Las Condes, Santiago"
+    mbti: "ISTJ"
+    occupation: "Ingeniera comercial en empresa de tecnología"
+    children: "1 hijo (5 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "linkedin"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["07:00-07:30", "22:00-23:00"]
+      behavior: "Consume contenido de datos y evidencia. Prefiere carruseles con información densa. Guarda para revisar después. Llega también por Google."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Le preocupa que su hijo pase demasiado tiempo en pantallas. Busca alternativas con respaldo científico. La personalización le interesa porque leyó que los niños se enganchan más cuando se ven reflejados en la historia."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Dato científico sorprendente sobre lectura y cerebro infantil"
+      save: "Estudios citados con fuente (Harvard, AAP, Oxford)"
+      comment: "Pregunta sobre metodología o edades recomendadas"
+      buy: "Evidencia de que la personalización mejora engagement lector + producto educativo"
+      follow: "Contenido con citas a estudios reales, no opiniones"
+
+    key_objection: "¿Un cuento con IA es tan bueno como un cuento de autor reconocido para estimulación?"
+    pain_point: "Su hijo prefiere la tablet al libro y ella siente que cada minuto de pantalla es tiempo perdido de desarrollo"
+
+  - name: "María José"
+    variant_of: "Catalina"
+    weight: 0.02
+    age: 40
+    gender: "mujer"
+    location: "Viña del Mar"
+    mbti: "INTP"
+    occupation: "Médica pediatra, clínica privada"
+    children: "2 hijos (6 y 3 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "light"
+      device: "iPhone"
+      peak_hours: ["23:00-00:00"]
+      behavior: "Consume muy poco contenido social. Cuando algo le llega por Google o recomendación, lo evalúa con criterio clínico. Lee papers, no posts."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Como pediatra conoce la importancia de la lectura temprana. Quiere herramientas concretas para sus propios hijos y también para recomendar a sus pacientes. Evalúa con ojo clínico."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Solo comparte con colegas si tiene evidencia sólida"
+      save: "Papers y contenido con respaldo científico verificable"
+      comment: "No comenta en redes sociales"
+      buy: "Respaldo científico verificable + recomendación de colega + utilidad práctica comprobada"
+      follow: "No sigue marcas en redes"
+
+    key_objection: "¿Tienen estudios que respalden que los cuentos personalizados mejoran outcomes de lectura?"
+    pain_point: "Ve a diario en consulta niños con retraso de lenguaje por exceso de pantallas y quiere predicar con el ejemplo en casa"
+
+  - name: "Ignacia"
+    variant_of: "Catalina"
+    weight: 0.02
+    age: 44
+    gender: "mujer"
+    location: "Peñalolén, Santiago"
+    mbti: "ENTJ"
+    occupation: "Directora de jardín infantil Montessori"
+    children: "3 hijos (10, 7 y 4 años)"
+    marital_status: "casada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "facebook"]
+      usage: "moderate"
+      device: "desktop"
+      peak_hours: ["20:00-21:00"]
+      behavior: "Consume en desktop cuando revisa mail del jardín. Busca recursos educativos constantemente. Comparte en grupo de educadoras."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "recomendación"
+
+    motivation: "Quiere estimular la lectura en sus tres hijos con estrategias basadas en evidencia. Como directora de jardín, también evalúa si podría recomendar a apoderados."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Recursos educativos que puede usar en su jardín"
+      save: "Metodologías de fomento lector con respaldo"
+      comment: "Pregunta profesional sobre personalización por nivel de desarrollo"
+      buy: "Ve aplicación tanto personal como profesional + puede probar primero con sus hijos"
+      follow: "Contenido Montessori-compatible"
+
+    key_objection: "¿Es compatible con enfoque Montessori o el niño es pasivo en la experiencia?"
+    pain_point: "Necesita herramientas que respeten el ritmo individual de cada niño y no sean one-size-fits-all"
+
+  - name: "Pilar"
+    variant_of: "Catalina"
+    weight: 0.02
+    age: 36
+    gender: "mujer"
+    location: "Temuco"
+    mbti: "ISFJ"
+    occupation: "Bibliotecaria escolar"
+    children: "1 hija (4 años)"
+    marital_status: "conviviente"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "facebook"]
+      usage: "moderate"
+      device: "Android"
+      peak_hours: ["18:00-19:30"]
+      behavior: "Consume contenido de fomento lector. Participa en grupos de mediadores de lectura. Guarda recursos para la biblioteca del colegio."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "bajo"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Como bibliotecaria, vive el problema del desinterés lector a diario. Le intriga si un cuento personalizado puede ser la puerta de entrada para niños que no quieren leer."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Datos sobre hábitos lectores infantiles en Chile"
+      save: "Listas de recursos para fomento lector"
+      comment: "Comparte su experiencia como mediadora de lectura"
+      buy: "Ve que funciona como herramienta de enganche lector + precio accesible del digital"
+      follow: "Contenido sobre lectura infantil con profundidad"
+
+    key_objection: "¿Un cuento generado por IA tiene la calidad literaria que un mediador de lectura busca?"
+    pain_point: "Los niños del colegio no quieren leer y siente que pierde la batalla contra las pantallas cada día"
+
+  - name: "Alejandra"
+    variant_of: "Catalina"
+    weight: 0.02
+    age: 43
+    gender: "mujer"
+    location: "Lo Barnechea, Santiago"
+    mbti: "ESTJ"
+    occupation: "Mamá de tiempo completo, ex ejecutiva de banca"
+    children: "2 hijos (5 y 7 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "pinterest"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["09:30-11:00", "21:00-22:00"]
+      behavior: "Muy estructurada en su consumo. Tiene carpetas de guardados por tema. Investiga a fondo antes de cada compra. Hace benchmark de productos."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "alto"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Dejó su carrera para dedicarse a la estimulación de sus hijos. Invierte tiempo y dinero en recursos educativos de calidad. Busca lo mejor en cada categoría."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Benchmark de productos educativos — 'este es el mejor que he encontrado'"
+      save: "Guarda en carpeta 'Libros y lectura' organizada por edad"
+      comment: "Pregunta detallada sobre diferencias entre formatos"
+      buy: "Convicción de que es el mejor producto en su categoría + libro físico premium"
+      follow: "Contenido educativo de alta calidad, sin relleno"
+
+    key_objection: "¿Es realmente el mejor producto de su tipo o hay alternativas superiores?"
+    pain_point: "Invirtió todo en la crianza de sus hijos y necesita sentir que cada decisión fue la correcta"
+
+  # ================================================================
+  # JAVIERA — Mamá joven 25-32, digital native (6 variantes = 0.11)
+  # ================================================================
+
+  - name: "Javiera"
+    variant_of: "Javiera"
+    weight: 0.02
+    age: 28
+    gender: "mujer"
+    location: "Santiago Centro"
+    mbti: "ESFP"
+    occupation: "Community manager freelance"
+    children: "1 hijo (3 años)"
+    marital_status: "conviviente"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["todo el día — trabaja en redes"]
+      behavior: "Vive en redes por trabajo. Descubre marcas constantemente por ads. Comparte productos que le gustan en stories. Consume reels rápidos."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Vio un reel de La Cuentería y le pareció genial para el cumple de su hijo. Quiere un regalo instagrameable que pueda mostrar en stories."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Producto visualmente atractivo — 'miren lo que le hice a mi hijo'"
+      save: "Ideas de regalos originales para niños"
+      comment: "Pregunta sobre proceso y opciones visuales"
+      buy: "Impulso + precio del digital accesible + entrega inmediata"
+      follow: "Contenido estéticamente cuidado con tono joven"
+
+    key_objection: "¿Se ve bien de verdad o es como esos productos de IA genéricos que se ven todos iguales?"
+    pain_point: "Quiere destacarse con regalos originales pero no puede gastar mucho"
+
+  - name: "Martina"
+    variant_of: "Javiera"
+    weight: 0.02
+    age: 26
+    gender: "mujer"
+    location: "Maipú, Santiago"
+    mbti: "ENFP"
+    occupation: "Estudiante de pedagogía, trabaja medio tiempo en retail"
+    children: "1 hija (2 años)"
+    marital_status: "soltera"
+    ses: "C3"
+
+    digital:
+      primary_platform: "tiktok"
+      platforms: ["tiktok", "instagram"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["21:00-01:00"]
+      behavior: "TikTok es su red principal. Descubre todo por algoritmo. Compra por impulso si el precio es bajo. Consume contenido de mamás jóvenes."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "medio"
+      purchase_style: "impulsiva"
+      discovery: "no_conoce"
+
+    motivation: "Busca regalos accesibles para su hija. El digital de $9.990 le parece perfecto. Le gustaría algo donde su hija sea la protagonista pero su hija aún es muy chica."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "TikTok de una mamá mostrando la reacción de su hijo al ver el cuento"
+      save: "Cosas para cuando su hija sea más grande"
+      comment: "Pregunta si sirve para niñas de 2 años"
+      buy: "Precio del digital + TikTok viral mostrando resultado real"
+      follow: "Contenido de mamás jóvenes reales, no aspiracionales"
+
+    key_objection: "Mi hija tiene 2 años — ¿es muy chica para esto?"
+    pain_point: "Es mamá joven y soltera, el presupuesto es muy limitado pero quiere darle cosas lindas a su hija"
+
+  - name: "Agustina"
+    variant_of: "Javiera"
+    weight: 0.02
+    age: 30
+    gender: "mujer"
+    location: "Ñuñoa, Santiago"
+    mbti: "ENFJ"
+    occupation: "Diseñadora UX en agencia digital"
+    children: "1 hijo (4 años)"
+    marital_status: "casada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok", "linkedin"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["12:00-13:00", "21:00-23:00"]
+      behavior: "Evalúa la UX de cada producto que compra. Muy sensible al diseño de la experiencia. Comparte productos bien diseñados."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Le interesa el producto tanto por el regalo como por la experiencia digital. Si la plataforma está bien diseñada, confía más en el resultado."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Experiencia de usuario excepcional que quiere mostrar a colegas"
+      save: "Ejemplos de buen diseño de producto digital"
+      comment: "Feedback sobre la UX de la plataforma"
+      buy: "Plataforma bien diseñada + resultado visual atractivo + proceso fluido"
+      follow: "Marca con identidad visual coherente y moderna"
+
+    key_objection: "Si la plataforma se siente tosca, dudo de la calidad del resultado"
+    pain_point: "Su ojo profesional hace que experiencias digitales mediocres la frustren doblemente"
+
+  - name: "Emilia"
+    variant_of: "Javiera"
+    weight: 0.02
+    age: 27
+    gender: "mujer"
+    location: "Viña del Mar"
+    mbti: "ISFP"
+    occupation: "Profesora de yoga y emprendedora de bienestar"
+    children: "1 hijo (3 años)"
+    marital_status: "conviviente"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["06:00-07:00", "21:00-22:00"]
+      behavior: "Consume contenido de bienestar y crianza consciente. Comparte mucho lo que resuena con su estilo de vida. Valora lo natural y artesanal."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Le gusta la personalización pero la palabra 'IA' le genera resistencia. Necesita sentir que el producto tiene alma y no es solo una máquina generando texto."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Contenido de crianza consciente que resuena con su filosofía"
+      save: "Alternativas a pantallas para niños"
+      comment: "Pregunta si los cuentos tienen valores positivos y son respetuosos"
+      buy: "Se convence de que la IA es una herramienta al servicio de la conexión humana, no un reemplazo"
+      follow: "Tono auténtico y cálido, no corporativo"
+
+    key_objection: "¿No prefiero comprar un libro artesanal hecho por una persona real?"
+    pain_point: "Quiere criar a su hijo con menos tecnología pero vive en un mundo digital — la contradicción la agota"
+
+  - name: "Florencia"
+    variant_of: "Javiera"
+    weight: 0.02
+    age: 31
+    gender: "mujer"
+    location: "Antofagasta"
+    mbti: "ESTP"
+    occupation: "Ingeniera de procesos en minera"
+    children: "1 hija (5 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["20:00-21:00"]
+      behavior: "Poco tiempo para redes. Compra rápido y eficientemente. Le gustan las marcas que resuelven sin complicar."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Necesita un regalo rápido para el cumple de su hija y la entrega digital inmediata le resuelve el problema desde Antofagasta."
+    journey_stage: "purchase"
+
+    triggers:
+      share: "No comparte mucho — es pragmática"
+      save: "No guarda — actúa en el momento"
+      comment: "Pregunta logística sobre envío a regiones"
+      buy: "Entrega digital inmediata + proceso rápido desde celular"
+      follow: "No sigue — es compradora directa"
+
+    key_objection: "¿El proceso completo se puede hacer en 10 minutos desde el celular?"
+    pain_point: "Vive lejos de Santiago y los envíos de regalos siempre llegan tarde o nunca"
+
+  - name: "Monserrat"
+    variant_of: "Javiera"
+    weight: 0.01
+    age: 25
+    gender: "mujer"
+    location: "Puente Alto, Santiago"
+    mbti: "ESFJ"
+    occupation: "Técnica en enfermería, jornada completa"
+    children: "1 hijo (4 años)"
+    marital_status: "soltera"
+    ses: "C3"
+
+    digital:
+      primary_platform: "tiktok"
+      platforms: ["tiktok", "facebook", "instagram"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["21:00-23:00"]
+      behavior: "Consume mucho TikTok y Facebook. Participa en grupos de mamás en Facebook. Le gustan los sorteos y promociones."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "bajo"
+      purchase_style: "espera_descuentos"
+      discovery: "no_conoce"
+
+    motivation: "Quiere darle algo especial a su hijo pero $29.990 está fuera de su alcance. Si supiera que existe el digital a $9.990, podría interesarle."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Sorteos y contenido emocional sobre hijos"
+      save: "Ideas de regalos económicos"
+      comment: "Pregunta por precio y promociones"
+      buy: "Promoción o descuento + digital a $9.990 + puede pagar con débito o transferencia"
+      follow: "Contenido que no la haga sentir que el producto 'no es para ella'"
+
+    key_objection: "Esto parece para gente con plata — ¿yo puedo comprarlo?"
+    pain_point: "Siente que los productos premium no son para ella y eso le duele"
+
+  # ================================================================
+  # CONSTANZA — Mamá primeriza 27-33 (4 variantes = 0.07)
+  # ================================================================
+
+  - name: "Constanza"
+    variant_of: "Constanza"
+    weight: 0.02
+    age: 29
+    gender: "mujer"
+    location: "Santiago Centro"
+    mbti: "ISFJ"
+    occupation: "Analista de datos, teletrabajo"
+    children: "1 hijo (18 meses)"
+    marital_status: "casada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["siesta del bebé 14:00-16:00", "22:00-00:00"]
+      behavior: "Consume mucho contenido de crianza buscando validación. Sigue 200+ cuentas de mamás y pediatras. Guarda todo. Comenta poco porque le da vergüenza."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Es mamá hace 18 meses y consume contenido de crianza como esponja. Le interesa La Cuentería pero su hijo es muy chico. La tiene en el radar para cuando cumpla 3."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Contenido que normaliza las dificultades de ser mamá primeriza"
+      save: "Todo sobre desarrollo infantil por edad"
+      comment: "Solo en comunidades donde se siente segura"
+      buy: "Cuando su hijo cumpla 3+ y alguien de confianza lo recomiende"
+      follow: "Contenido cálido que no juzga y ofrece orientación"
+
+    key_objection: "Mi hijo tiene 18 meses — ¿esto es para más grandes?"
+    pain_point: "Se siente bombardeada por información contradictoria sobre crianza y no sabe en quién confiar"
+
+  - name: "Valentina P."
+    variant_of: "Constanza"
+    weight: 0.02
+    age: 31
+    gender: "mujer"
+    location: "La Reina, Santiago"
+    mbti: "ENFP"
+    occupation: "Diseñadora de interiores, licencia postnatal"
+    children: "1 hija (5 meses)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "pinterest"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["todas — está en postnatal"]
+      behavior: "Con el postnatal, consume redes todo el día. Busca productos para cuando su hija crezca. Hace listas de deseos. Muy visual."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "alto"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Está planificando todo para su hija desde ya. Vio La Cuentería y se la guardó para el futuro. Quiere empezar a leerle cuentos pronto."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Productos bonitos para bebés y niños que quiere guardar para después"
+      save: "Guarda en carpeta 'Para cuando crezca' en Instagram"
+      comment: "Pregunta desde qué edad se puede usar"
+      buy: "Cuando su hija cumpla 2-3 años y recuerde la marca"
+      follow: "Contenido aspiracional sobre maternidad y primeros años"
+
+    key_objection: "Me falta mucho para que mi hija pueda usar esto — ¿me acordaré?"
+    pain_point: "Quiere hacerlo todo perfecto como mamá primeriza y la ansiedad por el futuro la consume"
+
+  - name: "Camila V."
+    variant_of: "Constanza"
+    weight: 0.02
+    age: 27
+    gender: "mujer"
+    location: "Concepción"
+    mbti: "INFP"
+    occupation: "Psicóloga recién titulada, haciendo práctica"
+    children: "1 hijo (2 años)"
+    marital_status: "conviviente"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["21:00-23:00"]
+      behavior: "Consume contenido de psicología infantil y crianza respetuosa. Le gustan las cuentas que mezclan evidencia con cercanía. Guarda mucho, comenta poco."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "espera_descuentos"
+      discovery: "ad_instagram"
+
+    motivation: "Como psicóloga entiende el valor de la biblioterapia pero como mamá joven no tiene presupuesto para muchos extras. El digital le parece una opción."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Contenido de biblioterapia con base científica"
+      save: "Recursos de crianza basados en evidencia"
+      comment: "Aporta desde su conocimiento de psicología"
+      buy: "Digital a $9.990 + puede usarlo como herramienta profesional también"
+      follow: "Contenido que valida la biblioterapia como enfoque"
+
+    key_objection: "¿El contenido generado es psicológicamente apropiado para un niño de 2 años?"
+    pain_point: "Sabe lo que necesita su hijo teóricamente pero no siempre puede pagarlo"
+
+  - name: "Nicole"
+    variant_of: "Constanza"
+    weight: 0.01
+    age: 33
+    gender: "mujer"
+    location: "Quilpué"
+    mbti: "ESFJ"
+    occupation: "Kinesióloga, recién reincorporada de postnatal"
+    children: "1 hija (10 meses)"
+    marital_status: "casada"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "facebook"]
+      usage: "moderate"
+      device: "Android"
+      peak_hours: ["20:00-21:30"]
+      behavior: "Menos tiempo en redes desde que volvió a trabajar. Consume contenido rápido. Participa en un grupo de mamás de WhatsApp del curso prenatal."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "bajo"
+      purchase_style: "investigadora"
+      discovery: "no_conoce"
+
+    motivation: "Se siente culpable por dejar a su hija en la sala cuna. Busca formas de hacer que el tiempo juntas sea significativo. Los cuentos le interesan pero su hija es muy chica."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Contenido que normaliza la culpa de volver al trabajo"
+      save: "Tips sobre estimulación temprana"
+      comment: "Rara vez — es observadora silenciosa"
+      buy: "Cuando su hija sea más grande + recomendación del grupo de WhatsApp"
+      follow: "Contenido sobre conciliar trabajo y maternidad"
+
+    key_objection: "Mi hija tiene 10 meses — es demasiado pronto para cuentos personalizados"
+    pain_point: "La culpa por trabajar full time y perderse hitos de su hija la agobia"
+
+  # ================================================================
+  # PATRICIA — Mujer 45-54, tía/madrina (3 variantes = 0.05)
+  # ================================================================
+
+  - name: "Patricia"
+    variant_of: "Patricia"
+    weight: 0.02
+    age: 48
+    gender: "mujer"
+    location: "Providencia, Santiago"
+    mbti: "ESFJ"
+    occupation: "Ejecutiva de cuentas en agencia de publicidad"
+    children: "2 hijos (19 y 16 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "facebook"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["20:00-21:30"]
+      behavior: "Usa Instagram para seguir marcas y tendencias. Comparte por WhatsApp más que por stories. Le gustan las marcas con historia."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Sus hijos ya son grandes pero tiene sobrinos chicos (4 y 6 años). Quiere ser la tía que regala cosas diferentes y memorables. El libro físico le parece el regalo perfecto."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Envía link por WhatsApp a su hermana — 'mira lo que encontré para los niños'"
+      save: "Guarda para cuando se acerque un cumpleaños"
+      comment: "Pregunta sobre envío y empaque de regalo"
+      buy: "Cumpleaños de sobrino cercano + entiende el producto rápidamente + libro físico"
+      follow: "No necesariamente sigue — es compradora esporádica"
+
+    key_objection: "¿Se puede envolver como regalo? ¿Llega bonito empacado?"
+    pain_point: "No sabe qué les gusta a los niños hoy y le da miedo regalar algo que ya tengan"
+
+  - name: "Soledad"
+    variant_of: "Patricia"
+    weight: 0.02
+    age: 52
+    gender: "mujer"
+    location: "La Serena"
+    mbti: "ISFJ"
+    occupation: "Profesora universitaria de literatura"
+    children: "1 hijo (24 años)"
+    marital_status: "divorciada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "facebook"
+      platforms: ["facebook", "instagram"]
+      usage: "light"
+      device: "desktop"
+      peak_hours: ["19:00-20:00"]
+      behavior: "Usa más Facebook y email que Instagram. Consume contenido literario y cultural. Comparte artículos por WhatsApp. Navega en desktop."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Su ahijada cumple 5 años y quiere regalarle algo que fomente la lectura. Como profesora de literatura, es exigente con la calidad del texto. El concepto le intriga pero duda de la IA."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Artículos sobre fomento lector que envía por email a sus colegas"
+      save: "No usa la función — se manda el link por mail"
+      comment: "Podría cuestionar la calidad literaria públicamente"
+      buy: "Se convence de que la calidad narrativa es aceptable + libro físico + tema literariamente digno"
+      follow: "No sigue marcas en redes"
+
+    key_objection: "¿Una IA puede escribir un cuento infantil con verdadera calidad literaria?"
+    pain_point: "Ve con tristeza cómo los niños leen cada vez menos y quiere hacer su parte"
+
+  - name: "Ximena"
+    variant_of: "Patricia"
+    weight: 0.01
+    age: 46
+    gender: "mujer"
+    location: "Las Condes, Santiago"
+    mbti: "ENFJ"
+    occupation: "Dueña de casa, ex gerenta comercial"
+    children: "3 hijos (14, 12 y 9 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "whatsapp"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["10:00-11:00", "15:00-16:00"]
+      behavior: "Activa en grupos de WhatsApp de mamás. Le gusta descubrir productos y recomendarlos. Es influenciadora natural en su círculo."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "recomendación"
+
+    motivation: "Madrina de dos ahijados (3 y 5 años). Siempre busca el regalo perfecto. Tiene presupuesto y disposición. Una amiga le habló de La Cuentería."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Recomienda en todos sus grupos de WhatsApp si le gusta"
+      save: "Guarda para fechas especiales"
+      comment: "Cuenta que lo compró y da su opinión"
+      buy: "Recomendación de amiga + producto premium tangible + experiencia de compra agradable"
+      follow: "Sigue si el contenido es lindo y puede compartirlo"
+
+    key_objection: "¿Se ve como regalo premium o parece impresión casera?"
+    pain_point: "Quiere que sus regalos siempre sean 'los mejores' del cumpleaños"
+
+  # ================================================================
+  # FRANCISCA — Abuela 55+, regalo para nietos (2 variantes = 0.03)
+  # ================================================================
+
+  - name: "Francisca"
+    variant_of: "Francisca"
+    weight: 0.02
+    age: 62
+    gender: "mujer"
+    location: "Providencia, Santiago"
+    mbti: "ESFJ"
+    occupation: "Jubilada, ex profesora de básica"
+    children: "3 hijos adultos, 4 nietos (7, 5, 4 y 2 años)"
+    marital_status: "viuda"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "facebook"
+      platforms: ["facebook", "whatsapp"]
+      usage: "light"
+      device: "desktop"
+      peak_hours: ["10:00-11:00"]
+      behavior: "Usa Facebook para ver fotos de la familia. WhatsApp es su herramienta principal. No usa Instagram. Llega a La Cuentería porque su hija le mandó el link."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "bajo"
+      purchase_style: "investigadora"
+      discovery: "recomendación"
+
+    motivation: "Quiere regalarle algo especial a su nieta que cumple 5. Su hija le mostró La Cuentería y le encantó la idea de un libro donde su nieta sea protagonista. Pero necesita ayuda para hacerlo."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Envía el link por WhatsApp a sus otras hijas preguntando qué les parece"
+      save: "No usa guardar — le pide a su hija que se lo recuerde"
+      comment: "No comenta en redes"
+      buy: "Su hija la ayuda con el proceso + libro físico + puede pagar por transferencia"
+      follow: "No sigue marcas"
+
+    key_objection: "No sé hacerlo sola — ¿hay alguien que me pueda ayudar por teléfono?"
+    pain_point: "Quiere ser parte del mundo digital de sus nietos pero la tecnología la intimida"
+
+  - name: "María Elena"
+    variant_of: "Francisca"
+    weight: 0.01
+    age: 58
+    gender: "mujer"
+    location: "Temuco"
+    mbti: "ISFJ"
+    occupation: "Dueña de librería independiente, semi-retirada"
+    children: "2 hijos adultos, 2 nietos (6 y 3 años)"
+    marital_status: "casada"
+    ses: "C2"
+
+    digital:
+      primary_platform: "facebook"
+      platforms: ["facebook"]
+      usage: "light"
+      device: "desktop"
+      peak_hours: ["17:00-18:00"]
+      behavior: "Usa Facebook para su librería. WhatsApp con la familia. Desconfía de compras online pero su experiencia en librería la hace curiosa."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "bajo"
+      purchase_style: "investigadora"
+      discovery: "recomendación"
+
+    motivation: "Como librera, la idea de un libro personalizado le genera curiosidad profesional y personal. Quiere uno para su nieto pero también evalúa si podría venderlo en su librería."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Cuenta a sus clientes de la librería si el producto la convence"
+      save: "Anota en su libreta física"
+      comment: "Pregunta sobre calidad de impresión y acabados"
+      buy: "Calidad de impresión profesional + posibilidad de ofrecer en su librería"
+      follow: "No sigue en redes"
+
+    key_objection: "¿La calidad de impresión es comparable a un libro editorial profesional?"
+    pain_point: "Ve que los niños leen cada vez menos y siente que las librerías independientes están desapareciendo"
+
+  # ================================================================
+  # VALENTINA — Profesional de salud/educación infantil (2 variantes = 0.04)
+  # ================================================================
 
   - name: "Valentina"
-    role: "Profesional de educación infantil / fonoaudióloga / psicóloga"
-    age_range: "25-45"
+    variant_of: "Valentina"
+    weight: 0.02
+    age: 32
     gender: "mujer"
-    location: "Chile"
-    primary_platform: "instagram"
-    usage: "moderate"
-    key_difference: "Usa cuentos como herramienta profesional. Busca respaldo científico. Podría recomendar a sus pacientes/apoderados. Valoriza la biblioterapia."
+    location: "Santiago Centro"
+    mbti: "INTJ"
+    occupation: "Psicóloga infantil, consulta privada"
+    children: "sin hijos"
+    marital_status: "soltera"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "linkedin"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["13:00-14:00", "20:00-21:00"]
+      behavior: "Consume contenido profesional sobre psicología infantil. Guarda recursos para pacientes. Comparte con colegas. Busca herramientas innovadoras."
+
+    attitude:
+      toward_ai: "escéptica"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Busca herramientas de biblioterapia en español para sus pacientes. Los cuentos personalizados podrían ser un recurso poderoso para abordar temas específicos en sesión. Necesita que sea profesionalmente riguroso."
+    journey_stage: "consideration"
+
     triggers:
-      - type: "save"
-        trigger: "guarda contenido con respaldo científico para compartir con apoderados"
-      - type: "share"
-        trigger: "comparte como recurso profesional con colegas o apoderados"
-      - type: "follow"
-        trigger: "encuentra contenido que valida su enfoque profesional con datos"
+      share: "Comparte como recurso profesional con colegas psicólogas"
+      save: "Contenido con respaldo científico sobre biblioterapia"
+      comment: "Pregunta sobre personalización de temas terapéuticos"
+      buy: "Ve aplicación práctica en sesiones + puede personalizar por caso + respaldo profesional"
+      follow: "Contenido que valida la biblioterapia con evidencia"
+
+    key_objection: "¿Puedo confiar en que la IA maneje bien temas como duelo, bullying o abuso?"
+    pain_point: "Las herramientas de biblioterapia en español son escasas y las que existen son genéricas"
+
+  - name: "Paz"
+    variant_of: "Valentina"
+    weight: 0.02
+    age: 41
+    gender: "mujer"
+    location: "Rancagua"
+    mbti: "ENFJ"
+    occupation: "Educadora de párvulos en jardín JUNJI"
+    children: "2 hijos (9 y 6 años)"
+    marital_status: "casada"
+    ses: "C2"
+
+    digital:
+      primary_platform: "facebook"
+      platforms: ["facebook", "instagram"]
+      usage: "moderate"
+      device: "Android"
+      peak_hours: ["18:00-19:00"]
+      behavior: "Busca recursos educativos en grupos de Facebook de educadoras. Comparte actividades con colegas. Consume contenido pedagógico."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "medio"
+      purchase_style: "espera_descuentos"
+      discovery: "recomendación"
+
+    motivation: "Quiere herramientas para sus alumnos y también para sus propios hijos. Si existiera un plan institucional o descuento para educadoras, lo usaría en el jardín como recurso pedagógico."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Recursos educativos en sus grupos de Facebook profesionales"
+      save: "Actividades y materiales para el aula"
+      comment: "Pregunta sobre plan institucional o descuento por volumen"
+      buy: "Descuento educador + puede usar con alumnos + aplicación pedagógica clara"
+      follow: "Contenido educativo práctico para el aula"
+
+    key_objection: "¿Hay descuento para educadoras o plan institucional?"
+    pain_point: "Los recursos educativos de calidad en Chile son caros y los presupuestos de JUNJI no alcanzan"
+
+  # ================================================================
+  # CAROLINA — Mamá champion/advocate (1 variante = 0.02)
+  # ================================================================
+
+  - name: "Carolina"
+    variant_of: "Carolina"
+    weight: 0.02
+    age: 36
+    gender: "mujer"
+    location: "Vitacura, Santiago"
+    mbti: "ENFP"
+    occupation: "Relacionadora pública, independiente"
+    children: "2 hijos (6 y 3 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "iPhone"
+      peak_hours: ["09:00-10:00", "21:00-23:00"]
+      behavior: "Ya compró y sube stories con el producto sin que se lo pidan. Recomienda en 3 grupos de WhatsApp de mamás. Etiqueta a la marca. Comenta en posts nuevos."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Compró para su hijo mayor y le encantó la reacción. Ahora quiere uno para el menor y piensa regalar a sobrinos. Es embajadora natural de marcas que le gustan."
+    journey_stage: "advocacy"
+
+    triggers:
+      share: "Sube foto/video del niño con el libro espontáneamente y etiqueta la marca"
+      save: "Nuevos temas de cuentos para comprar después"
+      comment: "Comenta validando — 'yo lo compré y es increíble, la reacción de mi hijo fue todo'"
+      buy: "Nuevo tema + fecha especial + descuento para cliente recurrente o referido"
+      follow: "Ya sigue — interactúa activamente con cada post"
+
+    key_objection: "Ya tengo uno — ¿el siguiente va a ser realmente diferente?"
+    pain_point: "Quiere más variedad de temas y cuentos para seguir comprando sin repetirse"
+
+  # ================================================================
+  # ANDREA — Exploradora sin conversión (2 variantes = 0.04)
+  # ================================================================
+
+  - name: "Andrea"
+    variant_of: "Andrea"
+    weight: 0.02
+    age: 34
+    gender: "mujer"
+    location: "Macul, Santiago"
+    mbti: "INFP"
+    occupation: "Diseñadora de modas, taller propio"
+    children: "1 hija (5 años)"
+    marital_status: "conviviente"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "moderate"
+      device: "Android"
+      peak_hours: ["22:00-23:30"]
+      behavior: "Llegó por ad, exploró la plataforma, creó un personaje para su hija con entusiasmo, pero abandonó en el checkout cuando vio el precio del físico."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "espera_descuentos"
+      discovery: "ad_instagram"
+
+    motivation: "Le encantó el concepto y creó un cuento completo para su hija. Pero $29.990 le pareció caro y no estaba segura del resultado final. Tiene el cuento guardado en su cuenta sin comprar."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Compartiría si alguien le pregunta por regalos originales"
+      save: "Ya tiene el producto en su radar"
+      comment: "Podría preguntar si hay descuento"
+      buy: "Descuento del 20% + reminder antes del cumple de su hija + ver resultado antes de pagar"
+      follow: "Retargeting que le recuerde lo que creó"
+
+    key_objection: "Quiero ver cómo queda terminado antes de pagar"
+    pain_point: "Le gustó pero el momento no era urgente y el precio la hizo dudar"
+
+  - name: "Tamara"
+    variant_of: "Andrea"
+    weight: 0.02
+    age: 30
+    gender: "mujer"
+    location: "La Florida, Santiago"
+    mbti: "ESTP"
+    occupation: "Vendedora en retail, jornada completa"
+    children: "1 hijo (4 años)"
+    marital_status: "soltera"
+    ses: "C3"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "tiktok"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["21:30-23:00"]
+      behavior: "Llegó por ad en TikTok. Creó un personaje en la plataforma por curiosidad. Se distrajo y no volvió. Ni siquiera recuerda el nombre de la marca."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "bajo"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Le pareció divertido crear un personaje pero no tenía fecha de regalo cercana. Si recibe un email o ad recordándole, podría completar la compra del digital."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "No compartiría por ahora"
+      save: "No guardó nada"
+      comment: "No comenta"
+      buy: "Email de recuperación con descuento + digital barato + fecha cercana (Día del Niño, Navidad)"
+      follow: "Ad de retargeting que le recuerde su creación"
+
+    key_objection: "Me olvidé de que existía — ¿vale la pena volver?"
+    pain_point: "Se distrae fácilmente y pierde interés si no actúa en el momento"
+
+  # ================================================================
+  # TOMÁS — Papá millennial 30-40, tech-friendly (4 variantes = 0.07)
+  # ================================================================
 
   - name: "Tomás"
-    role: "Papá millennial involucrado en la crianza"
-    age_range: "30-40"
+    variant_of: "Tomás"
+    weight: 0.02
+    age: 35
     gender: "hombre"
-    location: "Santiago, Chile"
-    primary_platform: "instagram"
-    usage: "moderate"
-    key_difference: "Menos presencia en comunidades de crianza pero busca activamente ser un buen papá. Sensible al ángulo tecnológico/IA del producto."
-    triggers:
-      - type: "buy"
-        trigger: "le atrae lo tech + lo emocional — 'puedo crearle algo único a mi hijo con IA'"
-      - type: "share"
-        trigger: "comparte con su pareja como idea de regalo"
+    location: "Providencia, Santiago"
+    mbti: "ENTP"
+    occupation: "Desarrollador de software en startup"
+    children: "1 hija (4 años)"
+    marital_status: "casada"
+    ses: "C1a"
 
-# Datos reales
-# Fuente: reporte_usuarios (plataforma) + daily report (GA4/Meta/IG API) — abril 2026
-# NOTA: IG Insights demográficos no disponibles vía API actual (ig_demographics: {})
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "twitter/x", "linkedin"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["22:00-23:30"]
+      behavior: "Consume contenido tech y lo cruza con paternidad. Prefiere reels cortos y datos duros. Comparte con su pareja por DM. Le interesa cómo funciona la IA detrás."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Le atrae la intersección de IA y paternidad. Quiere sorprender a su hija y a su pareja con algo innovador. También tiene curiosidad profesional por el producto."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Contenido tech + paternidad — 'mira lo que se puede hacer con IA'"
+      save: "Datos sobre desarrollo infantil presentados de forma concisa"
+      comment: "Pregunta técnica sobre el modelo de IA usado"
+      buy: "Entiende la tech + quiere sorprender a su pareja/hija + proceso rápido"
+      follow: "Contenido que combina innovación con crianza sin ser cursi"
+
+    key_objection: "¿Por qué pagar si puedo hacerlo yo con ChatGPT + Midjourney?"
+    pain_point: "El contenido de crianza le parece dirigido solo a mamás y se siente excluido"
+
+  - name: "Sebastián"
+    variant_of: "Tomás"
+    weight: 0.02
+    age: 33
+    gender: "hombre"
+    location: "Las Condes, Santiago"
+    mbti: "INTJ"
+    occupation: "Product manager en fintech"
+    children: "1 hijo (3 años)"
+    marital_status: "casada"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "twitter/x", "linkedin"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["21:00-22:00"]
+      behavior: "Analítico. Evalúa productos como analiza features en el trabajo. Lee reviews. Compara alternativas antes de comprar."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Quiere ser un papá involucrado y moderno. Le gusta la idea de crear algo personalizado para su hijo. Evalúa el producto como evalúa cualquier SaaS — funcionalidad, UX, precio."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Productos tech con buena UX que quiere recomendar"
+      save: "Guarda para evaluar con calma el fin de semana"
+      comment: "Feedback sobre funcionalidades o sugerencias de mejora"
+      buy: "UX impecable + resultado que supera lo que haría con ChatGPT solo + precio justo"
+      follow: "No sigue marcas de crianza pero podría si el contenido tech es bueno"
+
+    key_objection: "El wrapper sobre ChatGPT no justifica $29.990 — ¿qué valor agregado real tiene?"
+    pain_point: "Como PM, ve las costuras de los productos digitales y eso lo hace hipercrítico"
+
+  - name: "Nicolás"
+    variant_of: "Tomás"
+    weight: 0.02
+    age: 38
+    gender: "hombre"
+    location: "Ñuñoa, Santiago"
+    mbti: "ENFP"
+    occupation: "Profesor de ciencias en colegio, divulgador en YouTube"
+    children: "2 hijos (6 y 3 años)"
+    marital_status: "casada"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "youtube", "tiktok"]
+      usage: "heavy"
+      device: "Android"
+      peak_hours: ["20:00-22:00"]
+      behavior: "Crea contenido educativo. Consume y comparte recursos que combinen ciencia y crianza. Activo en comunidades de papás."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Como divulgador, le fascina la IA aplicada a educación. Quiere un cuento para sus hijos y además podría hacer contenido sobre la experiencia en su canal."
+    journey_stage: "purchase"
+
+    triggers:
+      share: "Haría un video sobre la experiencia de crear un cuento con IA para sus hijos"
+      save: "Datos científicos sobre personalización y aprendizaje"
+      comment: "Comenta con entusiasmo y etiqueta a otros papás"
+      buy: "Producto innovador + puede crear contenido sobre ello + regalo para sus hijos"
+      follow: "Contenido educativo innovador"
+
+    key_objection: "¿Me darían permiso para hacer un review honesto en mi canal?"
+    pain_point: "Quiere que sus hijos vean la ciencia como algo divertido y cercano"
+
+  - name: "Matías"
+    variant_of: "Tomás"
+    weight: 0.01
+    age: 31
+    gender: "hombre"
+    location: "Concepción"
+    mbti: "ISTP"
+    occupation: "Ingeniero civil en constructora"
+    children: "1 hija (5 años)"
+    marital_status: "conviviente"
+    ses: "C2"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "light"
+      device: "Android"
+      peak_hours: ["21:00-22:00"]
+      behavior: "Usa poco las redes. Su pareja le mandó el link de La Cuentería por WhatsApp. Evalúa rápido y decide."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "impulsiva"
+      discovery: "recomendación"
+
+    motivation: "Su pareja le pidió que le compre un cuento personalizado a su hija para Navidad. No investiga mucho — si la pareja lo validó, él compra."
+    journey_stage: "purchase"
+
+    triggers:
+      share: "No comparte"
+      save: "No guarda"
+      comment: "No comenta"
+      buy: "Validación de su pareja + proceso rápido + pago simple"
+      follow: "No sigue"
+
+    key_objection: "¿Puedo hacerlo en 5 minutos? Mi pareja me dijo qué poner"
+    pain_point: "Quiere cumplir bien con lo que su pareja le pide pero no tiene paciencia para procesos largos"
+
+  # ================================================================
+  # RODRIGO — Papá práctico 35-44, compra directa (2 variantes = 0.04)
+  # ================================================================
+
+  - name: "Rodrigo"
+    variant_of: "Rodrigo"
+    weight: 0.02
+    age: 40
+    gender: "hombre"
+    location: "La Reina, Santiago"
+    mbti: "ESTJ"
+    occupation: "Gerente comercial en empresa de logística"
+    children: "2 hijos (8 y 5 años)"
+    marital_status: "casado"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "light"
+      device: "iPhone"
+      peak_hours: ["22:00-22:30"]
+      behavior: "Casi no usa redes. Llegó porque su esposa le mandó el link. Visita el sitio, evalúa en 2 minutos, y compra o se va."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "impulsiva"
+      discovery: "recomendación"
+
+    motivation: "Su esposa quiere un cuento personalizado para el menor y le pidió que lo compre. No le interesa el concepto — solo quiere resolver el encargo rápido."
+    journey_stage: "purchase"
+
+    triggers:
+      share: "No comparte"
+      save: "No guarda"
+      comment: "No comenta"
+      buy: "Precio claro + proceso rápido + pago con tarjeta en un click"
+      follow: "No sigue"
+
+    key_objection: "¿Cuántos pasos son? ¿Puedo terminarlo en 5 minutos?"
+    pain_point: "Le frustra cuando los sitios web tienen demasiados pasos o piden crear cuenta"
+
+  - name: "Gonzalo"
+    variant_of: "Rodrigo"
+    weight: 0.02
+    age: 37
+    gender: "hombre"
+    location: "Viña del Mar"
+    mbti: "ESTP"
+    occupation: "Contador auditor, trabaja en empresa de consultoría"
+    children: "1 hija (6 años)"
+    marital_status: "separado"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "light"
+      device: "Android"
+      peak_hours: ["20:00-21:00"]
+      behavior: "Usa redes mínimamente. Busca regalos por Google cuando tiene a su hija los fines de semana. Compra online por conveniencia."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "bajo"
+      purchase_style: "investigadora"
+      discovery: "google"
+
+    motivation: "Está separado y los fines de semana que le toca, quiere que sean especiales. Un cuento personalizado donde ella sea protagonista le parece un buen gesto."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "No comparte"
+      save: "Guarda el link para comprarlo el viernes antes de buscar a su hija"
+      comment: "No comenta"
+      buy: "Puede hacerlo rápido el viernes + tiene el cuento digital listo para leerlo juntos el sábado"
+      follow: "No sigue"
+
+    key_objection: "¿Puedo hacer el cuento el viernes y tenerlo listo para el sábado?"
+    pain_point: "Quiere que los fines de semana con su hija sean memorables y no sabe cómo competir con la vida cotidiana que ella tiene con su mamá"
+
+  # ================================================================
+  # EDUARDO — Hombre 48-64, abuelo o tío regalador (3 variantes = 0.06)
+  # ================================================================
+
+  - name: "Eduardo"
+    variant_of: "Eduardo"
+    weight: 0.02
+    age: 55
+    gender: "hombre"
+    location: "Las Condes, Santiago"
+    mbti: "ISTJ"
+    occupation: "Ingeniero civil jubilado, consultor independiente"
+    children: "2 hijos adultos, 3 nietos (6, 4 y 2 años)"
+    marital_status: "casado"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "light"
+      device: "desktop"
+      peak_hours: ["10:00-11:00"]
+      behavior: "Usa Instagram ocasionalmente en desktop. Llegó por un ad. Después buscó en Google para investigar más. Comparte links por WhatsApp a su esposa."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "ad_instagram"
+
+    motivation: "Quiere regalarle algo especial a su nieta mayor que cumple 7. Un libro le parece un regalo 'con valor'. No quiere juguetes plásticos. La personalización lo diferencia."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Envía por WhatsApp a su esposa — 'mira esto para la Sofi'"
+      save: "No usa guardar"
+      comment: "No comenta"
+      buy: "Entiende qué es el producto + libro físico + puede navegar sin complicaciones"
+      follow: "No sigue"
+
+    key_objection: "¿Cómo se hace? ¿Necesito saber de tecnología?"
+    pain_point: "No sabe qué les gusta a los niños hoy — los juguetes tecnológicos le parecen excesivos"
+
+  - name: "Jorge"
+    variant_of: "Eduardo"
+    weight: 0.02
+    age: 50
+    gender: "hombre"
+    location: "Providencia, Santiago"
+    mbti: "ENFJ"
+    occupation: "Director de colegio particular"
+    children: "3 hijos (22, 19 y 15 años), tío de 4 sobrinos chicos"
+    marital_status: "casado"
+    ses: "C1a"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "linkedin"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["19:00-20:00"]
+      behavior: "Más digital que el promedio de su edad por su rol. Consume contenido educativo. Le interesan las herramientas pedagógicas innovadoras."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Como director de colegio, ve potencial pedagógico. Como tío, quiere regalos que fomenten la lectura. Combina ambos intereses."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Comparte con su equipo docente como recurso potencial"
+      save: "Guarda herramientas educativas innovadoras"
+      comment: "Pregunta si hay planes para colegios"
+      buy: "Regalo para sobrinos + potencial uso institucional + libro físico"
+      follow: "Contenido educativo innovador"
+
+    key_objection: "¿Tienen algo pensado para uso institucional en colegios?"
+    pain_point: "Busca constantemente herramientas para motivar la lectura en sus alumnos"
+
+  - name: "Luis"
+    variant_of: "Eduardo"
+    weight: 0.02
+    age: 63
+    gender: "hombre"
+    location: "La Serena"
+    mbti: "ISFJ"
+    occupation: "Médico general jubilado"
+    children: "4 hijos adultos, 5 nietos (8, 6, 5, 3 y 1 año)"
+    marital_status: "casado"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "facebook"
+      platforms: ["facebook"]
+      usage: "light"
+      device: "desktop"
+      peak_hours: ["09:00-10:00"]
+      behavior: "Usa Facebook para noticias y familia. Su hija le mostró La Cuentería en el celular de ella. Necesita ayuda para hacer la compra."
+
+    attitude:
+      toward_ai: "desconoce"
+      brand_trust: "bajo"
+      purchase_style: "investigadora"
+      discovery: "recomendación"
+
+    motivation: "Tiene 5 nietos y siempre les regala libros. Un libro personalizado para cada uno sería el regalo perfecto de Navidad, pero necesita que su hija lo ayude con el proceso."
+    journey_stage: "awareness"
+
+    triggers:
+      share: "Le cuenta a su esposa y a sus hijos por WhatsApp"
+      save: "No usa funciones digitales — su hija guarda el link"
+      comment: "No comenta en redes"
+      buy: "Su hija lo ayuda + libro físico + puede pagar por transferencia + uno para cada nieto"
+      follow: "No sigue marcas"
+
+    key_objection: "¿Puedo hacer 5 libros distintos? ¿Hay descuento por cantidad?"
+    pain_point: "Quiere tratar a todos sus nietos por igual pero hacer 5 compras online le parece abrumador"
+
+  # ================================================================
+  # FELIPE — Hombre joven 25-34, sin hijos, regala (2 variantes = 0.03)
+  # ================================================================
+
+  - name: "Felipe"
+    variant_of: "Felipe"
+    weight: 0.02
+    age: 28
+    gender: "hombre"
+    location: "Santiago Centro"
+    mbti: "ENTP"
+    occupation: "Ingeniero informático en consultora"
+    children: "sin hijos"
+    marital_status: "soltero"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram", "twitter/x", "tiktok"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["20:00-22:00"]
+      behavior: "Consume contenido tech y entretenimiento. No consume nada de crianza. Llegó por ad de IG mientras buscaba regalo de último minuto."
+
+    attitude:
+      toward_ai: "entusiasta"
+      brand_trust: "alto"
+      purchase_style: "impulsiva"
+      discovery: "ad_instagram"
+
+    motivation: "Su sobrino cumple 5 y no tiene idea qué regalarle. Vio el ad y le pareció original y fácil. El ángulo tech le resulta atractivo. Quiere quedar bien sin esfuerzo."
+    journey_stage: "purchase"
+
+    triggers:
+      share: "Solo si el resultado le impresiona — lo muestra a amigos como novedad tech"
+      save: "No guarda — compra en el momento"
+      comment: "No comenta en contenido de crianza"
+      buy: "Necesidad inmediata + proceso rápido + entrega digital instantánea"
+      follow: "No sigue"
+
+    key_objection: "¿Puedo hacerlo desde el celular en 5 minutos? Lo necesito ya"
+    pain_point: "No sabe nada de niños y le da inseguridad elegir un regalo para uno"
+
+  - name: "Diego"
+    variant_of: "Felipe"
+    weight: 0.01
+    age: 32
+    gender: "hombre"
+    location: "Ñuñoa, Santiago"
+    mbti: "INFP"
+    occupation: "Psicólogo clínico de adultos"
+    children: "sin hijos"
+    marital_status: "en pareja"
+    ses: "C1b"
+
+    digital:
+      primary_platform: "instagram"
+      platforms: ["instagram"]
+      usage: "moderate"
+      device: "iPhone"
+      peak_hours: ["21:00-22:00"]
+      behavior: "Consume contenido cultural y de psicología. Llegó por recomendación de una colega que trabaja con niños."
+
+    attitude:
+      toward_ai: "neutral"
+      brand_trust: "medio"
+      purchase_style: "investigadora"
+      discovery: "recomendación"
+
+    motivation: "Es padrino de la hija de su mejor amigo y quiere regalarle algo significativo para su cumpleaños. Un cuento personalizado le parece un gesto con profundidad emocional."
+    journey_stage: "consideration"
+
+    triggers:
+      share: "Recomienda a amigos que tienen hijos si el producto le gusta"
+      save: "Guarda para evaluar con calma"
+      comment: "Podría comentar algo sobre el aspecto emocional del producto"
+      buy: "Se convence de la calidad narrativa + libro físico como regalo con peso"
+      follow: "No sigue marcas infantiles"
+
+    key_objection: "¿Es raro que un padrino sin hijos regale esto? ¿Se verá bien?"
+    pain_point: "Quiere ser un padrino presente y significativo pero no sabe cómo conectar con una niña de 5 años"
+
+# ================================================================
+# RESUMEN DE PESOS Y VALIDACIÓN — 53 PERSONAS EXPANDIDAS
+# ================================================================
+# Segmento base  | Variantes | Pesos              | Subtotal
+# ---------------+-----------+--------------------+---------
+# Camila         | 10        | 10 × 0.02          | 0.20
+# Macarena       | 7         | 7 × 0.02           | 0.14
+# Catalina       | 5         | 5 × 0.02           | 0.10
+# Javiera        | 6         | 5 × 0.02 + 1×0.01  | 0.11
+# Constanza      | 4         | 3 × 0.02 + 1×0.01  | 0.07
+# Patricia       | 3         | 2 × 0.02 + 1×0.01  | 0.05
+# Francisca      | 2         | 1 × 0.02 + 1×0.01  | 0.03
+# Valentina      | 2         | 2 × 0.02           | 0.04
+# Carolina       | 1         | 1 × 0.02           | 0.02
+# Andrea         | 2         | 2 × 0.02           | 0.04
+# Tomás          | 4         | 3 × 0.02 + 1×0.01  | 0.07
+# Rodrigo        | 2         | 2 × 0.02           | 0.04
+# Eduardo        | 3         | 3 × 0.02           | 0.06
+# Felipe         | 2         | 1 × 0.02 + 1×0.01  | 0.03
+# ---------------+-----------+--------------------+---------
+# TOTAL          | 53        | 47×0.02 + 6×0.01   | 1.00 ✓
+#
+# SUBTOTAL MUJERES: 0.80 (vs 79.8% IG ✓)
+# SUBTOTAL HOMBRES: 0.20 (vs 20.2% IG ✓)
+#
+# Personas con peso 0.01 (6):
+#   Monserrat (Javiera), Nicole (Constanza), Ximena (Patricia),
+#   María Elena (Francisca), Matías (Tomás), Diego (Felipe)
+#
+# Verificación aritmética:
+#   47 × 0.02 = 0.94
+#    6 × 0.01 = 0.06
+#   Total     = 1.00 ✓
+#
+# Cobertura demográfica (sin cambios vs original):
+#   Mujer 35-44: Camila(0.20) + Macarena(0.14) + Catalina(0.10) = 0.44 → 45.2% ✓
+#   Mujer 25-34: Javiera(0.11) + Constanza(0.07) = 0.18 → 24.6%
+#   Mujer 45-54: Patricia(0.05) = 0.05 → 6.1% ✓
+#   Mujer 55+:   Francisca(0.03) = 0.03 → 2.7% ✓
+#   Mujer cross: Valentina(0.04) + Carolina(0.02) + Andrea(0.04) = 0.10
+#   Hombre 25-44: Tomás(0.07) + Rodrigo(0.04) + Felipe(0.03) = 0.14
+#   Hombre 45-64: Eduardo(0.06) = 0.06
+# ================================================================
+
+# ================================================================
+# DATOS REALES (fuente de verdad para las personas)
+# ================================================================
 real_data:
-  source: "Plataforma La Cuentería + GA4 + Meta Ads + IG API"
+  source: "Plataforma La Cuentería + GA4 + Meta Ads + IG Insights (app export manual)"
   date: "2026-04-03"
 
   # Datos de usuarios registrados en la plataforma (73 usuarios)
   platform_users:
     total: 73
-    gender_split: { "F": "62%", "M": "38%" }  # Estimado por nombre (45 identificados de 73)
+    gender_split: { "F": "62%", "M": "38%" }
     registration_method: { "email": "64%", "google": "36%" }
     user_segments:
-      champions: 10             # Uso intensivo + compras
-      compradores: 7            # Compraron al menos una vez
-      exploradores: 19          # Crearon personajes/cuentos sin comprar
-      curiosos: 16              # Registro sin actividad significativa
-      inactivos: 21             # Sin actividad reciente
-    conversion_rate: "17%"      # 13 compradores de 73 registrados
-    total_revenue_clp: 763026   # Revenue acumulado total
-    country: "100% Chile"       # Todos los usuarios son de Chile
+      champions: 10
+      compradores: 7
+      exploradores: 19
+      curiosos: 16
+      inactivos: 21
+    conversion_rate: "17%"
+    total_revenue_clp: 763026
+    country: "100% Chile"
 
-  # Datos de IG (API, no Insights completos)
+  # Datos de IG (API + Insights manual)
   instagram:
     followers: 1006
-    growth_30d: 600             # ~20 nuevos/día promedio
+    growth_30d: 600
     media_count: 17
-    notes: "Cuenta en crecimiento rápido. IG Insights demográficos no disponibles vía API — requiere export manual desde app."
 
   # Datos de GA4
   ga4:
@@ -164,7 +2256,6 @@ real_data:
     source: "IG Insights app export manual"
     period: "2026-03-04 a 2026-04-02"
 
-    # Alcance
     reach:
       accounts_reached: 59279
       reach_growth: "+926.5%"
@@ -172,28 +2263,25 @@ real_data:
       from_followers: "6.5%"
       from_non_followers: "93.5%"
 
-    # Reach por formato
     reach_by_format:
       publicaciones: "45.1%"
       reels: "44.5%"
       historias: "10.4%"
 
-    # Demografía — Todos
     age_groups_all:
       "13-17": "0%"
       "18-24": "1.1%"
       "25-34": "27.6%"
-      "35-44": "49.7%"          # Grupo dominante
+      "35-44": "49.7%"
       "45-54": "10.9%"
       "55-64": "7.7%"
       "65+": "3.1%"
 
-    # Demografía — Solo Mujeres
     age_groups_women:
       "13-17": "0%"
       "18-24": "1.6%"
       "25-34": "30.8%"
-      "35-44": "56.6%"          # Grupo dominante en mujeres
+      "35-44": "56.6%"
       "45-54": "7.7%"
       "55-64": "2.2%"
       "65+": "1.1%"
@@ -207,16 +2295,15 @@ real_data:
       - "Canadá 0.2%"
       - "Estados Unidos 0.2%"
 
-    top_cities: []              # No disponible en screenshots — pedir export de "Ciudades"
+    top_cities: []
 
-    # Actividad de seguidores
     peak_activity:
       notes: "Actividad crece desde las 6h, meseta entre 9h-21h, picos más altos entre 18h-21h"
       best_hours_estimated: ["09:00", "12:00", "18:00-21:00"]
-      best_days_estimated: ["jueves", "viernes", "sábado"]  # Barras más altas en gráfico
+      best_days_estimated: ["jueves", "viernes", "sábado"]
 
   behavior:
-    avg_engagement_rate: ""     # Pendiente: calcular con datos de posts individuales
+    avg_engagement_rate: ""
     best_performing_format: "publicaciones + reels casi iguales (45.1% vs 44.5% del reach)"
     peak_days: ["jueves", "viernes", "sábado"]
     peak_hours: ["09:00", "12:00", "18:00-21:00"]

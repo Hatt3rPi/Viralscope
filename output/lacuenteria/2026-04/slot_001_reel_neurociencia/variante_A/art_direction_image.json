@@ -1,0 +1,92 @@
+{
+  "type": "image",
+  "generator": "nanobanana_2",
+  "variant": "A",
+  "slot_theme": "lectura_dialogica",
+  "slot_angle": "No es leer más, es leer diferente",
+  "settings": {
+    "aspect_ratio": "9:16",
+    "count": 8,
+    "quality": "2k_unlimited"
+  },
+  "art_direction": {
+    "concept": "El momento exacto en que una madre hace una pregunta a su hijo durante la lectura. No es el antes ni el después — es ese instante de silencio cargado donde el niño está pensando su respuesta. El libro está abierto, la madre lo sostiene inclinada hacia él, y el niño tiene la boca entreabierta a punto de responder. Es la intimidad más pequeña y más poderosa de la crianza.",
+    "style": "Fotografía editorial de crianza premium. Estilo Annie Leibovitz para revista de padres. Grano de película 35mm muy sutil. Sin filtros evidentes. Aspecto de foto robada de un momento real, no posada. Referencia visual: editorial Kinfolk familia + apartado crianza de NYT Parenting.",
+    "mood": "Íntimo, cálido, concentrado. La emoción es la curiosidad del niño y la atención total de la madre. Silencio activo. Amor sin teatralidad.",
+    "color_palette": {
+      "dominant": "#F7F0FF — lavanda suave del ambiente, paredes de dormitorio o sala de estar con luz cálida",
+      "accents": [
+        "#F59E0B — tono dorado del libro físico tapa dura, luz de lámpara de noche calentando la escena",
+        "#7C3AED — presencia muy sutil, quizás en el detalle del lomo del libro o un cojín fuera de foco",
+        "#D4A574 — tono piel realista y cálido de ambos personajes, sin sobreexposición"
+      ],
+      "temperature": "Cálida. Balance de blancos entre 3800K-4200K. Como una lámpara incandescente encendida en una tarde nublada."
+    },
+    "composition": {
+      "framing": "Vertical 9:16. Los dos personajes ocupan el tercio inferior-central del encuadre. El tercio superior tiene espacio para texto overlay con cielo de fondo oscurecido o pared suave. El libro visible en el tercio inferior crea un triángulo visual: libro → cara del niño → cara de la madre.",
+      "rule": "Regla de los tercios invertida: el peso visual está abajo, dejando el área superior aireada para texto. Los ojos del niño caen en el cruce de tercios inferior-izquierdo.",
+      "focal_point": "Los ojos del niño mirando a su madre, ligeramente desenfocados en el libro. El punto de foco preciso es el iris del niño — todo lo demás tiene bokeh suave pero no genérico de estudio.",
+      "negative_space": "El tercio superior de la imagen: fondo de pared con textura de estuco o madera clara, ligeramente subexpuesto. Aquí va el texto principal del reel."
+    },
+    "lighting": {
+      "type": "Luz de práctica + relleno natural. Una lámpara de mesa fuera de cuadro a la derecha crea el calor principal. Una ventana difusa a la izquierda rellena las sombras sin anularlas. Las sombras son suaves pero presentes — no es iluminación de estudio.",
+      "direction": "Lateral derecha, 45 grados, baja (altura de la lámpara de noche de una mesita). Esto crea sombras naturales en el lateral de la cara del niño.",
+      "quality": "Soft light pero con contraste. No es la luz plana de stock photo. Hay una zona de luz y una zona de sombra claramente diferenciadas pero con transición gradual. El libro refleja sutilmente la luz en sus páginas."
+    },
+    "subjects": [
+      {
+        "description": "Niño latinoamericano, 3-5 años, pelo oscuro ligeramente desordenado como recién levantado de la siesta o en pijama. Cara redonda, piel trigueña media, expresión de concentración activa — está pensando la respuesta a la pregunta que acaba de escuchar.",
+        "expression": "Boca entreabierta, cejas ligeramente levantadas, ojos mirando hacia arriba-izquierda (gesto de búsqueda cognitiva real). Es la expresión genuina de 'estoy pensando'. NO sonrisa forzada. NO cara de sorpresa exagerada.",
+        "clothing": "Pijama de algodón, colores neutros (gris claro, crema o azul marino muy suave). Tela con textura visible. Quizás una manga ligeramente arrugada. Sin logos ni estampados llamativos.",
+        "action": "Sentado con las piernas cruzadas sobre la cama o sofá. El cuerpo ligeramente inclinado hacia el libro. Una mano apoya la barbilla o toca el borde de la página. Postura de quien está completamente absorbido en algo."
+      },
+      {
+        "description": "Mujer latinoamericana, 33-40 años, Camila. Profesional, no idealizada. Pelo oscuro mediano suelto o en cola informal. Sin maquillaje evidente o maquillaje natural. Piel trigueña clara con pequeñas imperfecciones normales (no piel de plástico).",
+        "expression": "Atención total dirigida al niño. Inclinada levemente hacia él, esperando su respuesta. Los ojos tienen suavidad — no son brillantes artificiales. Es la cara de una madre que genuinamente quiere escuchar lo que su hijo tiene que decir.",
+        "clothing": "Ropa de estar en casa cómoda pero no desaliñada: sweater de punto en tono neutro (gris, beige, verde salvia suave) o camisa de lino holgada. Tela con textura real visible. Ninguna marca visible.",
+        "action": "Sostiene el libro abierto con ambas manos, inclinada hacia el niño a una distancia de unos 40cm. El libro está en el tercio inferior central del encuadre. Su cabeza está ladeada levemente hacia él, en postura de escucha activa."
+      }
+    ],
+    "environment": {
+      "setting": "Dormitorio infantil o rincón de sofá en sala de estar. Ambiente chileno clase media-alta, no aspiracional excesivo. Una habitación que ha sido vivida: hay una almohada ligeramente aplastada, quizás un segundo libro en el borde del encuadre fuera de foco.",
+      "props": [
+        "Libro infantil de tapa dura en tonos cálidos, abierto a una doble página con ilustraciones coloridas visibles pero no identificables",
+        "Lámpara de mesa pequeña fuera de cuadro, generando el halo de luz cálida",
+        "Cojín o manta de punto en el borde del encuadre, textura visible",
+        "Quizás un segundo libro cerrado en el suelo cerca — establece que la lectura es habitual en esta casa"
+      ],
+      "textures": [
+        "Sábanas o funda de almohada de algodón con ligeras arrugas naturales",
+        "Madera del suelo o de una mesita de noche con veta visible",
+        "Tejido de punto del sweater de la madre",
+        "Papel de las páginas del libro, blanco cálido con reflejo de lámpara",
+        "Estuco rugoso de pared al fondo, suavemente desenfocado"
+      ],
+      "depth": "Tres planos claramente diferenciados: fondo (pared texturada, desenfocada), plano medio (cuerpos de madre e hijo, en foco), primer plano (esquina del libro y mano del niño, muy ligeramente desenfocada). El bokeh es óptico, no generado artificialmente."
+    },
+    "anti_ai_directives": [
+      "Las manos DEBEN tener exactamente 5 dedos con proporciones anatómicas correctas. Si hay incertidumbre, ocultar una mano detrás del libro.",
+      "La piel tiene poros, pequeñas manchas, y textura real. NO piel de plástico brillante o hiper-lisa.",
+      "Los ojos tienen blancos con venas sutiles y reflejos de la luz específica de la escena (la lámpara). NO ojos con catchlights genéricos o brillo sobrenatural.",
+      "La composición tiene UNA asimetría intencional: madre e hijo no están perfectamente centrados ni perfectamente simétricas sus alturas.",
+      "El fondo NO es bokeh circular perfecto de lente de estudio. Es bokeh real con algo reconocible: textura de pared, forma de ventana, silueta de mueble.",
+      "Las arrugas de la ropa son reales y asimétricas, no colocadas artificialmente.",
+      "El libro tiene grosor real visible en el lomo, no es plano como recorte.",
+      "EVITAR: sonrisa dentada forzada en cualquiera de los dos, pose simétrica espejo, fondo completamente liso y uniforme."
+    ],
+    "text_overlay": {
+      "required": true,
+      "position": "Tercio superior, centrado. Margen de seguridad de 80px en los laterales para no cortar en dispositivos.",
+      "text": "Leer en silencio es bueno.\nLeer haciendo preguntas\nduplica el desarrollo del lenguaje.",
+      "notes": "Fuente Sour Gummy weight 700 para la primera línea (pequeña, 28px), Sour Gummy weight 800 para las líneas 2-3 (grande, 42px). Color blanco con sombra drop muy sutil (2px blur, 40% opacidad negro) para legibilidad sobre cualquier fondo. La tercera línea en color #F59E0B amber para énfasis. Alineación centrada."
+    },
+    "reference_styles": [
+      "Annie Leibovitz — series familiares para Vogue, especialmente la iluminación lateral cálida y el foco en micro-expresiones",
+      "Kinfolk Magazine — fotografía de familia en interiores, paleta cálida, composición aireada",
+      "NYT Parenting editorial photography — momentos reales de crianza sin glamourización excesiva",
+      "Fotografía de Céline Clanet para Le Monde — grano de película, naturalidad, luz de práctica"
+    ]
+  },
+  "prompt_string": "Editorial photography, Chilean Latin American mother 35yo and her 4yo son reading together on a bed, intimate moment, she holds an open hardcover children's book, he has his mouth slightly open thinking about her question, genuine cognitive search expression, boy's eyes looking up-left, warm incandescent lamp light from right side, soft natural window fill from left, slight film grain texture, cotton pajamas with fabric texture visible, knit sweater on mother, wooden floor visible, slightly asymmetric composition, medium-format photography feel, warm color temperature 4000K, natural Latin skin tones with realistic pores, soft bokeh background showing textured wall, no plastic skin, no perfect symmetry, real hand anatomy, Kinfolk magazine aesthetic, 9:16 vertical portrait",
+  "negative_prompt": "cartoon, illustration, clipart, stock photo, perfect symmetry, plastic skin, glowing eyes, generic studio bokeh, 6 fingers, forced smile, teeth showing unnaturally, overly bright catchlights, makeup-heavy, posed stiffness, white seamless background, AI art style, oversaturated colors, dramatic vignette, lens flare, watermark, text in image"
+}

@@ -1,0 +1,99 @@
+{
+  "type": "video",
+  "generator": "higgsfield_cinema",
+  "variant": "C",
+  "slot_theme": "lectura_dialogica",
+  "slot_angle": "Directo al punto — visualmente simple, máximo impacto, CTA agresivo",
+  "settings": {
+    "aspect_ratio": "9:16",
+    "duration_seconds": 40,
+    "fps": 30
+  },
+  "art_direction": {
+    "concept": "El reel más directo del set. Estructura de 'revelación en 3 actos' comprimida al máximo: (1) el problema nombrado crudamente, (2) el mecanismo explicado con un solo dato, (3) la acción concreta. Sin rodeos. Sin poesía. Sin historia larga. Cada segundo es información con propósito. La estética visual refuerza la directividad: encuadres limpios, edición rápida pero no frenética, paleta reducida.",
+    "visual_style": "Editorial directo. Cercano al estilo de los mejores TikTok educativos de alto rendimiento pero con producción de reel de crianza premium. Sin los trucos baratos de TikTok (sin POV forzado, sin 'storytime' falso, sin actuación exagerada). La directividad viene de la estructura, no de efectos visuales.",
+    "mood": "Urgencia calmada. Como cuando un médico te da un consejo directo y concreto: serio, claro, sin drama, pero no puedes ignorarlo. Camila termina este reel sintiendo que tiene una tarea para esta noche.",
+    "color_grading": {
+      "lut_reference": "Kodak Portra 400 — skin tones cálidos y ricos, sombras suaves, altas luces ligeramente quemadas. Es el LUT que hace que las caras se vean más reales y presentes. La paleta es más saturada que las variantes A y B — transmite urgencia y presencia.",
+      "temperature": "Constante 4500K durante todo el video. No hay cambio de temperatura porque el video no tiene transformación emocional — es directamente al punto desde el primer frame hasta el último.",
+      "saturation": "Normal a ligeramente elevada (+8 en Lumetri). Los colores más vividos transmiten urgencia. El púrpura #7C3AED de cualquier elemento de marca se preserva intacto."
+    },
+    "scenes": [
+      {
+        "time_range": "0-3s",
+        "scene_type": "hook",
+        "shot_type": "Close-up frontal de la cara de la madre mirando directamente a la cámara. No es un 'hablar a la cámara' estilo vlog — es más bien como si la cámara hubiera aparecido de improviso y la madre acabara de decir algo importante. Sus ojos están en la cámara por 1 segundo, luego se dirige al niño. Ese 1 segundo de contacto visual directo es el gancho.",
+        "camera_movement": "Completamente estático. Trípode firme. La quietud de la cámara hace que el movimiento del sujeto tenga más peso. El único movimiento en este plano es el de la madre.",
+        "subject_action": "La madre mira directo a la cámara por 1 segundo — expresión seria pero no fría. Luego gira hacia el niño que está fuera de cuadro y le pregunta: '¿Por qué crees que el oso estaba solo?' El niño responde desde fuera de cuadro — se escucha su voz pero no se le ve. El contraste entre la pregunta simple de la madre y la respuesta elaborada del niño (que lleva 3-4 palabras más de lo que esperarías) es el hook.",
+        "environment": "Sala de estar, sofá. Todo limpio pero real. La cámara está donde normalmente no está — directamente frente a la madre a 80cm, como si alguien hubiera dejado el teléfono en un soporte frente a ella.",
+        "text_overlay": "A los 0.5s sobre la cara de la madre antes de que hable: '¿Lees así?' — Sour Gummy Bold blanco, enorme, 52px. Aparece y desaparece en 1.5s. Sin fondo, sin caja, sin drop shadow — la pared detrás de la madre es suficientemente simple para que el texto sea legible.",
+        "audio_direction": "Silencio absoluto en los primeros 0.3s — muy antinatural, crea tensión inmediata. Luego la voz de la madre pregunta. Luego la voz del niño responde. Luego entra la música a baja intensidad. No hay música en los primeros 3 segundos — el silencio y las voces reales son el gancho de audio.",
+        "transition_to_next": "La madre asiente al escuchar la respuesta del niño. Corte seco al plano del niño."
+      },
+      {
+        "time_range": "3-15s",
+        "scene_type": "context",
+        "shot_type": "Plano medio del niño respondiendo la pregunta de la madre — ahora lo vemos. El plano dura 4 segundos de corrido sin cortes. Vemos al niño terminando su respuesta, que es sorprendentemente elaborada para su edad. Luego corte a plano medio de la madre (misma posición pero ahora mirando al niño). Luego corte a plano cerrado del libro. Luego, texto directo en pantalla negra (el único momento de pantalla negra en todo el set).",
+        "camera_movement": "Plano del niño: estático. Plano de la madre: estático. Plano del libro: macro lento. Pantalla de texto: fade from black.",
+        "subject_action": "El niño responde con su vocabulario propio, gesticulando. Su respuesta tiene lógica narrativa y empleo correcto del tiempo pasado — detalle que una madre profesional notará como significativo. La madre escucha sin interrumpir hasta que él termina.",
+        "environment": "En el plano de texto negro: nada. La pantalla oscura hace que el texto sea absolutamente imposible de ignorar.",
+        "text_overlay": "Plano del niño: sin texto — dejar que la respuesta del niño sea el argumento.\nTransición a pantalla oscura + texto grande:\n'Leer en silencio: el niño escucha.'\n[0.7s pausa]\n'Leer con preguntas: el niño PIENSA.'\nEsa diferencia es todo.\nFuente: Sour Gummy Bold, blanco sobre negro. La palabra 'PIENSA' en #F59E0B amber y 20% más grande.",
+        "audio_direction": "La voz del niño respondiendo es el audio principal — nada más. Cuando llega la pantalla oscura, silencio total por 0.5s. Luego voiceover entra directamente, sin música bajo. La ausencia de música en las pantallas de texto da peso máximo a las palabras.",
+        "transition_to_next": "Fade from black suave de 0.3s hacia la siguiente escena."
+      },
+      {
+        "time_range": "15-35s",
+        "scene_type": "value",
+        "shot_type": "Secuencia de planos cortos y directos (2-3 segundos cada uno): (1) Close-up del niño señalando el libro. (2) Close-up de la boca de la madre haciendo una pregunta (no se ve su cara completa — solo la boca). (3) Close-up de los ojos del niño iluminándose. (4) Plano detalle de las manos de ambos sobre el libro. (5) Plano medio final de los dos — el único plano 'completo' de la secuencia de valor, que actúa como resolución visual.",
+        "camera_movement": "Todos los planos son estáticos o con micro-movimiento de 1-2%. La velocidad de edición es constante — ningún plano dura más de 3.5 segundos. El ritmo de cortes es el metrónomo del video.",
+        "subject_action": "Cada plano captura un micro-momento específico de la lectura dialógica: la pregunta, la pausa de pensamiento, la respuesta, el señalar, el escuchar. Son los 5 movimientos de una danza que el espectador reconocerá porque es la que no está haciendo.",
+        "environment": "El ambiente pasa a segundo plano completamente. En esta sección, el ambiente es contexto, no protagonista. Solo importan las acciones.",
+        "text_overlay": "Secuencia de textos directos, un dato por plano:\n[15s] 'Vocabulario del niño:'\n[17s] '+8 meses de desarrollo'\n[19s] 'Con 15 min al día'\n[21s] 'Solo por hacer preguntas'\n[23s] '—'\n[24s] 'No necesitas saber más sobre crianza.'\n[27s] 'Solo necesitas una pregunta.'\n[30s] 'Cualquier pregunta.'\n[32s] '¿Por qué crees que...?'\n[34s] '¿Qué harías tú si...?'\nEstilo: Poppins Regular para datos, Sour Gummy Bold para frases emocionales. Los textos en [32s] y [34s] están en formato de 'ejemplos concretos' — Poppins Italic #F59E0B.",
+        "audio_direction": "Voiceover femenino chileno retoma a los 15s. Tono de amiga experta: 'No necesitas leer más libros de crianza para esto. Solo necesitas pausar. Y preguntar. Una pregunta abierta — las que no se responden con sí o no. Eso es todo.' La música entra a los 20s como background suave. A los 28s sube levemente anticipando el CTA.",
+        "transition_to_next": "El plano medio final de madre e hijo se detiene en un frame congelado por 0.5s — efecto de freeze frame sutil antes de cortar al CTA. Este es el único efecto de postproducción en todo el video."
+      },
+      {
+        "time_range": "35-40s",
+        "scene_type": "cta",
+        "shot_type": "El mismo close-up de la cara de la madre del hook — como bookend visual. Pero ahora ella está sonriendo al niño fuera de cuadro. La simetría con el inicio cierra el loop.",
+        "camera_movement": "Estático. Idéntico al plano del hook pero la expresión cambió.",
+        "subject_action": "La madre sonríe genuinamente al escuchar la respuesta de su hijo. Es la expresión de satisfacción de quien acaba de ver el resultado de algo que hizo bien. No es actuación — es la cara real de un padre cuando su hijo dice algo inteligente.",
+        "text_overlay": "Secuencia de tres textos que aparecen y se apilan:\n[35.5s] 'Pruébalo esta noche.' — Sour Gummy Bold blanco grande\n[37s] 'Comenta con ✋ si ya lees así.' — Poppins Regular #F59E0B\n[38.5s] 'Guarda para no olvidar.' — Poppins Regular blanco\n[39.5s] Logo La Cuentería discreto — esquina inferior derecha",
+        "audio_direction": "La música alcanza su punto más alto (pero nunca es volumétrica). El voiceover dice: 'Esta noche, una pregunta. Solo una.' Pausa de 0.8s. 'Y cuéntanos qué respondió.' La música hace fade out con un cierre armónico limpio."
+      }
+    ],
+    "b_roll_suggestions": [
+      "El plano de 'solo la boca de la madre haciendo una pregunta' es el más arriesgado y el más poderoso — si funciona, para el scroll completamente",
+      "Plano POV del libro: la cámara está donde está el libro, mirando hacia arriba a las dos caras inclinadas — perspectiva poco usual que crea interés visual inmediato",
+      "Plano muy cerrado de los dedos del niño señalando el libro — se ve la uña con su textura real, la piel con sus pliegues, el movimiento del dedo indicando algo específico",
+      "Freeze frame del instante exacto en que los ojos del niño 'encienden' — ese micro-momento capturado en video y congelado es la imagen más poderosa del formato"
+    ],
+    "anti_ai_directives": [
+      "La pantalla negra con texto no debe durar más de 3 segundos por plano — si dura más, el espectador asume que terminó el video y hace scroll.",
+      "El plano de 'solo la boca de la madre' debe ser anatómicamente convincente: labios con textura real, no modelo de labios perfectos, con el micro-movimiento de quien está a punto de hablar.",
+      "El freeze frame al final del plano de valor dura exactamente 0.5s — ni más (parece error de edición) ni menos (no se percibe el efecto).",
+      "Los cortes de 2-3 segundos deben ser limpios — no jump cuts, no transiciones con efecto. El ritmo viene de la edición, no de efectos.",
+      "El silencio de los primeros 0.3s del hook debe ser silencio real — ningún fade in de música, ningún tono de ambiente. El silencio absoluto en video mobile es antinatural y genera atención inmediata.",
+      "EVITAR: el efecto 'zoom dramático' en cualquier momento, incluso si el generador lo propone como default.",
+      "EVITAR: música con letra o con cualquier elemento vocal que compita con el voiceover."
+    ],
+    "audio": {
+      "music_style": "Minimalismo con pulso — diferente a las variantes A y B. Aquí la música tiene un pulso suave (no beat de tambor — algo más como un pizzicato de cuerdas o un patrón rítmico de piano). El pulso transmite urgencia sin agresividad. Referencia: Nils Frahm 'Says' — tiene pulso pero no beat. Tempo 80-90 BPM.",
+      "voiceover": true,
+      "voiceover_tone": "Mujer chilena, 30-35 años. El tono más directo de los tres variantes. Como una amiga que te dice algo importante en 30 segundos porque sabe que tienes poco tiempo. Ningún rodeo. Frases cortas. Puntos finales, no puntos suspensivos. Velocidad media-rápida. Sin música bajo hasta los 20s — el voiceover puro tiene más autoridad.",
+      "sound_effects": [
+        "Silencio absoluto en los primeros 0.3s — antinatural, crea tensión",
+        "Audio diegético de la voz del niño respondiendo — sin procesar, sin efectos",
+        "El freeze frame tiene un micro-efecto sonoro casi imperceptible: una nota de piano grave que se sostiene 0.5s antes del corte al CTA"
+      ]
+    },
+    "reference_styles": [
+      "Los mejores reels educativos de Ali Abdaal — estructura directa, sin rodeos, datos claros, CTA concreto",
+      "Gary Vee early content — directividad y urgencia pero sin agresividad",
+      "Vox Explain videos — estructura de revelación directa, dato → mecanismo → aplicación en tiempo mínimo",
+      "Fotografía documental de Sebastião Salgado — cada plano tiene peso propio, ninguno es de relleno"
+    ]
+  },
+  "prompt_string": "Direct editorial cinematic 9:16 video, Chilean Latin American mother 33yo looking directly at camera for 1 second then to her child, close-up tight composition, static tripod shots, 2-3 second cuts, child 4yo responding question with elaborate vocabulary gesturing, close-up sequences alternating mother question and child response, Kodak Portra 400 grade warm natural skin tones, black screen text panels between scenes, home living room authentic Chilean setting, no music first 3 seconds only diegetic voices, direct documentary no acting no staged poses",
+  "negative_prompt": "zoom effects, wipe transitions, talking head with lower third name graphic, teleprompter stiffness, overly smooth camera movement, TikTok trending sound, stock music with lyrics, perfect symmetry shots, studio lighting, multiple effects layered, slow motion overuse, jump cuts faster than 1.5 seconds, generic Instagram filter grade"
+}

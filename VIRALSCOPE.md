@@ -296,17 +296,15 @@ Cada eje se puntúa del 1 al 10. El peso de cada eje varía según el objetivo d
 
 *Inspirado en: Brainsuite (6 drivers neurocientíficos), Limbik (Resonance + Spread)*
 
-### 9.2 Modelo OCEAN/Big Five para Personas Simuladas
-Las buyer personas en `audiences.yaml` incluyen rasgos Big Five:
-- **O**penness (apertura a nuevas experiencias)
-- **C**onscientiousness (responsabilidad)
-- **E**xtraversion (extroversión)
-- **A**greeableness (amabilidad)
-- **N**euroticism (neuroticismo)
+### 9.2 Modelo MBTI para Personas Simuladas
+Las buyer personas en `audiences.yaml` incluyen tipo MBTI (16 tipos de personalidad), compatible con MiroFish:
+- 4 dicotomías: Introversión/Extroversión, Sensing/iNtuición, Thinking/Feeling, Judging/Perceiving
+- Resultado: tipo de 4 letras (ej: "ENFJ", "INTJ")
+- Cada tipo implica patrones de comportamiento, estilo de comunicación y triggers de acción
 
-Esto hace la simulación más realista y predecible (74-90% de correlación reportada por Deepsona).
+Los perfiles de MiroFish usan MBTI como parte del campo `persona` (~2000 palabras narrativas por agente).
 
-*Inspirado en: Deepsona (framework agent-based con Big Five)*
+*Compatible con: MiroFish (MBTI nativo). Alternativa: Deepsona usa Big Five/OCEAN con 74-90% de correlación.*
 
 ### 9.3 Resonance vs Spread como Métricas Separadas
 Dos métricas independientes por variante:

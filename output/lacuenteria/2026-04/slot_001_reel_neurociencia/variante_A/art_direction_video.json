@@ -1,0 +1,101 @@
+{
+  "type": "video",
+  "generator": "higgsfield_cinema",
+  "variant": "A",
+  "slot_theme": "lectura_dialogica",
+  "slot_angle": "No es leer más, es leer diferente — ángulo emocional/storytelling",
+  "settings": {
+    "aspect_ratio": "9:16",
+    "duration_seconds": 40,
+    "fps": 30
+  },
+  "art_direction": {
+    "concept": "El reel comienza como si el espectador pasara por el pasillo y viera por la puerta entreabierta una escena de lectura. Lo que parece ordinario se revela como un acto extraordinario. El cambio de perspectiva ocurre cuando la cámara se acerca lentamente y el espectador nota: no están leyendo en silencio, están conversando sobre el libro. Eso es la lectura dialógica. La revelación emocional llega a los 15 segundos.",
+    "visual_style": "Documental íntimo de crianza. Estilo de corto cinematográfico, no de reel publicitario. La cámara observa, no dirige. Paleta cálida y desaturada ligeramente — como si los colores fueran reales pero en su versión más nostálgica. Grano de película digital sutil (ISO 800 simulado).",
+    "mood": "Nostalgia dulce que activa en Camila el deseo de replicar esa escena hoy mismo con su hijo. La emoción predominante es la ternura con un subtexto de 'yo quiero esto para mí'.",
+    "color_grading": {
+      "lut_reference": "Kodak Vision3 250D — tono fílmico cálido, sombras ligeramente azuladas, highlights dorados. Referencia: película 'Room' de Lenny Abrahamson (escenas cálidas de madre-hijo) o 'Beasts of the Southern Wild'.",
+      "temperature": "Warm — 4200K base, con halos dorados de lámpara en las altas luces",
+      "saturation": "Ligeramente desaturado (-15 en Lumetri) excepto los tonos naranjas-dorados que se preservan o realzan sutilmente. Hace que la escena se vea como un recuerdo en el momento en que sucede."
+    },
+    "scenes": [
+      {
+        "time_range": "0-3s",
+        "scene_type": "hook",
+        "shot_type": "Plano americano moviéndose a close-up. Comenzamos viendo a madre e hijo de espaldas leyendo en el sofá — no se ve el libro. Parece una escena de lectura cualquiera.",
+        "camera_movement": "Lento dolly in desde detrás-lateral derecha. La cámara no sabe todavía qué es lo que importa. Movimiento fluido como steadicam suave, no estabilizado digitalmente.",
+        "subject_action": "La madre sostiene el libro abierto. El niño está recostado contra ella. Silencio. Desde este ángulo parece lectura normal en silencio.",
+        "environment": "Sala de estar chilena, sofá de tela gris claro, almohada de colores suaves, ventana lateral con luz de tarde. Sin mostrar nada del libro todavía.",
+        "text_overlay": "Texto aparece a los 1.5s, fade in suave: '¿Sabes cuánto importa\nCÓMO le lees?' — Fuente Sour Gummy Bold, blanco, centrado, sobre el área de cielo/pared arriba de los personajes.",
+        "audio_direction": "Silencio ambiente de casa por 0.5s. Luego fade in muy suave de música instrumental — piano minimalista con textura de cuerdas. A los 1s se escucha levemente la voz de fondo de la madre leyendo, ininteligible pero presente. Crea intriga.",
+        "transition_to_next": "El dolly in continúa, la cámara pasa al lateral de la pareja y por primera vez vemos el libro y la cara del niño."
+      },
+      {
+        "time_range": "3-15s",
+        "scene_type": "context",
+        "shot_type": "Secuencia de 3 planos: (1) Close-up lateral de madre e hijo desde el lado — ahora vemos que ella no está leyendo, está mirando al niño con una pregunta en los labios. (2) Extreme close-up del libro abierto con la mano del niño señalando una ilustración. (3) Close-up del rostro del niño con su expresión pensativa genuina.",
+        "camera_movement": "Plano 1: Estático con muy leve respiración orgánica (handheld 5% de movimiento). Plano 2: Tilt down lento del libro a la mano. Plano 3: Rack focus sutil desde la mano al rostro.",
+        "subject_action": "La madre formula una pregunta al niño señalando una ilustración del libro: '¿Y tú qué harías si vieras un dragón?' El niño reflexiona con su expresión de búsqueda cognitiva — boca entreabierta, ojos arriba. Luego responde animadamente con gestos.",
+        "environment": "Mismo sofá. La luz de tarde crea un halo dorado. En el fondo fuera de foco se intuye una librería con otros libros — establece que son una familia lectora.",
+        "text_overlay": "A los 5s: 'Leer EN SILENCIO es leer.' — aparece. A los 8s el texto anterior hace fade out y aparece: 'Leer HACIENDO PREGUNTAS...' — se queda.",
+        "audio_direction": "La música sube muy levemente en presencia. El diálogo de la madre al niño es audible y natural — no es actuación, suena como grabación real de casa. La voz del niño respondiendo crea el gancho emocional. Voiceover en OFF aún no empieza.",
+        "transition_to_next": "Corte en el momento en que el niño termina su respuesta y la madre asiente sonriendo. Es un momento de conexión pura. La siguiente escena inicia con voiceover."
+      },
+      {
+        "time_range": "15-35s",
+        "scene_type": "value",
+        "shot_type": "Secuencia de 4 planos alternados: close-up de cara del niño / plano medio de los dos / close-up del libro / plano detalle de las manos (madre sosteniendo, niño señalando). Los planos duran 3-4 segundos cada uno — ritmo pausado, no acelerado.",
+        "camera_movement": "Plano a plano con cortes limpios. Ningún zoom digital. Un plano tiene leve pan seguimiento cuando el niño gesticula con el brazo. El último plano (manos) tiene un dolly out muy lento que revela la escena completa.",
+        "subject_action": "El diálogo de lectura dialógica continúa en loop natural. La madre señala ilustraciones, hace preguntas abiertas, escucha las respuestas del niño con atención total. El niño está completamente activado — señala, habla, se mueve ligeramente. Es un niño que piensa, no que escucha pasivo.",
+        "environment": "Misma sala. La luz va cambiando muy levemente hacia más dorada (como si pasaran 20 minutos). Detalle: en un momento se ve la mano del niño tocar el libro con familiaridad — como si fuera suyo.",
+        "text_overlay": "Secuencia de texto que aparece y desaparece cada 4-5 segundos:\n- [15s] 'La lectura dialógica:'\n- [18s] 'Leer haciendo preguntas al niño'\n- [22s] '↑ DUPLICA el desarrollo del lenguaje'\n- [26s] 'vs leer en silencio'\n- [29s] 'Lo confirma 30 años de investigación'\n- [32s] 'El cambio es de 10 segundos.'\nFuente Poppins para datos, Sour Gummy para frases emocionales. #F59E0B amber para los datos clave.",
+        "audio_direction": "A los 15s entra voiceover femenino natural, chileno (no locutora, sueña como la hermana mayor de Camila contándole algo importante): 'Hay un pequeño cambio en cómo leemos que tiene un impacto enorme en el cerebro de los niños. Se llama lectura dialógica. Y la diferencia está en una sola cosa: las preguntas.' La música baja a -12dB para dar protagonismo a la voz. A los 28s la música sube levemente.",
+        "transition_to_next": "El dolly out final del plano de manos se detiene en el plano completo de madre-hijo. La imagen se pausa un frame. Corte a última escena."
+      },
+      {
+        "time_range": "35-40s",
+        "scene_type": "cta",
+        "shot_type": "Close-up del rostro del niño mirando hacia la cámara — no directamente a lens, sino hacia la madre que le pregunta algo. Es como si mirara al espectador sin saberlo. Máximo impacto emocional en el momento de menor duración.",
+        "camera_movement": "Estático. Ningún movimiento. La quietud es intencional — después de toda la suavidad del reel, este plano fijo crea peso. El niño está sonriendo ligeramente en respuesta a algo que su madre le preguntó. No es sonrisa forzada: es la sonrisa de quien acaba de decir algo que le parece gracioso.",
+        "subject_action": "El niño mira al frente (donde está la madre). Tiene el libro en el regazo. Su expresión alterna entre pensativo y ligeramente sonriente. No se mueve mucho — solo la respiración y el micro-movimiento natural.",
+        "text_overlay": "Aparece a los 36s con un fade rápido (0.3s): '¿Le lees así a tu hijo/a?' en Sour Gummy Bold blanco — grande. A los 37.5s aparece debajo en Poppins regular más pequeño: 'Guarda esto y pruébalo hoy.' En el filo inferior, el logo de La Cuentería aparece muy discretamente.",
+        "audio_direction": "El voiceover dice suave: 'Esta noche, mientras lees, prueba una pregunta. Solo una.' Pausa de 1 segundo. La música sube con un acorde resolutivo cálido. Fade out suave en los últimos 0.5s."
+      }
+    ],
+    "b_roll_suggestions": [
+      "Plano detalle: páginas de libro pasando en cámara lenta — se ven las ilustraciones coloridas borrosas, solo se entiende que es un libro de cuentos",
+      "Plano detalle: la mano pequeña del niño señalando con el dedo índice una parte del libro",
+      "Plano muy cerrado: los labios del niño moviéndose mientras habla — sin audio claro, solo la textura del habla",
+      "Plano detalles: taza de té humeante en la mesa lateral — establece la hora y el ambiente sin decir nada",
+      "Plano angular: desde el suelo mirando hacia arriba, se ve el libro de frente y las caras de ambos en el fondo — perspectiva del suelo, poco usual, impactante"
+    ],
+    "anti_ai_directives": [
+      "Los movimientos de cámara deben ser imperfectamente suaves — como steadicam de presupuesto medio, no como drone perfecto ni como trípode rígido.",
+      "El audio ambiente del hogar debe estar presente: un refrigerador zumbando levemente, un auto pasando afuera, el crujido del sofá.",
+      "La actuación del niño NO debe ser actuación — si el niño es real, que sea real. Si es generado, debe tener micro-movimientos aleatorios: parpadeos no sincronizados, ajustes de postura sutiles.",
+      "La madre NO mira a la cámara en ningún momento. Su atención es 100% su hijo.",
+      "La iluminación cambia ligeramente entre planos (como es normal al cambiar el ángulo en una habitación real). No iluminación perfectamente consistente.",
+      "EVITAR: transiciones con efectos (wipe, zoom out extremo, glitch). Solo cortes limpios o muy suave dissolve.",
+      "EVITAR: música con beat demasiado marcado o trending sounds de TikTok que fechen el video en un mes específico.",
+      "El texto overlay no tiene animaciones llamativas (ningún bounce, ningún efecto tipo maquinaria de texto). Solo fade in/out limpio."
+    ],
+    "audio": {
+      "music_style": "Piano minimalista con cuerdas de fondo — tipo Max Richter 'On the Nature of Daylight' o Nils Frahm 'Says'. Tempo lento (60-70 BPM). Debe sentirse como el score de un cortometraje de festival, no como una canción reconocible que quedará desactualizada.",
+      "voiceover": true,
+      "voiceover_tone": "Mujer chilena, 32-38 años. Voz cálida pero no locutora. Habla como contándole algo a una amiga cercana. Velocidad media-lenta. Ningún tono de vendedora. Cercana, inteligente, con una leve sonrisa implícita en las palabras. Sin énfasis exagerados. Sin pausas dramáticas artificiales.",
+      "sound_effects": [
+        "Páginas de libro siendo pasadas suavemente — muy bajo en el mix, casi subliminal",
+        "Sonido ambiente de sala de estar chilena — refrigerador distante, quizás lluvia suave al fondo (establece Chile)",
+        "Crujido sutil del sofá cuando el niño se mueve"
+      ]
+    },
+    "reference_styles": [
+      "Film 'Room' (2015) de Lenny Abrahamson — paleta cálida, intimidad madre-hijo, planos cerrados que crean un mundo propio",
+      "Cortos de UNICEF sobre primera infancia — documental íntimo, sin artificialidad",
+      "Publicidad de Patagonia para familia — autenticidad, luz natural, anti-stock",
+      "Editorial de video The New Yorker 'How to Read to Kids' — ritmo pausado, información valiosa, planos cuidados"
+    ]
+  },
+  "prompt_string": "Cinematic 9:16 vertical video, intimate documentary style, Chilean Latin American mother 35yo reading with her 4yo son on a sofa, warm afternoon light from side window, she asks him a question pointing to illustrated book page, boy has genuine thinking expression mouth slightly open eyes upward, soft handheld camera movement, warm film grade Kodak Vision3, slight grain, close-up sequence alternating child face and book details, no tripod-perfect stability, natural home ambient sounds, soft piano score, Kinfolk aesthetic, real skin texture no plastic, authentic Latin family not stock photo, 30fps",
+  "negative_prompt": "stock footage, perfect stabilization, studio lighting, white background, forced acting, teeth-showing fake smile, generic transition effects, TikTok trending sound, bright oversaturated colors, cartoon or animation overlay, talking head static shot, teleprompter stiffness, Instagram filter look, echo chamber audio, 6 fingers"
+}

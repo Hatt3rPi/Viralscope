@@ -1,0 +1,91 @@
+{
+  "type": "image",
+  "generator": "nanobanana_2",
+  "variant": "B",
+  "slot_theme": "lectura_dialogica",
+  "slot_angle": "La ciencia detrás de algo cotidiano — ángulo educativo/datos",
+  "settings": {
+    "aspect_ratio": "9:16",
+    "count": 8,
+    "quality": "2k_unlimited"
+  },
+  "art_direction": {
+    "concept": "Una imagen que visualmente sugiere 'el cerebro del niño activándose' sin caer en ilustraciones médicas o iconografía de cerebro genérica. El concepto se transmite a través de la escena: la misma situación de lectura, pero con una diferencia visual clave — hay una especie de 'energía' o 'activación' que se siente en la postura y la expresión del niño, como si literalmente se pudiera ver que está procesando, conectando, respondiendo. El contraste con 'leer en silencio' está implícito en la dinámica de la escena.",
+    "style": "Fotografía editorial científica de divulgación. Como las imágenes interiores de National Geographic cuando cubre neurociencia infantil o como los spreads visuales de New Scientist. Real pero con intención conceptual. Hay un elemento visual que 'representa' el dato científico sin graficarlo explícitamente.",
+    "mood": "Sorpresa intelectual. La sensación de 'no sabía esto y me cambia algo'. Curiosidad activada. Como cuando lees un dato y dices 'wow, ¿en serio?'. El tono es más frío que la variante A pero con calidez humana como âncora.",
+    "color_palette": {
+      "dominant": "#1F2937 — fondo oscuro o zona oscura que da contraste y seriedad científica. Puede ser una pared de biblioteca o un ambiente más tenue.",
+      "accents": [
+        "#7C3AED — presencia más fuerte que en variante A. Puede aparecer como un objeto del ambiente (libro con lomo púrpura, alfombra, cojín) o como un halo de luz sobre el niño",
+        "#F59E0B — amber para detallar el punto focal: las páginas del libro abiertas, la zona de las manos y el libro brillan ligeramente más que el resto",
+        "#F7F0FF — lavanda muy suave como el único punto claro en una imagen más oscura que la variante A"
+      ],
+      "temperature": "Neutra-fría con toques cálidos estratégicos. Balance de blancos 5000K-5500K. No es la calidez de la variante A — es más luminosa en los puntos de datos y más oscura en los bordes. Contraste mayor."
+    },
+    "composition": {
+      "framing": "Vertical 9:16. Composición en dos zonas visuales: zona inferior oscura con madre-hijo leyendo (plano tierra, realidad) y zona superior con espacio para texto y un elemento visual conceptual (un patrón de luz, un halo, algo que connote 'activación'). La línea divisoria no es literal — es gradiente.",
+      "rule": "Composición diagonal: el libro en la esquina inferior izquierda, la cara del niño en el centro, y el espacio de texto en el tercio superior. El ojo viaja desde el libro → la cara activada → el dato escrito arriba.",
+      "focal_point": "El rostro del niño en el momento de responder — la boca abierta en respuesta activa, no en silencio pasivo. Este es el contraste visual con 'leer en silencio': aquí el niño está HABLANDO.",
+      "negative_space": "Zona superior derecha más oscura con gradiente hacia el texto. El espacio vacío es intencional y da peso al dato científico cuando aparece el texto."
+    },
+    "lighting": {
+      "type": "Iluminación en dos zonas: luz de lectura concentrada en el libro y los rostros (como una linterna o una lámpara de arquitecto enfocada), y oscuridad ambiente. Es la iluminación de quien lee de noche con una sola luz encendida. Más cinematográfica y menos de revista de decoración que la variante A.",
+      "direction": "Contraluz suave desde detrás del libro: las páginas parecen brillar ligeramente desde dentro, como si el contenido del libro irradiara. Relleno muy sutil desde arriba para las caras.",
+      "quality": "Alto contraste pero sin perder detalle en las sombras. Las zonas de sombra tienen información — se ven los cuerpos y el ambiente, pero en versión oscura y texturada. Ratio de contraste 4:1 aproximadamente."
+    },
+    "subjects": [
+      {
+        "description": "Niño latinoamericano, 4-6 años. En esta variante el niño tiene más energía y activación que en la A — está en pleno proceso de respuesta. El enfoque científico requiere mostrar 'al cerebro en acción', lo que visualmente significa: boca abierta hablando, gestos de mano, postura inclinada hacia adelante.",
+        "expression": "Boca abierta respondiendo activamente — no solo pensando como en variante A, aquí ya está HABLANDO. Los ojos brillan de genuino entusiasmo por lo que está diciendo. Cejas ligeramente levantadas de emoción. Es la expresión de 'eso te cuento yo'. Real, no forzado.",
+        "clothing": "Ropa de noche o tarde: pijama o ropa casual de interior. En esta variante se acepta un tono más oscuro — quizás un suéter azul marino o gris oscuro que armoniza con la paleta más oscura.",
+        "action": "Una mano señala el libro mientras la otra gesticula explicando algo. El cuerpo está inclinado hacia adelante, hacia la madre. La energía cinética del niño es el 'dato visual' de que el cerebro está activo."
+      },
+      {
+        "description": "Madre latinoamericana, 33-40 años. En segundo plano ligeramente más oscuro que el niño — visualmente ella es el catalizador, él es el resultado. Esto refuerza el mensaje científico: la pregunta de ella activa él a él.",
+        "expression": "Escuchando con intensidad y leve sonrisa de satisfacción. Como quien ve un experimento que está funcionando exactamente como esperaba. Hay algo de 'mira eso' en su cara. No es orgullo performativo — es asombro íntimo.",
+        "clothing": "Ropa oscura que la hace receder visualmente pero no desaparecer: jersey oscuro, pelo recogido. Ella es marco, él es figura.",
+        "action": "Sostiene el libro en posición ligeramente abierta hacia el niño. La mano libre está en su barbilla en postura de escucha activa."
+      }
+    ],
+    "environment": {
+      "setting": "Rincón de biblioteca o estudio en casa. Más libros en el fondo que en la variante A. Estantes con libros fuera de foco crean una sensación de 'contexto académico' sin ser una biblioteca formal. Es el estudio o la sala de una profesional que también tiene hijos.",
+      "props": [
+        "Estantes con libros en el fondo (fuera de foco pero reconocibles como libros adultos, no solo infantiles)",
+        "Una taza de infusión en la mesita — establece que ella también estaba estudiando o leyendo antes de este momento",
+        "El libro infantil abierto, con las páginas brillando ligeramente bajo la luz concentrada",
+        "Una pequeña lámpara de arquitecto o lámpara de mesa con luz dirección",
+        "Opcionalmente: un post-it o cuaderno en el borde del encuadre — ella es una mamá profesional"
+      ],
+      "textures": [
+        "Lomos de libros en el fondo — colores variados, texturas de tela y papel visibles aunque desenfocados",
+        "Superficie de madera oscura de la mesa o estante",
+        "Tela del sofá o silla, textura de lino o terciopelo suave",
+        "Las páginas iluminadas del libro — blanco cálido con micro-textura de papel"
+      ],
+      "depth": "Mayor profundidad de campo que la variante A. Los libros del fondo son reconocibles aunque desenfocados. Tres planos: estantes oscuros al fondo, madre en segundo plano más oscuro, niño en primer plano más iluminado."
+    },
+    "anti_ai_directives": [
+      "La mano del niño gesticulando debe tener exactamente 5 dedos en posición natural de habla — dedos en movimiento, no perfectamente extendidos.",
+      "El brillo de las páginas del libro es reflejo de una fuente de luz específica (la lámpara), no un brillo mágico sobrenatural.",
+      "Los libros del fondo son libros reales con títulos borrosos pero espinas plausibles — no texturas genéricas de 'libros IA'.",
+      "La diferencia de iluminación entre madre (más oscura) y niño (más iluminado) es intencional y anatómicamente correcta según la posición de la lámpara.",
+      "El niño habla — su boca está abierta de forma anatómicamente correcta para producir habla, no bostezo ni grito.",
+      "EVITAR: iconografía de cerebro, ondas de radio, efectos de partículas o cualquier elemento gráfico que trate de 'visualizar' la neurociencia literalmente.",
+      "EVITAR: la escena se vea como una foto de experimento científico — debe seguir siendo un momento de hogar auténtico."
+    ],
+    "text_overlay": {
+      "required": true,
+      "position": "Dos zonas: (1) Hook en el tercio superior, centrado. (2) Dato científico en el tercio inferior sobre área oscura, como etiqueta de laboratorio.",
+      "text": "ZONA SUPERIOR: '¿Por qué su cerebro trabaja\n3x más cuando le PREGUNTAS?'\n\nZONA INFERIOR (pequeño, al estilo caption científico): 'Lectura dialógica — Universidad de Oxford, 1988-2024'",
+      "notes": "Zona superior: Sour Gummy Bold, blanco, 38px. La palabra 'PREGUNTAS' en #F59E0B amber y más grande (46px). Zona inferior: Poppins Regular, blanco 70% opacidad, 18px — da credibilidad científica sin ser el foco. El estilo de la zona inferior imita los captions de papers visualizados en divulgación científica."
+    },
+    "reference_styles": [
+      "National Geographic — spreads interiores sobre neurociencia o primera infancia. Iluminación concentrada, fondo oscuro, sujeto iluminado.",
+      "New Scientist magazine covers — fotografía conceptual que representa ciencia a través de situaciones cotidianas",
+      "TED Talk visuals — la combinación de dato + imagen humana real + paleta oscura con acento de color",
+      "Fotografía de Rineke Dijkstra — presencia del sujeto, fondo limpio que no distrae, honestidad en el retrato"
+    ]
+  },
+  "prompt_string": "Editorial scientific photography, dark moody interior library setting, Chilean Latin American mother and 4yo son reading together, child is actively speaking mouth open gesticulating with hand pointing at book, warm focused desk lamp light illuminating child's face and open book pages, mother in slightly darker second plane listening intently, bookshelves out-of-focus background, low-key chiaroscuro lighting, warm-cold contrast, natural skin texture, authentic gestures not posed, 9:16 vertical, medium-format film aesthetic, National Geographic editorial style, no artificial brain imagery, real home environment not laboratory",
+  "negative_prompt": "brain illustrations, neural network graphics, glowing effects, particle effects, perfect studio lighting, white background, stock photo poses, clipart science icons, oversaturated neon colors, plastic skin, symmetrical composition, forced smile, generic bokeh, AI art aesthetic, cartoon overlay, laboratory setting, medical imagery"
+}

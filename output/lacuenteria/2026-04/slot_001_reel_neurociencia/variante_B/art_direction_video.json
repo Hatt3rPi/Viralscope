@@ -1,0 +1,100 @@
+{
+  "type": "video",
+  "generator": "higgsfield_cinema",
+  "variant": "B",
+  "slot_theme": "lectura_dialogica",
+  "slot_angle": "La ciencia detrás de algo cotidiano — ángulo educativo/datos",
+  "settings": {
+    "aspect_ratio": "9:16",
+    "duration_seconds": 40,
+    "fps": 30
+  },
+  "art_direction": {
+    "concept": "El reel empieza con un dato que parece imposible. La estructura es la de un experimento que el espectador puede replicar en casa esta noche. El 'experimento' es simplemente cambiar cómo lees: de silencio a preguntas. El video muestra el contraste entre los dos modos de lectura — primero la lectura pasiva (niño escuchando en silencio, cara de trance) y luego la lectura dialógica (niño activado, respondiendo, gesticulando). El impacto visual del contraste es el argumento más poderoso del video.",
+    "visual_style": "Híbrido entre documental científico de divulgación y reel editorial de crianza. La primera mitad tiene un tono más sobrio y conceptual. La segunda mitad se calienta emocionalmente. Como un episodio de 'Abstract: The Art of Design' de Netflix pero en 40 segundos y sobre crianza.",
+    "mood": "Asombro intelectual que se convierte en motivación práctica. El espectador termina el video sintiendo que tiene un superpoder nuevo y sencillo. 'Puedo hacer esto. Esta noche.'",
+    "color_grading": {
+      "lut_reference": "Fuji Eterna Cinema 400 — contraste medio-alto, sombras densas pero con detalle, altas luces contenidas. La primera parte del video (lectura pasiva) tiene una versión más desaturada y fría del grado. La segunda parte (lectura dialógica) cambia sutilmente a más cálida — como si el propio color celebrara la activación.",
+      "temperature": "Primera parte 5500K (neutro-frío, científico). Segunda parte 4000K (cálido, emocional). La transición de temperatura es gradual entre los 15-20 segundos — nadie lo nota conscientemente pero lo siente.",
+      "saturation": "Primera parte: -20 saturación (casi monocromático excepto los tonos piel). Segunda parte: saturación normal -5. El color cobra vida cuando el niño se activa."
+    },
+    "scenes": [
+      {
+        "time_range": "0-3s",
+        "scene_type": "hook",
+        "shot_type": "Plano muy cerrado del libro abierto. No se ven caras todavía. Solo el libro sostenido por manos adultas. La voz de la madre leyendo en silencio (palabras claras, tono monótono de lectura). El niño no habla. Luego, una pregunta: '¿Y tú qué harías?' — y el niño explota con respuesta. Corte rápido al texto del hook.",
+        "camera_movement": "Macro zoom muy lento hacia las páginas del libro durante 0-2s. A los 2s corte seco a plano medio del niño respondiendo.",
+        "subject_action": "Manos adultas sosteniendo libro. Luego niño respondiendo con energía — transición abrupta de pasividad a activación. La diferencia física es el argumento.",
+        "environment": "Interior de casa, iluminación neutra pero con carácter. Misma habitación en ambas mitades — la diferencia es el color grading y la energía de los sujetos, no el ambiente.",
+        "text_overlay": "A los 1s aparece en grande: 'Una sola pregunta' — Sour Gummy Bold blanco. A los 2.5s: 'activa esto 👇' — aparece debajo, más pequeño en Poppins. (El emoji se usa aquí con intención estratégica — es el único emoji de todo el video, actúa como señal de scroll hacia abajo.)",
+        "audio_direction": "Audio diegético de la madre leyendo en silencio durante 0-1.5s — voz monótona tranquila, palabras reconocibles de cuento infantil. A 1.5s ella hace la pregunta. A 2s el niño explota respondiendo. Corte súbito a silencio por 0.3s. Luego entra la música.",
+        "transition_to_next": "Cut seco — el corte abrupto entre silencio y la respuesta del niño es intencional. El silencio de 0.3s entre los dos hace que el espectador aguante la respiración."
+      },
+      {
+        "time_range": "3-15s",
+        "scene_type": "context",
+        "shot_type": "Split visual mental (no efecto gráfico — solo cortes alternados): 3 segundos de lectura pasiva (niño escucha, cara neutra, poco movimiento) / 3 segundos de lectura dialógica (niño habla, gesticula, ojos brillantes). Los planos son del mismo niño, misma luz, misma ropa. Solo cambia lo que está haciendo.",
+        "camera_movement": "Planos estáticos en ambos casos. La inmovilidad de la cámara hace que el contraste entre los sujetos sea más evidente. A los 10s, en el plano de lectura dialógica, la cámara hace un muy lento push in hacia la cara del niño hablando.",
+        "subject_action": "MODO PASIVO: niño recostado, ojos semi-fijos en el libro, boca cerrada, manos quietas. MODO DIALÓGICO: mismo niño inclinado, boca abierta hablando, mano señalando, ojos conectados con la madre. El contraste físico es dramático.",
+        "environment": "Misma sala. El grado de color cambia entre los dos modos: frío-desaturado para lectura pasiva, cálido para lectura dialógica.",
+        "text_overlay": "En modo pasivo: 'Leyendo en silencio.' — Poppins Regular, blanco, neutral. En modo dialógico: 'Lectura dialógica.' — Sour Gummy Bold, #F59E0B amber, más grande. El contraste tipográfico refuerza el contraste visual.",
+        "audio_direction": "Para modo pasivo: música fría minimalista (sola cuerda de piano suave). Para modo dialógico: la misma música pero con capa de cuerdas que la enriquece. Las voces diegéticas están presentes pero en plano bajo — no se escuchan palabras claras.",
+        "transition_to_next": "El último plano de lectura dialógica se extiende medio segundo más de lo que se esperaría — el niño sigue hablando animadamente y la cámara lo deja. Luego corte a voiceover."
+      },
+      {
+        "time_range": "15-35s",
+        "scene_type": "value",
+        "shot_type": "Plano medio estable de la madre haciendo una pregunta al niño — se ve su cara por primera vez en primer plano. La madre es el científico de la escena. Su pregunta al niño es el 'protocolo'. Luego secuencia de planos cercanos: cara del niño pensando, luego respondiendo, la madre tomando nota mental (o en un papel).",
+        "camera_movement": "Cámara en trípode para los planos de datos — da autoridad científica. Para los planos emocionales de cierre (28s-35s) vuelve el handheld suave. El cambio es intencional: datos con tripode, emoción con handheld.",
+        "subject_action": "La madre formula preguntas abiertas sobre el libro: '¿Por qué crees que el personaje hizo eso?' El niño responde con vocabulario más rico del que usa normalmente. En un momento dice una palabra 'difícil' correctamente en contexto — ese momento es el 'experimento funcionando'.",
+        "environment": "Primer plano de madre: la cámara finalmente está cerca de ella y se ve su atención total. Fondo con estantes de libros, cálido. El ambiente se volvió más cálido en esta parte (grading shift).",
+        "text_overlay": "Secuencia de datos con tipografía limpia:\n- [15s] 'En 1988, la Universidad de Oxford'\n- [17s] 'estudió 2 grupos de familias.'\n- [19s] 'Grupo A: leer en silencio.'\n- [21s] 'Grupo B: leer haciendo preguntas.'\n- [23s] '—'\n- [24s] 'A los 9 meses: vocabulario del grupo B'\n- [26s] '8 meses más adelantado.'\n- [28s] '8 meses de diferencia.'\n- [30s] 'Con 15 minutos al día.'\n- [32s] 'Con una sola pregunta.'\nEstilo visual: números en Sour Gummy Bold #F59E0B, texto explicativo en Poppins Regular blanco. Cada dato aparece limpiamente, el anterior desaparece.",
+        "audio_direction": "Voiceover masculino chileno (contraste con variante A que era femenino). Voz de divulgador científico accesible — tipo el tono de un podcast de ciencia popular. Dice: 'En los años 80, investigadores de Oxford compararon dos grupos de padres. Unos leían en silencio. Otros leían haciendo preguntas. A los 9 meses, el segundo grupo tenía hijos con vocabulario 8 meses más adelantado. No con libros más caros. No con más tiempo. Solo con preguntas.' Música de fondo sube gradualmente.",
+        "transition_to_next": "El voiceover termina. Un beat de silencio de 0.5s. Luego corte a CTA."
+      },
+      {
+        "time_range": "35-40s",
+        "scene_type": "cta",
+        "shot_type": "Plano de detalle: las manos del niño sosteniendo el libro — ya no son las manos de la madre, son las suyas propias. Un símbolo visual de autonomía lectora. La madre señala algo en la página desde afuera del cuadro — solo se ve su mano entrando al encuadre.",
+        "camera_movement": "Dolly out muy lento que revela el contexto: era un libro, es una escena de aprendizaje, es un hogar. El dolly termina en plano medio que muestra madre e hijo juntos.",
+        "subject_action": "El niño sostiene el libro como suyo. Su postura es de dueño del libro, no de receptor pasivo. La madre entra al cuadro señalando una página y él responde señalando también.",
+        "text_overlay": "Aparece en secuencia rápida:\n[35s] 'Esta noche, una pregunta.' — Sour Gummy Bold blanco grande\n[37s] '¿Cuál es el mejor cuento para empezar?' — Poppins Regular más pequeño\n[38.5s] '→ Responde en comentarios' — #F59E0B amber\n[39s] Logo La Cuentería discreto en esquina inferior",
+        "audio_direction": "El voiceover retoma con tono íntimo: 'Intenta esto esta noche. Solo una pregunta. Después cuéntanos cómo te fue.' La música sube a volumen normal y hace un fade out limpio en los últimos 0.8s."
+      }
+    ],
+    "b_roll_suggestions": [
+      "Plano de detalle: los dedos del niño contando con las manos mientras responde — señal visual de procesamiento cognitivo",
+      "Plano muy cerrado de los ojos del niño durante la lectura pasiva (ojos perdidos) vs lectura dialógica (ojos conectados con la madre) — el contraste es brutalmente claro",
+      "Plano de corte: taza de café de la madre en la mesa, ella no la toca durante toda la escena — está 100% enfocada en el niño",
+      "Plano de detalle: las páginas del libro con las ilustraciones — se ven ligeramente borrosas pero coloridas, el niño señala algo específico",
+      "Plano de perspectiva del libro mirando hacia arriba: se ve el libro desde abajo y al fondo las dos caras inclinadas hacia él"
+    ],
+    "anti_ai_directives": [
+      "El contraste entre modo pasivo y modo dialógico debe ser una diferencia de COMPORTAMIENTO del sujeto, no de iluminación artificial o efectos visuales.",
+      "Los datos en texto deben aparecer de forma limpia y legible — sin animaciones de 'datos volando' ni efectos de scanlines ni tipografía de hacker.",
+      "La voz en off no tiene música de fondo que la tape. Es legible al 100% sin auriculares.",
+      "Las manos del niño cuando señala el libro tienen dedos anatómicamente correctos y en posición natural de señalar.",
+      "El dolly out final revela un hogar real — hay imperfecciones: una mochila en el suelo, libros apilados irregularmente, una ventana con cortina ligeramente torcida.",
+      "EVITAR: iconos, gráficos animados de cerebro o neuronas, cualquier overlay que 'explique' la neurociencia visualmente con ilustraciones.",
+      "EVITAR: el cambio de color grading entre modo pasivo y dialógico sea tan evidente que parezca un efecto de color — debe ser sutil, el espectador lo siente más que lo ve."
+    ],
+    "audio": {
+      "music_style": "Ambient minimalista de cuerdas con progresión — comienza frío (cuarteto de cuerdas suave, modo menor) y evoluciona hacia más cálido (se añade piano en modo mayor a los 20s). Referencia: Ólafur Arnalds o Johann Johannsson. El arco emocional de la música espeja el del video.",
+      "voiceover": true,
+      "voiceover_tone": "Hombre chileno, 35-42 años. Voz de divulgador científico accesible — como el conductor de un podcast de ciencia popular. No es locutor de radio. Habla con certeza pero sin pedantería. Velocidad normal-rápida para la sección de datos (transmite urgencia intelectual), luego más lento para la sección de CTA (aterriza emocionalmente).",
+      "sound_effects": [
+        "Silencio deliberado de 0.3s entre el hook y la música — el silencio actúa como transición",
+        "Páginas del libro siendo pasadas — muy sutil en la sección de datos",
+        "Ambiente de casa chilena — refrigerador distante, quizás lluvia suave"
+      ]
+    },
+    "reference_styles": [
+      "Abstract: The Art of Design (Netflix) — rigor visual, planos de detalle, datos presentados como arte",
+      "Kurzgesagt — estructura de divulgación científica (dato impactante → contexto → mecanismo → aplicación) adaptada a formato visual real",
+      "Pediatrics journal video abstracts — sobriedad científica con emocionalidad humana",
+      "Documentales de NatGeo sobre primera infancia — paleta oscura iluminada, autoridad visual, sin condescendencia"
+    ]
+  },
+  "prompt_string": "Cinematic 9:16 educational documentary video, Chilean Latin American family, contrast sequence between passive reading (child static listening, neutral desaturated grade) and dialogic reading (child actively responding gesticulating, warm grade), mother asking questions pointing at illustrated book, child 4yo genuine animated response with hand gestures, bookshelf background, mixed warm-cool lighting, Fuji Eterna film grade color shift mid-video from cold to warm, scientific documentary aesthetic not stock footage, handheld stability on emotional shots tripod on data shots, natural sounds ambient home Chile",
+  "negative_prompt": "brain animation overlays, neural network graphics, neon data visualization, stock footage, studio white background, static talking head, teleprompter delivery, oversaturated Instagram filter, jump cuts too fast, music drowning voice, 6 fingers, plastic skin, forced acting children"
+}

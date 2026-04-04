@@ -13,6 +13,7 @@ primary:
   gender: ""                # ej: "mujer" / "hombre" / "mixto"
   location: ""              # ej: "Santiago, Chile"
   occupation: ""            # ej: "profesional joven, trabaja en oficina"
+  mbti: ""                  # Tipo MBTI (ej: "ENFJ") — compatible con MiroFish
 
   # Comportamiento digital
   digital:
@@ -58,6 +59,7 @@ secondary:
     location: ""
     primary_platform: ""
     usage: ""               # "heavy" / "moderate" / "light"
+    mbti: ""                # Tipo MBTI
     key_difference: ""      # Qué la distingue de la persona principal
     triggers:
       - type: ""

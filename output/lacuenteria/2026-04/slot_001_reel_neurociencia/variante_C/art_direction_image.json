@@ -1,0 +1,82 @@
+{
+  "type": "image",
+  "generator": "nanobanana_2",
+  "variant": "C",
+  "slot_theme": "lectura_dialogica",
+  "slot_angle": "Directo al punto — close-up impactante, visualmente simple pero poderoso",
+  "settings": {
+    "aspect_ratio": "9:16",
+    "count": 8,
+    "quality": "2k_unlimited"
+  },
+  "art_direction": {
+    "concept": "Una sola imagen, un solo sujeto, una sola emoción. El close-up extremo de la cara de un niño exactamente en el momento de dar una respuesta. La boca levemente abierta, los ojos encendidos, una mano levantada como quien tiene la respuesta. No hay contexto explícito — pero el texto overlay lo entrega todo. La imagen es tan directa que para el scroll en el primer frame.",
+    "style": "Retrato editorial impactante. Richard Avedon conoce a Sebatião Salgado en formato Instagram. La composición es casi minimalista pero la imagen tiene una textura emocional densa. Es el tipo de imagen que Camila guarda y manda por WhatsApp a su pareja diciendo 'mira esta cara, parece X cuando le hago una pregunta'.",
+    "mood": "Impacto inmediato. La emoción es el reconocimiento: 'esa cara la conozco'. Camila ve a su propio hijo en esa imagen. El gancho es la identificación instantánea, no la belleza ni la aspiración.",
+    "color_palette": {
+      "dominant": "#F7F0FF — lavanda suave del fondo. El fondo es casi neutro-claro para que el sujeto tenga máximo protagonismo. No es blanco estudio — es la pared de una habitación con luz de día filtrada.",
+      "accents": [
+        "#7C3AED — aparece en un elemento pequeño pero estratégico: quizás el detalle del libro parcialmente visible en el borde inferior, o el cojín fuera de cuadro que arroja un reflejo muy sutil en el fondo",
+        "#F59E0B — amber en los ojos del niño — no como efecto artificial sino como el reflejo natural de una fuente de luz cálida lateral que crea ese brillo dorado orgánico en el iris",
+        "#D4A574 — tono piel latinoamericano natural, sin filtros, sin blanqueamiento"
+      ],
+      "temperature": "Cálida. 4000K. La única fuente de luz cálida es lateral — crea sombra en un lado de la cara del niño que da dimensión y evita la planura de una foto de estudio."
+    },
+    "composition": {
+      "framing": "Extreme close-up. La cara del niño ocupa 60-70% del encuadre. Los bordes cortan parte del pelo arriba y de la barbilla abajo — una composición intencionalmente 'demasiado cerca'. Esta proximidad es el impacto. El espectador siente que está a 20cm del niño.",
+      "rule": "No hay regla de tercios aquí. Los ojos del niño están en el centro perfecto del encuadre — la única vez en estos 6 JSONs donde la simetría se usa intencionalmente, porque la simetría de un retrato close-up crea una fuerza visual diferente. Los ojos del niño te miran directamente al pecho.",
+      "focal_point": "Los ojos. El foco es razor-sharp en los ojos — cada pestaña individual, el iris con su textura real, los catchlights de la fuente de luz específica. Todo lo demás — nariz, boca, pelo — tiene un microsutil desenfoque que empuja el foco hacia los ojos.",
+      "negative_space": "El tercio superior del encuadre, donde el pelo del niño y el fondo lavanda crean espacio para el texto principal. El tercio inferior, debajo de la barbilla, también tiene espacio limpio para texto de soporte."
+    },
+    "lighting": {
+      "type": "Un único punto de luz. Lateral izquierdo, alto. Como la luz de una ventana en una mañana nublada pero luminosa. Sombra natural en el lateral derecho de la cara — dimensión sin dramatismo extremo.",
+      "direction": "45 grados lateral izquierdo, 30 grados desde arriba. Clásico rembrandt lighting suavizado — hay triángulo de luz en la mejilla del lado oscuro pero muy suave.",
+      "quality": "Soft pero con presencia. El box de luz es grande — como si hubiera una ventana grande difundida con tela fina. Las sombras tienen bordes graduales. No hay sombras duras. El contorno del pelo tiene un halo muy sutil de luz de ambiente."
+    },
+    "subjects": [
+      {
+        "description": "Niño latinoamericano, 4-6 años. Solo él. Solo su cara. Pelo oscuro ligeramente desordenado. Piel trigueña real con la textura de una piel infantil: suave pero no de plástico — hay pequeñas imperfecciones como la marca casi invisible de cuando se rascó en algún momento, o una mínima costra de resfrío pasado.",
+        "expression": "El micro-instante entre escuchar la pregunta y empezar a responder. Es la expresión más específica de este brief: ojos que acaban de iluminarse (el momento exacto de 'tengo la respuesta'), boca que se está abriendo pero aún no habla, ceja derecha levemente más alta que la izquierda. Es una asimetría de 2-3mm que hace la expresión completamente real. Esta expresión dura aproximadamente 0.3 segundos en la vida real — lo que la hace tan difícil de capturar es lo que la hace tan poderosa aquí.",
+        "clothing": "Solo se ve el cuello y los hombros — ropa casual infantil, sin importar el color. No distraer del rostro.",
+        "action": "Completamente estático en el cuerpo. Solo la expresión facial está 'en movimiento'. Quizás una mano levantada ligeramente en el borde del encuadre — el gesto de 'yo sé, yo sé' que hacen los niños cuando quieren responder antes de que les pregunten."
+      }
+    ],
+    "environment": {
+      "setting": "Interior de casa. Casi no se ve — el fondo es fondo. Lo poco visible es pared de color lavanda suave (#F7F0FF) con una textura de estuco muy leve. En el borde inferior del encuadre, fuera de foco, el canto del libro — aporta contexto sin robarlo.",
+      "props": [
+        "El canto del libro en el borde inferior — fuera de foco, solo se reconoce por la forma y el color de la tapa. Establece el contexto sin explicarlo.",
+        "Opcionalmente: el borde de una mano adulta en el margen derecho del encuadre — fuera de cuadro casi completo, solo los dedos visibles. Establece que hay alguien más en la escena sin mostrarlo."
+      ],
+      "textures": [
+        "Piel del niño — textura real, poros visibles en nariz y mejillas",
+        "Pestañas — visibles individualmente en el foco razor-sharp de los ojos",
+        "Pelo — mechones individuales, algunos capturan la luz lateral y brillan levemente",
+        "La pared de fondo — textura de estuco muy suave, casi imperceptible pero presente"
+      ],
+      "depth": "Extremadamente poca profundidad de campo. El plano de foco tiene 2-3cm de profundidad. Los ojos en foco perfecto, la punta de la nariz levemente desenfocada, las orejas completamente fuera de foco. El libro en el borde inferior completamente bokeh. Este nivel de desenfoque se logra con apertura f/1.4-1.8 simulada."
+    },
+    "anti_ai_directives": [
+      "Los ojos deben ser anatómicamente correctos: pupila, iris con textura real (no iris plano de un solo color), esclerótica con las venas sutiles normales de un niño activo, catchlights que reflejan específicamente la ventana lateral (rectángulo, no punto perfecto).",
+      "La asimetría de la expresión es CRÍTICA: la ceja derecha 2-3mm más alta, la comisura izquierda levemente diferente a la derecha. Las caras simétricas se ven falsas.",
+      "El pelo tiene capas — algunos mechones sobre la frente, algunos detrás, la textura de pelo latinoamericano oscuro con su brillo específico.",
+      "La piel NO es perfectamente lisa. Un niño de 5 años tiene alguna marca de juego, una pequeña cicatriz en la frente, la textura natural de piel joven real.",
+      "Los catchlights en los ojos son el reflejo específico de UNA ventana lateral — no dos puntos simétricos, no un reflejo circular perfecto, sino la forma rectangular irregular de una ventana real.",
+      "La mano levantada en el borde del encuadre tiene exactamente 5 dedos en posición natural de 'yo quiero responder' — no todos extendidos rígidamente.",
+      "EVITAR: sonrisa dentada (la expresión específica que buscamos no muestra dientes), ojos de anime o excesivamente grandes, piel completamente lisa, pelo perfectamente peinado, fondo completamente uniforme sin textura."
+    ],
+    "text_overlay": {
+      "required": true,
+      "position": "Dos bloques. Bloque 1: tercio superior sobre el pelo/fondo, centrado. Bloque 2: borde inferior, centrado, sobre el área del libro fuera de foco.",
+      "text": "BLOQUE SUPERIOR (grande, impactante):\n'¿Por qué esta cara\ncambia todo?'\n\nBLOQUE INFERIOR (pequeño, dato):\n'La pregunta que hiciste\nactivó algo en su cerebro.'",
+      "notes": "Bloque superior: Sour Gummy Black (o ExtraBold) 46px, blanco puro. Sin sombra — la pared lavanda es suficientemente clara para dar contraste. Bloque inferior: Poppins Regular Italic, 20px, blanco 85% opacidad. El italic da sensación de reflexión, de pensamiento. Espaciado generoso entre las dos líneas del bloque superior."
+    },
+    "reference_styles": [
+      "Richard Avedon — retratos en blanco y negro. Aquí en color pero misma filosofía: el sujeto llena el encuadre, el fondo desaparece, la emoción es todo.",
+      "Steve McCurry 'Afghan Girl' — close-up que captura un micro-momento emocional genuino con foco perfecto en los ojos",
+      "Revista TIME Portrait covers — impacto visual inmediato, sujeto en primer plano, texto conciso",
+      "Fotografía de Oleg Oprisco — bokeh extremo con foco selectivo, aire de ensueño pero base real"
+    ]
+  },
+  "prompt_string": "Extreme close-up portrait, 4yo Chilean Latin American boy, face fills 65% of frame, slightly disheveled dark hair, genuine pre-response expression mouth beginning to open eyes just lighting up with answer, razor-sharp focus on eyes with real iris texture and natural window catchlight rectangle, slight asymmetry right eyebrow 3mm higher, natural trigueño Latin skin with real pores and texture, soft single lateral window light from left creating gentle Rembrandt shadow, lavender soft background (#F7F0FF) with subtle stucco texture, blurred book corner in lower frame edge, shallow depth of field f/1.4 equivalent, warm 4000K, 9:16 vertical, Richard Avedon portrait philosophy, absolutely no plastic skin no symmetric expression no studio lighting",
+  "negative_prompt": "symmetric perfect face, plastic smooth skin, glowing magical eyes, studio two-point lighting, smile showing teeth, generic portrait backdrop, stock photo child, posed stiffness, artificial catchlights perfect circles, neon colors, cartoon aesthetic, baby face unrealistically cute, multiple people, wide shot, full body"
+}
