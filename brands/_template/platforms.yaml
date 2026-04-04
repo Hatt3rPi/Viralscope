@@ -1,0 +1,156 @@
+# ============================================================
+# PLATFORMS.YAML — Configuración de plataformas
+# ============================================================
+# Define en qué plataformas publica la marca y las reglas
+# específicas de cada una. El usuario selecciona plataformas
+# por run, pero estos son los defaults y configuraciones.
+# ============================================================
+
+platforms:
+  instagram:
+    active: false           # ¿La marca publica aquí?
+    handle: ""
+    url: ""
+    formats:                # Formatos activos en esta plataforma
+      - type: "reel"
+        active: true
+        specs:
+          duration: "35-45s"        # Duración ideal
+          aspect_ratio: "9:16"
+          max_hashtags: 5
+        frequency: ""               # ej: "2/día"
+
+      - type: "carousel"
+        active: true
+        specs:
+          slides: 10
+          aspect_ratio: "1:1"       # o "4:5"
+          max_text_per_slide: 18    # palabras
+          max_hashtags: 10
+        frequency: ""
+
+      - type: "story"
+        active: true
+        specs:
+          duration: "15s"
+          aspect_ratio: "9:16"
+        frequency: ""               # ej: "3/día"
+
+      - type: "static_post"
+        active: true
+        specs:
+          aspect_ratio: "1:1"
+          max_hashtags: 10
+        frequency: ""
+
+    posting_schedule:
+      best_days: []                 # ej: ["martes", "jueves", "sábado"]
+      best_hours: []                # ej: ["08:00", "12:00", "20:00"]
+      source: ""                    # ej: "IG Insights marzo 2026"
+
+  tiktok:
+    active: false
+    handle: ""
+    url: ""
+    formats:
+      - type: "video"
+        active: true
+        specs:
+          duration: "15-60s"
+          aspect_ratio: "9:16"
+          max_hashtags: 5
+        frequency: ""
+    posting_schedule:
+      best_days: []
+      best_hours: []
+      source: ""
+
+  linkedin:
+    active: false
+    handle: ""
+    url: ""
+    formats:
+      - type: "post"
+        active: true
+        specs:
+          max_length: 3000          # caracteres
+          max_hashtags: 5
+        frequency: ""
+
+      - type: "article"
+        active: true
+        specs:
+          max_length: 10000
+        frequency: ""
+
+      - type: "carousel_pdf"
+        active: true
+        specs:
+          slides: 10
+        frequency: ""
+    posting_schedule:
+      best_days: []
+      best_hours: []
+      source: ""
+
+  facebook:
+    active: false
+    handle: ""
+    url: ""
+    formats:
+      - type: "post"
+        active: true
+        specs:
+          max_length: 500
+          max_hashtags: 3
+        frequency: ""
+
+      - type: "reel"
+        active: true
+        specs:
+          duration: "30-60s"
+          aspect_ratio: "9:16"
+        frequency: ""
+    posting_schedule:
+      best_days: []
+      best_hours: []
+      source: ""
+
+  youtube_shorts:
+    active: false
+    handle: ""
+    url: ""
+    formats:
+      - type: "short"
+        active: true
+        specs:
+          duration: "30-60s"
+          aspect_ratio: "9:16"
+        frequency: ""
+    posting_schedule:
+      best_days: []
+      best_hours: []
+      source: ""
+
+  x:
+    active: false
+    handle: ""
+    url: ""
+    formats:
+      - type: "tweet"
+        active: true
+        specs:
+          max_length: 280
+          max_hashtags: 2
+        frequency: ""
+
+      - type: "thread"
+        active: true
+        specs:
+          max_tweets: 10
+          max_length_per_tweet: 280
+        frequency: ""
+    posting_schedule:
+      best_days: []
+      best_hours: []
+      source: ""

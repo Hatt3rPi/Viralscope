@@ -1,0 +1,64 @@
+# ============================================================
+# VOICE.YAML — Voz y tono de la marca
+# ============================================================
+# Define CÓMO habla la marca. Toda pieza de contenido generada
+# debe sonar como si viniera de esta voz.
+# ============================================================
+
+# Personalidad de marca (3-5 adjetivos)
+personality:
+  - ""                      # ej: "cercana"
+  - ""                      # ej: "empática"
+  - ""                      # ej: "experta sin ser pedante"
+
+# Tono general
+tone: ""                    # ej: "conversacional, cálido, directo"
+
+# Nivel de formalidad (1-5, donde 1=muy informal, 5=muy formal)
+formality: 3
+
+# Persona narrativa
+narrator: ""                # ej: "primera persona plural (nosotros)", "la marca como amiga"
+
+# Cómo se dirige a la audiencia
+addressing: ""              # ej: "tú (informal)", "usted", "mamá/papá directamente"
+
+# Vocabulario
+vocabulary:
+  preferred_words:          # Palabras que la marca usa frecuentemente
+    - ""
+  avoided_words:            # Palabras que la marca NO usa
+    - ""
+  jargon_level: ""          # "ninguno" / "bajo" / "medio" / "alto"
+  emoji_usage: ""           # "nunca" / "moderado" / "frecuente"
+  hashtag_style: ""         # "branded" / "trending" / "mix" / "ninguno"
+
+# Ejemplos de voz (frases reales o ideales de la marca)
+examples:
+  good:                     # Así SÍ suena la marca
+    - ""
+    - ""
+  bad:                      # Así NO suena la marca
+    - ""
+    - ""
+
+# Adaptación por plataforma
+platform_adjustments:
+  instagram:
+    tone_shift: ""          # ej: "más emocional y visual"
+    max_caption_length: 300 # caracteres ideales para caption
+  tiktok:
+    tone_shift: ""          # ej: "más directo y rápido"
+    max_hook_words: 10      # palabras máximas en el hook
+  linkedin:
+    tone_shift: ""          # ej: "más profesional, datos y insights"
+    max_post_length: 500
+  facebook:
+    tone_shift: ""
+    max_post_length: 400
+  youtube_shorts:
+    tone_shift: ""
+    max_hook_words: 8
+  x:
+    tone_shift: ""
+    max_post_length: 280

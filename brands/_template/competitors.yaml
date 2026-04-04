@@ -1,0 +1,47 @@
+# ============================================================
+# COMPETITORS.YAML — Competidores y referentes
+# ============================================================
+# Define quién más opera en el mismo nicho.
+# Se usa para competitor tracking y para detectar oportunidades
+# de contenido que la competencia cubre y tú no (o viceversa).
+# ============================================================
+
+competitors:
+  - name: ""                # Nombre de la marca/cuenta
+    type: "direct"          # "direct" (mismo nicho) / "indirect" (nicho adyacente) / "aspirational" (referente)
+    platforms:
+      - platform: "instagram"
+        handle: ""          # ej: "@competidor"
+        url: ""
+        followers: ""       # Aproximado
+      - platform: "tiktok"
+        handle: ""
+        url: ""
+        followers: ""
+    website: ""
+    strengths: []           # Qué hacen bien
+    weaknesses: []          # Dónde flaquean
+    content_style: ""       # Descripción breve de su estilo de contenido
+    posting_frequency: ""   # ej: "5-7 posts/semana"
+    notes: ""               # Observaciones adicionales
+
+  - name: ""
+    type: ""
+    platforms:
+      - platform: ""
+        handle: ""
+        url: ""
+        followers: ""
+    website: ""
+    strengths: []
+    weaknesses: []
+    content_style: ""
+    posting_frequency: ""
+    notes: ""
+
+# Referentes fuera del nicho (marcas que admiras por su contenido)
+inspirations:
+  - name: ""
+    platform: ""
+    handle: ""
+    why: ""                 # Qué admiras de su contenido

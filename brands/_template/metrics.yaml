@@ -1,0 +1,93 @@
+# ============================================================
+# METRICS.YAML — Métricas baseline y tracking
+# ============================================================
+# Métricas actuales de la marca. Se actualizan mensualmente.
+# Se usan para calibrar la simulación y medir progreso.
+# ============================================================
+
+# Fecha de última actualización
+last_updated: ""            # YYYY-MM-DD
+
+# Métricas generales de la marca
+general:
+  total_followers:
+    instagram: 0
+    tiktok: 0
+    linkedin: 0
+    facebook: 0
+    youtube: 0
+    x: 0
+  website_monthly_sessions: 0
+  email_subscribers: 0
+
+# Métricas de contenido por plataforma
+content_metrics:
+  instagram:
+    avg_engagement_rate: 0.0        # ej: 2.5 (porcentaje)
+    avg_reach_per_post: 0
+    avg_likes: 0
+    avg_comments: 0
+    avg_shares: 0
+    avg_saves: 0
+    avg_reel_views: 0
+    avg_reel_retention: 0.0         # porcentaje
+    followers_growth_monthly: 0
+    best_performing_format: ""      # ej: "carrusel"
+    worst_performing_format: ""
+    top_3_posts_last_month:         # Los 3 mejores posts del último mes
+      - topic: ""
+        format: ""
+        engagement_rate: 0.0
+        why_worked: ""              # Hipótesis de por qué funcionó
+      - topic: ""
+        format: ""
+        engagement_rate: 0.0
+        why_worked: ""
+      - topic: ""
+        format: ""
+        engagement_rate: 0.0
+        why_worked: ""
+    bottom_3_posts_last_month:      # Los 3 peores posts
+      - topic: ""
+        format: ""
+        engagement_rate: 0.0
+        why_failed: ""
+      - topic: ""
+        format: ""
+        engagement_rate: 0.0
+        why_failed: ""
+      - topic: ""
+        format: ""
+        engagement_rate: 0.0
+        why_failed: ""
+
+  tiktok:
+    avg_views: 0
+    avg_likes: 0
+    avg_comments: 0
+    avg_shares: 0
+    avg_retention: 0.0
+    followers_growth_monthly: 0
+
+  linkedin:
+    avg_impressions: 0
+    avg_engagement_rate: 0.0
+    avg_clicks: 0
+    connections_growth_monthly: 0
+
+# Métricas de conversión
+conversion:
+  website_conversion_rate: 0.0      # porcentaje
+  social_to_website_rate: 0.0       # % de tráfico social → web
+  top_conversion_source: ""         # ej: "instagram stories"
+  avg_monthly_revenue_from_social: 0
+
+# Histórico mensual (para detectar tendencias)
+# Agregar una entrada por mes
+monthly_history:
+  - month: ""               # YYYY-MM
+    followers_ig: 0
+    engagement_rate_ig: 0.0
+    posts_published: 0
+    best_post_topic: ""
+    notes: ""                # Observaciones del mes

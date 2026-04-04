@@ -1,0 +1,94 @@
+# ============================================================
+# OBJECTIVES.YAML — Objetivos y prioridades
+# ============================================================
+# Define qué busca lograr la marca con su contenido.
+# Cada contenido en la parrilla se alinea a un objetivo primario.
+# Los pesos pueden cambiar mes a mes según prioridades.
+# ============================================================
+
+# Objetivos activos con su peso en la parrilla
+objectives:
+  - id: "sales"
+    name: "Ventas / Conversión"
+    description: "Contenido con CTA directo a compra, landing, o contacto"
+    weight: 0.0             # Peso en la parrilla (0.0-1.0)
+    kpis:                   # Cómo se mide el éxito
+      - "clicks al sitio"
+      - "mensajes directos"
+      - "ventas atribuidas"
+    cta_examples:           # CTAs típicos para este objetivo
+      - ""
+
+  - id: "followers_ig"
+    name: "Seguidores Instagram"
+    description: "Contenido diseñado para atraer nuevos seguidores en IG"
+    weight: 0.0
+    kpis:
+      - "seguidores nuevos/semana"
+      - "visitas al perfil"
+    cta_examples:
+      - "Síguenos para más"
+
+  - id: "followers_tiktok"
+    name: "Seguidores TikTok"
+    description: "Contenido optimizado para crecimiento en TikTok"
+    weight: 0.0
+    kpis:
+      - "seguidores nuevos/semana"
+      - "visitas al perfil"
+    cta_examples:
+      - ""
+
+  - id: "followers_linkedin"
+    name: "Seguidores LinkedIn"
+    description: "Contenido para posicionamiento profesional y crecimiento"
+    weight: 0.0
+    kpis:
+      - "conexiones nuevas"
+      - "impresiones"
+    cta_examples:
+      - ""
+
+  - id: "engagement"
+    name: "Engagement"
+    description: "Contenido para generar interacción (comentarios, guardados, compartidos)"
+    weight: 0.0
+    kpis:
+      - "engagement rate"
+      - "guardados"
+      - "compartidos"
+      - "comentarios"
+    cta_examples:
+      - "Guarda esto para después"
+      - "Envíale esto a alguien que lo necesita"
+
+  - id: "awareness"
+    name: "Brand Awareness"
+    description: "Contenido para que más gente conozca la marca"
+    weight: 0.0
+    kpis:
+      - "alcance"
+      - "impresiones"
+      - "nuevas cuentas alcanzadas"
+    cta_examples:
+      - ""
+
+  - id: "traffic"
+    name: "Tráfico Web"
+    description: "Contenido que lleva tráfico al sitio web"
+    weight: 0.0
+    kpis:
+      - "clicks al link"
+      - "sesiones desde redes"
+    cta_examples:
+      - "Link en bio"
+
+# Mix de intención por defecto
+# Configurable por run, pero estos son los defaults de la marca
+content_mix:
+  viral: 0.15              # % de contenido diseñado para máximo alcance
+  quality: 0.75            # % de contenido de valor (el "relleno de calidad")
+  commercial: 0.10         # % de contenido con CTA comercial directo
+
+# Validación: objectives weights deben sumar 1.0
+# content_mix debe sumar 1.0

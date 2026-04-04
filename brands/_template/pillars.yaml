@@ -1,0 +1,51 @@
+# ============================================================
+# PILLARS.YAML — Pilares de contenido de la marca
+# ============================================================
+# Los pilares definen las categorías temáticas de la marca.
+# La parrilla mensual se balancea entre estos pilares.
+# ============================================================
+
+pillars:
+  - id: ""                  # Identificador corto (ej: "educativo")
+    name: ""                # Nombre del pilar (ej: "Educación y crianza")
+    description: ""         # Descripción en 1-2 líneas
+    weight: 0.0             # Peso en la parrilla (0.0-1.0, todos deben sumar 1.0)
+    topics:                 # Temas ejemplo dentro de este pilar
+      - ""
+      - ""
+    formats_preferred:      # Formatos que mejor funcionan para este pilar
+      - ""                  # ej: "carrusel", "reel", "post estático"
+    objective_alignment:    # Con qué objetivos se alinea mejor
+      - ""                  # ej: "engagement", "brand_awareness"
+    example_hooks:          # Ganchos ejemplo para este pilar
+      - ""
+      - ""
+
+  - id: ""
+    name: ""
+    description: ""
+    weight: 0.0
+    topics:
+      - ""
+    formats_preferred:
+      - ""
+    objective_alignment:
+      - ""
+    example_hooks:
+      - ""
+
+  - id: ""
+    name: ""
+    description: ""
+    weight: 0.0
+    topics:
+      - ""
+    formats_preferred:
+      - ""
+    objective_alignment:
+      - ""
+    example_hooks:
+      - ""
+
+# Validación: los weights deben sumar 1.0
+# El sistema alertará si no cuadran.

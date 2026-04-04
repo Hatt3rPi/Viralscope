@@ -1,0 +1,96 @@
+# ============================================================
+# CALENDAR.YAML — Fechas importantes y efemérides
+# ============================================================
+# Fechas que el sistema debe considerar al planificar la parrilla.
+# Incluye fechas nacionales, del nicho, y propias de la marca.
+# El contenido temático se genera automáticamente para estas fechas.
+# ============================================================
+
+# País base para feriados nacionales
+country: "CL"
+
+# Fechas nacionales/comerciales importantes
+national:
+  - date: "01-01"           # Formato MM-DD
+    name: "Año Nuevo"
+    relevance: "low"        # "high" / "medium" / "low" para esta marca
+    content_angle: ""       # Ángulo sugerido (ej: "propósitos de año nuevo")
+    advance_days: 3         # Días antes para empezar a publicar contenido relacionado
+
+  - date: "02-14"
+    name: "San Valentín"
+    relevance: ""
+    content_angle: ""
+    advance_days: 5
+
+  - date: "03-08"
+    name: "Día de la Mujer"
+    relevance: ""
+    content_angle: ""
+    advance_days: 3
+
+  - date: "05-10"           # Segundo domingo de mayo (aproximado, ajustar por año)
+    name: "Día de la Mamá"
+    relevance: ""
+    content_angle: ""
+    advance_days: 7
+
+  - date: "06-21"           # Tercer domingo de junio (aproximado)
+    name: "Día del Papá"
+    relevance: ""
+    content_angle: ""
+    advance_days: 7
+
+  - date: "09-18"
+    name: "Fiestas Patrias"
+    relevance: ""
+    content_angle: ""
+    advance_days: 7
+
+  - date: "10-31"
+    name: "Halloween"
+    relevance: ""
+    content_angle: ""
+    advance_days: 5
+
+  - date: "11-29"           # Último viernes de noviembre (aproximado)
+    name: "Black Friday"
+    relevance: ""
+    content_angle: ""
+    advance_days: 7
+
+  - date: "12-25"
+    name: "Navidad"
+    relevance: ""
+    content_angle: ""
+    advance_days: 10
+
+# Fechas específicas del nicho
+niche:
+  - date: ""                # MM-DD
+    name: ""                # ej: "Día del Libro"
+    relevance: ""
+    content_angle: ""
+    advance_days: 3
+
+# Fechas propias de la marca
+brand:
+  - date: ""                # MM-DD
+    name: ""                # ej: "Aniversario de la marca"
+    relevance: "high"
+    content_angle: ""
+    advance_days: 5
+
+# Temporadas relevantes
+seasons:
+  - name: ""                # ej: "Vuelta a clases"
+    start: ""               # MM-DD
+    end: ""                 # MM-DD
+    relevance: ""
+    content_angle: ""
+
+  - name: ""                # ej: "Temporada navideña"
+    start: ""
+    end: ""
+    relevance: ""
+    content_angle: ""
