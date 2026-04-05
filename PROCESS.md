@@ -1,6 +1,6 @@
 # Viralscope — Proceso Operativo
 
-**Versión:** 0.2
+**Versión:** 0.3
 **Última actualización:** 4 abril 2026
 
 Este documento define **cómo se ejecuta** Viralscope paso a paso. Cada paso especifica qué entra, qué se hace, y qué sale.
@@ -222,75 +222,138 @@ El sistema recopila información externa para alimentar la planificación.
 
 ---
 
-## PASO 3: Planificación de Parrilla
+## PASO 3: Planificación de Parrilla (El Estratega)
 
-El sistema distribuye N contenidos en el período, balanceados estratégicamente.
+**Este es el paso más crítico de todo el pipeline.** Si la estrategia es mala, las variantes y simulaciones solo optimizan basura. El Estratega debe ser el agente más transparente y colaborativo — muestra su razonamiento, presenta tensiones, y consulta al humano en los puntos de decisión.
+
+### Fase 3.1 — Input del Humano (al inicio)
+
+El humano define el objetivo del mes. Puede ser desde muy vago hasta muy específico:
+
+| Input vago | Input específico |
+|------------|-----------------|
+| "Este mes quiero crecer en IG" | "Quiero llegar a 2000 seguidores IG, tengo $50K CLP para ads, y lanzo libro físico de Navidad anticipado" |
+| "Haz lo que creas mejor" | "Necesito 5 posts de producto porque cambié los precios" |
+
+Además del objetivo, el humano puede dar **contexto de negocio** que el Estratega no puede saber por sí solo:
+- Lanzamientos o cambios de producto próximos
+- Presupuesto de ads del mes
+- Cambios de precio o promociones
+- Restricciones de capacidad ("no puedo publicar más de 4 veces por semana")
+- Prioridades especiales ("este mes quiero probar TikTok")
+
+**Si el input es vago**, el Estratega debe preguntar lo mínimo necesario antes de proceder:
+- "¿Hay algún lanzamiento o fecha especial que deba considerar este mes?"
+- "¿Alguna restricción de volumen o presupuesto?"
+
+**Si el input es específico**, el Estratega procede directo al análisis.
+
+### Fase 3.2 — Análisis (Estratega trabaja solo)
 
 **Input:**
 - `brand_context` (paso 1)
 - `intelligence_report` (paso 2)
-- `run_config` (N contenidos, mix, plataformas, dirección temática)
-- `template_funnel.md` → Template #1 "Cazador de Nicho + Ángulo Viral" (generación de ideas)
-- `template_funnel.md` → Template #7 "Calendario viral de 7 días" (estructura semanal)
+- Objetivo + contexto del humano (fase 3.1)
 
-**Proceso:**
+**El Estratega analiza en este orden:**
 
-### 3a. Generación de Ideas Base (Template #1: Cazador de Nicho)
-1. Usar Template #1 para generar pool de 30+ ideas de contenido alineadas a la marca
-2. Cada idea incluye: tema, ángulo viral, promesa, formato ideal, gatillo de compartir, CTA
-3. Filtrar ideas por relevancia al período y dirección temática del humano
-4. Este pool alimenta la asignación de temas en el paso 3e
+#### 3.2a. Datos vivos (no solo snapshots estáticos)
+1. **Resultados detallados por post** — no promedios generales, sino qué posts específicos funcionaron, con qué hook, formato, tema, día y hora. Si hay datos en `metrics.yaml` (top/bottom posts), usarlos. Si no hay suficientes datos propios:
+2. **Benchmarks del nicho** — buscar qué funciona en el nicho crianza/lectura infantil, qué publican las cuentas de referencia, qué formatos tienen mejor rendimiento en el sector.
+3. **Qué publicó la competencia esta semana** — no el perfil estático de `competitors.yaml`, sino actividad reciente. Gaps actuales.
+4. **Tendencias actuales** — del `intelligence_report` (paso 2).
+5. **Si aún faltan datos** → preguntar al humano: "¿Qué tipo de contenido te ha funcionado mejor hasta ahora?"
 
-### 3b. Asignación de Slots por Fecha
-1. Marcar slots fijos para fechas importantes con `relevance: high`
-2. Distribuir slots restantes en el calendario según `posting_schedule` de cada plataforma (best_days, best_hours)
-3. Espaciar contenido para evitar fatiga
+**Declaración explícita de incertidumbre:** Si no tiene datos suficientes para una decisión, debe decirlo: "No tengo datos suficientes para predecir qué pilar funciona mejor. Propongo X basado en benchmarks del nicho, pero es una hipótesis."
 
-### 3c. Distribución por Pilares
-1. Asignar pilar a cada slot según weights de `pillars.yaml`
-2. Asegurar que no haya más de 2-3 contenidos del mismo pilar seguidos (detección de fatiga)
-3. Slots de fechas importantes se asignan al pilar `ocasiones` o al pilar más relevante
+#### 3.2b. Fechas como anclas de campaña
+Las fechas importantes NO son "un slot especial" — son **anclas que reorganizan semanas enteras** de contenido.
 
-### 3d. Distribución por Objetivos
-1. Asignar objetivo primario a cada slot según weights de `objectives.yaml`
-2. Alinear objetivo con pilar (respetar `objective_alignment` de cada pilar)
-3. Verificar que el mix de intención (viral/calidad/comercial) se respete globalmente
+1. Identificar fechas del período desde `calendar.yaml`
+2. Evaluar lead time por fecha (NO es fijo — depende de la importancia):
 
-### 3e. Asignación de Formato
-1. Por cada slot, asignar formato según la plataforma y el pilar (`formats_preferred`)
-2. Respetar frecuencia máxima por formato (de `platforms.yaml`)
-3. Variar formatos para evitar monotonía
+| Fecha | Lead time | Estructura |
+|-------|-----------|-----------|
+| Navidad | 4 semanas | Embudo largo: awareness → emoción → urgencia → CTA |
+| Día de la Mamá | 3 semanas | Campaña dedicada desde 3 semanas antes |
+| Día del Libro | 1 semana | Contenido puntual, 2-3 posts |
+| Fiestas Patrias | 1 semana | Contenido temático leve |
 
-### 3f. Asignación de Tema
-1. Del pool de ideas (paso 3a), asignar tema específico a cada slot basado en:
-   - Pilar asignado + topics del pilar
-   - Fechas importantes cercanas
-   - Tendencias detectadas
+3. Estructurar mini-campañas alrededor de cada fecha anchor
+4. **El Estratega propone la estructura de cada mini-campaña** — el humano la aprueba
+
+#### 3.2c. Distribución: weights como guía, no ley
+1. Leer weights de `pillars.yaml` y `objectives.yaml` como punto de partida
+2. Evaluar si el objetivo del mes justifica desviarse:
+   - **Si los datos sugieren ajustar** → mostrar la tensión: "Los weights dicen 25% neurociencia, pero tus datos sugieren 40% porque ese pilar tiene 2x más engagement. ¿Ajusto?"
+   - **NO cambiar weights sin aprobación del humano**
+3. Distribuir pilares, objetivos y mix de intención respetando los weights (o los ajustes aprobados)
+
+#### 3.2d. Generación de ideas + asignación de temas
+1. Usar Template #1 "Cazador de Nicho" para generar pool de 30+ ideas
+2. Asignar temas a slots basándose en:
+   - Pilar del slot + topics del pilar
+   - Mini-campaña de fecha (si aplica)
    - Content gaps competitivos
-   - Dirección temática del humano (si la dio)
-   - Aprendizajes del ciclo anterior (temas que funcionaron → repetir variación; temas que fallaron → evitar)
-2. Verificar que no se repitan temas textualmente
+   - Tendencias detectadas
+   - Aprendizajes del ciclo anterior
+   - Dirección temática del humano
+3. **Verificar variedad:** no repetir temas, no más de 2-3 del mismo pilar seguidos
+4. Asignar formato por slot según plataforma + pilar + `formats_preferred`
+5. Usar Template #7 "Calendario Viral" como referencia para cadencia semanal
 
-### 3g. Estructura Semanal (Template #7: Calendario Viral)
-1. Usar Template #7 como referencia para la estructura semanal:
-   - Distribución de formatos por día (reels, carruseles, stories)
-   - Cadencia y ritmo de publicación
-   - Stories diarios como calentamiento
-   - Lista de verificación operativa por día
-2. Verificar que la secuencia semanal tenga variación emocional
-3. Aplicar arco emocional: inspiración → educación → controversia → comunidad+comercial
+#### 3.2e. Verificaciones finales
+1. **Variedad de temas** — ¿hay diversidad? ¿No es monótono?
+2. **Alineación con objetivo** — ¿cada post tiene un propósito claro que apunte al objetivo del mes?
+3. **Calendario coherente** — ¿las fechas hacen sentido? ¿No hay huecos ni sobrecarga? ¿El ritmo es sostenible?
+4. **Arco emocional** — ¿la secuencia semanal tiene variación? inspiración → educación → controversia → comunidad
+5. **Content series** — ¿hay temas que se prestan a serialización (2-3 partes)?
+6. **Story funnel** — ¿los posts clave del día tienen stories de calentamiento?
 
-### 3h. Content Series
-1. Identificar temas que se prestan a serialización (2-3 partes)
-2. Agrupar slots consecutivos para series
-3. Marcar la relación entre partes
+### Fase 3.3 — Presentación al Humano (resumen ejecutivo + parrilla editable)
 
-### 3i. Story Funnel
-1. Por cada post clave del día, generar 2-3 slots de stories previas como calentamiento
-2. Marcar relación story → post principal
+El Estratega presenta:
+
+#### A. Resumen ejecutivo
+```
+OBJETIVO DEL MES: [lo que el humano definió]
+VOLUMEN: [N contenidos en el período]
+DISTRIBUCIÓN: [% por pilar, comparado con weights default]
+FECHAS ANCHOR: [mini-campañas planificadas]
+TENSIONES: [donde los datos sugieren desviarse de los weights]
+INCERTIDUMBRES: [donde no hay datos suficientes]
+```
+
+#### B. Razonamiento por cada decisión clave
+Cada decisión viene con justificación datos + estrategia:
+- "Jueves 9 abril, reel neurociencia → datos: jueves es el mejor día (IG Insights). Estrategia: el pilar neurociencia tiene mayor shareability y necesitamos alcance orgánico."
+- "Semanas 3-4 de abril: 60% contenido emocional/mamá → datos: no hay datos propios del pilar emocional aún. Benchmark: cuentas de crianza con >10K seguidores dedican 40-60% a contenido emocional en pre-Día de la Mamá. Estrategia: empezar a calentar para el 11 de mayo."
+
+#### C. Parrilla completa EDITABLE
+El humano puede:
+- **Mover slots** (cambiar fecha/hora)
+- **Cambiar tema** de un slot
+- **Cambiar pilar** de un slot
+- **Eliminar slots**
+- **Agregar slots**
+- **Aprobar todo** si confía en el Estratega
+
+#### D. Veto visual (Sergio)
+Sergio (socio diseñador/director de arte) puede vetar slots por viabilidad visual:
+- "Este slot requiere un video con 3 personajes interactuando — no es viable con los generadores actuales"
+- "Este concepto visual es demasiado complejo para NanoBanana"
+- Slots vetados se marcan y el Estratega propone alternativa
+
+### Fase 3.4 — Iteración y Aprobación
+
+1. El humano revisa el resumen + parrilla
+2. Hace ajustes (mover, cambiar, eliminar, agregar)
+3. Sergio revisa viabilidad visual de los slots
+4. Cuando ambos están conformes → **aprobación**
+5. Solo los slots aprobados pasan al paso 4 (generación de variantes)
 
 **Output:**
-- `parrilla`: array de N slots, cada uno con:
+- `parrilla`: array de N slots aprobados, cada uno con:
   - `date`: fecha y hora de publicación
   - `platform`: plataforma(s) destino
   - `pillar`: pilar de contenido
@@ -303,8 +366,12 @@ El sistema distribuye N contenidos en el período, balanceados estratégicamente
   - `cta_direction`: dirección para el CTA
   - `series_info`: si es parte de una serie (parte N de M)
   - `story_funnel`: si tiene stories de calentamiento asociadas
-  - `date_reference`: si está vinculado a una fecha importante
+  - `date_reference`: si está vinculado a una fecha/mini-campaña
   - `trend_reference`: si está vinculado a una tendencia detectada
+  - `reasoning`: justificación del Estratega (datos + estrategia) para este slot
+  - `confidence`: alta / media / baja (basado en disponibilidad de datos)
+  - `approved_by`: quién aprobó (Felipe / ambos)
+  - `visual_vetoed`: si Sergio vetó y se reemplazó
 
 ---
 
