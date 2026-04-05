@@ -1,7 +1,7 @@
 # Viralscope — Proceso Operativo
 
-**Versión:** 0.1
-**Última actualización:** 3 abril 2026
+**Versión:** 0.2
+**Última actualización:** 4 abril 2026
 
 Este documento define **cómo se ejecuta** Viralscope paso a paso. Cada paso especifica qué entra, qué se hace, y qué sale.
 
@@ -624,15 +624,64 @@ El sistema genera los assets visuales usando los JSON de art direction del paso 
 7. **Brand consistency check**: ¿La imagen es coherente con `brand.yaml` visual.style y visual.mood?
 
 ### Modo: + Video
-1. Extraer `prompt_string` de `art_direction_video.json`
-2. Ejecutar prompts en Higgsfield Cinema / Freepik AI Video
-3. (Manual o API según disponibilidad)
-4. Guardar en misma estructura de carpetas
-5. Review de coherencia entre scenes del JSON y resultado generado
+
+**Regla crítica: los videos se generan SIN texto en pantalla ni subtítulos.**
+Los generadores de video IA (Seedance, Veo 3.1, Higgsfield) producen texto ilegible o con artefactos. Los text overlays se agregan en post-producción (CapCut o similar).
+
+El `prompt_string` NO debe mencionar texto en pantalla. El `negative_prompt` debe incluir `"text on screen, subtitles, captions, written words"`. Los `text_overlay_sequence` en los clips son instrucciones para post-producción, no para el generador. El Director de Arte debe especificar `negative_space` en la composición para dejar espacio limpio donde irá el texto después.
+
+**Paso 5a: Split por generador disponible**
+
+El `art_direction_video.json` del paso 4 se divide en clips según la duración máxima del generador:
+
+| Generador | Duración máxima | Clips para reel de 40s |
+|-----------|----------------|----------------------|
+| Veo 3.1 (Google AI Studio) | 8s | 5 clips |
+| Seedance | 15s | 3 clips |
+| Higgsfield Cinema | variable | 2-4 clips |
+
+Cada clip se exporta como JSON independiente con:
+- `duration_seconds` ajustado al generador
+- `prompt_string` adaptado a la escena del clip
+- `text_overlay_sequence` como referencia para post-producción (NO para el generador)
+- `negative_prompt` incluyendo `"text on screen, subtitles, captions"`
+
+Estructura de output:
+```
+variante_X/
+├── art_direction_video.json       ← video completo (referencia)
+├── seedance_clips/                ← split para Seedance (15s max)
+│   ├── clip_1_hook_context.json
+│   ├── clip_2_data_framework.json
+│   └── clip_3_cta_close.json
+└── veo31_clips/                   ← split para Veo 3.1 (8s max)
+    ├── clip_1_hook.json
+    ├── clip_2_passive_reading.json
+    ├── clip_3_dialogic_reading.json
+    ├── clip_4_mother_questions.json
+    └── clip_5_cta_close.json
+```
+
+**Paso 5b: Generación de video**
+1. El humano elige generador (Seedance, Veo 3.1, Higgsfield)
+2. Abre el clip JSON correspondiente
+3. Copia el `prompt_string` al generador
+4. Genera el clip
+5. Repite para cada clip
+6. Ensambla los clips en CapCut/editor de video
+7. Agrega text overlays según `text_overlay_sequence` de cada clip
+8. Agrega audio/música según `audio` del `art_direction_video.json` original
+
+**Paso 5c: Review**
+1. Review de coherencia entre clips (continuidad visual, color grading)
+2. Review de negative_space (¿hay espacio para los textos?)
+3. Brand consistency check contra `brand.yaml`
+4. Anti-IA check: ¿se ven artefactos? (manos, ojos, simetría)
 
 **Output:**
 - Assets generados organizados por slot y variante
 - Reporte de visual attention (si se generaron imágenes)
+- Clips de video por generador + instrucciones de post-producción
 
 ---
 
@@ -648,26 +697,46 @@ El **Analista de Viralización** (Opus) prepara el material para MiroFish, ejecu
 **Proceso:**
 
 ### 6a. Preparación del Seed Material (Analista de Viralización)
-El Analista transforma las variantes en seed material que MiroFish puede consumir:
-1. Cargar personas de `audiences.yaml` (primary + secondary)
-2. Enriquecer con modelo OCEAN/Big Five (si está definido)
-3. Calibrar con datos reales de `metrics.yaml` y feedback loop anterior
-4. Compilar por cada variante un paquete de seed:
-   - El contenido (copy + visual description del art direction JSON)
-   - El contexto de la marca (posicionamiento, voz, restricciones)
-   - Las personas simuladas con sus perfiles completos
-   - Las preguntas/métricas que MiroFish debe responder
+
+El Analista transforma las variantes en seed material que MiroFish puede consumir.
+
+**Primera simulación de una marca (perfiles nuevos):**
+1. Cargar personas de `audiences.yaml` (53 personas con MBTI, demographics, triggers)
+2. Calibrar con datos reales de `metrics.yaml` y feedback loop anterior
+3. Compilar seed document (MD) con:
+   - Descripción del producto y marca
+   - Métricas reales de IG/GA4
+   - Las 53 personas con detalle narrativo (~50-80 palabras c/u)
+   - Las 3 variantes de contenido con copy + visual description
+   - Métricas del algoritmo de la plataforma
+   - Requisitos de predicción explícitos
+   - Guardrails anti-alucinación
+4. Compilar simulation_requirement con mapeo de acciones IG → Twitter/Reddit
+5. Subir a MiroFish web → generar ontología → generar perfiles → lanzar simulación
+
+**Simulaciones subsiguientes de la misma marca (reutilizar perfiles):**
+1. El graph_id de Zep persiste — los perfiles y memorias de simulaciones anteriores se acumulan
+2. Copiar los mismos archivos de perfiles (`reddit_profiles.json` + `twitter_profiles.csv`)
+3. Crear nuevo `simulation_config.json` cambiando solo `event_config.initial_posts` con el nuevo contenido
+4. Ejecutar vía CLI: `python run_parallel_simulation.py --config nuevo_dir/simulation_config.json`
+5. Las personas ya tienen memoria de simulaciones anteriores — se vuelven más "reales" con cada ciclo
+
+**Nota sobre idioma:** MiroFish genera perfiles y reportes en chino aunque el seed esté en inglés. El Analista debe traducir el reporte a español para interpretación.
 
 ### 6b. Ejecución de Simulación
 
-**Modo MiroFish (completo):**
-1. Inyectar seed material en MiroFish
-2. MiroFish genera agentes autónomos basados en las personas
-3. Los agentes "ven" las 3 variantes e interactúan entre sí
-4. MiroFish genera reporte vía ReportAgent
-5. El Analista recibe el reporte crudo
+**Modo MiroFish (completo) — PRIORIZAR cuando haya discrepancia con panel LLM:**
+1. Subir seed material a MiroFish (web para primera vez, CLI para subsiguientes)
+2. MiroFish genera agentes autónomos basados en las personas (~2000 palabras de perfil por agente, MBTI)
+3. Los agentes "ven" las variantes como posts iniciales e interactúan entre sí
+4. Acciones disponibles: CREATE_POST, LIKE, REPOST (=share), QUOTE_POST (=comment), FOLLOW, DO_NOTHING (=ignore), CREATE_COMMENT, DISLIKE
+5. Duración típica: ~2.7 horas, ~900+ acciones, 40-72 rondas
+6. MiroFish genera reporte vía ReportAgent (patrón ReACT, ~15-20 min adicionales)
+7. El Analista recibe el reporte y lo traduce a español
 
-**Modo Panel LLM (MVP, sin MiroFish):**
+**Nota técnica (Windows):** No refrescar la página de Start durante la simulación — puede relanzar el proceso y corromper el estado. Los archivos `.db` se bloquean en Windows. Si el estado se desincroniza, parchear `state.json` y `run_state.json` manualmente y navegar directo a la página de Report.
+
+**Modo Panel LLM (fallback, cuando MiroFish no está disponible):**
 1. El Analista ejecuta internamente la simulación con prompts de persona
 2. Por cada variante, cada persona simulada responde un scorecard:
    - **Atención** (1-10): ¿Detiene mi scroll?
@@ -680,13 +749,20 @@ El Analista transforma las variantes en seed material que MiroFish puede consumi
    - **Emoción generada**: texto libre
    - **Resonance score** (1-10): ¿Conecté con esto?
    - **Spread score** (1-10): ¿Lo enviaría por DM/WhatsApp?
+3. **Sesgo conocido:** El panel LLM sobreestima el impacto emocional y subestima el peso de los profesionales como drivers de crecimiento. Calibrar pesos con resultados de MiroFish cuando estén disponibles.
 
 ### 6c. Interpretación de Resultados (Analista de Viralización)
 1. Recibir output de MiroFish (o del panel LLM)
-2. Normalizar scores entre personas (peso según representatividad en audiencia real)
-3. Identificar patrones: ¿qué persona conectó más con qué variante?
-4. Generar ranking preliminar con justificación
-5. Flaggear variantes problemáticas (brand fit bajo, spread sin resonance, etc.)
+2. Traducir reporte de MiroFish a español (si aplica)
+3. Normalizar scores entre personas (peso según representatividad en audiencia real)
+4. Identificar patrones: ¿qué persona conectó más con qué variante?
+5. Detectar dinámicas entre personas que el panel LLM no captura (ej: profesionales validando → audiencia general siguiendo)
+6. Generar ranking preliminar con justificación
+7. Flaggear variantes problemáticas (brand fit bajo, spread sin resonance, etc.)
+8. Si hay discrepancia MiroFish vs panel LLM: **priorizar MiroFish** y documentar la discrepancia como aprendizaje
+
+**Cuando ambos coinciden:** alta confianza en la recomendación.
+**Cuando discrepan:** priorizar MiroFish. Documentar por qué discreparon para calibrar el panel LLM.
 
 **Output:**
 - `simulation_results`: por cada variante, scorecard multi-dimensional por persona
