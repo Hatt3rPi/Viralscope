@@ -6,10 +6,6 @@
   "time_range": "0-8s",
   "aspect_ratio": "9:16",
   "description": "Hook — libro macro, madre lee en silencio, pregunta, niño explota respondiendo",
-  "text_overlay_sequence": [
-    {"time": "1s", "text": "Una sola pregunta", "style": "bold grande blanco"},
-    {"time": "3s", "text": "activa esto 👇", "style": "pequeño blanco debajo"}
-  ],
   "prompt_string": "Cinematic 9:16 vertical video, extreme close-up of an illustrated children's storybook held by a mother's hands, warm Chilean home interior with wooden bookshelf in soft focus background, macro zoom slowly into colorful book pages for 3 seconds, then abrupt cut to a 4-year-old Chilean boy suddenly responding animatedly with bright eyes and hand gestures pointing at the book, genuine surprised excited expression, natural window light from left side, Fuji Eterna 400 film color grade slightly cool transitioning to warm, shallow depth of field, documentary intimate style, authentic Latin American family home with lived-in details",
   "negative_prompt": "brain graphics, neon effects, stock footage, studio white background, forced child acting, plastic skin, 6 fingers, oversaturated filter, cartoon, symmetrical composition, AI artifacts"
 }

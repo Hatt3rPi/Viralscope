@@ -6,12 +6,6 @@
   "time_range": "24-32s",
   "aspect_ratio": "9:16",
   "description": "Madre haciendo preguntas al niño — ella es la 'científica'. Niño responde con vocabulario rico. Las 3 preguntas como framework.",
-  "text_overlay_sequence": [
-    {"time": "0s", "text": "3 preguntas que funcionan:", "style": "bold blanco"},
-    {"time": "2s", "text": "1. ¿Qué crees que va a pasar?", "style": "regular blanco"},
-    {"time": "4s", "text": "2. ¿Por qué crees que hizo eso?", "style": "regular blanco"},
-    {"time": "6s", "text": "3. ¿Tú qué harías?", "style": "regular blanco"}
-  ],
   "prompt_string": "Cinematic 9:16 vertical video, medium shot on tripod of a Chilean mother aged 35-40 with warm natural appearance asking a question to her 4-year-old son about an illustrated storybook, mother's face visible in close-up showing genuine attentive listening expression, child in soft focus background thinking then responding with surprisingly articulate words and hand gestures, warm golden hour window light from left, wooden bookshelf with irregularly stacked books in background, untouched coffee cup on side table, Fuji Eterna warm film grade, scientific documentary authority aesthetic with stable tripod composition, rack focus from mother to child as he responds, intimate authentic moment",
   "negative_prompt": "wide shot, stock footage, studio lighting, teleprompter reading, forced smile, plastic skin, 6 fingers, cartoon, neon colors, brain graphics, split screen, harsh shadows"
 }
