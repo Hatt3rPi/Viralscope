@@ -26,7 +26,6 @@
         "camera_movement": "Macro zoom muy lento hacia las páginas del libro durante 0-2s. A los 2s corte seco a plano medio del niño respondiendo.",
         "subject_action": "Manos adultas sosteniendo libro. Luego niño respondiendo con energía — transición abrupta de pasividad a activación. La diferencia física es el argumento.",
         "environment": "Interior de casa, iluminación neutra pero con carácter. Misma habitación en ambas mitades — la diferencia es el color grading y la energía de los sujetos, no el ambiente.",
-        "text_overlay": "A los 1s aparece en grande: 'Una sola pregunta' — Sour Gummy Bold blanco. A los 2.5s: 'activa esto 👇' — aparece debajo, más pequeño en Poppins. (El emoji se usa aquí con intención estratégica — es el único emoji de todo el video, actúa como señal de scroll hacia abajo.)",
         "audio_direction": "Audio diegético de la madre leyendo en silencio durante 0-1.5s — voz monótona tranquila, palabras reconocibles de cuento infantil. A 1.5s ella hace la pregunta. A 2s el niño explota respondiendo. Corte súbito a silencio por 0.3s. Luego entra la música.",
         "transition_to_next": "Cut seco — el corte abrupto entre silencio y la respuesta del niño es intencional. El silencio de 0.3s entre los dos hace que el espectador aguante la respiración."
       },
@@ -37,7 +36,6 @@
         "camera_movement": "Planos estáticos en ambos casos. La inmovilidad de la cámara hace que el contraste entre los sujetos sea más evidente. A los 10s, en el plano de lectura dialógica, la cámara hace un muy lento push in hacia la cara del niño hablando.",
         "subject_action": "MODO PASIVO: niño recostado, ojos semi-fijos en el libro, boca cerrada, manos quietas. MODO DIALÓGICO: mismo niño inclinado, boca abierta hablando, mano señalando, ojos conectados con la madre. El contraste físico es dramático.",
         "environment": "Misma sala. El grado de color cambia entre los dos modos: frío-desaturado para lectura pasiva, cálido para lectura dialógica.",
-        "text_overlay": "En modo pasivo: 'Leyendo en silencio.' — Poppins Regular, blanco, neutral. En modo dialógico: 'Lectura dialógica.' — Sour Gummy Bold, #F59E0B amber, más grande. El contraste tipográfico refuerza el contraste visual.",
         "audio_direction": "Para modo pasivo: música fría minimalista (sola cuerda de piano suave). Para modo dialógico: la misma música pero con capa de cuerdas que la enriquece. Las voces diegéticas están presentes pero en plano bajo — no se escuchan palabras claras.",
         "transition_to_next": "El último plano de lectura dialógica se extiende medio segundo más de lo que se esperaría — el niño sigue hablando animadamente y la cámara lo deja. Luego corte a voiceover."
       },
@@ -48,7 +46,6 @@
         "camera_movement": "Cámara en trípode para los planos de datos — da autoridad científica. Para los planos emocionales de cierre (28s-35s) vuelve el handheld suave. El cambio es intencional: datos con tripode, emoción con handheld.",
         "subject_action": "La madre formula preguntas abiertas sobre el libro: '¿Por qué crees que el personaje hizo eso?' El niño responde con vocabulario más rico del que usa normalmente. En un momento dice una palabra 'difícil' correctamente en contexto — ese momento es el 'experimento funcionando'.",
         "environment": "Primer plano de madre: la cámara finalmente está cerca de ella y se ve su atención total. Fondo con estantes de libros, cálido. El ambiente se volvió más cálido en esta parte (grading shift).",
-        "text_overlay": "Secuencia de datos con tipografía limpia:\n- [15s] 'En 1988, la Universidad de Oxford'\n- [17s] 'estudió 2 grupos de familias.'\n- [19s] 'Grupo A: leer en silencio.'\n- [21s] 'Grupo B: leer haciendo preguntas.'\n- [23s] '—'\n- [24s] 'A los 9 meses: vocabulario del grupo B'\n- [26s] '8 meses más adelantado.'\n- [28s] '8 meses de diferencia.'\n- [30s] 'Con 15 minutos al día.'\n- [32s] 'Con una sola pregunta.'\nEstilo visual: números en Sour Gummy Bold #F59E0B, texto explicativo en Poppins Regular blanco. Cada dato aparece limpiamente, el anterior desaparece.",
         "audio_direction": "Voiceover masculino chileno (contraste con variante A que era femenino). Voz de divulgador científico accesible — tipo el tono de un podcast de ciencia popular. Dice: 'En los años 80, investigadores de Oxford compararon dos grupos de padres. Unos leían en silencio. Otros leían haciendo preguntas. A los 9 meses, el segundo grupo tenía hijos con vocabulario 8 meses más adelantado. No con libros más caros. No con más tiempo. Solo con preguntas.' Música de fondo sube gradualmente.",
         "transition_to_next": "El voiceover termina. Un beat de silencio de 0.5s. Luego corte a CTA."
       },
@@ -58,7 +55,6 @@
         "shot_type": "Plano de detalle: las manos del niño sosteniendo el libro — ya no son las manos de la madre, son las suyas propias. Un símbolo visual de autonomía lectora. La madre señala algo en la página desde afuera del cuadro — solo se ve su mano entrando al encuadre.",
         "camera_movement": "Dolly out muy lento que revela el contexto: era un libro, es una escena de aprendizaje, es un hogar. El dolly termina en plano medio que muestra madre e hijo juntos.",
         "subject_action": "El niño sostiene el libro como suyo. Su postura es de dueño del libro, no de receptor pasivo. La madre entra al cuadro señalando una página y él responde señalando también.",
-        "text_overlay": "Aparece en secuencia rápida:\n[35s] 'Esta noche, una pregunta.' — Sour Gummy Bold blanco grande\n[37s] '¿Cuál es el mejor cuento para empezar?' — Poppins Regular más pequeño\n[38.5s] '→ Responde en comentarios' — #F59E0B amber\n[39s] Logo La Cuentería discreto en esquina inferior",
         "audio_direction": "El voiceover retoma con tono íntimo: 'Intenta esto esta noche. Solo una pregunta. Después cuéntanos cómo te fue.' La música sube a volumen normal y hace un fade out limpio en los últimos 0.8s."
       }
     ],

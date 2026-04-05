@@ -26,7 +26,6 @@
         "camera_movement": "Lento dolly in desde detrás-lateral derecha. La cámara no sabe todavía qué es lo que importa. Movimiento fluido como steadicam suave, no estabilizado digitalmente.",
         "subject_action": "La madre sostiene el libro abierto. El niño está recostado contra ella. Silencio. Desde este ángulo parece lectura normal en silencio.",
         "environment": "Sala de estar chilena, sofá de tela gris claro, almohada de colores suaves, ventana lateral con luz de tarde. Sin mostrar nada del libro todavía.",
-        "text_overlay": "Texto aparece a los 1.5s, fade in suave: '¿Sabes cuánto importa\nCÓMO le lees?' — Fuente Sour Gummy Bold, blanco, centrado, sobre el área de cielo/pared arriba de los personajes.",
         "audio_direction": "Silencio ambiente de casa por 0.5s. Luego fade in muy suave de música instrumental — piano minimalista con textura de cuerdas. A los 1s se escucha levemente la voz de fondo de la madre leyendo, ininteligible pero presente. Crea intriga.",
         "transition_to_next": "El dolly in continúa, la cámara pasa al lateral de la pareja y por primera vez vemos el libro y la cara del niño."
       },
@@ -37,7 +36,6 @@
         "camera_movement": "Plano 1: Estático con muy leve respiración orgánica (handheld 5% de movimiento). Plano 2: Tilt down lento del libro a la mano. Plano 3: Rack focus sutil desde la mano al rostro.",
         "subject_action": "La madre formula una pregunta al niño señalando una ilustración del libro: '¿Y tú qué harías si vieras un dragón?' El niño reflexiona con su expresión de búsqueda cognitiva — boca entreabierta, ojos arriba. Luego responde animadamente con gestos.",
         "environment": "Mismo sofá. La luz de tarde crea un halo dorado. En el fondo fuera de foco se intuye una librería con otros libros — establece que son una familia lectora.",
-        "text_overlay": "A los 5s: 'Leer EN SILENCIO es leer.' — aparece. A los 8s el texto anterior hace fade out y aparece: 'Leer HACIENDO PREGUNTAS...' — se queda.",
         "audio_direction": "La música sube muy levemente en presencia. El diálogo de la madre al niño es audible y natural — no es actuación, suena como grabación real de casa. La voz del niño respondiendo crea el gancho emocional. Voiceover en OFF aún no empieza.",
         "transition_to_next": "Corte en el momento en que el niño termina su respuesta y la madre asiente sonriendo. Es un momento de conexión pura. La siguiente escena inicia con voiceover."
       },
@@ -48,7 +46,6 @@
         "camera_movement": "Plano a plano con cortes limpios. Ningún zoom digital. Un plano tiene leve pan seguimiento cuando el niño gesticula con el brazo. El último plano (manos) tiene un dolly out muy lento que revela la escena completa.",
         "subject_action": "El diálogo de lectura dialógica continúa en loop natural. La madre señala ilustraciones, hace preguntas abiertas, escucha las respuestas del niño con atención total. El niño está completamente activado — señala, habla, se mueve ligeramente. Es un niño que piensa, no que escucha pasivo.",
         "environment": "Misma sala. La luz va cambiando muy levemente hacia más dorada (como si pasaran 20 minutos). Detalle: en un momento se ve la mano del niño tocar el libro con familiaridad — como si fuera suyo.",
-        "text_overlay": "Secuencia de texto que aparece y desaparece cada 4-5 segundos:\n- [15s] 'La lectura dialógica:'\n- [18s] 'Leer haciendo preguntas al niño'\n- [22s] '↑ DUPLICA el desarrollo del lenguaje'\n- [26s] 'vs leer en silencio'\n- [29s] 'Lo confirma 30 años de investigación'\n- [32s] 'El cambio es de 10 segundos.'\nFuente Poppins para datos, Sour Gummy para frases emocionales. #F59E0B amber para los datos clave.",
         "audio_direction": "A los 15s entra voiceover femenino natural, chileno (no locutora, sueña como la hermana mayor de Camila contándole algo importante): 'Hay un pequeño cambio en cómo leemos que tiene un impacto enorme en el cerebro de los niños. Se llama lectura dialógica. Y la diferencia está en una sola cosa: las preguntas.' La música baja a -12dB para dar protagonismo a la voz. A los 28s la música sube levemente.",
         "transition_to_next": "El dolly out final del plano de manos se detiene en el plano completo de madre-hijo. La imagen se pausa un frame. Corte a última escena."
       },
@@ -58,7 +55,6 @@
         "shot_type": "Close-up del rostro del niño mirando hacia la cámara — no directamente a lens, sino hacia la madre que le pregunta algo. Es como si mirara al espectador sin saberlo. Máximo impacto emocional en el momento de menor duración.",
         "camera_movement": "Estático. Ningún movimiento. La quietud es intencional — después de toda la suavidad del reel, este plano fijo crea peso. El niño está sonriendo ligeramente en respuesta a algo que su madre le preguntó. No es sonrisa forzada: es la sonrisa de quien acaba de decir algo que le parece gracioso.",
         "subject_action": "El niño mira al frente (donde está la madre). Tiene el libro en el regazo. Su expresión alterna entre pensativo y ligeramente sonriente. No se mueve mucho — solo la respiración y el micro-movimiento natural.",
-        "text_overlay": "Aparece a los 36s con un fade rápido (0.3s): '¿Le lees así a tu hijo/a?' en Sour Gummy Bold blanco — grande. A los 37.5s aparece debajo en Poppins regular más pequeño: 'Guarda esto y pruébalo hoy.' En el filo inferior, el logo de La Cuentería aparece muy discretamente.",
         "audio_direction": "El voiceover dice suave: 'Esta noche, mientras lees, prueba una pregunta. Solo una.' Pausa de 1 segundo. La música sube con un acorde resolutivo cálido. Fade out suave en los últimos 0.5s."
       }
     ],

@@ -26,7 +26,6 @@
         "camera_movement": "Completamente estático. Trípode firme. La quietud de la cámara hace que el movimiento del sujeto tenga más peso. El único movimiento en este plano es el de la madre.",
         "subject_action": "La madre mira directo a la cámara por 1 segundo — expresión seria pero no fría. Luego gira hacia el niño que está fuera de cuadro y le pregunta: '¿Por qué crees que el oso estaba solo?' El niño responde desde fuera de cuadro — se escucha su voz pero no se le ve. El contraste entre la pregunta simple de la madre y la respuesta elaborada del niño (que lleva 3-4 palabras más de lo que esperarías) es el hook.",
         "environment": "Sala de estar, sofá. Todo limpio pero real. La cámara está donde normalmente no está — directamente frente a la madre a 80cm, como si alguien hubiera dejado el teléfono en un soporte frente a ella.",
-        "text_overlay": "A los 0.5s sobre la cara de la madre antes de que hable: '¿Lees así?' — Sour Gummy Bold blanco, enorme, 52px. Aparece y desaparece en 1.5s. Sin fondo, sin caja, sin drop shadow — la pared detrás de la madre es suficientemente simple para que el texto sea legible.",
         "audio_direction": "Silencio absoluto en los primeros 0.3s — muy antinatural, crea tensión inmediata. Luego la voz de la madre pregunta. Luego la voz del niño responde. Luego entra la música a baja intensidad. No hay música en los primeros 3 segundos — el silencio y las voces reales son el gancho de audio.",
         "transition_to_next": "La madre asiente al escuchar la respuesta del niño. Corte seco al plano del niño."
       },
@@ -37,7 +36,6 @@
         "camera_movement": "Plano del niño: estático. Plano de la madre: estático. Plano del libro: macro lento. Pantalla de texto: fade from black.",
         "subject_action": "El niño responde con su vocabulario propio, gesticulando. Su respuesta tiene lógica narrativa y empleo correcto del tiempo pasado — detalle que una madre profesional notará como significativo. La madre escucha sin interrumpir hasta que él termina.",
         "environment": "En el plano de texto negro: nada. La pantalla oscura hace que el texto sea absolutamente imposible de ignorar.",
-        "text_overlay": "Plano del niño: sin texto — dejar que la respuesta del niño sea el argumento.\nTransición a pantalla oscura + texto grande:\n'Leer en silencio: el niño escucha.'\n[0.7s pausa]\n'Leer con preguntas: el niño PIENSA.'\nEsa diferencia es todo.\nFuente: Sour Gummy Bold, blanco sobre negro. La palabra 'PIENSA' en #F59E0B amber y 20% más grande.",
         "audio_direction": "La voz del niño respondiendo es el audio principal — nada más. Cuando llega la pantalla oscura, silencio total por 0.5s. Luego voiceover entra directamente, sin música bajo. La ausencia de música en las pantallas de texto da peso máximo a las palabras.",
         "transition_to_next": "Fade from black suave de 0.3s hacia la siguiente escena."
       },
@@ -48,7 +46,6 @@
         "camera_movement": "Todos los planos son estáticos o con micro-movimiento de 1-2%. La velocidad de edición es constante — ningún plano dura más de 3.5 segundos. El ritmo de cortes es el metrónomo del video.",
         "subject_action": "Cada plano captura un micro-momento específico de la lectura dialógica: la pregunta, la pausa de pensamiento, la respuesta, el señalar, el escuchar. Son los 5 movimientos de una danza que el espectador reconocerá porque es la que no está haciendo.",
         "environment": "El ambiente pasa a segundo plano completamente. En esta sección, el ambiente es contexto, no protagonista. Solo importan las acciones.",
-        "text_overlay": "Secuencia de textos directos, un dato por plano:\n[15s] 'Vocabulario del niño:'\n[17s] '+8 meses de desarrollo'\n[19s] 'Con 15 min al día'\n[21s] 'Solo por hacer preguntas'\n[23s] '—'\n[24s] 'No necesitas saber más sobre crianza.'\n[27s] 'Solo necesitas una pregunta.'\n[30s] 'Cualquier pregunta.'\n[32s] '¿Por qué crees que...?'\n[34s] '¿Qué harías tú si...?'\nEstilo: Poppins Regular para datos, Sour Gummy Bold para frases emocionales. Los textos en [32s] y [34s] están en formato de 'ejemplos concretos' — Poppins Italic #F59E0B.",
         "audio_direction": "Voiceover femenino chileno retoma a los 15s. Tono de amiga experta: 'No necesitas leer más libros de crianza para esto. Solo necesitas pausar. Y preguntar. Una pregunta abierta — las que no se responden con sí o no. Eso es todo.' La música entra a los 20s como background suave. A los 28s sube levemente anticipando el CTA.",
         "transition_to_next": "El plano medio final de madre e hijo se detiene en un frame congelado por 0.5s — efecto de freeze frame sutil antes de cortar al CTA. Este es el único efecto de postproducción en todo el video."
       },
@@ -58,7 +55,6 @@
         "shot_type": "El mismo close-up de la cara de la madre del hook — como bookend visual. Pero ahora ella está sonriendo al niño fuera de cuadro. La simetría con el inicio cierra el loop.",
         "camera_movement": "Estático. Idéntico al plano del hook pero la expresión cambió.",
         "subject_action": "La madre sonríe genuinamente al escuchar la respuesta de su hijo. Es la expresión de satisfacción de quien acaba de ver el resultado de algo que hizo bien. No es actuación — es la cara real de un padre cuando su hijo dice algo inteligente.",
-        "text_overlay": "Secuencia de tres textos que aparecen y se apilan:\n[35.5s] 'Pruébalo esta noche.' — Sour Gummy Bold blanco grande\n[37s] 'Comenta con ✋ si ya lees así.' — Poppins Regular #F59E0B\n[38.5s] 'Guarda para no olvidar.' — Poppins Regular blanco\n[39.5s] Logo La Cuentería discreto — esquina inferior derecha",
         "audio_direction": "La música alcanza su punto más alto (pero nunca es volumétrica). El voiceover dice: 'Esta noche, una pregunta. Solo una.' Pausa de 0.8s. 'Y cuéntanos qué respondió.' La música hace fade out con un cierre armónico limpio."
       }
     ],
