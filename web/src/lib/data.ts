@@ -149,12 +149,12 @@ export function getSimulationData() {
 
 // ─── Write operations (require Supabase) ───
 
-async function getSupabaseClient() {
+async function getSupabaseAdmin() {
   if (!isSupabaseConfigured()) {
     throw new Error("Supabase not configured");
   }
-  const { createClient } = await import("./supabase/server");
-  return createClient();
+  const { createAdminClient } = await import("./supabase/admin");
+  return createAdminClient();
 }
 
 export async function createProject(data: {
@@ -169,7 +169,7 @@ export async function createProject(data: {
   metrics_yaml?: Record<string, unknown>;
   calendar_yaml?: Record<string, unknown>;
 }): Promise<Project> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { data: row, error } = await supabase
     .from("projects")
     .insert({
@@ -199,7 +199,7 @@ export async function createCampaign(data: {
   platform: string;
   objectives_json?: Record<string, unknown>;
 }): Promise<Campaign> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { data: row, error } = await supabase
     .from("campaigns")
     .insert({
@@ -227,7 +227,7 @@ export async function createSlot(data: {
   intention?: string;
   topic: string;
 }): Promise<Slot> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { data: row, error } = await supabase
     .from("slots")
     .insert({
@@ -253,7 +253,7 @@ export async function upsertBrief(
   briefYaml: Record<string, unknown>,
   version: number = 1
 ): Promise<Brief> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { data: row, error } = await supabase
     .from("briefs")
     .insert({
@@ -268,7 +268,7 @@ export async function upsertBrief(
 }
 
 export async function approveBrief(briefId: string, approvedBy: string): Promise<void> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { error } = await supabase
     .from("briefs")
     .update({ approved_by: approvedBy, approved_at: new Date().toISOString() })
@@ -277,7 +277,7 @@ export async function approveBrief(briefId: string, approvedBy: string): Promise
 }
 
 export async function deleteVariantesForSlot(slotId: string): Promise<void> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { error } = await supabase
     .from("variantes")
     .delete()
@@ -295,7 +295,7 @@ export async function insertVariante(
     status?: string;
   }
 ): Promise<Variante> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { data: row, error } = await supabase
     .from("variantes")
     .insert({
@@ -317,7 +317,7 @@ export async function updateVarianteArt(
   artImageJson: Record<string, unknown>,
   artVideoJson: Record<string, unknown>
 ): Promise<void> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { error } = await supabase
     .from("variantes")
     .update({
@@ -334,7 +334,7 @@ export async function updateSlotStatus(
   status: SlotStatus,
   currentStep: SlotStep
 ): Promise<void> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { error } = await supabase
     .from("slots")
     .update({ status, current_step: currentStep })
@@ -346,7 +346,7 @@ export async function updateSlotSimulationMd(
   slotId: string,
   simulationMd: string
 ): Promise<void> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { error } = await supabase
     .from("slots")
     .update({ simulation_md: simulationMd })
@@ -362,7 +362,7 @@ export async function addFeedback(data: {
   step: "brief" | "content" | "art" | "simulation";
   comment: string;
 }): Promise<Feedback> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { data: row, error } = await supabase
     .from("feedback")
     .insert({
@@ -387,7 +387,7 @@ export async function addGenerationLog(data: {
   model_used: string;
   tokens_used?: number;
 }): Promise<void> {
-  const supabase = await getSupabaseClient();
+  const supabase = await getSupabaseAdmin();
   const { error } = await supabase.from("generation_logs").insert(data);
   if (error) throw new Error(error.message);
 }

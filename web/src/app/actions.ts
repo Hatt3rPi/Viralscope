@@ -18,8 +18,15 @@ export async function createProjectAction(formData: FormData) {
   const name = formData.get("name") as string;
   const slug = (formData.get("slug") as string) || name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
-  const project = await createProject({ name, slug });
-  redirect(`/projects/${project.slug}`);
+  let projectSlug: string;
+  try {
+    const project = await createProject({ name, slug });
+    projectSlug = project.slug;
+  } catch (e) {
+    console.error("createProjectAction error:", e);
+    throw new Error(`Error creando proyecto: ${e instanceof Error ? e.message : e}`);
+  }
+  redirect(`/projects/${projectSlug}`);
 }
 
 // ─── Campaign CRUD ───
@@ -34,38 +41,45 @@ export async function createCampaignAction(formData: FormData) {
   const numSlots = parseInt(formData.get("num_slots") as string || "0", 10);
   const slug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
-  const campaign = await createCampaign({
-    project_id: projectId,
-    name,
-    slug,
-    period_start: periodStart,
-    period_end: periodEnd,
-    platform,
-  });
+  let campaignId: string;
+  try {
+    const campaign = await createCampaign({
+      project_id: projectId,
+      name,
+      slug,
+      period_start: periodStart,
+      period_end: periodEnd,
+      platform,
+    });
+    campaignId = campaign.id;
 
-  // Auto-create empty slots distributed across the period
-  if (numSlots > 0) {
-    const start = new Date(periodStart);
-    const end = new Date(periodEnd);
-    const totalDays = Math.max(1, Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
-    const interval = totalDays / numSlots;
+    // Auto-create empty slots distributed across the period
+    if (numSlots > 0) {
+      const start = new Date(periodStart);
+      const end = new Date(periodEnd);
+      const totalDays = Math.max(1, Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
+      const interval = totalDays / numSlots;
 
-    for (let i = 0; i < numSlots; i++) {
-      const slotDate = new Date(start.getTime() + interval * i * 24 * 60 * 60 * 1000);
-      await createSlot({
-        campaign_id: campaign.id,
-        slot_number: i + 1,
-        date: slotDate.toISOString(),
-        format: "reel",
-        pillar: "general",
-        objective: "engagement",
-        intention: "quality",
-        topic: `Contenido #${i + 1}`,
-      });
+      for (let i = 0; i < numSlots; i++) {
+        const slotDate = new Date(start.getTime() + interval * i * 24 * 60 * 60 * 1000);
+        await createSlot({
+          campaign_id: campaignId,
+          slot_number: i + 1,
+          date: slotDate.toISOString(),
+          format: "reel",
+          pillar: "general",
+          objective: "engagement",
+          intention: "quality",
+          topic: `Contenido #${i + 1}`,
+        });
+      }
     }
+  } catch (e) {
+    console.error("createCampaignAction error:", e);
+    throw new Error(`Error creando campana: ${e instanceof Error ? e.message : e}`);
   }
 
-  redirect(`/projects/${projectSlug}/campaigns/${campaign.id}`);
+  redirect(`/projects/${projectSlug}/campaigns/${campaignId}`);
 }
 
 // ─── Brief Actions ───
