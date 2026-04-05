@@ -1,0 +1,21 @@
+{
+  "clip": 2,
+  "clip_name": "data_framework",
+  "duration_seconds": 15,
+  "time_range": "15-30s",
+  "aspect_ratio": "9:16",
+  "description": "Datos del estudio Whitehurst + framework de 3 preguntas accionables",
+  "narrative": "Plano medio estable de la madre haciendo una pregunta al niño sobre el libro. Se ve su cara por primera vez en primer plano — ella es la 'científica' del experimento. El niño piensa y responde con vocabulario sorprendentemente rico. Secuencia de datos en texto limpio sobre fondo de la escena. Los datos aparecen uno por uno: Oxford, 2 grupos, grupo A silencio, grupo B preguntas, 8 meses de ventaja. Las 3 preguntas aparecen como framework. Cámara en trípode (autoridad científica).",
+  "text_overlay_sequence": [
+    {"time": "0s", "text": "En 1988, la Universidad de Oxford", "style": "regular blanco"},
+    {"time": "2s", "text": "estudió 2 grupos de familias.", "style": "regular blanco"},
+    {"time": "4s", "text": "Grupo A: leer en silencio.", "style": "regular blanco"},
+    {"time": "6s", "text": "Grupo B: leer haciendo preguntas.", "style": "regular blanco"},
+    {"time": "8s", "text": "Vocabulario del grupo B:", "style": "regular blanco"},
+    {"time": "9s", "text": "8 meses más adelantado.", "style": "bold amber #F59E0B grande"},
+    {"time": "11s", "text": "Con 15 minutos al día.", "style": "regular blanco"},
+    {"time": "13s", "text": "Con una sola pregunta.", "style": "bold amber #F59E0B"}
+  ],
+  "prompt_string": "Cinematic 9:16 vertical video, medium shot of Chilean mother 35-40 years old asking question to 4-year-old son about illustrated storybook, warm home library setting with wooden bookshelves, child thinking then responding animatedly with hand gestures, mother listening intently with warm expression, tripod stable camera, warm golden hour window light, Fuji Eterna film grade warm tones, shallow depth of field on mother's face then rack focus to child, clean space in upper third for text overlay data, authentic Latin American home, books stacked irregularly on shelves, coffee cup untouched on table, documentary scientific authority aesthetic",
+  "negative_prompt": "infographic animations, brain illustrations, flying data particles, stock footage, studio lighting, teleprompter reading, forced expressions, plastic skin, 6 fingers, neon colors, cartoon elements, split screen effect"
+}

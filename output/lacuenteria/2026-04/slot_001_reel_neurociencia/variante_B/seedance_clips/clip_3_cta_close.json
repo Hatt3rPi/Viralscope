@@ -1,0 +1,18 @@
+{
+  "clip": 3,
+  "clip_name": "cta_close",
+  "duration_seconds": 10,
+  "time_range": "30-40s",
+  "aspect_ratio": "9:16",
+  "description": "Cierre emocional + CTA para follow y comentarios",
+  "narrative": "Plano de detalle: las manos del niño sostienen el libro — ya no son las manos de la madre, son las suyas. Símbolo visual de autonomía lectora. La madre señala algo en la página desde fuera del cuadro — solo se ve su mano entrando al encuadre. Dolly out lento que revela el contexto completo: madre e hijo juntos en su hogar. La escena se siente como un cierre natural, íntimo. Aparece el CTA y el logo discreto.",
+  "text_overlay_sequence": [
+    {"time": "0s", "text": "Esta noche, una pregunta.", "style": "bold grande blanco"},
+    {"time": "3s", "text": "¿Cuál de las 3 vas a probar?", "style": "regular blanco"},
+    {"time": "5s", "text": "→ Responde en comentarios", "style": "amber #F59E0B"},
+    {"time": "7s", "text": "Síguenos para el script completo 👆", "style": "regular blanco"},
+    {"time": "8s", "text": "Logo La Cuentería", "style": "esquina inferior derecha, discreto"}
+  ],
+  "prompt_string": "Cinematic 9:16 vertical video, close-up detail shot of small child's hands holding illustrated storybook independently, mother's hand entering frame from side pointing at page, slow dolly out revealing full scene of mother and 4-year-old son reading together on couch in warm Chilean home, evening golden lamp light, bookshelf background slightly out of focus, Fuji Eterna warm film grade, handheld gentle movement, backpack on floor and books stacked irregularly for lived-in authenticity, intimate closing moment, shallow depth of field transitioning to medium depth as dolly reveals room, ambient string music piano warm major key fading out softly",
+  "negative_prompt": "stock footage, studio setup, white background, forced pose, plastic skin, 6 fingers, neon effects, oversaturated, cartoon, abrupt ending, harsh lighting, sterile environment"
+}

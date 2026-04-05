@@ -1,0 +1,16 @@
+{
+  "clip": 3,
+  "clip_name": "dialogic_reading",
+  "generator": "veo_3.1",
+  "duration_seconds": 8,
+  "time_range": "16-24s",
+  "aspect_ratio": "9:16",
+  "description": "Contraste: lectura dialógica — mismo niño ahora activo, hablando, gesticulando, color cálido",
+  "text_overlay_sequence": [
+    {"time": "0s", "text": "Lectura dialógica.", "style": "bold amber #F59E0B grande"},
+    {"time": "3s", "text": "Grupo B: leer haciendo preguntas.", "style": "regular blanco"},
+    {"time": "6s", "text": "8 meses más adelantado.", "style": "bold amber #F59E0B"}
+  ],
+  "prompt_string": "Cinematic 9:16 vertical video, same couch same room as previous clip but now the 4-year-old Chilean boy is leaning forward actively talking and gesticulating with hands pointing at the illustrated storybook, bright engaged eyes looking at his mother, mouth open mid-sentence, animated body language showing cognitive activation, warm color grade with Fuji Eterna film look at 4000K warm temperature, slightly more saturated than previous clip, slow push-in camera movement toward child's face, mother visible in soft focus listening intently, golden warm lamp light mixing with natural window light, documentary intimate style, authentic Chilean family home",
+  "negative_prompt": "passive child, still hands, neutral expression, cool tones, desaturated, stock footage, studio lighting, cartoon, plastic skin, 6 fingers, forced acting, oversaturated"
+}

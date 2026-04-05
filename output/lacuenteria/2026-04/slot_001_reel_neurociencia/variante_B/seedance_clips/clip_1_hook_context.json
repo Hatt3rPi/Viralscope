@@ -1,0 +1,17 @@
+{
+  "clip": 1,
+  "clip_name": "hook_context",
+  "duration_seconds": 15,
+  "time_range": "0-15s",
+  "aspect_ratio": "9:16",
+  "description": "Hook (0-3s) + Contexto del contraste pasivo vs dialógico (3-15s)",
+  "narrative": "Abre con plano macro de libro abierto sostenido por manos de madre. Voz de madre leyendo en tono monótono. A los 2s ella pregunta '¿Y tú qué harías?' y el niño explota respondiendo con energía. Corte seco. Luego secuencia de contraste: planos alternados de lectura pasiva (niño quieto, cara neutra, color frío desaturado) vs lectura dialógica (mismo niño hablando, gesticulando, ojos brillantes, color cálido). Misma ropa, misma luz, solo cambia el comportamiento.",
+  "text_overlay_sequence": [
+    {"time": "1s", "text": "Una sola pregunta", "style": "bold grande blanco"},
+    {"time": "2.5s", "text": "activa esto 👇", "style": "pequeño blanco debajo"},
+    {"time": "5s", "text": "Leyendo en silencio.", "style": "regular blanco neutro"},
+    {"time": "9s", "text": "Lectura dialógica.", "style": "bold amber #F59E0B grande"}
+  ],
+  "prompt_string": "Cinematic 9:16 vertical video, intimate close-up of illustrated children's book held by mother's hands, warm home interior with bookshelf background, then cut to 4-year-old Chilean boy listening passively with neutral face and still hands in cool desaturated color grade, then same boy in same clothes same room but now animated talking gesticulating pointing at book with bright eyes in warm color grade, contrast between passive and active reading modes, documentary style stable camera, natural window light from left, Fuji Eterna film color science, authentic Latin American family home with imperfections visible, soft ambient string music transitioning from cold minor key to warm major key",
+  "negative_prompt": "brain graphics, neural overlays, neon effects, stock footage, studio white background, forced child acting, plastic skin, 6 fingers, oversaturated filter, cartoon style, AI-obvious artifacts, symmetrical composition"
+}

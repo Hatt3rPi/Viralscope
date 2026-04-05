@@ -1,0 +1,16 @@
+{
+  "clip": 2,
+  "clip_name": "passive_reading",
+  "generator": "veo_3.1",
+  "duration_seconds": 8,
+  "time_range": "8-16s",
+  "aspect_ratio": "9:16",
+  "description": "Contraste: lectura pasiva — niño quieto, cara neutra, color frío desaturado",
+  "text_overlay_sequence": [
+    {"time": "0s", "text": "Leyendo en silencio.", "style": "regular blanco neutro"},
+    {"time": "5s", "text": "Su cerebro escucha.", "style": "regular blanco"},
+    {"time": "7s", "text": "Pero no produce.", "style": "regular blanco"}
+  ],
+  "prompt_string": "Cinematic 9:16 vertical video, static tripod shot of a 4-year-old Chilean boy sitting on a couch listening passively while his mother reads a storybook aloud, child has neutral expression with still hands and semi-fixed gaze on the book, mouth closed, body reclined and passive, cool desaturated color grade with muted tones, Fuji Eterna film look at 5500K cold temperature, documentary observational style, warm home interior with bookshelf background, natural soft window light, the stillness and passivity of the child is the visual point, subtle ambient sound of mother reading in monotone voice",
+  "negative_prompt": "animated child, bright colors, warm tones, excited expression, stock footage, studio lighting, cartoon, plastic skin, 6 fingers, split screen, infographic overlay"
+}
