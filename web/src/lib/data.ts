@@ -153,8 +153,15 @@ async function getSupabaseAdmin() {
   if (!isSupabaseConfigured()) {
     throw new Error("Supabase not configured");
   }
-  const { createAdminClient } = await import("./supabase/admin");
-  return createAdminClient();
+  // Try admin client (service role, bypasses RLS) first
+  // Fall back to regular server client if service role key is not available
+  try {
+    const { createAdminClient } = await import("./supabase/admin");
+    return createAdminClient();
+  } catch {
+    const { createClient } = await import("./supabase/server");
+    return createClient();
+  }
 }
 
 export async function createProject(data: {
