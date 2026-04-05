@@ -54,7 +54,7 @@ export function CampaignTabs({
   const [activeTab, setActiveTab] = useState<string>("parrilla");
 
   const tabData: Record<string, Record<string, unknown>> = {
-    objectives: (project.metrics_yaml as Record<string, unknown>) || {},
+    objectives: (campaign.objectives_json as Record<string, unknown>) || {},
     calendar: (project.calendar_yaml as Record<string, unknown>) || {},
     metrics: (project.metrics_yaml as Record<string, unknown>) || {},
   };
