@@ -20,7 +20,7 @@ export default function LoginPage() {
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 
       // If Supabase is not configured, use demo mode
-      if (supabaseUrl.includes("YOUR_PROJECT")) {
+      if (!supabaseUrl || supabaseUrl.includes("YOUR_PROJECT") || supabaseUrl.includes("tu_proyecto") || supabaseUrl.includes("supabase.co") === false) {
         localStorage.setItem(
           "viralscope_user",
           JSON.stringify({ email, logged_in: true })
