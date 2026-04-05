@@ -200,34 +200,34 @@ export function TimelineView({
                               const imgDir = v.art_direction_image_json as Record<string, unknown>;
                               const prompt = imgDir?.prompt_string as string;
                               const negative = imgDir?.negative_prompt as string;
-                              const settings = imgDir?.settings as Record<string, unknown>;
                               if (!prompt) return alert("No hay prompt de imagen");
 
                               const btn = document.activeElement as HTMLButtonElement;
                               if (btn) { btn.textContent = "Generando..."; btn.disabled = true; }
 
                               try {
-                                const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-                                const res = await fetch(`${supabaseUrl}/functions/v1/generate-image`, {
-                                  method: "POST",
-                                  headers: { "Content-Type": "application/json" },
-                                  body: JSON.stringify({
-                                    prompt_string: prompt,
-                                    negative_prompt: negative || "",
-                                    aspect_ratio: (settings?.aspect_ratio as string) || "9:16",
-                                    slot_id: slot.id,
-                                    variant_label: v.variant_label,
-                                  }),
-                                });
+                                const res = await fetch(
+                                  `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/generate-image`,
+                                  {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                      prompt_string: prompt,
+                                      negative_prompt: negative || "",
+                                      slot_id: slot.id,
+                                      variant_label: v.variant_label,
+                                    }),
+                                  }
+                                );
                                 const data = await res.json();
                                 if (data.image_url) {
-                                  alert("Imagen generada correctamente");
+                                  alert("Imagen generada");
                                   window.location.reload();
                                 } else {
                                   alert(`Error: ${data.error || "Sin imagen"}`);
                                 }
                               } catch (err) {
-                                alert(`Error de conexión: ${err}`);
+                                alert(`Error: ${err}`);
                               } finally {
                                 if (btn) { btn.textContent = "Generar Imagen"; btn.disabled = false; }
                               }
