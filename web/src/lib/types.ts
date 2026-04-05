@@ -53,6 +53,7 @@ export interface Slot {
   topic: string;
   status: SlotStatus;
   current_step: SlotStep;
+  simulation_md: string | null;
   created_at: string;
 }
 

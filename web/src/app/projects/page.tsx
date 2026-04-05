@@ -50,10 +50,12 @@ export default async function ProjectsPage() {
           ))}
 
           {/* Add project card */}
-          <div className="bg-white/50 rounded-2xl border-2 border-dashed border-purple-200 p-6 flex flex-col items-center justify-center text-purple-400 hover:border-purple-400 hover:text-purple-600 transition-colors cursor-pointer min-h-[180px]">
-            <span className="text-4xl mb-2">+</span>
-            <span className="text-sm font-medium">Nuevo proyecto</span>
-          </div>
+          <Link href="/projects/new">
+            <div className="bg-white/50 rounded-2xl border-2 border-dashed border-purple-200 p-6 flex flex-col items-center justify-center text-purple-400 hover:border-purple-400 hover:text-purple-600 transition-colors cursor-pointer min-h-[180px]">
+              <span className="text-4xl mb-2">+</span>
+              <span className="text-sm font-medium">Nuevo proyecto</span>
+            </div>
+          </Link>
         </div>
       </main>
     </div>

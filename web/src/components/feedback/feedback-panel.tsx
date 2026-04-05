@@ -4,6 +4,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { addFeedbackAction } from "@/app/actions";
 import type { Feedback } from "@/lib/types";
 
 interface FeedbackPanelProps {
@@ -21,8 +22,9 @@ export function FeedbackPanel({
 }: FeedbackPanelProps) {
   const [items, setItems] = React.useState<Feedback[]>(feedbackItems);
   const [comment, setComment] = React.useState("");
+  const [submitting, setSubmitting] = React.useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!comment.trim()) return;
 
@@ -31,7 +33,7 @@ export function FeedbackPanel({
       slot_id: slotId,
       variante_id: varianteId || null,
       user_id: "local-user",
-      user_email: "usuario@local.dev",
+      user_email: "usuario@viralscope.dev",
       step: step as Feedback["step"],
       comment: comment.trim(),
       requested_changes_json: null,
@@ -41,6 +43,21 @@ export function FeedbackPanel({
 
     setItems((prev) => [...prev, newItem]);
     setComment("");
+
+    // Persist to Supabase (non-blocking)
+    setSubmitting(true);
+    try {
+      await addFeedbackAction(
+        slotId,
+        step as Feedback["step"],
+        newItem.comment,
+        varianteId
+      );
+    } catch {
+      // Local state already updated, silent fail for persistence
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function formatDate(dateStr: string) {
@@ -95,8 +112,8 @@ export function FeedbackPanel({
           placeholder="Escribe tu feedback..."
           className="min-h-[60px] flex-1"
         />
-        <Button type="submit" size="sm" className="self-end">
-          Enviar Feedback
+        <Button type="submit" size="sm" className="self-end" disabled={submitting}>
+          {submitting ? "Enviando..." : "Enviar Feedback"}
         </Button>
       </form>
     </div>

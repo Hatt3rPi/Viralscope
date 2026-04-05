@@ -53,7 +53,15 @@ export function ProjectTabs({
 
       {activeTab === "campaigns" ? (
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-gray-900">Campañas</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900">Campañas</h3>
+            <Link
+              href={`/projects/${slug}/campaigns/new`}
+              className="px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-colors"
+            >
+              + Nueva Campana
+            </Link>
+          </div>
           {campaigns.length === 0 ? (
             <p className="text-gray-500">No hay campañas aún.</p>
           ) : (

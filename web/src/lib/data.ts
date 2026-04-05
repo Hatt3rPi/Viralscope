@@ -2,6 +2,8 @@ import type {
   Project,
   Campaign,
   Slot,
+  SlotStatus,
+  SlotStep,
   Brief,
   Variante,
   Feedback,
@@ -143,4 +145,249 @@ export async function getFeedback(slotId: string): Promise<Feedback[]> {
 
 export function getSimulationData() {
   return import("./seed-data").then((mod) => mod.simulationData);
+}
+
+// ─── Write operations (require Supabase) ───
+
+async function getSupabaseClient() {
+  if (!isSupabaseConfigured()) {
+    throw new Error("Supabase not configured");
+  }
+  const { createClient } = await import("./supabase/server");
+  return createClient();
+}
+
+export async function createProject(data: {
+  name: string;
+  slug: string;
+  brand_yaml?: Record<string, unknown>;
+  voice_yaml?: Record<string, unknown>;
+  audiences_yaml?: Record<string, unknown>;
+  pillars_yaml?: Record<string, unknown>;
+  competitors_yaml?: Record<string, unknown>;
+  platforms_yaml?: Record<string, unknown>;
+  metrics_yaml?: Record<string, unknown>;
+  calendar_yaml?: Record<string, unknown>;
+}): Promise<Project> {
+  const supabase = await getSupabaseClient();
+  const { data: row, error } = await supabase
+    .from("projects")
+    .insert({
+      name: data.name,
+      slug: data.slug,
+      brand_yaml: data.brand_yaml || {},
+      voice_yaml: data.voice_yaml || {},
+      audiences_yaml: data.audiences_yaml || {},
+      pillars_yaml: data.pillars_yaml || {},
+      competitors_yaml: data.competitors_yaml || {},
+      platforms_yaml: data.platforms_yaml || {},
+      metrics_yaml: data.metrics_yaml || {},
+      calendar_yaml: data.calendar_yaml || {},
+    })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as Project;
+}
+
+export async function createCampaign(data: {
+  project_id: string;
+  name: string;
+  slug: string;
+  period_start: string;
+  period_end: string;
+  platform: string;
+  objectives_json?: Record<string, unknown>;
+}): Promise<Campaign> {
+  const supabase = await getSupabaseClient();
+  const { data: row, error } = await supabase
+    .from("campaigns")
+    .insert({
+      project_id: data.project_id,
+      name: data.name,
+      slug: data.slug,
+      period_start: data.period_start,
+      period_end: data.period_end,
+      platform: data.platform,
+      objectives_json: data.objectives_json || {},
+    })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as Campaign;
+}
+
+export async function createSlot(data: {
+  campaign_id: string;
+  slot_number: number;
+  date: string;
+  format: string;
+  pillar: string;
+  objective: string;
+  intention?: string;
+  topic: string;
+}): Promise<Slot> {
+  const supabase = await getSupabaseClient();
+  const { data: row, error } = await supabase
+    .from("slots")
+    .insert({
+      campaign_id: data.campaign_id,
+      slot_number: data.slot_number,
+      date: data.date,
+      format: data.format,
+      pillar: data.pillar,
+      objective: data.objective,
+      intention: data.intention || "quality",
+      topic: data.topic,
+      status: "draft",
+      current_step: "1-brief",
+    })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as Slot;
+}
+
+export async function upsertBrief(
+  slotId: string,
+  briefYaml: Record<string, unknown>,
+  version: number = 1
+): Promise<Brief> {
+  const supabase = await getSupabaseClient();
+  const { data: row, error } = await supabase
+    .from("briefs")
+    .insert({
+      slot_id: slotId,
+      brief_yaml: briefYaml,
+      version,
+    })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as Brief;
+}
+
+export async function approveBrief(briefId: string, approvedBy: string): Promise<void> {
+  const supabase = await getSupabaseClient();
+  const { error } = await supabase
+    .from("briefs")
+    .update({ approved_by: approvedBy, approved_at: new Date().toISOString() })
+    .eq("id", briefId);
+  if (error) throw new Error(error.message);
+}
+
+export async function deleteVariantesForSlot(slotId: string): Promise<void> {
+  const supabase = await getSupabaseClient();
+  const { error } = await supabase
+    .from("variantes")
+    .delete()
+    .eq("slot_id", slotId);
+  if (error) throw new Error(error.message);
+}
+
+export async function insertVariante(
+  slotId: string,
+  label: "A" | "B" | "C",
+  data: {
+    copy_md: string;
+    art_direction_image_json?: Record<string, unknown>;
+    art_direction_video_json?: Record<string, unknown>;
+    status?: string;
+  }
+): Promise<Variante> {
+  const supabase = await getSupabaseClient();
+  const { data: row, error } = await supabase
+    .from("variantes")
+    .insert({
+      slot_id: slotId,
+      variant_label: label,
+      copy_md: data.copy_md,
+      art_direction_image_json: data.art_direction_image_json || {},
+      art_direction_video_json: data.art_direction_video_json || {},
+      status: data.status || "draft",
+    })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as Variante;
+}
+
+export async function updateVarianteArt(
+  varianteId: string,
+  artImageJson: Record<string, unknown>,
+  artVideoJson: Record<string, unknown>
+): Promise<void> {
+  const supabase = await getSupabaseClient();
+  const { error } = await supabase
+    .from("variantes")
+    .update({
+      art_direction_image_json: artImageJson,
+      art_direction_video_json: artVideoJson,
+      status: "art_review",
+    })
+    .eq("id", varianteId);
+  if (error) throw new Error(error.message);
+}
+
+export async function updateSlotStatus(
+  slotId: string,
+  status: SlotStatus,
+  currentStep: SlotStep
+): Promise<void> {
+  const supabase = await getSupabaseClient();
+  const { error } = await supabase
+    .from("slots")
+    .update({ status, current_step: currentStep })
+    .eq("id", slotId);
+  if (error) throw new Error(error.message);
+}
+
+export async function updateSlotSimulationMd(
+  slotId: string,
+  simulationMd: string
+): Promise<void> {
+  const supabase = await getSupabaseClient();
+  const { error } = await supabase
+    .from("slots")
+    .update({ simulation_md: simulationMd })
+    .eq("id", slotId);
+  if (error) throw new Error(error.message);
+}
+
+export async function addFeedback(data: {
+  slot_id: string;
+  variante_id?: string;
+  user_id: string;
+  user_email?: string;
+  step: "brief" | "content" | "art" | "simulation";
+  comment: string;
+}): Promise<Feedback> {
+  const supabase = await getSupabaseClient();
+  const { data: row, error } = await supabase
+    .from("feedback")
+    .insert({
+      slot_id: data.slot_id,
+      variante_id: data.variante_id || null,
+      user_id: data.user_id,
+      user_email: data.user_email,
+      step: data.step,
+      comment: data.comment,
+    })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as Feedback;
+}
+
+export async function addGenerationLog(data: {
+  slot_id: string;
+  step: string;
+  input_json: Record<string, unknown>;
+  output_json: Record<string, unknown>;
+  model_used: string;
+  tokens_used?: number;
+}): Promise<void> {
+  const supabase = await getSupabaseClient();
+  const { error } = await supabase.from("generation_logs").insert(data);
+  if (error) throw new Error(error.message);
 }

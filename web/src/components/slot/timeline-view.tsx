@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, Circle } from "lucide-react";
+import { Check, Circle, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { ArtDirectionCard } from "@/components/slot/art-direction-card";
 import { InstagramPreview } from "@/components/slot/instagram-preview";
 import { SimulationCard } from "@/components/slot/simulation-card";
 import { FeedbackPanel } from "@/components/feedback/feedback-panel";
+import { approveBriefAction, advanceSlotAction, saveSimulationMdAction } from "@/app/actions";
 import type { Slot, Brief, Variante, Feedback, SlotStep } from "@/lib/types";
 
 interface TimelineViewProps {
@@ -19,6 +20,8 @@ interface TimelineViewProps {
   variantes: Variante[];
   feedbackItems: Feedback[];
   simulationData: Record<string, unknown>;
+  projectId: string;
+  campaignId: string;
 }
 
 const stepsConfig: {
@@ -58,10 +61,134 @@ export function TimelineView({
   variantes,
   feedbackItems,
   simulationData,
+  projectId,
+  campaignId,
 }: TimelineViewProps) {
   const [expandedSteps, setExpandedSteps] = React.useState<Set<string>>(() => {
     return new Set([slot.current_step]);
   });
+  const [loading, setLoading] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
+  const [mirofishMd, setMirofishMd] = React.useState<string | null>(null);
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+
+  async function callEdgeFunction(name: string, body: Record<string, unknown>) {
+    const res = await fetch(`${supabaseUrl}/functions/v1/${name}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: res.statusText }));
+      throw new Error(err.error || `Error ${res.status}`);
+    }
+    return res.json();
+  }
+
+  async function handleGenerateBrief() {
+    setLoading("brief");
+    setError(null);
+    try {
+      await callEdgeFunction("generate-brief", {
+        project_id: projectId,
+        campaign_id: campaignId,
+        slot_id: slot.id,
+      });
+      window.location.reload();
+    } catch (e) {
+      setError(`Error generando brief: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handleApproveBrief() {
+    if (!brief) return;
+    setLoading("approve-brief");
+    setError(null);
+    try {
+      await approveBriefAction(brief.id, slot.id, "usuario@viralscope.dev");
+      window.location.reload();
+    } catch (e) {
+      setError(`Error aprobando brief: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handleRegenerateBrief() {
+    setLoading("regen-brief");
+    setError(null);
+    try {
+      await callEdgeFunction("generate-brief", {
+        project_id: projectId,
+        campaign_id: campaignId,
+        slot_id: slot.id,
+      });
+      window.location.reload();
+    } catch (e) {
+      setError(`Error regenerando brief: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handleGenerateVariantes() {
+    setLoading("variantes");
+    setError(null);
+    try {
+      await callEdgeFunction("generate-variantes", { slot_id: slot.id });
+      window.location.reload();
+    } catch (e) {
+      setError(`Error generando variantes: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handleGenerateArt(variantLabel: string) {
+    setLoading(`art-${variantLabel}`);
+    setError(null);
+    try {
+      await callEdgeFunction("generate-art", {
+        slot_id: slot.id,
+        variant_label: variantLabel,
+      });
+      window.location.reload();
+    } catch (e) {
+      setError(`Error generando arte ${variantLabel}: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handlePrepareMirofish() {
+    setLoading("mirofish");
+    setError(null);
+    try {
+      const data = await callEdgeFunction("prepare-mirofish", { slot_id: slot.id });
+      setMirofishMd(data.simulation_md);
+      await saveSimulationMdAction(slot.id, data.simulation_md);
+    } catch (e) {
+      setError(`Error preparando MiroFish: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handleApproveForPublish() {
+    setLoading("approve-final");
+    setError(null);
+    try {
+      await advanceSlotAction(slot.id, "ready", "5-approved");
+      window.location.reload();
+    } catch (e) {
+      setError(`Error aprobando: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
 
   function toggleStep(stepKey: string) {
     setExpandedSteps((prev) => {
@@ -178,63 +305,147 @@ export function TimelineView({
 
               {isExpanded && (
                 <div className="mt-4 space-y-4">
+                  {/* Error display */}
+                  {error && (
+                    <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+                      {error}
+                    </div>
+                  )}
+
                   {/* Step 1: Brief */}
-                  {step.key === "1-brief" && brief && <BriefCard brief={brief} />}
+                  {step.key === "1-brief" && (
+                    <div className="space-y-4">
+                      {brief ? (
+                        <BriefCard
+                          brief={brief}
+                          onApprove={handleApproveBrief}
+                          onRegenerate={handleRegenerateBrief}
+                        />
+                      ) : (
+                        <div className="rounded-xl border border-gray-200 bg-white p-6 text-center space-y-3">
+                          <p className="text-sm text-gray-500">
+                            No hay brief generado aun para este slot.
+                          </p>
+                          <Button
+                            onClick={handleGenerateBrief}
+                            disabled={loading === "brief"}
+                            className="bg-purple-600 hover:bg-purple-700"
+                          >
+                            {loading === "brief" ? (
+                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Brief...</>
+                            ) : (
+                              "Generar Brief con IA"
+                            )}
+                          </Button>
+                        </div>
+                      )}
+                      {loading === "approve-brief" && (
+                        <div className="flex items-center gap-2 text-sm text-purple-600">
+                          <Loader2 className="h-4 w-4 animate-spin" /> Aprobando brief...
+                        </div>
+                      )}
+                      {loading === "regen-brief" && (
+                        <div className="flex items-center gap-2 text-sm text-purple-600">
+                          <Loader2 className="h-4 w-4 animate-spin" /> Regenerando brief...
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Step 2: Content */}
-                  {step.key === "2-content" && variantes.length > 0 && (
-                    <VarianteTabs variantes={variantes} />
+                  {step.key === "2-content" && (
+                    <div className="space-y-4">
+                      {variantes.length > 0 ? (
+                        <VarianteTabs variantes={variantes} />
+                      ) : (
+                        <div className="rounded-xl border border-gray-200 bg-white p-6 text-center space-y-3">
+                          <p className="text-sm text-gray-500">
+                            No hay variantes generadas aun.
+                          </p>
+                        </div>
+                      )}
+                      <Button
+                        onClick={handleGenerateVariantes}
+                        disabled={loading === "variantes"}
+                        variant={variantes.length > 0 ? "outline" : "default"}
+                        className={variantes.length > 0 ? "" : "bg-purple-600 hover:bg-purple-700"}
+                      >
+                        {loading === "variantes" ? (
+                          <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Variantes...</>
+                        ) : variantes.length > 0 ? (
+                          "Regenerar Variantes"
+                        ) : (
+                          "Generar 3 Variantes con IA"
+                        )}
+                      </Button>
+                    </div>
                   )}
 
                   {/* Step 3: Art Direction */}
                   {step.key === "3-art" && (
                     <div className="space-y-6">
+                      {variantes.length === 0 && (
+                        <p className="text-sm text-gray-400">Primero genera variantes en el paso anterior.</p>
+                      )}
                       {variantes.map((v) => (
-                        <div
-                          key={v.id}
-                          className="grid gap-6 lg:grid-cols-2"
-                        >
-                          <ArtDirectionCard
-                            variante={v}
-                            onGenerateImage={async () => {
-                              const imgDir = v.art_direction_image_json as Record<string, unknown>;
-                              const prompt = imgDir?.prompt_string as string;
-                              const negative = imgDir?.negative_prompt as string;
-                              if (!prompt) return alert("No hay prompt de imagen");
+                        <div key={v.id} className="space-y-4">
+                          {/* Generate Art Direction button per variant */}
+                          {(!v.art_direction_image_json || Object.keys(v.art_direction_image_json).length === 0) && (
+                            <Button
+                              onClick={() => handleGenerateArt(v.variant_label)}
+                              disabled={loading === `art-${v.variant_label}`}
+                              className="bg-purple-600 hover:bg-purple-700"
+                              size="sm"
+                            >
+                              {loading === `art-${v.variant_label}` ? (
+                                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Arte {v.variant_label}...</>
+                              ) : (
+                                `Generar Art Direction — Variante ${v.variant_label}`
+                              )}
+                            </Button>
+                          )}
+                          <div className="grid gap-6 lg:grid-cols-2">
+                            <ArtDirectionCard
+                              variante={v}
+                              onGenerateImage={async () => {
+                                const imgDir = v.art_direction_image_json as Record<string, unknown>;
+                                const prompt = imgDir?.prompt_string as string;
+                                const negative = imgDir?.negative_prompt as string;
+                                if (!prompt) return alert("No hay prompt de imagen. Genera art direction primero.");
 
-                              const btn = document.activeElement as HTMLButtonElement;
-                              if (btn) { btn.textContent = "Generando..."; btn.disabled = true; }
+                                const btn = document.activeElement as HTMLButtonElement;
+                                if (btn) { btn.textContent = "Generando..."; btn.disabled = true; }
 
-                              try {
-                                const res = await fetch(
-                                  `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/generate-image`,
-                                  {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify({
-                                      prompt_string: prompt,
-                                      negative_prompt: negative || "",
-                                      slot_id: slot.id,
-                                      variant_label: v.variant_label,
-                                    }),
+                                try {
+                                  const res = await fetch(
+                                    `${supabaseUrl}/functions/v1/generate-image`,
+                                    {
+                                      method: "POST",
+                                      headers: { "Content-Type": "application/json" },
+                                      body: JSON.stringify({
+                                        prompt_string: prompt,
+                                        negative_prompt: negative || "",
+                                        slot_id: slot.id,
+                                        variant_label: v.variant_label,
+                                      }),
+                                    }
+                                  );
+                                  const data = await res.json();
+                                  if (data.image_url) {
+                                    window.location.reload();
+                                  } else {
+                                    alert(`Error: ${data.error || "Sin imagen"}`);
                                   }
-                                );
-                                const data = await res.json();
-                                if (data.image_url) {
-                                  alert("Imagen generada");
-                                  window.location.reload();
-                                } else {
-                                  alert(`Error: ${data.error || "Sin imagen"}`);
+                                } catch (err) {
+                                  alert(`Error: ${err}`);
+                                } finally {
+                                  if (btn) { btn.textContent = "Generar Imagen"; btn.disabled = false; }
                                 }
-                              } catch (err) {
-                                alert(`Error: ${err}`);
-                              } finally {
-                                if (btn) { btn.textContent = "Generar Imagen"; btn.disabled = false; }
-                              }
-                            }}
-                          />
-                          <div className="flex items-start justify-center">
-                            <InstagramPreview variante={v} />
+                              }}
+                            />
+                            <div className="flex items-start justify-center">
+                              <InstagramPreview variante={v} />
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -242,13 +453,55 @@ export function TimelineView({
                   )}
 
                   {/* Step 4: Simulation */}
-                  {step.key === "4-simulation" &&
-                    Object.keys(simulationData).length > 0 && (
-                      <SimulationCard
-                        simulationData={typedSimData}
-                        variantes={variantes}
-                      />
-                    )}
+                  {step.key === "4-simulation" && (
+                    <div className="space-y-4">
+                      {Object.keys(simulationData).length > 0 && (
+                        <SimulationCard
+                          simulationData={typedSimData}
+                          variantes={variantes}
+                        />
+                      )}
+                      <div className="rounded-xl border border-gray-200 bg-white p-6 space-y-4">
+                        <h4 className="font-semibold text-gray-900">Preparar para MiroFish</h4>
+                        <p className="text-sm text-gray-500">
+                          Genera un documento seed en Markdown con las variantes, personas y criterios de
+                          evaluacion para copiar a MiroFish.
+                        </p>
+                        <Button
+                          onClick={handlePrepareMirofish}
+                          disabled={loading === "mirofish"}
+                          className="bg-indigo-600 hover:bg-indigo-700"
+                        >
+                          {loading === "mirofish" ? (
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Preparando Seed...</>
+                          ) : (
+                            "Preparar Seed para MiroFish"
+                          )}
+                        </Button>
+                        {(() => {
+                          const displayMd = mirofishMd || slot.simulation_md;
+                          if (!displayMd) return null;
+                          return (
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs font-semibold uppercase text-gray-400">Seed Document</span>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => navigator.clipboard.writeText(displayMd)}
+                                >
+                                  Copiar al Clipboard
+                                </Button>
+                              </div>
+                              <pre className="max-h-96 overflow-auto rounded-lg bg-gray-50 p-4 text-xs text-gray-700 whitespace-pre-wrap">
+                                {displayMd}
+                              </pre>
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Step 5: Approval */}
                   {step.key === "5-approved" && (
@@ -263,10 +516,14 @@ export function TimelineView({
                             <span className="font-bold text-purple-700">
                               {winnerVariant.variant_label}
                             </span>{" "}
-                            con un puntaje de{" "}
-                            <span className="font-bold text-green-700">
-                              {winnerVariant.simulation_score?.toFixed(1)}
-                            </span>
+                            {winnerVariant.simulation_score !== null && (
+                              <>
+                                con un puntaje de{" "}
+                                <span className="font-bold text-green-700">
+                                  {winnerVariant.simulation_score?.toFixed(1)}
+                                </span>
+                              </>
+                            )}
                           </p>
                           {winnerVariant.image_url && (
                             // eslint-disable-next-line @next/next/no-img-element
@@ -276,14 +533,39 @@ export function TimelineView({
                               className="max-w-xs rounded-lg border"
                             />
                           )}
-                          <Button className="bg-green-600 hover:bg-green-700">
-                            Aprobar para Publicación
+                          <Button
+                            className="bg-green-600 hover:bg-green-700"
+                            disabled={loading === "approve-final"}
+                            onClick={handleApproveForPublish}
+                          >
+                            {loading === "approve-final" ? (
+                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Aprobando...</>
+                            ) : (
+                              "Aprobar para Publicacion"
+                            )}
                           </Button>
                         </div>
                       ) : (
-                        <p className="text-sm text-gray-400">
-                          Aún no hay datos de simulación disponibles.
-                        </p>
+                        <div className="space-y-3">
+                          <p className="text-sm text-gray-500">
+                            {variantes.length > 0
+                              ? "Las variantes estan listas para revision."
+                              : "Aun no hay datos de simulacion disponibles."}
+                          </p>
+                          {variantes.length > 0 && (
+                            <Button
+                              className="bg-green-600 hover:bg-green-700"
+                              disabled={loading === "approve-final"}
+                              onClick={handleApproveForPublish}
+                            >
+                              {loading === "approve-final" ? (
+                                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Aprobando...</>
+                              ) : (
+                                "Aprobar para Publicacion"
+                              )}
+                            </Button>
+                          )}
+                        </div>
                       )}
                     </div>
                   )}

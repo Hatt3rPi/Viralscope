@@ -75,6 +75,8 @@ export default async function SlotPage({
           variantes={variantes}
           feedbackItems={feedbackItems}
           simulationData={simulationData}
+          projectId={project.id}
+          campaignId={campaign.id}
         />
       </main>
     </div>
