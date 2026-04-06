@@ -143,30 +143,49 @@ export function ChatPhase({
           </div>
         )}
 
-        {/* Ready confirmation */}
-        {isReady && !isLoading && (
+        {/* Ready confirmation / Generating parrilla */}
+        {isReady && (
           <div className="rounded-xl border-2 border-purple-200 bg-purple-50 p-5 space-y-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-purple-600" />
-              <p className="font-semibold text-purple-900">
-                Tengo toda la informacion necesaria
-              </p>
-            </div>
-            <p className="text-sm text-purple-700">
-              Puedo generar la parrilla estrategica ahora, o podemos seguir conversando si quieres agregar mas detalles.
-            </p>
-            <div className="flex gap-3">
-              <Button
-                onClick={onGenerateParrilla}
-                className="bg-purple-600 hover:bg-purple-700"
-              >
-                <Sparkles className="mr-2 h-4 w-4" />
-                Generar Parrilla
-              </Button>
-              <Button variant="outline" onClick={onContinueChat}>
-                Seguir conversando
-              </Button>
-            </div>
+            {isLoading ? (
+              <>
+                <div className="flex items-center gap-3">
+                  <Loader2 className="h-6 w-6 text-purple-600 animate-spin" />
+                  <p className="font-semibold text-purple-900">
+                    Generando parrilla estrategica...
+                  </p>
+                </div>
+                <p className="text-sm text-purple-700">
+                  El Estratega esta disenando tu calendario de contenidos. Esto puede tomar unos segundos.
+                </p>
+                <div className="h-1.5 w-full rounded-full bg-purple-100 overflow-hidden">
+                  <div className="h-full w-2/3 rounded-full bg-purple-500 animate-pulse" />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-purple-600" />
+                  <p className="font-semibold text-purple-900">
+                    Tengo toda la informacion necesaria
+                  </p>
+                </div>
+                <p className="text-sm text-purple-700">
+                  Puedo generar la parrilla estrategica ahora, o podemos seguir conversando si quieres agregar mas detalles.
+                </p>
+                <div className="flex gap-3">
+                  <Button
+                    onClick={onGenerateParrilla}
+                    className="bg-purple-600 hover:bg-purple-700"
+                  >
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Generar Parrilla
+                  </Button>
+                  <Button variant="outline" onClick={onContinueChat}>
+                    Seguir conversando
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
         )}
 

@@ -223,6 +223,7 @@ export function CampaignWizard({ project, projectSlug }: CampaignWizardProps) {
 
   // ── Generate Parrilla ───────────────────────────────────────────────────
   async function handleGenerateParrilla() {
+    if (state.isLoading) return; // Prevent double-click
     dispatch({ type: "SET_LOADING", loading: true });
     dispatch({ type: "SET_ERROR", error: null });
 
@@ -252,7 +253,7 @@ export function CampaignWizard({ project, projectSlug }: CampaignWizardProps) {
 
   // ── Approve & Create Campaign ───────────────────────────────────────────
   async function handleApprove() {
-    if (!state.config || state.parrilla.length === 0) return;
+    if (!state.config || state.parrilla.length === 0 || state.isLoading) return;
 
     dispatch({ type: "SET_LOADING", loading: true });
     dispatch({ type: "SET_ERROR", error: null });
