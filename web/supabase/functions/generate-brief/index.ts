@@ -5,7 +5,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const GEMINI_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -93,9 +93,10 @@ Deno.serve(async (req: Request) => {
     const geminiBody = {
       contents: [{ parts: [{ text: prompt }] }],
       generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 4096,
+        temperature: 1.0,
+        maxOutputTokens: 8192,
         responseMimeType: "application/json",
+        thinkingConfig: { thinkingLevel: "low" },
       },
     };
 
@@ -119,8 +120,9 @@ Deno.serve(async (req: Request) => {
     const geminiData = await geminiRes.json();
 
     // ── Parse Gemini response ───────────────────────────────────────────
-    const rawText =
-      geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
+    const allParts = geminiData?.candidates?.[0]?.content?.parts ?? [];
+    const textPart = allParts.find((p: Record<string, unknown>) => typeof p.text === "string" && !p.thoughtSignature);
+    const rawText = textPart?.text || allParts[allParts.length - 1]?.text || null;
 
     if (!rawText) {
       return errorResponse("Empty response from Gemini", 502, geminiData);
@@ -193,7 +195,7 @@ Deno.serve(async (req: Request) => {
         step: "1-brief",
         input_json: { project_id, campaign_id, slot_id, prompt_length: prompt.length },
         output_json: briefYaml,
-        model_used: "gemini-2.5-flash",
+        model_used: "gemini-3.1-pro-preview",
         tokens_used: tokensUsed,
       });
 
@@ -206,7 +208,7 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({
       brief: savedBrief,
       version: nextVersion,
-      model: "gemini-2.5-flash",
+      model: "gemini-3.1-pro-preview",
       tokens_used: tokensUsed,
     });
   } catch (err) {

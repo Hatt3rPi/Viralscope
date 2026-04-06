@@ -5,7 +5,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const GEMINI_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -191,7 +191,8 @@ Now generate the MiroFish seed document. Structure it with these sections:
           },
         ],
         generationConfig: {
-          temperature: 0.7,
+          temperature: 1.0,
+          thinkingConfig: { thinkingLevel: "medium" },
         },
       }),
     });
@@ -259,7 +260,7 @@ Now generate the MiroFish seed document. Structure it with these sections:
         ),
       },
       output_json: { simulation_md_length: simulationMd.length },
-      model_used: "gemini-2.5-flash",
+      model_used: "gemini-3.1-pro-preview",
       tokens_used: tokensUsed,
     });
 

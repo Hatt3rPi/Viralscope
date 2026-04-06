@@ -5,7 +5,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const GEMINI_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -273,7 +273,8 @@ Generate the two art direction JSONs now. The image art direction must be highly
         ],
         generationConfig: {
           responseMimeType: "application/json",
-          temperature: 0.8,
+          temperature: 1.0,
+          thinkingConfig: { thinkingLevel: "low" },
         },
       }),
     });
@@ -288,8 +289,9 @@ Generate the two art direction JSONs now. The image art direction must be highly
 
     const geminiData = await geminiResponse.json();
 
-    const rawText =
-      geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    const allParts = geminiData?.candidates?.[0]?.content?.parts ?? [];
+    const textPart = allParts.find((p: Record<string, unknown>) => typeof p.text === "string" && !p.thoughtSignature);
+    const rawText = textPart?.text || allParts[allParts.length - 1]?.text || "";
 
     if (!rawText) {
       return jsonResponse(
@@ -358,7 +360,7 @@ Generate the two art direction JSONs now. The image art direction must be highly
       step: "generate-art",
       input_json: { slot_id, variant_label, slot_context: slot, brief_yaml: brief?.brief_yaml },
       output_json: { art_direction_image_json, art_direction_video_json },
-      model_used: "gemini-2.5-flash",
+      model_used: "gemini-3.1-pro-preview",
       tokens_used: tokensUsed,
     });
 
