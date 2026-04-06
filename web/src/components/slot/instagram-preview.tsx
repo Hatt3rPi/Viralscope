@@ -33,49 +33,65 @@ export function InstagramPreview({
   format = "reel",
 }: InstagramPreviewProps) {
   const caption = extractCaption(variante.copy_md);
-
-  const initials = brandName
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-
-  const username = brandName
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/[^a-z0-9]/g, "");
+  const initials = brandName.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+  const username = brandName.toLowerCase().replace(/\s+/g, "").replace(/[^a-z0-9]/g, "");
 
   if (format === "reel" || format === "video") {
     return <ReelPreview variante={variante} initials={initials} username={username} caption={caption} />;
   }
-
   if (format === "story") {
     return <StoryPreview variante={variante} initials={initials} username={username} caption={caption} />;
   }
-
   if (format === "carrusel") {
     return <CarouselPreview variante={variante} initials={initials} username={username} caption={caption} />;
   }
-
   return <PostPreview variante={variante} initials={initials} username={username} caption={caption} />;
 }
 
-// ─── Full Caption (always visible for demo) ─────────────────────────────────
+// ─── Device Shell ───────────────────────────────────────────────────────────
 
-function FullCaption({
-  username,
-  caption,
+function DeviceShell({
+  children,
+  width = "max-w-[340px]",
+  dark = false,
 }: {
-  username: string;
-  caption: string;
+  children: React.ReactNode;
+  width?: string;
+  dark?: boolean;
 }) {
   return (
-    <div className="px-4 py-2">
-      <div className="text-sm text-gray-900 whitespace-pre-wrap leading-relaxed">
-        <span className="font-semibold">{username}</span>{" "}
-        {caption}
+    <div className={cn("mx-auto", width)}>
+      <div className="device-frame">
+        <div className={cn("device-screen", dark && "bg-black")}>
+          {/* Notch area */}
+          <div className={cn(
+            "flex items-center justify-center pt-7 pb-1 px-6",
+            dark ? "bg-black" : "bg-white"
+          )}>
+            <span className={cn(
+              "text-[10px] font-semibold tracking-tight",
+              dark ? "text-white/70" : "text-gray-900"
+            )}>
+              9:41
+            </span>
+          </div>
+          {children}
+        </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Avatar ─────────────────────────────────────────────────────────────────
+
+function Avatar({ initials, size = "sm", ring = false }: { initials: string; size?: "sm" | "md"; ring?: boolean }) {
+  return (
+    <div className={cn(
+      "flex items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 font-bold text-white",
+      size === "sm" ? "h-8 w-8 text-[10px]" : "h-9 w-9 text-xs",
+      ring && "ring-2 ring-fuchsia-400/60 ring-offset-1 ring-offset-black"
+    )}>
+      {initials}
     </div>
   );
 }
@@ -83,156 +99,126 @@ function FullCaption({
 // ─── Reel Preview (9:16) ────────────────────────────────────────────────────
 
 function ReelPreview({
-  variante,
-  initials,
-  username,
-  caption,
+  variante, initials, username, caption,
 }: {
-  variante: Variante;
-  initials: string;
-  username: string;
-  caption: string;
+  variante: Variante; initials: string; username: string; caption: string;
 }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="mx-auto max-w-[280px]">
-      <div className="overflow-hidden rounded-[32px] border-[6px] border-gray-800 bg-black relative">
-        <div className="flex items-center justify-center bg-black px-6 py-1">
-          <span className="text-[10px] font-medium text-white">9:41</span>
+    <DeviceShell width="max-w-[280px]" dark>
+      <div className="relative aspect-[9/16] bg-black">
+        {variante.image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={variante.image_url} alt="Reel" className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-900/80 to-fuchsia-900/60">
+            <span className="text-sm text-white/40 font-light tracking-wide">Sin imagen</span>
+          </div>
+        )}
+
+        {/* Play overlay */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-black/25 backdrop-blur-md border border-white/10">
+            <Play className="h-5 w-5 text-white ml-0.5" fill="white" />
+          </div>
         </div>
 
-        <div className="relative aspect-[9/16]">
-          {variante.image_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={variante.image_url} alt="Reel" className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-purple-600 to-purple-900">
-              <span className="text-sm text-white/60">Sin imagen</span>
+        {/* Side actions */}
+        <div className="absolute right-3 bottom-28 flex flex-col items-center gap-5">
+          {[
+            { icon: Heart, label: "127" },
+            { icon: MessageCircle, label: "24" },
+            { icon: Send },
+            { icon: Bookmark },
+          ].map(({ icon: Icon, label }, i) => (
+            <div key={i} className="flex flex-col items-center gap-0.5">
+              <Icon className="h-6 w-6 text-white drop-shadow-lg" />
+              {label && <span className="text-[9px] text-white/80 font-medium">{label}</span>}
             </div>
-          )}
+          ))}
+        </div>
 
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
-              <Play className="h-6 w-6 text-white ml-1" fill="white" />
-            </div>
+        {/* Bottom caption */}
+        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-4 pb-4 pt-20">
+          <div className="flex items-center gap-2 mb-2">
+            <Avatar initials={initials} size="sm" />
+            <span className="text-[13px] font-semibold text-white">{username}</span>
           </div>
+          <p className="text-[12px] text-white/85 leading-relaxed">
+            {expanded ? caption : caption.slice(0, 80)}
+            {caption.length > 80 && (
+              <button onClick={() => setExpanded(!expanded)} className="text-white/50 ml-1 font-medium">
+                {expanded ? " menos" : "... mas"}
+              </button>
+            )}
+          </p>
+        </div>
 
-          <div className="absolute right-3 bottom-32 flex flex-col items-center gap-5">
-            <button className="flex flex-col items-center gap-1">
-              <Heart className="h-6 w-6 text-white drop-shadow" />
-              <span className="text-[10px] text-white font-medium drop-shadow">127</span>
-            </button>
-            <button className="flex flex-col items-center gap-1">
-              <MessageCircle className="h-6 w-6 text-white drop-shadow" />
-              <span className="text-[10px] text-white font-medium drop-shadow">24</span>
-            </button>
-            <button className="flex flex-col items-center gap-1">
-              <Send className="h-6 w-6 text-white drop-shadow" />
-            </button>
-            <button className="flex flex-col items-center gap-1">
-              <Bookmark className="h-6 w-6 text-white drop-shadow" />
-            </button>
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 pt-16">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-purple-600 text-[10px] font-bold text-white">
-                {initials}
-              </div>
-              <span className="text-xs font-semibold text-white">{username}</span>
-            </div>
-            <p className="text-xs text-white/90 leading-relaxed">
-              {expanded ? caption : caption.slice(0, 80)}
-              {caption.length > 80 && (
-                <button onClick={() => setExpanded(!expanded)} className="text-white/60 ml-1">
-                  {expanded ? " menos" : "... mas"}
-                </button>
-              )}
-            </p>
-          </div>
-
-          <div className="absolute top-4 right-3">
-            <Volume2 className="h-4 w-4 text-white drop-shadow" />
-          </div>
+        {/* Sound */}
+        <div className="absolute top-3 right-3">
+          <Volume2 className="h-4 w-4 text-white/70" />
         </div>
       </div>
-    </div>
+    </DeviceShell>
   );
 }
 
 // ─── Story Preview (9:16) ───────────────────────────────────────────────────
 
 function StoryPreview({
-  variante,
-  initials,
-  username,
-  caption,
+  variante, initials, username, caption,
 }: {
-  variante: Variante;
-  initials: string;
-  username: string;
-  caption: string;
+  variante: Variante; initials: string; username: string; caption: string;
 }) {
   return (
-    <div className="mx-auto max-w-[280px]">
-      <div className="overflow-hidden rounded-[32px] border-[6px] border-gray-800 bg-black relative">
-        <div className="flex items-center justify-center bg-black px-6 py-1">
-          <span className="text-[10px] font-medium text-white">9:41</span>
+    <DeviceShell width="max-w-[280px]" dark>
+      <div className="relative aspect-[9/16] bg-black">
+        {variante.image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={variante.image_url} alt="Story" className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-900/80 to-fuchsia-900/60">
+            <span className="text-sm text-white/40 font-light tracking-wide">Sin imagen</span>
+          </div>
+        )}
+
+        {/* Progress bar */}
+        <div className="absolute top-1 left-3 right-3">
+          <div className="h-[2px] rounded-full bg-white/25">
+            <div className="h-full w-1/3 rounded-full bg-white" />
+          </div>
         </div>
 
-        <div className="relative aspect-[9/16]">
-          {variante.image_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={variante.image_url} alt="Story" className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-purple-600 to-purple-900">
-              <span className="text-sm text-white/60">Sin imagen</span>
-            </div>
-          )}
-
-          <div className="absolute top-2 left-3 right-3">
-            <div className="h-0.5 rounded-full bg-white/30">
-              <div className="h-full w-1/3 rounded-full bg-white" />
-            </div>
+        {/* Header */}
+        <div className="absolute top-4 left-3 right-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Avatar initials={initials} size="sm" ring />
+            <span className="text-[13px] font-semibold text-white drop-shadow-lg">{username}</span>
+            <span className="text-[10px] text-white/50">2h</span>
           </div>
+          <button className="text-white/70 text-xl leading-none">&times;</button>
+        </div>
 
-          <div className="absolute top-5 left-3 right-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 ring-2 ring-purple-400 text-[10px] font-bold text-white">
-                {initials}
-              </div>
-              <span className="text-xs font-semibold text-white drop-shadow">{username}</span>
-              <span className="text-[10px] text-white/60">2h</span>
-            </div>
-            <button className="text-white text-lg font-light">&times;</button>
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 pt-10 text-center">
-            <p className="text-xs text-white/80 mb-2">{caption.slice(0, 150)}</p>
-            <div className="flex flex-col items-center gap-1">
-              <ChevronUp className="h-5 w-5 text-white animate-bounce" />
-              <span className="text-[10px] font-semibold text-white uppercase tracking-wider">Ver mas</span>
-            </div>
+        {/* Bottom CTA */}
+        <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-5 pt-12 text-center">
+          <p className="text-[12px] text-white/75 mb-3 leading-relaxed">{caption.slice(0, 150)}</p>
+          <div className="flex flex-col items-center gap-0.5">
+            <ChevronUp className="h-5 w-5 text-white animate-bounce" />
+            <span className="text-[9px] font-bold text-white uppercase tracking-[0.15em]">Ver mas</span>
           </div>
         </div>
       </div>
-    </div>
+    </DeviceShell>
   );
 }
 
-// ─── Carousel Preview (1:1) with navigation ─────────────────────────────────
+// ─── Carousel Preview (1:1) ─────────────────────────────────────────────────
 
 function CarouselPreview({
-  variante,
-  initials,
-  username,
-  caption,
+  variante, initials, username, caption,
 }: {
-  variante: Variante;
-  initials: string;
-  username: string;
-  caption: string;
+  variante: Variante; initials: string; username: string; caption: string;
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -242,30 +228,24 @@ function CarouselPreview({
       ? (imgJson.slides as Array<Record<string, unknown>>)
       : null;
   const totalSlides = slides ? slides.length : 1;
-
   const currentSlideData = slides?.[currentSlide];
   const currentSlideImageUrl = currentSlideData?.image_url as string | undefined;
   const currentConcept = currentSlideData?.concept as string | undefined;
 
   return (
-    <div className="mx-auto max-w-[375px]">
-      <div className="overflow-hidden rounded-[40px] border-8 border-gray-800 bg-white max-h-[700px] overflow-y-auto">
-        <div className="sticky top-0 z-10 flex items-center justify-center bg-gray-800 px-6 py-1.5">
-          <span className="text-xs font-medium text-white">9:41</span>
-        </div>
-
-        <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-3 bg-white">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-xs font-bold text-white">
-            {initials}
-          </div>
-          <span className="text-sm font-semibold text-gray-900">{username}</span>
+    <DeviceShell>
+      <div className="scrollbar-none overflow-y-auto max-h-[680px]">
+        {/* IG Header */}
+        <div className="sticky top-0 z-10 flex items-center gap-3 px-4 py-2.5 bg-white/95 backdrop-blur-sm border-b border-gray-100/80">
+          <Avatar initials={initials} size="sm" />
+          <span className="text-[13px] font-semibold text-gray-900 tracking-tight">{username}</span>
           <div className="ml-auto">
-            <MoreHorizontal className="h-5 w-5 text-gray-600" />
+            <MoreHorizontal className="h-5 w-5 text-gray-500" />
           </div>
         </div>
 
-        {/* Image area with navigation */}
-        <div className="relative">
+        {/* Image with navigation */}
+        <div className="relative bg-gray-50">
           {currentSlideImageUrl || (currentSlide === 0 && variante.image_url) ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -275,108 +255,100 @@ function CarouselPreview({
               loading={currentSlide === 0 ? "eager" : "lazy"}
             />
           ) : (
-            <div className="flex aspect-square w-full flex-col items-center justify-center bg-gradient-to-br from-purple-500 to-purple-700 p-6">
-              <span className="text-sm font-medium text-white/90 text-center">
+            <div className="flex aspect-square w-full flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-8">
+              <span className="text-[13px] font-medium text-gray-500 text-center leading-relaxed">
                 {currentConcept || `Slide ${currentSlide + 1}`}
               </span>
-              <span className="text-xs text-white/50 mt-2">Imagen pendiente</span>
+              <span className="text-[11px] text-gray-400 mt-2">Imagen pendiente</span>
             </div>
           )}
 
-          {/* Slide counter */}
-          <div className="absolute top-3 right-3 rounded-full bg-black/60 px-2.5 py-1">
-            <span className="text-[10px] font-medium text-white">
+          {/* Pill counter */}
+          <div className="absolute top-3 right-3 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-1">
+            <span className="text-[10px] font-semibold text-white tabular-nums">
               {currentSlide + 1}/{totalSlides}
             </span>
           </div>
 
-          {/* Navigation arrows */}
+          {/* Arrows */}
           {currentSlide > 0 && (
             <button
               onClick={() => setCurrentSlide((s) => s - 1)}
-              className="absolute left-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white transition-colors"
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur-sm transition-transform hover:scale-105 active:scale-95"
             >
-              <ChevronLeft className="h-4 w-4 text-gray-700" />
+              <ChevronLeft className="h-4 w-4 text-gray-800" />
             </button>
           )}
           {currentSlide < totalSlides - 1 && (
             <button
               onClick={() => setCurrentSlide((s) => s + 1)}
-              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 shadow-md hover:bg-white transition-colors"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur-sm transition-transform hover:scale-105 active:scale-95"
             >
-              <ChevronRight className="h-4 w-4 text-gray-700" />
+              <ChevronRight className="h-4 w-4 text-gray-800" />
             </button>
           )}
         </div>
 
-        {/* Action bar with dots */}
-        <div className="flex items-center px-4 py-3">
+        {/* Actions + dots */}
+        <div className="flex items-center px-4 py-2.5">
           <div className="flex gap-4">
-            <Heart className="h-6 w-6 text-gray-900" />
-            <MessageCircle className="h-6 w-6 text-gray-900" />
-            <Send className="h-6 w-6 text-gray-900" />
+            <Heart className="h-[22px] w-[22px] text-gray-900" />
+            <MessageCircle className="h-[22px] w-[22px] text-gray-900" />
+            <Send className="h-[22px] w-[22px] text-gray-900" />
           </div>
-          <div className="flex-1 flex justify-center gap-1">
+          <div className="flex-1 flex justify-center gap-[5px]">
             {Array.from({ length: Math.min(totalSlides, 7) }).map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentSlide(i)}
                 className={cn(
-                  "h-1.5 w-1.5 rounded-full transition-colors",
-                  i === currentSlide ? "bg-blue-500" : "bg-gray-300"
+                  "rounded-full transition-all duration-200",
+                  i === currentSlide
+                    ? "h-[6px] w-[6px] bg-blue-500"
+                    : "h-[5px] w-[5px] bg-gray-300"
                 )}
               />
             ))}
-            {totalSlides > 7 && (
-              <span className="text-[8px] text-gray-400 ml-1">+{totalSlides - 7}</span>
-            )}
           </div>
-          <Bookmark className="h-6 w-6 text-gray-900" />
+          <Bookmark className="h-[22px] w-[22px] text-gray-900" />
         </div>
 
-        {/* Likes */}
-        <div className="px-4">
-          <p className="text-sm font-semibold text-gray-900">127 Me gusta</p>
+        {/* Engagement */}
+        <div className="px-4 pb-1">
+          <p className="text-[13px] font-semibold text-gray-900">127 Me gusta</p>
         </div>
 
-        {/* Expandable caption */}
-        <FullCaption username={username} caption={caption} />
+        {/* Full caption */}
+        <div className="px-4 py-2">
+          <p className="text-[13px] text-gray-900 whitespace-pre-wrap leading-[1.45]">
+            <span className="font-semibold">{username}</span>{" "}{caption}
+          </p>
+        </div>
 
-        <div className="px-4 pb-4">
-          <p className="text-xs text-gray-400">Hace 2 horas</p>
+        <div className="px-4 pb-5">
+          <p className="text-[11px] text-gray-400 tracking-tight">Hace 2 horas</p>
         </div>
       </div>
-    </div>
+    </DeviceShell>
   );
 }
 
 // ─── Static Post Preview (1:1) ──────────────────────────────────────────────
 
 function PostPreview({
-  variante,
-  initials,
-  username,
-  caption,
+  variante, initials, username, caption,
 }: {
-  variante: Variante;
-  initials: string;
-  username: string;
-  caption: string;
+  variante: Variante; initials: string; username: string; caption: string;
 }) {
   return (
-    <div className="mx-auto max-w-[375px]">
-      <div className="overflow-hidden rounded-[40px] border-8 border-gray-800 bg-white max-h-[700px] overflow-y-auto">
-        <div className="sticky top-0 z-10 flex items-center justify-center bg-gray-800 px-6 py-1.5">
-          <span className="text-xs font-medium text-white">9:41</span>
-        </div>
-
-        <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-3 bg-white">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-xs font-bold text-white">
-            {initials}
-          </div>
-          <span className="text-sm font-semibold text-gray-900">{username}</span>
+    <DeviceShell>
+      <div className="scrollbar-none overflow-y-auto max-h-[680px]">
+        {/* IG Header */}
+        <div className="sticky top-0 z-10 flex items-center gap-3 px-4 py-2.5 bg-white/95 backdrop-blur-sm border-b border-gray-100/80">
+          <Avatar initials={initials} size="sm" />
+          <span className="text-[13px] font-semibold text-gray-900 tracking-tight">{username}</span>
           <div className="ml-auto">
-            <MoreHorizontal className="h-5 w-5 text-gray-600" />
+            <MoreHorizontal className="h-5 w-5 text-gray-500" />
           </div>
         </div>
 
@@ -384,32 +356,38 @@ function PostPreview({
           // eslint-disable-next-line @next/next/no-img-element
           <img src={variante.image_url} alt="Post" className="aspect-square w-full object-cover" />
         ) : (
-          <div className="flex aspect-square w-full items-center justify-center bg-gradient-to-br from-purple-500 to-purple-700">
-            <span className="text-lg font-medium text-white/80">Sin imagen</span>
+          <div className="flex aspect-square w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+            <span className="text-sm font-light text-gray-400 tracking-wide">Sin imagen</span>
           </div>
         )}
 
-        <div className="flex items-center px-4 py-3">
+        {/* Actions */}
+        <div className="flex items-center px-4 py-2.5">
           <div className="flex gap-4">
-            <Heart className="h-6 w-6 text-gray-900" />
-            <MessageCircle className="h-6 w-6 text-gray-900" />
-            <Send className="h-6 w-6 text-gray-900" />
+            <Heart className="h-[22px] w-[22px] text-gray-900" />
+            <MessageCircle className="h-[22px] w-[22px] text-gray-900" />
+            <Send className="h-[22px] w-[22px] text-gray-900" />
           </div>
           <div className="ml-auto">
-            <Bookmark className="h-6 w-6 text-gray-900" />
+            <Bookmark className="h-[22px] w-[22px] text-gray-900" />
           </div>
         </div>
 
-        <div className="px-4">
-          <p className="text-sm font-semibold text-gray-900">127 Me gusta</p>
+        <div className="px-4 pb-1">
+          <p className="text-[13px] font-semibold text-gray-900">127 Me gusta</p>
         </div>
 
-        <FullCaption username={username} caption={caption} />
+        {/* Full caption */}
+        <div className="px-4 py-2">
+          <p className="text-[13px] text-gray-900 whitespace-pre-wrap leading-[1.45]">
+            <span className="font-semibold">{username}</span>{" "}{caption}
+          </p>
+        </div>
 
-        <div className="px-4 pb-4">
-          <p className="text-xs text-gray-400">Hace 2 horas</p>
+        <div className="px-4 pb-5">
+          <p className="text-[11px] text-gray-400 tracking-tight">Hace 2 horas</p>
         </div>
       </div>
-    </div>
+    </DeviceShell>
   );
 }

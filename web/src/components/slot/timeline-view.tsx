@@ -645,61 +645,73 @@ export function TimelineView({
 
                       {/* Per-variant: strategy card + preview */}
                       {variantes.map((v) => {
-                        const toneLabels: Record<string, string> = { A: "Emocional / Storytelling", B: "Educativo / Datos", C: "Directo / CTA" };
-                        const toneColors: Record<string, string> = { A: "bg-pink-100 text-pink-700", B: "bg-blue-100 text-blue-700", C: "bg-amber-100 text-amber-700" };
+                        const toneConfig: Record<string, { label: string; accent: string; border: string; bg: string }> = {
+                          A: { label: "Emocional", accent: "text-rose-600", border: "border-l-rose-400", bg: "bg-rose-50" },
+                          B: { label: "Educativo", accent: "text-sky-600", border: "border-l-sky-400", bg: "bg-sky-50" },
+                          C: { label: "Directo", accent: "text-amber-600", border: "border-l-amber-400", bg: "bg-amber-50" },
+                        };
+                        const tone = toneConfig[v.variant_label] || { label: v.variant_label, accent: "text-gray-600", border: "border-l-gray-300", bg: "bg-gray-50" };
                         const briefData = brief?.brief_yaml as Record<string, unknown> | undefined;
 
                         return (
-                          <div key={v.id} className="space-y-3">
+                          <div key={v.id} className="space-y-4">
+                            {/* Variant header */}
                             <div className="flex items-center gap-3">
-                              <h4 className="text-sm font-semibold text-purple-700 uppercase tracking-wide">
-                                Variante {v.variant_label}
-                              </h4>
-                              <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-medium", toneColors[v.variant_label] || "bg-gray-100 text-gray-600")}>
-                                {toneLabels[v.variant_label] || v.variant_label}
-                              </span>
+                              <div className={cn("h-7 w-7 rounded-lg flex items-center justify-center text-xs font-bold text-white", {
+                                "bg-rose-500": v.variant_label === "A",
+                                "bg-sky-500": v.variant_label === "B",
+                                "bg-amber-500": v.variant_label === "C",
+                              })}>
+                                {v.variant_label}
+                              </div>
+                              <div>
+                                <h4 className="text-sm font-semibold text-gray-900">
+                                  Variante {v.variant_label} — <span className={tone.accent}>{tone.label}</span>
+                                </h4>
+                                <p className="text-[11px] text-gray-400">
+                                  {slot.objective} · {slot.intention} · {slot.format}
+                                </p>
+                              </div>
                             </div>
 
-                            <div className="grid gap-6 lg:grid-cols-2">
-                              {/* Left: Strategy justification */}
-                              <div className="rounded-xl border border-gray-100 bg-white p-5 space-y-4">
+                            <div className="grid gap-6 lg:grid-cols-[1fr,380px]">
+                              {/* Left: Strategy card */}
+                              <div className={cn(
+                                "rounded-xl border border-gray-100 bg-white overflow-hidden",
+                              )}>
                                 {briefData && (
-                                  <>
-                                    <div>
-                                      <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Foco estrategico</p>
-                                      <p className="text-sm text-gray-800">{(briefData.topic_angle as string) || (briefData.topic as string) || "—"}</p>
+                                  <div className="space-y-0">
+                                    <div className={cn("px-5 py-4 border-l-[3px] border-b border-gray-50", tone.border)}>
+                                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1.5">Foco estrategico</p>
+                                      <p className="text-[13px] text-gray-800 leading-relaxed font-medium">
+                                        {String(briefData.topic_angle || briefData.topic || "—")}
+                                      </p>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-3">
-                                      <div>
-                                        <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Hook</p>
-                                        <p className="text-sm text-gray-700">{(briefData.hook_direction as string) || "—"}</p>
+                                    <div className="grid grid-cols-2 border-b border-gray-50">
+                                      <div className="px-5 py-3 border-r border-gray-50">
+                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1">Hook</p>
+                                        <p className="text-[12px] text-gray-700 leading-relaxed">{String(briefData.hook_direction || "—")}</p>
                                       </div>
-                                      <div>
-                                        <p className="text-xs font-semibold text-gray-400 uppercase mb-1">CTA</p>
-                                        <p className="text-sm text-gray-700">{(briefData.cta_direction as string) || "—"}</p>
+                                      <div className="px-5 py-3">
+                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1">CTA</p>
+                                        <p className="text-[12px] text-gray-700 leading-relaxed">{String(briefData.cta_direction || "—")}</p>
                                       </div>
                                     </div>
-                                    <div>
-                                      <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Persona target</p>
-                                      <p className="text-sm text-gray-700">{(briefData.persona_target as string) || "—"}</p>
+                                    <div className="px-5 py-3 border-b border-gray-50">
+                                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1">Persona target</p>
+                                      <p className="text-[12px] text-gray-700">{String(briefData.persona_target || "—")}</p>
                                     </div>
-                                    {briefData.reasoning && (
-                                      <div>
-                                        <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Razonamiento</p>
-                                        <p className="text-sm text-gray-600 leading-relaxed">{briefData.reasoning as string}</p>
+                                    {Boolean(briefData.reasoning) && (
+                                      <div className={cn("px-5 py-4", tone.bg)}>
+                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1.5">Razonamiento</p>
+                                        <p className="text-[12px] text-gray-600 leading-relaxed">{String(briefData.reasoning)}</p>
                                       </div>
                                     )}
-                                  </>
+                                  </div>
                                 )}
-                                <div>
-                                  <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Objetivo → Intencion</p>
-                                  <p className="text-sm text-gray-700">
-                                    {slot.objective} → <span className="font-medium">{slot.intention}</span>
-                                  </p>
-                                </div>
                               </div>
 
-                              {/* Right: Preview */}
+                              {/* Right: Phone preview */}
                               <div className="flex items-start justify-center">
                                 <InstagramPreview variante={v} format={slot.format} />
                               </div>

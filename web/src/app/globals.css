@@ -28,3 +28,41 @@ body {
 .animate-pulse-dot {
   animation: pulse-dot 2s ease-in-out infinite;
 }
+
+/* Hidden scrollbar — keeps scroll, removes visual bar */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Phone device frame */
+.device-frame {
+  position: relative;
+  border-radius: 44px;
+  background: #0a0a0a;
+  padding: 12px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08) inset,
+    0 25px 60px -12px rgba(0,0,0,0.35),
+    0 8px 24px -8px rgba(0,0,0,0.2);
+}
+.device-frame::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 24px;
+  background: #0a0a0a;
+  border-radius: 0 0 16px 16px;
+  z-index: 20;
+}
+.device-screen {
+  border-radius: 32px;
+  overflow: hidden;
+  background: white;
+}
