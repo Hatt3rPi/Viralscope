@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   Heart,
   MessageCircle,
@@ -25,6 +25,40 @@ interface InstagramPreviewProps {
 function extractCaption(copyMd: string): string {
   const captionMatch = copyMd.match(/## Caption\s*\n([\s\S]*?)(?=\n## |$)/i);
   return captionMatch ? captionMatch[1].trim() : copyMd.slice(0, 500);
+}
+
+function LazyImage({
+  src,
+  alt,
+  className,
+  eager = false,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  eager?: boolean;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const onLoad = useCallback(() => setLoaded(true), []);
+
+  return (
+    <div className={cn("relative", className)}>
+      {/* Skeleton shimmer */}
+      {!loaded && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-[shimmer_1.5s_infinite]" />
+        </div>
+      )}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        className={cn("w-full h-full object-cover transition-opacity duration-300", loaded ? "opacity-100" : "opacity-0")}
+        loading={eager ? "eager" : "lazy"}
+        onLoad={onLoad}
+      />
+    </div>
+  );
 }
 
 export function InstagramPreview({
@@ -110,7 +144,7 @@ function ReelPreview({
       <div className="relative aspect-[9/16] bg-black">
         {variante.image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={variante.image_url} alt="Reel" className="h-full w-full object-cover" />
+          <LazyImage src={variante.image_url!} alt="Reel" className="h-full w-full" eager />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-900/80 to-fuchsia-900/60">
             <span className="text-sm text-white/40 font-light tracking-wide">Sin imagen</span>
@@ -176,7 +210,7 @@ function StoryPreview({
       <div className="relative aspect-[9/16] bg-black">
         {variante.image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={variante.image_url} alt="Story" className="h-full w-full object-cover" />
+          <LazyImage src={variante.image_url!} alt="Story" className="h-full w-full" eager />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-900/80 to-fuchsia-900/60">
             <span className="text-sm text-white/40 font-light tracking-wide">Sin imagen</span>
@@ -248,11 +282,11 @@ function CarouselPreview({
         <div className="relative bg-gray-50">
           {currentSlideImageUrl || (currentSlide === 0 && variante.image_url) ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <LazyImage
               src={currentSlideImageUrl || variante.image_url || ""}
               alt={`Slide ${currentSlide + 1}`}
-              className="aspect-square w-full object-cover"
-              loading={currentSlide === 0 ? "eager" : "lazy"}
+              className="aspect-square w-full"
+              eager={currentSlide === 0}
             />
           ) : (
             <div className="flex aspect-square w-full flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-8">
@@ -354,7 +388,7 @@ function PostPreview({
 
         {variante.image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={variante.image_url} alt="Post" className="aspect-square w-full object-cover" />
+          <LazyImage src={variante.image_url!} alt="Post" className="aspect-square w-full" eager />
         ) : (
           <div className="flex aspect-square w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
             <span className="text-sm font-light text-gray-400 tracking-wide">Sin imagen</span>
