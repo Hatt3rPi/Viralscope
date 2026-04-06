@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, Circle, Loader2 } from "lucide-react";
+import { Check, Circle, Loader2, Sparkles, AlertTriangle, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -70,6 +70,8 @@ export function TimelineView({
   const [loading, setLoading] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [mirofishMd, setMirofishMd] = React.useState<string | null>(null);
+  const [artProgress, setArtProgress] = React.useState<Record<string, "pending" | "generating" | "done" | "error">>({});
+  const [imgProgress, setImgProgress] = React.useState<Record<string, "pending" | "generating" | "retrying" | "done" | "error">>({});
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 
@@ -188,6 +190,162 @@ export function TimelineView({
     } finally {
       setLoading(null);
     }
+  }
+
+  // ── Auto-generate art direction for all variants ───────────────────
+  async function handleAutoGenerateArt() {
+    if (loading) return;
+    setLoading("auto-art");
+    setError(null);
+
+    const labels = variantes.map((v) => v.variant_label);
+    const progress: Record<string, "pending" | "generating" | "done" | "error"> = {};
+    labels.forEach((l) => (progress[l] = "pending"));
+    setArtProgress({ ...progress });
+
+    try {
+      // Advance slot first
+      await advanceSlotAction(slot.id, "art_review", "3-art");
+
+      // Generate art for all variants in parallel
+      const results = await Promise.allSettled(
+        labels.map(async (label) => {
+          setArtProgress((prev) => ({ ...prev, [label]: "generating" }));
+          await callEdgeFunction("generate-art", {
+            slot_id: slot.id,
+            variant_label: label,
+          });
+          setArtProgress((prev) => ({ ...prev, [label]: "done" }));
+        })
+      );
+
+      const failed = results.filter((r) => r.status === "rejected");
+      if (failed.length > 0) {
+        failed.forEach((_, i) => {
+          const label = labels[results.indexOf(failed[i]!)];
+          if (label) setArtProgress((prev) => ({ ...prev, [label]: "error" }));
+        });
+        setError(`${failed.length} variante(s) fallaron al generar arte`);
+      }
+
+      window.location.reload();
+    } catch (e) {
+      setError(`Error generando arte: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  // ── Batch image generation with retry ─────────────────────────────
+  async function generateWithRetry(
+    job: { prompt_string: string; negative_prompt: string; aspect_ratio: string; slot_id: string; variant_label: string; slideKey?: string },
+    maxRetries: number
+  ): Promise<{ image_url: string }> {
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const result = await callEdgeFunction("generate-image", job);
+        if (result.image_url) return result;
+        throw new Error(result.error || "No image returned");
+      } catch (err) {
+        if (attempt === maxRetries) throw err;
+        const key = job.slideKey || job.variant_label;
+        setImgProgress((prev) => ({ ...prev, [key]: "retrying" }));
+        await new Promise((r) => setTimeout(r, 2000));
+      }
+    }
+    throw new Error("Max retries exceeded");
+  }
+
+  async function handleGenerateAllImages() {
+    if (loading) return;
+    setLoading("batch-images");
+    setError(null);
+
+    type ImageJob = {
+      prompt_string: string;
+      negative_prompt: string;
+      aspect_ratio: string;
+      slot_id: string;
+      variant_label: string;
+      slideKey?: string;
+    };
+
+    // Collect all image jobs from all variants
+    const jobs: ImageJob[] = [];
+    for (const v of variantes) {
+      const imgJson = v.art_direction_image_json as Record<string, unknown>;
+      if (!imgJson) continue;
+
+      if (imgJson.type === "carousel" && Array.isArray(imgJson.slides)) {
+        // Carousel: one job per slide
+        for (const slide of imgJson.slides as Array<Record<string, unknown>>) {
+          const key = `${v.variant_label}-s${slide.slide_number}`;
+          jobs.push({
+            prompt_string: (slide.prompt_string as string) || "",
+            negative_prompt: (slide.negative_prompt as string) || "",
+            aspect_ratio: "1:1",
+            slot_id: slot.id,
+            variant_label: v.variant_label,
+            slideKey: key,
+          });
+        }
+      } else {
+        // Single image
+        const prompt = (imgJson.prompt_string as string) || "";
+        if (!prompt) continue;
+        jobs.push({
+          prompt_string: prompt,
+          negative_prompt: (imgJson.negative_prompt as string) || "",
+          aspect_ratio:
+            slot.format === "reel" || slot.format === "story" ? "9:16" : "1:1",
+          slot_id: slot.id,
+          variant_label: v.variant_label,
+        });
+      }
+    }
+
+    if (jobs.length === 0) {
+      setError("No hay prompts de imagen disponibles. Genera art direction primero.");
+      setLoading(null);
+      return;
+    }
+
+    // Initialize progress
+    const progress: Record<string, "pending" | "generating" | "retrying" | "done" | "error"> = {};
+    jobs.forEach((j) => (progress[j.slideKey || j.variant_label] = "pending"));
+    setImgProgress({ ...progress });
+
+    const MAX_PARALLEL = 3;
+    const MAX_RETRIES = 2;
+
+    // Process in batches of MAX_PARALLEL
+    for (let i = 0; i < jobs.length; i += MAX_PARALLEL) {
+      const batch = jobs.slice(i, i + MAX_PARALLEL);
+      const results = await Promise.allSettled(
+        batch.map(async (job) => {
+          const key = job.slideKey || job.variant_label;
+          setImgProgress((prev) => ({ ...prev, [key]: "generating" }));
+          const result = await generateWithRetry(job, MAX_RETRIES);
+          setImgProgress((prev) => ({ ...prev, [key]: "done" }));
+          return result;
+        })
+      );
+
+      results.forEach((r, idx) => {
+        if (r.status === "rejected") {
+          const key = batch[idx].slideKey || batch[idx].variant_label;
+          setImgProgress((prev) => ({ ...prev, [key]: "error" }));
+        }
+      });
+    }
+
+    const failCount = Object.values(imgProgress).filter((s) => s === "error").length;
+    if (failCount > 0) {
+      setError(`${failCount} imagen(es) fallaron despues de ${MAX_RETRIES + 1} intentos`);
+    }
+
+    setLoading(null);
+    window.location.reload();
   }
 
   function toggleStep(stepKey: string) {
@@ -381,27 +539,41 @@ export function TimelineView({
                         </Button>
                         {variantes.length > 0 && (
                           <Button
-                            onClick={async () => {
-                              setLoading("advance-content");
-                              setError(null);
-                              try {
-                                await advanceSlotAction(slot.id, "art_review", "3-art");
-                                window.location.reload();
-                              } catch (e) {
-                                setError(`Error avanzando: ${e instanceof Error ? e.message : e}`);
-                              } finally {
-                                setLoading(null);
-                              }
-                            }}
-                            disabled={loading === "advance-content"}
+                            onClick={handleAutoGenerateArt}
+                            disabled={loading === "auto-art"}
                             className="bg-green-600 hover:bg-green-700"
                           >
-                            {loading === "advance-content" ? (
-                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Avanzando...</>
+                            {loading === "auto-art" ? (
+                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Arte A, B, C...</>
                             ) : (
-                              "Continuar a Direccion de Arte"
+                              <>
+                                <Sparkles className="mr-2 h-4 w-4" />
+                                Continuar a Direccion de Arte
+                              </>
                             )}
                           </Button>
+                        )}
+                        {/* Art generation progress chips */}
+                        {Object.keys(artProgress).length > 0 && (
+                          <div className="flex gap-2 mt-2">
+                            {Object.entries(artProgress).map(([label, status]) => (
+                              <span
+                                key={label}
+                                className={cn(
+                                  "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium",
+                                  status === "done" && "bg-green-100 text-green-700",
+                                  status === "generating" && "bg-purple-100 text-purple-700",
+                                  status === "error" && "bg-red-100 text-red-700",
+                                  status === "pending" && "bg-gray-100 text-gray-500"
+                                )}
+                              >
+                                {status === "generating" && <Loader2 className="h-3 w-3 animate-spin" />}
+                                {status === "done" && <Check className="h-3 w-3" />}
+                                {status === "error" && <AlertTriangle className="h-3 w-3" />}
+                                Variante {label}
+                              </span>
+                            ))}
+                          </div>
                         )}
                       </div>
                     </div>
@@ -413,9 +585,71 @@ export function TimelineView({
                       {variantes.length === 0 && (
                         <p className="text-sm text-gray-400">Primero genera variantes en el paso anterior.</p>
                       )}
+
+                      {/* Batch generate all images button */}
+                      {variantes.some((v) => v.art_direction_image_json && Object.keys(v.art_direction_image_json).length > 0) && (
+                        <div className="rounded-xl border border-purple-100 bg-white p-5 space-y-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+                                <ImageIcon className="h-4 w-4 text-purple-600" />
+                                Generacion de Imagenes
+                              </h4>
+                              <p className="text-sm text-gray-500 mt-1">
+                                Genera imagenes para todas las variantes en paralelo (max 3 simultaneas, con reintentos automaticos).
+                              </p>
+                            </div>
+                            <Button
+                              onClick={handleGenerateAllImages}
+                              disabled={loading === "batch-images"}
+                              className="bg-purple-600 hover:bg-purple-700"
+                            >
+                              {loading === "batch-images" ? (
+                                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando...</>
+                              ) : (
+                                <>
+                                  <ImageIcon className="mr-2 h-4 w-4" />
+                                  Generar Todas las Imagenes
+                                </>
+                              )}
+                            </Button>
+                          </div>
+
+                          {/* Image generation progress */}
+                          {Object.keys(imgProgress).length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {Object.entries(imgProgress).map(([key, status]) => (
+                                <span
+                                  key={key}
+                                  className={cn(
+                                    "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium",
+                                    status === "done" && "bg-green-100 text-green-700",
+                                    status === "generating" && "bg-purple-100 text-purple-700",
+                                    status === "retrying" && "bg-amber-100 text-amber-700",
+                                    status === "error" && "bg-red-100 text-red-700",
+                                    status === "pending" && "bg-gray-100 text-gray-500"
+                                  )}
+                                >
+                                  {(status === "generating" || status === "retrying") && <Loader2 className="h-3 w-3 animate-spin" />}
+                                  {status === "done" && <Check className="h-3 w-3" />}
+                                  {status === "error" && <AlertTriangle className="h-3 w-3" />}
+                                  {key}{status === "retrying" ? " (reintentando)" : ""}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* AutoLab placeholder note */}
+                          <div className="rounded-lg bg-gray-50 border border-gray-200 px-4 py-3 text-xs text-gray-500 flex items-center gap-2">
+                            <Sparkles className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+                            Proximamente: los prompts seran refinados automaticamente via AutoLab antes de generar.
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Art direction cards per variant */}
                       {variantes.map((v) => (
                         <div key={v.id} className="space-y-4">
-                          {/* Generate Art Direction button per variant */}
                           {(!v.art_direction_image_json || Object.keys(v.art_direction_image_json).length === 0) && (
                             <Button
                               onClick={() => handleGenerateArt(v.variant_label)}
@@ -435,8 +669,8 @@ export function TimelineView({
                               variante={v}
                               onGenerateImage={async () => {
                                 const imgDir = v.art_direction_image_json as Record<string, unknown>;
-                                const prompt = imgDir?.prompt_string as string;
-                                const negative = imgDir?.negative_prompt as string;
+                                const prompt = (imgDir?.prompt_string as string) || "";
+                                const negative = (imgDir?.negative_prompt as string) || "";
                                 if (!prompt) return alert("No hay prompt de imagen. Genera art direction primero.");
 
                                 const btn = document.activeElement as HTMLButtonElement;
@@ -450,7 +684,8 @@ export function TimelineView({
                                       headers: { "Content-Type": "application/json" },
                                       body: JSON.stringify({
                                         prompt_string: prompt,
-                                        negative_prompt: negative || "",
+                                        negative_prompt: negative,
+                                        aspect_ratio: slot.format === "reel" || slot.format === "story" ? "9:16" : "1:1",
                                         slot_id: slot.id,
                                         variant_label: v.variant_label,
                                       }),
@@ -470,11 +705,39 @@ export function TimelineView({
                               }}
                             />
                             <div className="flex items-start justify-center">
-                              <InstagramPreview variante={v} />
+                              <InstagramPreview variante={v} format={slot.format} />
                             </div>
                           </div>
                         </div>
                       ))}
+
+                      {/* Advance to simulation */}
+                      {variantes.some((v) => v.image_url) && (
+                        <div className="flex justify-end pt-2">
+                          <Button
+                            onClick={async () => {
+                              setLoading("advance-art");
+                              setError(null);
+                              try {
+                                await advanceSlotAction(slot.id, "simulating", "4-simulation");
+                                window.location.reload();
+                              } catch (e) {
+                                setError(`Error avanzando: ${e instanceof Error ? e.message : e}`);
+                              } finally {
+                                setLoading(null);
+                              }
+                            }}
+                            disabled={loading === "advance-art"}
+                            className="bg-green-600 hover:bg-green-700"
+                          >
+                            {loading === "advance-art" ? (
+                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Avanzando...</>
+                            ) : (
+                              "Continuar a Simulacion"
+                            )}
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   )}
 

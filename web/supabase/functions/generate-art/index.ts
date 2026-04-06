@@ -119,15 +119,45 @@ Every piece of art direction MUST embed anti-AI aesthetics:
 - Platform: ${campaign.platform ?? "instagram"}
 - The prompt_string in each JSON must be a ready-to-use prompt optimized for NanoBanana 2 image generation
 - The negative_prompt MUST always include: "text on screen, subtitles, captions, written words, perfect symmetry, plastic skin, AI look, uncanny valley, oversaturated"
+- ASPECT RATIO: ${slot.format === "reel" || slot.format === "story" ? "9:16 (vertical)" : "1:1 (square)"}
 
-## Output Schema
+${slot.format === "carrusel" ? `
+## CAROUSEL FORMAT — CRITICAL
+This is a CAROUSEL format. You MUST generate a SEPARATE image prompt for EACH slide.
+Analyze the copy/content to determine how many slides the carousel has (look for ## Slide or numbered sections).
+If unclear, default to 5 slides.
+Each slide must have its own unique visual concept that tells a progressive story.
+
+The art_direction_image_json must use this CAROUSEL schema:
+{
+  "type": "carousel",
+  "generator": "nanobanana_2",
+  "settings": { "aspect_ratio": "1:1", "quality": "2k_unlimited" },
+  "art_direction": {
+    "style": "visual style description",
+    "mood": "emotional tone",
+    "color_palette": { "dominant": "#hex", "accents": ["#hex"], "temperature": "warm/cool/neutral" },
+    "anti_ai_directives": ["specific imperfections"],
+    "reference_styles": ["editorial references"]
+  },
+  "slides": [
+    {
+      "slide_number": 1,
+      "concept": "what this specific slide shows",
+      "prompt_string": "NanoBanana-optimized prompt for THIS slide. 100-200 words.",
+      "negative_prompt": "text on screen, subtitles, ..."
+    }
+  ]
+}
+` : `
+## Output Schema — SINGLE IMAGE
 Return a JSON object with exactly two keys:
 
 {
   "art_direction_image_json": {
     "type": "image",
     "generator": "nanobanana_2",
-    "settings": { "aspect_ratio": "9:16", "count": 8, "quality": "2k_unlimited" },
+    "settings": { "aspect_ratio": "${slot.format === "reel" || slot.format === "story" ? "9:16" : "1:1"}", "count": 8, "quality": "2k_unlimited" },
     "art_direction": {
       "concept": "one-line concept for the image",
       "style": "visual style description",
@@ -163,9 +193,10 @@ Return a JSON object with exactly two keys:
       "anti_ai_directives": ["specific imperfections to include"],
       "reference_styles": ["Kinfolk editorial", "other references"]
     },
-    "prompt_string": "Complete NanoBanana-optimized prompt that compiles ALL the art direction above into a single generative prompt. Be detailed and specific. 150-300 words.",
-    "negative_prompt": "text on screen, subtitles, captions, written words, perfect symmetry, plastic skin, AI look, uncanny valley, oversaturated, [plus any brand-specific negatives]"
+    "prompt_string": "Complete NanoBanana-optimized prompt. 150-300 words.",
+    "negative_prompt": "text on screen, subtitles, captions, written words, perfect symmetry, plastic skin, AI look, uncanny valley, oversaturated, [plus brand-specific negatives]"
   },
+`}
   "art_direction_video_json": {
     "type": "video",
     "generator": "manual",
