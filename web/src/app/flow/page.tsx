@@ -114,19 +114,33 @@ export default function FlowPage() {
         {/* PASO 4 */}
         <Step
           number="4"
-          title="Simulacion"
-          subtitle="Analista de Viralizacion"
+          title="Panel de Evaluacion"
+          subtitle="MiroFish — Agentes persistentes evaluan contenido real"
           color="indigo"
+          badge="UPGRADED"
           items={[
-            "Genera seed document (Markdown) con:",
-            "  Comparacion A vs B vs C",
-            "  Personas target mapeadas",
-            "  Criterios: atencion, resonancia, shareability, brand fit",
-            "  Risk flags",
+            "Panel de consumidores creado desde audiences_yaml (todas las personas)",
+            "Agentes persistentes con memoria hibrida (historial activable)",
             "",
-            "Opcion A: MiroFish (40 agentes, ~25min con kimi-k2.5)",
-            "Opcion B: Panel LLM (scoring rapido)",
-            "Resultado: score por variante",
+            "Cada agente recibe contenido REAL:",
+            "  Imagen generada (multimodal) + copy IG completo",
+            "  Contexto: formato, plataforma, pilar, objetivo",
+            "  Su historial de evaluaciones previas",
+            "",
+            "Encuesta estructurada por agente (~200 tokens):",
+            "  Acciones multi-select: scroll, stop, read, like, comment, share, save, follow",
+            "  6 dimensiones (1-10): hook, resonancia, claridad, CTA, brand fit, memorabilidad",
+            "  Sentimiento: inspired | informed | entertained | indifferent | annoyed | confused",
+            "  Cualitativos: best_thing, worst_thing, would_share_with, comment_if_any",
+            "  Condicionales: would_buy (commercial), would_repost (viral), notifications (retention)",
+            "  Recall test opcional: que recuerda sin ver el contenido",
+            "",
+            "Composite Score ponderado por intencion del slot:",
+            "  viral → prioriza share + comment (difusion)",
+            "  quality → prioriza save + read + follow (autoridad)",
+            "  commercial → prioriza cta_action + follow (conversion)",
+            "",
+            "~21K tokens para 10 personas x 3 variantes (~30s)",
           ]}
         />
 
@@ -135,11 +149,20 @@ export default function FlowPage() {
         {/* PASO 5 */}
         <Step
           number="5"
-          title="Aprobacion Final"
-          subtitle="Humano decide"
+          title="Veredicto + Aprobacion"
+          subtitle="Ranking automatico + decision humana"
           color="emerald"
           items={[
-            "Variante ganadora + score + imagen",
+            "Composite scores por variante (A: 7.2, B: 8.4, C: 6.8)",
+            "Radar chart comparativo de 6 dimensiones",
+            "Tabla: % acciones por variante (stop, like, share, save...)",
+            "Highlights: frases repetidas en best/worst thing",
+            "",
+            "Recomendacion para CADA variante:",
+            "  Ganadora → publish (publicar como principal)",
+            "  Perdedoras → story | reserve | repurpose | archive",
+            "  Ej: 'Publicar B, usar A para Story, archivar C'",
+            "",
             "[Aprobar para Publicacion]",
             "Status: ready → published",
           ]}
