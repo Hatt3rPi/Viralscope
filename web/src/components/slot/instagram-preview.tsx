@@ -269,9 +269,9 @@ function CarouselPreview({
       : null;
   const totalSlides = slides ? slides.length : 1;
 
-  // For now we only have 1 generated image — show it on slide 0
-  // Future: each slide will have its own image_url
-  const currentConcept = slides?.[currentSlide]?.concept as string | undefined;
+  const currentSlideData = slides?.[currentSlide];
+  const currentSlideImageUrl = currentSlideData?.image_url as string | undefined;
+  const currentConcept = currentSlideData?.concept as string | undefined;
 
   return (
     <div className="mx-auto max-w-[375px]">
@@ -292,9 +292,13 @@ function CarouselPreview({
 
         {/* Image area with navigation */}
         <div className="relative">
-          {currentSlide === 0 && variante.image_url ? (
+          {currentSlideImageUrl || (currentSlide === 0 && variante.image_url) ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={variante.image_url} alt="Carousel slide" className="aspect-square w-full object-cover" />
+            <img
+              src={currentSlideImageUrl || variante.image_url || ""}
+              alt={`Slide ${currentSlide + 1}`}
+              className="aspect-square w-full object-cover"
+            />
           ) : (
             <div className="flex aspect-square w-full flex-col items-center justify-center bg-gradient-to-br from-purple-500 to-purple-700 p-6">
               <span className="text-sm font-medium text-white/90 text-center">

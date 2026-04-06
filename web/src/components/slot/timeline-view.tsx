@@ -267,6 +267,7 @@ export function TimelineView({
       aspect_ratio: string;
       slot_id: string;
       variant_label: string;
+      slide_number?: number;
       slideKey?: string;
     };
 
@@ -279,13 +280,15 @@ export function TimelineView({
       if (imgJson.type === "carousel" && Array.isArray(imgJson.slides)) {
         // Carousel: one job per slide
         for (const slide of imgJson.slides as Array<Record<string, unknown>>) {
-          const key = `${v.variant_label}-s${slide.slide_number}`;
+          const slideNum = slide.slide_number as number;
+          const key = `${v.variant_label}-s${slideNum}`;
           jobs.push({
             prompt_string: (slide.prompt_string as string) || "",
             negative_prompt: (slide.negative_prompt as string) || "",
             aspect_ratio: "1:1",
             slot_id: slot.id,
             variant_label: v.variant_label,
+            slide_number: slideNum,
             slideKey: key,
           });
         }
