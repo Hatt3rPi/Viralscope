@@ -18,12 +18,14 @@ interface ArtDirectionCardProps {
   variante: Variante;
   onGenerateImage?: () => void;
   onUploadVideo?: (file: File) => void;
+  hideVideo?: boolean;
 }
 
 export function ArtDirectionCard({
   variante,
   onGenerateImage,
   onUploadVideo,
+  hideVideo = false,
 }: ArtDirectionCardProps) {
   const imageDir =
     (variante.art_direction_image_json as Record<string, unknown>) || {};
@@ -180,8 +182,8 @@ export function ArtDirectionCard({
         </CardContent>
       </Card>
 
-      {/* Video Section */}
-      <Card>
+      {/* Video Section — hidden for carousel format */}
+      {!hideVideo && <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <Film className="h-4 w-4" />
@@ -288,7 +290,7 @@ export function ArtDirectionCard({
             </div>
           )}
         </CardContent>
-      </Card>
+      </Card>}
     </div>
   );
 }

@@ -5,7 +5,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const GEMINI_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -330,9 +330,12 @@ Deno.serve(async (req: Request) => {
       body: JSON.stringify({
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: {
-          temperature: 0.8,
-          maxOutputTokens: 8192,
+          temperature: 1.0,
+          maxOutputTokens: 32768,
           responseMimeType: "application/json",
+          thinkingConfig: {
+            thinkingLevel: "low",
+          },
         },
       }),
     });
@@ -362,7 +365,10 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const textContent = candidate.content?.parts?.[0]?.text;
+    // Gemini 3.1 Pro may include thoughtSignature in parts — find the text part
+    const allParts = candidate.content?.parts ?? [];
+    const textPart = allParts.find((p: Record<string, unknown>) => typeof p.text === "string" && !p.thoughtSignature);
+    const textContent = textPart?.text || allParts[allParts.length - 1]?.text;
     if (!textContent) {
       return jsonResponse(
         { error: "Gemini returned empty content", raw: candidate },
@@ -463,7 +469,7 @@ Deno.serve(async (req: Request) => {
         labels: variants.map((v) => v.label),
         tones: variants.map((v) => v.tone),
       },
-      model_used: "gemini-2.5-flash",
+      model_used: "gemini-3.1-pro-preview",
       tokens_used: tokensUsed || null,
     });
 
