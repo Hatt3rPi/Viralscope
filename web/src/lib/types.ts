@@ -121,6 +121,26 @@ export interface WizardConfig {
   platform: string;
 }
 
+// ─── Hook Funnel Types ───
+
+export interface HookScores {
+  hook_strength: number;
+  emotional_resonance: number;
+  cta_potential: number;
+  value_promise: number;
+  scroll_stop: number;
+  brand_fit: number;
+}
+
+export interface Hook {
+  id: number;
+  text: string;
+  tone: "emocional" | "educativo" | "directo";
+  scores: HookScores;
+  total: number;
+  reasoning: string;
+}
+
 export interface Feedback {
   id: string;
   slot_id: string;

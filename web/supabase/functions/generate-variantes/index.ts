@@ -239,11 +239,14 @@ Deno.serve(async (req: Request) => {
     // -----------------------------------------------------------------------
     // 1. Parse input
     // -----------------------------------------------------------------------
-    const { slot_id } = await req.json();
+    const { slot_id, selected_hooks } = await req.json();
 
     if (!slot_id) {
       return jsonResponse({ error: "slot_id is required" }, 400);
     }
+
+    // selected_hooks: optional array of 3 hook texts pre-selected from the funnel
+    const hookTexts: string[] = Array.isArray(selected_hooks) ? selected_hooks.slice(0, 3) : [];
 
     // -----------------------------------------------------------------------
     // 2. Load slot
@@ -319,7 +322,39 @@ Deno.serve(async (req: Request) => {
     const voiceData = project.voice_yaml || {};
     const platform = campaign.platform || "instagram";
 
-    const prompt = buildPrompt(briefData, brandData, voiceData, slot, platform);
+    let prompt = buildPrompt(briefData, brandData, voiceData, slot, platform);
+
+    // Inject pre-selected hooks if available
+    if (hookTexts.length === 3) {
+      prompt += `\n\n═══════════════════════════════════
+HOOKS PRE-SELECCIONADOS (OBLIGATORIO)
+═══════════════════════════════════
+
+Estos 3 hooks fueron seleccionados de un pool de 12 por su alto puntaje. DEBES usar cada uno como el hook de su variante correspondiente:
+
+- **Variante A (Emocional):** "${hookTexts[0]}"
+- **Variante B (Educativo):** "${hookTexts[1]}"
+- **Variante C (Directo):** "${hookTexts[2]}"
+
+Desarrolla el contenido completo a partir de cada hook. El hook ya fue validado — construye el copy, guion/slides, CTA y hashtags que lo complementen.`;
+    }
+
+    // Add post-scoring instruction
+    prompt += `\n\n═══════════════════════════════════
+AUTO-EVALUACION (OBLIGATORIO)
+═══════════════════════════════════
+
+Para CADA variante, agrega un campo "scores" con evaluacion de 6 dimensiones (1-10):
+- hook_strength: detiene scroll en 1.5s
+- emotional_resonance: conecta con persona target
+- cta_potential: abre camino a accion
+- value_promise: cumple lo prometido
+- scroll_stop: diferente al feed
+- brand_fit: alineado con marca
+
+Agrega "scores_total" (suma) y "scores_reasoning" (1 oracion explicando fortaleza/debilidad).
+
+El JSON de cada variante debe incluir: label, tone, copy_md, scores, scores_total, scores_reasoning.`;
 
     // -----------------------------------------------------------------------
     // 7. Call Gemini API

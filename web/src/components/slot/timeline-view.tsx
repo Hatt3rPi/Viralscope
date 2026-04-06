@@ -72,6 +72,8 @@ export function TimelineView({
   const [mirofishMd, setMirofishMd] = React.useState<string | null>(null);
   const [artProgress, setArtProgress] = React.useState<Record<string, "pending" | "generating" | "done" | "error">>({});
   const [imgProgress, setImgProgress] = React.useState<Record<string, "pending" | "generating" | "retrying" | "done" | "error">>({});
+  const [hooks, setHooks] = React.useState<Array<{ id: number; text: string; tone: string; scores: Record<string, number>; total: number; reasoning: string }>>([]);
+  const [selectedHooks, setSelectedHooks] = React.useState<number[]>([]);
   const autoImageTriggered = React.useRef(false);
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -142,6 +144,40 @@ export function TimelineView({
     setError(null);
     try {
       await callEdgeFunction("generate-variantes", { slot_id: slot.id });
+      window.location.reload();
+    } catch (e) {
+      setError(`Error generando variantes: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handleGenerateHooks() {
+    setLoading("hooks");
+    setError(null);
+    try {
+      const data = await callEdgeFunction("generate-hooks", { slot_id: slot.id });
+      if (data.hooks && Array.isArray(data.hooks)) {
+        setHooks(data.hooks);
+        // Auto-select top 3
+        const top3 = data.hooks.slice(0, 3).map((h: { id: number }) => h.id);
+        setSelectedHooks(top3);
+      }
+    } catch (e) {
+      setError(`Error generando hooks: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handleGenerateVariantesFromHooks(hookTexts: string[]) {
+    setLoading("variantes");
+    setError(null);
+    try {
+      await callEdgeFunction("generate-variantes", {
+        slot_id: slot.id,
+        selected_hooks: hookTexts,
+      });
       window.location.reload();
     } catch (e) {
       setError(`Error generando variantes: ${e instanceof Error ? e.message : e}`);
@@ -526,72 +562,185 @@ export function TimelineView({
                     </div>
                   )}
 
-                  {/* Step 2: Content */}
+                  {/* Step 2: Content (Hook Funnel → Variants) */}
                   {step.key === "2-content" && (
-                    <div className="space-y-4">
-                      {variantes.length > 0 ? (
-                        <VarianteTabs variantes={variantes} />
-                      ) : (
-                        <div className="rounded-xl border border-gray-200 bg-white p-6 text-center space-y-3">
-                          <p className="text-sm text-gray-500">
-                            No hay variantes generadas aun.
-                          </p>
+                    <div className="space-y-6">
+
+                      {/* Phase A: Hook Funnel */}
+                      {variantes.length === 0 && (
+                        <div className="space-y-4">
+                          {/* Generate hooks button */}
+                          {hooks.length === 0 && (
+                            <div className="rounded-xl border border-gray-200 bg-white p-6 text-center space-y-3">
+                              <p className="text-sm text-gray-600">
+                                Primero generamos 12 hooks y los evaluamos con 6 dimensiones de calidad.
+                                Solo los mejores 3 avanzaran a variantes completas.
+                              </p>
+                              <Button
+                                onClick={handleGenerateHooks}
+                                disabled={loading === "hooks"}
+                                className="bg-purple-600 hover:bg-purple-700"
+                              >
+                                {loading === "hooks" ? (
+                                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando 12 hooks...</>
+                                ) : (
+                                  <>
+                                    <Sparkles className="mr-2 h-4 w-4" />
+                                    Generar Hook Funnel
+                                  </>
+                                )}
+                              </Button>
+                            </div>
+                          )}
+
+                          {/* Hook results table */}
+                          {hooks.length > 0 && (
+                            <div className="space-y-4">
+                              <div className="flex items-center justify-between">
+                                <h4 className="text-sm font-semibold text-gray-900">
+                                  {hooks.length} hooks generados — selecciona 3 para desarrollar
+                                </h4>
+                                <span className="text-xs text-gray-400">Ordenados por score total</span>
+                              </div>
+
+                              <div className="space-y-2">
+                                {hooks.map((hook, idx) => {
+                                  const isSelected = selectedHooks.includes(hook.id);
+                                  const toneColor = hook.tone === "emocional" ? "border-l-rose-400 bg-rose-50/30"
+                                    : hook.tone === "educativo" ? "border-l-sky-400 bg-sky-50/30"
+                                    : "border-l-amber-400 bg-amber-50/30";
+                                  const toneLabel = hook.tone === "emocional" ? "EMO"
+                                    : hook.tone === "educativo" ? "EDU" : "DIR";
+
+                                  return (
+                                    <button
+                                      key={hook.id}
+                                      onClick={() => {
+                                        setSelectedHooks((prev) => {
+                                          if (prev.includes(hook.id)) return prev.filter((id) => id !== hook.id);
+                                          if (prev.length >= 3) return prev;
+                                          return [...prev, hook.id];
+                                        });
+                                      }}
+                                      className={cn(
+                                        "w-full text-left rounded-lg border-l-[3px] px-4 py-3 transition-all",
+                                        toneColor,
+                                        isSelected
+                                          ? "ring-2 ring-purple-400 bg-purple-50/50 border border-purple-200"
+                                          : "border border-gray-100 hover:border-gray-200"
+                                      )}
+                                    >
+                                      <div className="flex items-start gap-3">
+                                        <div className={cn(
+                                          "flex h-6 w-6 shrink-0 items-center justify-center rounded text-[10px] font-bold mt-0.5",
+                                          isSelected ? "bg-purple-600 text-white" : "bg-gray-200 text-gray-500"
+                                        )}>
+                                          {isSelected ? <Check className="h-3.5 w-3.5" /> : idx + 1}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <p className="text-[13px] text-gray-900 font-medium leading-snug">
+                                            &ldquo;{hook.text}&rdquo;
+                                          </p>
+                                          <div className="flex items-center gap-2 mt-1.5">
+                                            <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400">{toneLabel}</span>
+                                            <span className="text-[10px] text-gray-400">·</span>
+                                            <span className="text-[11px] text-gray-500">{hook.reasoning}</span>
+                                          </div>
+                                        </div>
+                                        <div className="shrink-0 text-right">
+                                          <span className={cn(
+                                            "text-lg font-bold tabular-nums",
+                                            hook.total >= 48 ? "text-green-600" : hook.total >= 40 ? "text-amber-600" : "text-gray-400"
+                                          )}>
+                                            {hook.total}
+                                          </span>
+                                          <p className="text-[9px] text-gray-400">/60</p>
+                                        </div>
+                                      </div>
+                                    </button>
+                                  );
+                                })}
+                              </div>
+
+                              {/* Generate variants from selected hooks */}
+                              <div className="flex items-center justify-between pt-2">
+                                <p className="text-xs text-gray-400">
+                                  {selectedHooks.length}/3 seleccionados
+                                </p>
+                                <Button
+                                  onClick={() => {
+                                    const selected = hooks
+                                      .filter((h) => selectedHooks.includes(h.id))
+                                      .map((h) => h.text);
+                                    handleGenerateVariantesFromHooks(selected);
+                                  }}
+                                  disabled={selectedHooks.length !== 3 || loading === "variantes"}
+                                  className="bg-purple-600 hover:bg-purple-700"
+                                >
+                                  {loading === "variantes" ? (
+                                    <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Variantes...</>
+                                  ) : (
+                                    "Generar Variantes desde Hooks"
+                                  )}
+                                </Button>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       )}
-                      <div className="flex gap-3">
-                        <Button
-                          onClick={handleGenerateVariantes}
-                          disabled={loading === "variantes"}
-                          variant={variantes.length > 0 ? "outline" : "default"}
-                          className={variantes.length > 0 ? "" : "bg-purple-600 hover:bg-purple-700"}
-                        >
-                          {loading === "variantes" ? (
-                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Variantes...</>
-                          ) : variantes.length > 0 ? (
-                            "Regenerar Variantes"
-                          ) : (
-                            "Generar 3 Variantes con IA"
-                          )}
-                        </Button>
-                        {variantes.length > 0 && (
-                          <Button
-                            onClick={handleAutoGenerateArt}
-                            disabled={loading === "auto-art"}
-                            className="bg-green-600 hover:bg-green-700"
-                          >
-                            {loading === "auto-art" ? (
-                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Arte A, B, C...</>
-                            ) : (
-                              <>
-                                <Sparkles className="mr-2 h-4 w-4" />
-                                Continuar a Direccion de Arte
-                              </>
-                            )}
-                          </Button>
-                        )}
-                        {/* Art generation progress chips */}
-                        {Object.keys(artProgress).length > 0 && (
-                          <div className="flex gap-2 mt-2">
-                            {Object.entries(artProgress).map(([label, status]) => (
-                              <span
-                                key={label}
-                                className={cn(
-                                  "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium",
-                                  status === "done" && "bg-green-100 text-green-700",
-                                  status === "generating" && "bg-purple-100 text-purple-700",
-                                  status === "error" && "bg-red-100 text-red-700",
-                                  status === "pending" && "bg-gray-100 text-gray-500"
-                                )}
-                              >
-                                {status === "generating" && <Loader2 className="h-3 w-3 animate-spin" />}
-                                {status === "done" && <Check className="h-3 w-3" />}
-                                {status === "error" && <AlertTriangle className="h-3 w-3" />}
-                                Variante {label}
-                              </span>
-                            ))}
+
+                      {/* Phase B: Generated variants */}
+                      {variantes.length > 0 && (
+                        <>
+                          <VarianteTabs variantes={variantes} />
+                          <div className="flex flex-wrap gap-3 items-center">
+                            <Button
+                              onClick={handleGenerateVariantes}
+                              disabled={loading === "variantes"}
+                              variant="outline"
+                              size="sm"
+                            >
+                              Regenerar Variantes
+                            </Button>
+                            <Button
+                              onClick={handleAutoGenerateArt}
+                              disabled={loading === "auto-art"}
+                              className="bg-green-600 hover:bg-green-700"
+                            >
+                              {loading === "auto-art" ? (
+                                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Arte A, B, C...</>
+                              ) : (
+                                <>
+                                  <Sparkles className="mr-2 h-4 w-4" />
+                                  Continuar a Direccion de Arte
+                                </>
+                              )}
+                            </Button>
                           </div>
-                        )}
-                      </div>
+                          {/* Art generation progress chips */}
+                          {Object.keys(artProgress).length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {Object.entries(artProgress).map(([label, artStatus]) => (
+                                <span
+                                  key={label}
+                                  className={cn(
+                                    "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium",
+                                    artStatus === "done" && "bg-green-100 text-green-700",
+                                    artStatus === "generating" && "bg-purple-100 text-purple-700",
+                                    artStatus === "error" && "bg-red-100 text-red-700",
+                                    artStatus === "pending" && "bg-gray-100 text-gray-500"
+                                  )}
+                                >
+                                  {artStatus === "generating" && <Loader2 className="h-3 w-3 animate-spin" />}
+                                  {artStatus === "done" && <Check className="h-3 w-3" />}
+                                  {artStatus === "error" && <AlertTriangle className="h-3 w-3" />}
+                                  Variante {label}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </>
+                      )}
                     </div>
                   )}
 
