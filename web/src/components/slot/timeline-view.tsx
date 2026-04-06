@@ -364,20 +364,46 @@ export function TimelineView({
                           </p>
                         </div>
                       )}
-                      <Button
-                        onClick={handleGenerateVariantes}
-                        disabled={loading === "variantes"}
-                        variant={variantes.length > 0 ? "outline" : "default"}
-                        className={variantes.length > 0 ? "" : "bg-purple-600 hover:bg-purple-700"}
-                      >
-                        {loading === "variantes" ? (
-                          <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Variantes...</>
-                        ) : variantes.length > 0 ? (
-                          "Regenerar Variantes"
-                        ) : (
-                          "Generar 3 Variantes con IA"
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={handleGenerateVariantes}
+                          disabled={loading === "variantes"}
+                          variant={variantes.length > 0 ? "outline" : "default"}
+                          className={variantes.length > 0 ? "" : "bg-purple-600 hover:bg-purple-700"}
+                        >
+                          {loading === "variantes" ? (
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generando Variantes...</>
+                          ) : variantes.length > 0 ? (
+                            "Regenerar Variantes"
+                          ) : (
+                            "Generar 3 Variantes con IA"
+                          )}
+                        </Button>
+                        {variantes.length > 0 && (
+                          <Button
+                            onClick={async () => {
+                              setLoading("advance-content");
+                              setError(null);
+                              try {
+                                await advanceSlotAction(slot.id, "art_review", "3-art");
+                                window.location.reload();
+                              } catch (e) {
+                                setError(`Error avanzando: ${e instanceof Error ? e.message : e}`);
+                              } finally {
+                                setLoading(null);
+                              }
+                            }}
+                            disabled={loading === "advance-content"}
+                            className="bg-green-600 hover:bg-green-700"
+                          >
+                            {loading === "advance-content" ? (
+                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Avanzando...</>
+                            ) : (
+                              "Continuar a Direccion de Arte"
+                            )}
+                          </Button>
                         )}
-                      </Button>
+                      </div>
                     </div>
                   )}
 
