@@ -386,6 +386,95 @@ export async function addFeedback(data: {
   return row as Feedback;
 }
 
+export async function createSlotsAndBriefsBulk(
+  campaignId: string,
+  parrilla: Array<{
+    slot_number: number;
+    date: string;
+    format: string;
+    pillar: string;
+    objective: string;
+    intention: string;
+    topic: string;
+    topic_angle?: string;
+    hook_direction?: string;
+    cta_direction?: string;
+    persona_target?: string;
+    reasoning?: string;
+    confidence?: string;
+    tensions?: string[];
+    uncertainties?: string[];
+    date_reference?: string | null;
+  }>
+): Promise<{ slotsCreated: number; briefsCreated: number }> {
+  const supabase = await getSupabaseAdmin();
+
+  // 1. Bulk insert all slots
+  const slotRows = parrilla.map((s) => ({
+    campaign_id: campaignId,
+    slot_number: s.slot_number,
+    date: new Date(s.date).toISOString(),
+    format: s.format,
+    pillar: s.pillar,
+    objective: s.objective,
+    intention: s.intention || "quality",
+    topic: s.topic,
+    status: "brief_review" as const,
+    current_step: "1-brief" as const,
+  }));
+
+  const { data: insertedSlots, error: slotsErr } = await supabase
+    .from("slots")
+    .insert(slotRows)
+    .select("id, slot_number");
+
+  if (slotsErr) throw new Error(`Error creating slots: ${slotsErr.message}`);
+  if (!insertedSlots || insertedSlots.length === 0) {
+    throw new Error("No slots were created");
+  }
+
+  // 2. Map slot IDs to brief data
+  const slotIdMap = new Map(
+    insertedSlots.map((s: { id: string; slot_number: number }) => [
+      s.slot_number,
+      s.id,
+    ])
+  );
+
+  const briefRows = parrilla.map((s) => ({
+    slot_id: slotIdMap.get(s.slot_number)!,
+    brief_yaml: {
+      topic: s.topic,
+      topic_angle: s.topic_angle || "",
+      format: s.format,
+      platform: "instagram",
+      pillar: s.pillar,
+      objective: s.objective,
+      intention: s.intention || "quality",
+      hook_direction: s.hook_direction || "",
+      cta_direction: s.cta_direction || "",
+      persona_target: s.persona_target || "",
+      reasoning: s.reasoning || "",
+      confidence: s.confidence || "media",
+      tensions: s.tensions || [],
+      uncertainties: s.uncertainties || [],
+      date_reference: s.date_reference || null,
+    },
+    version: 1,
+  }));
+
+  const { error: briefsErr } = await supabase
+    .from("briefs")
+    .insert(briefRows);
+
+  if (briefsErr) throw new Error(`Error creating briefs: ${briefsErr.message}`);
+
+  return {
+    slotsCreated: insertedSlots.length,
+    briefsCreated: briefRows.length,
+  };
+}
+
 export async function addGenerationLog(data: {
   slot_id: string;
   step: string;

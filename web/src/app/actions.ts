@@ -6,11 +6,13 @@ import {
   createProject,
   createCampaign,
   createSlot,
+  createSlotsAndBriefsBulk,
   approveBrief,
   updateSlotStatus,
   addFeedback,
   updateSlotSimulationMd,
 } from "@/lib/data";
+import type { ParrillaSlot, WizardConfig } from "@/lib/types";
 
 // ─── Project CRUD ───
 
@@ -80,6 +82,44 @@ export async function createCampaignAction(formData: FormData) {
   }
 
   redirect(`/projects/${projectSlug}/campaigns/${campaignId}`);
+}
+
+// ─── Campaign with Parrilla (Wizard) ───
+
+export async function createCampaignWithParrillaAction(data: {
+  project_id: string;
+  project_slug: string;
+  config: WizardConfig;
+  collected_answers: Record<string, unknown>;
+  parrilla: ParrillaSlot[];
+}): Promise<{ campaignId: string }> {
+  const slug = data.config.name
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+
+  let campaignId: string;
+  try {
+    const campaign = await createCampaign({
+      project_id: data.project_id,
+      name: data.config.name,
+      slug,
+      period_start: data.config.period_start,
+      period_end: data.config.period_end,
+      platform: data.config.platform,
+      objectives_json: data.collected_answers,
+    });
+    campaignId = campaign.id;
+
+    await createSlotsAndBriefsBulk(campaignId, data.parrilla);
+  } catch (e) {
+    console.error("createCampaignWithParrillaAction error:", e);
+    throw new Error(
+      `Error creando campana con parrilla: ${e instanceof Error ? e.message : e}`
+    );
+  }
+
+  return { campaignId };
 }
 
 // ─── Brief Actions ───

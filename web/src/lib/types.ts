@@ -83,6 +83,44 @@ export interface Variante {
   created_at: string;
 }
 
+// ─── Wizard Types ───
+
+export type WizardPhase = "config" | "chat" | "review" | "done";
+
+export interface ChatMessage {
+  id: string;
+  role: "assistant" | "user";
+  content: string;
+  quick_responses?: string[];
+  timestamp: number;
+}
+
+export interface ParrillaSlot {
+  slot_number: number;
+  date: string;
+  format: string;
+  pillar: string;
+  objective: string;
+  intention: string;
+  topic: string;
+  topic_angle: string;
+  hook_direction: string;
+  cta_direction: string;
+  persona_target: string;
+  reasoning: string;
+  confidence: "alta" | "media" | "baja";
+  tensions: string[];
+  uncertainties: string[];
+  date_reference: string | null;
+}
+
+export interface WizardConfig {
+  name: string;
+  period_start: string;
+  period_end: string;
+  platform: string;
+}
+
 export interface Feedback {
   id: string;
   slot_id: string;
