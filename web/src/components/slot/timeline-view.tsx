@@ -643,37 +643,59 @@ export function TimelineView({
                         Proximamente: los prompts seran refinados automaticamente via AutoLab antes de generar.
                       </div>
 
-                      {/* Per-variant: art card + preview + copy */}
+                      {/* Per-variant: strategy card + preview */}
                       {variantes.map((v) => {
-                        const hasArt = v.art_direction_image_json && Object.keys(v.art_direction_image_json).length > 0;
-                        const isCarousel = slot.format === "carrusel";
+                        const toneLabels: Record<string, string> = { A: "Emocional / Storytelling", B: "Educativo / Datos", C: "Directo / CTA" };
+                        const toneColors: Record<string, string> = { A: "bg-pink-100 text-pink-700", B: "bg-blue-100 text-blue-700", C: "bg-amber-100 text-amber-700" };
+                        const briefData = brief?.brief_yaml as Record<string, unknown> | undefined;
 
                         return (
-                          <div key={v.id} className="space-y-4">
-                            <h4 className="text-sm font-semibold text-purple-700 uppercase tracking-wide">
-                              Variante {v.variant_label}
-                            </h4>
+                          <div key={v.id} className="space-y-3">
+                            <div className="flex items-center gap-3">
+                              <h4 className="text-sm font-semibold text-purple-700 uppercase tracking-wide">
+                                Variante {v.variant_label}
+                              </h4>
+                              <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-medium", toneColors[v.variant_label] || "bg-gray-100 text-gray-600")}>
+                                {toneLabels[v.variant_label] || v.variant_label}
+                              </span>
+                            </div>
 
                             <div className="grid gap-6 lg:grid-cols-2">
-                              {/* Left: Art direction (image only, no video for carousel) */}
-                              <div className="space-y-4">
-                                {hasArt ? (
-                                  <ArtDirectionCard
-                                    variante={v}
-                                    hideVideo={isCarousel}
-                                  />
-                                ) : (
-                                  <div className="rounded-xl border border-gray-200 bg-white p-6 text-center">
-                                    <p className="text-sm text-gray-400">Art direction pendiente...</p>
-                                  </div>
+                              {/* Left: Strategy justification */}
+                              <div className="rounded-xl border border-gray-100 bg-white p-5 space-y-4">
+                                {briefData && (
+                                  <>
+                                    <div>
+                                      <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Foco estrategico</p>
+                                      <p className="text-sm text-gray-800">{(briefData.topic_angle as string) || (briefData.topic as string) || "—"}</p>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-3">
+                                      <div>
+                                        <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Hook</p>
+                                        <p className="text-sm text-gray-700">{(briefData.hook_direction as string) || "—"}</p>
+                                      </div>
+                                      <div>
+                                        <p className="text-xs font-semibold text-gray-400 uppercase mb-1">CTA</p>
+                                        <p className="text-sm text-gray-700">{(briefData.cta_direction as string) || "—"}</p>
+                                      </div>
+                                    </div>
+                                    <div>
+                                      <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Persona target</p>
+                                      <p className="text-sm text-gray-700">{(briefData.persona_target as string) || "—"}</p>
+                                    </div>
+                                    {briefData.reasoning && (
+                                      <div>
+                                        <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Razonamiento</p>
+                                        <p className="text-sm text-gray-600 leading-relaxed">{briefData.reasoning as string}</p>
+                                      </div>
+                                    )}
+                                  </>
                                 )}
-
-                                {/* Full copy display */}
-                                <div className="rounded-xl border border-gray-100 bg-white p-5">
-                                  <h5 className="text-xs font-semibold text-gray-400 uppercase mb-3">Copy completo</h5>
-                                  <div className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed max-h-[500px] overflow-y-auto">
-                                    {v.copy_md}
-                                  </div>
+                                <div>
+                                  <p className="text-xs font-semibold text-gray-400 uppercase mb-1">Objetivo → Intencion</p>
+                                  <p className="text-sm text-gray-700">
+                                    {slot.objective} → <span className="font-medium">{slot.intention}</span>
+                                  </p>
                                 </div>
                               </div>
 

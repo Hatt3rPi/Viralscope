@@ -22,10 +22,9 @@ interface InstagramPreviewProps {
   format?: string;
 }
 
-function extractSections(copyMd: string): { caption: string; full: string } {
+function extractCaption(copyMd: string): string {
   const captionMatch = copyMd.match(/## Caption\s*\n([\s\S]*?)(?=\n## |$)/i);
-  const caption = captionMatch ? captionMatch[1].trim() : copyMd.slice(0, 300);
-  return { caption, full: copyMd };
+  return captionMatch ? captionMatch[1].trim() : copyMd.slice(0, 500);
 }
 
 export function InstagramPreview({
@@ -33,7 +32,7 @@ export function InstagramPreview({
   brandName = "La Cuenteria",
   format = "reel",
 }: InstagramPreviewProps) {
-  const { caption, full } = extractSections(variante.copy_md);
+  const caption = extractCaption(variante.copy_md);
 
   const initials = brandName
     .split(" ")
@@ -56,50 +55,27 @@ export function InstagramPreview({
   }
 
   if (format === "carrusel") {
-    return <CarouselPreview variante={variante} initials={initials} username={username} caption={caption} copyFull={full} />;
+    return <CarouselPreview variante={variante} initials={initials} username={username} caption={caption} />;
   }
 
-  return <PostPreview variante={variante} initials={initials} username={username} caption={caption} copyFull={full} />;
+  return <PostPreview variante={variante} initials={initials} username={username} caption={caption} />;
 }
 
-// ─── Expandable Caption ─────────────────────────────────────────────────────
+// ─── Full Caption (always visible for demo) ─────────────────────────────────
 
-function ExpandableCaption({
+function FullCaption({
   username,
   caption,
-  copyFull,
-  dark = false,
 }: {
   username: string;
   caption: string;
-  copyFull?: string;
-  dark?: boolean;
 }) {
-  const [expanded, setExpanded] = useState(false);
-  const text = expanded && copyFull ? copyFull : caption;
-  const truncated = !expanded && caption.length > 120;
-
   return (
-    <div className={cn("px-4 py-2", dark && "text-white")}>
-      <div className={cn("text-sm", dark ? "text-white/90" : "text-gray-900")}>
+    <div className="px-4 py-2">
+      <div className="text-sm text-gray-900 whitespace-pre-wrap leading-relaxed">
         <span className="font-semibold">{username}</span>{" "}
-        {expanded ? (
-          <span className="whitespace-pre-wrap">{text}</span>
-        ) : (
-          <span>{truncated ? caption.slice(0, 120) + "..." : caption}</span>
-        )}
+        {caption}
       </div>
-      {(truncated || expanded) && (
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className={cn(
-            "text-xs mt-1 font-medium",
-            dark ? "text-white/60" : "text-gray-400"
-          )}
-        >
-          {expanded ? "menos" : "mas"}
-        </button>
-      )}
     </div>
   );
 }
@@ -252,13 +228,11 @@ function CarouselPreview({
   initials,
   username,
   caption,
-  copyFull,
 }: {
   variante: Variante;
   initials: string;
   username: string;
   caption: string;
-  copyFull: string;
 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -275,12 +249,12 @@ function CarouselPreview({
 
   return (
     <div className="mx-auto max-w-[375px]">
-      <div className="overflow-hidden rounded-[40px] border-8 border-gray-800 bg-white">
-        <div className="flex items-center justify-center bg-gray-800 px-6 py-1.5">
+      <div className="overflow-hidden rounded-[40px] border-8 border-gray-800 bg-white max-h-[700px] overflow-y-auto">
+        <div className="sticky top-0 z-10 flex items-center justify-center bg-gray-800 px-6 py-1.5">
           <span className="text-xs font-medium text-white">9:41</span>
         </div>
 
-        <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-3 bg-white">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-xs font-bold text-white">
             {initials}
           </div>
@@ -298,6 +272,7 @@ function CarouselPreview({
               src={currentSlideImageUrl || variante.image_url || ""}
               alt={`Slide ${currentSlide + 1}`}
               className="aspect-square w-full object-cover"
+              loading={currentSlide === 0 ? "eager" : "lazy"}
             />
           ) : (
             <div className="flex aspect-square w-full flex-col items-center justify-center bg-gradient-to-br from-purple-500 to-purple-700 p-6">
@@ -365,7 +340,7 @@ function CarouselPreview({
         </div>
 
         {/* Expandable caption */}
-        <ExpandableCaption username={username} caption={caption} copyFull={copyFull} />
+        <FullCaption username={username} caption={caption} />
 
         <div className="px-4 pb-4">
           <p className="text-xs text-gray-400">Hace 2 horas</p>
@@ -382,22 +357,20 @@ function PostPreview({
   initials,
   username,
   caption,
-  copyFull,
 }: {
   variante: Variante;
   initials: string;
   username: string;
   caption: string;
-  copyFull: string;
 }) {
   return (
     <div className="mx-auto max-w-[375px]">
-      <div className="overflow-hidden rounded-[40px] border-8 border-gray-800 bg-white">
-        <div className="flex items-center justify-center bg-gray-800 px-6 py-1.5">
+      <div className="overflow-hidden rounded-[40px] border-8 border-gray-800 bg-white max-h-[700px] overflow-y-auto">
+        <div className="sticky top-0 z-10 flex items-center justify-center bg-gray-800 px-6 py-1.5">
           <span className="text-xs font-medium text-white">9:41</span>
         </div>
 
-        <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-3 bg-white">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-xs font-bold text-white">
             {initials}
           </div>
@@ -431,7 +404,7 @@ function PostPreview({
           <p className="text-sm font-semibold text-gray-900">127 Me gusta</p>
         </div>
 
-        <ExpandableCaption username={username} caption={caption} copyFull={copyFull} />
+        <FullCaption username={username} caption={caption} />
 
         <div className="px-4 pb-4">
           <p className="text-xs text-gray-400">Hace 2 horas</p>
