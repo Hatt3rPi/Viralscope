@@ -1,0 +1,149 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]: MIROFISH
+    - generic [ref=e6]:
+      - button "Español ▼" [ref=e8] [cursor=pointer]:
+        - text: Español
+        - generic [ref=e9]: ▼
+      - link "Visita nuestra página en Github ↗" [ref=e10] [cursor=pointer]:
+        - /url: https://github.com/666ghj/MiroFish
+        - text: Visita nuestra página en Github
+        - generic [ref=e11]: ↗
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: Motor de Inteligencia Colectiva Conciso y Universal
+          - generic [ref=e17]: / v0.1-Preview
+        - heading "Sube Documentos, Predice el Futuro" [level=1] [ref=e18]:
+          - text: Sube Documentos,
+          - generic [ref=e19]: Predice el Futuro
+        - generic [ref=e20]:
+          - paragraph [ref=e21]:
+            - generic [ref=e22]: A partir de un solo documento, MiroFish extrae semillas de realidad para auto-generar un mundo paralelo con hasta millones de Agentes. Inyecta variables desde una perspectiva omnisciente para encontrar el "óptimo local" en dinámicas de grupo complejas.
+          - paragraph [ref=e23]: Deja que los Agentes ensayen el futuro, deja que las decisiones prevalezcan_
+      - generic [ref=e25]:
+        - img "MiroFish Logo" [ref=e27]
+        - button "↓" [ref=e28] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - generic [ref=e32]: ■
+          - text: Estado del Sistema
+        - heading "Listo" [level=2] [ref=e33]
+        - paragraph [ref=e34]: Motor de predicción en espera. Sube datos no estructurados para iniciar una secuencia de simulación.
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - generic [ref=e37]: Bajo Costo
+            - generic [ref=e38]: ~$5/simulación
+          - generic [ref=e39]:
+            - generic [ref=e40]: Escalable
+            - generic [ref=e41]: Millones de Agentes
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e44]: ◇
+            - text: Flujo de Trabajo
+          - generic [ref=e45]:
+            - generic [ref=e46]:
+              - generic [ref=e47]: "01"
+              - generic [ref=e48]:
+                - generic [ref=e49]: Construir Grafo
+                - generic [ref=e50]: Extracción de semillas, inyección de memoria y construcción de GraphRAG
+            - generic [ref=e51]:
+              - generic [ref=e52]: "02"
+              - generic [ref=e53]:
+                - generic [ref=e54]: Config. Entorno
+                - generic [ref=e55]: Extracción de entidades, generación de personas y config. de Agentes
+            - generic [ref=e56]:
+              - generic [ref=e57]: "03"
+              - generic [ref=e58]:
+                - generic [ref=e59]: Simulación
+                - generic [ref=e60]: Simulación dual paralela, auto-análisis de requisitos y memoria temporal
+            - generic [ref=e61]:
+              - generic [ref=e62]: "04"
+              - generic [ref=e63]:
+                - generic [ref=e64]: Reporte
+                - generic [ref=e65]: ReportAgent interactúa con el entorno post-simulación mediante herramientas avanzadas
+            - generic [ref=e66]:
+              - generic [ref=e67]: "05"
+              - generic [ref=e68]:
+                - generic [ref=e69]: Interacción
+                - generic [ref=e70]: Chatea con cualquier individuo simulado y conversa con ReportAgent
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: 01 / Semilla de Realidad
+            - generic [ref=e76]: "Formatos: PDF, MD, TXT"
+          - generic [ref=e78] [cursor=pointer]:
+            - generic [ref=e79]: ↑
+            - generic [ref=e80]: Arrastra archivos para subir
+            - generic [ref=e81]: o haz clic para buscar archivos
+        - generic [ref=e83]: Parámetros de Entrada
+        - generic [ref=e84]:
+          - generic [ref=e86]: ">_ 02 / Prompt de Simulación"
+          - generic [ref=e87]:
+            - textbox "// Describe tu requisito de simulación o predicción en lenguaje natural" [ref=e88]
+            - generic [ref=e89]: "Motor: MiroFish-V1.0"
+        - button "Iniciar Motor →" [disabled] [ref=e91]:
+          - generic [ref=e92]: Iniciar Motor
+          - generic [ref=e93]: →
+    - generic [ref=e94]:
+      - generic [ref=e97]: Historial de Simulaciones
+      - generic [ref=e99]:
+        - generic [ref=e100] [cursor=pointer]:
+          - generic [ref=e101]:
+            - generic [ref=e102]: SIM_0E2F3B
+            - generic [ref=e103]:
+              - generic "Construir Grafo" [ref=e104]: ◇
+              - generic "Config. Entorno" [ref=e105]: ◈
+              - generic "Reporte de Análisis" [ref=e106]: ◆
+          - generic [ref=e109]:
+            - generic [ref=e110]: MD
+            - generic [ref=e111]: seed-test-es.md
+          - heading "Simula como reaccion..." [level=3] [ref=e112]
+          - paragraph [ref=e113]: Simula como reaccionarian profesores, padres y medios e...
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - generic [ref=e116]: 2026-04-06
+              - generic [ref=e117]: 23:35
+            - generic [ref=e118]:
+              - generic [ref=e119]: ●
+              - text: 48/48 rondas
+        - generic [ref=e121] [cursor=pointer]:
+          - generic [ref=e122]:
+            - generic [ref=e123]: SIM_29D8FF
+            - generic [ref=e124]:
+              - generic "Construir Grafo" [ref=e125]: ◇
+              - generic "Config. Entorno" [ref=e126]: ◈
+              - generic "Reporte de Análisis" [ref=e127]: ◆
+          - generic [ref=e130]:
+            - generic [ref=e131]: MD
+            - generic [ref=e132]: seed-lacuenter....md
+          - heading "Simula cómo reaccion..." [level=3] [ref=e133]
+          - paragraph [ref=e134]: Simula cómo reaccionarían 500 padres chilenos (25-45 añ...
+          - generic [ref=e135]:
+            - generic [ref=e136]:
+              - generic [ref=e137]: 2026-03-29
+              - generic [ref=e138]: 00:36
+            - generic [ref=e139]:
+              - generic [ref=e140]: ●
+              - text: 40/40 rondas
+        - generic [ref=e141] [cursor=pointer]:
+          - generic [ref=e142]:
+            - generic [ref=e143]: SIM_2ABEAA
+            - generic [ref=e144]:
+              - generic "Construir Grafo" [ref=e145]: ◇
+              - generic "Config. Entorno" [ref=e146]: ◈
+              - generic "Reporte de Análisis" [ref=e147]: ◆
+          - generic [ref=e150]:
+            - generic [ref=e151]: MD
+            - generic [ref=e152]: seed-viralscop....md
+          - heading "# Simulation Require..." [level=3] [ref=e153]
+          - paragraph [ref=e154]: "# Simulation Requirement — Instagram Reel A/B/C Test ..."
+          - generic [ref=e155]:
+            - generic [ref=e156]:
+              - generic [ref=e157]: 2026-04-04
+              - generic [ref=e158]: 07:56
+            - generic [ref=e159]:
+              - generic [ref=e160]: ●
+              - text: 72/72 rondas

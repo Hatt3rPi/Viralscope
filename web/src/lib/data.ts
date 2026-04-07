@@ -541,3 +541,29 @@ export async function getPanelEvaluations(slotId: string): Promise<PanelEvaluati
   }
   return [];
 }
+
+// ─── Project Onboarding ───
+
+export async function updateProjectYamls(
+  projectId: string,
+  yamls: Record<string, Record<string, unknown>>,
+): Promise<void> {
+  const supabase = await getSupabaseAdmin();
+  const { error } = await supabase
+    .from("projects")
+    .update(yamls)
+    .eq("id", projectId);
+  if (error) throw new Error(error.message);
+}
+
+export async function updateProjectOnboardingStatus(
+  projectId: string,
+  status: string,
+): Promise<void> {
+  const supabase = await getSupabaseAdmin();
+  const { error } = await supabase
+    .from("projects")
+    .update({ onboarding_status: status })
+    .eq("id", projectId);
+  if (error) throw new Error(error.message);
+}

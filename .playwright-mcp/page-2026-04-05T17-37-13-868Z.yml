@@ -1,0 +1,25 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e18]
+  - generic [ref=e42]:
+    - banner [ref=e43]:
+      - generic [ref=e44]:
+        - link "← Proyectos" [ref=e45] [cursor=pointer]:
+          - /url: /projects
+        - heading "Nuevo Proyecto" [level=1] [ref=e46]
+    - main [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - generic [ref=e50]:
+            - generic [ref=e51]: Nombre del proyecto
+            - textbox "Nombre del proyecto" [ref=e52]:
+              - /placeholder: La Cuenteria
+          - generic [ref=e53]:
+            - generic [ref=e54]: Slug (URL)
+            - textbox "Slug (URL)" [ref=e55]:
+              - /placeholder: lacuenteria (se genera automaticamente si se deja vacio)
+            - paragraph [ref=e56]: "Se usa en la URL: /projects/slug"
+        - paragraph [ref=e57]: Los archivos de marca (brand.yaml, voice.yaml, etc.) se pueden configurar desde la vista del proyecto despues de crearlo.
+        - generic [ref=e58]:
+          - link "Cancelar" [ref=e59] [cursor=pointer]:
+            - /url: /projects
+          - button "Crear Proyecto" [ref=e60]

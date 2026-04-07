@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { createProjectAction } from "@/app/actions";
+import { OnboardingWizard } from "@/components/onboarding/onboarding-wizard";
 
 export default function NewProjectPage() {
   return (
@@ -12,64 +12,12 @@ export default function NewProjectPage() {
           >
             &larr; Proyectos
           </Link>
-          <h1 className="text-lg font-bold text-gray-900">Nuevo Proyecto</h1>
+          <h1 className="text-lg font-bold text-gray-900">Nueva Marca</h1>
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-6 py-8">
-        <form action={createProjectAction} className="space-y-6">
-          <div className="bg-white rounded-2xl border border-purple-100 p-6 space-y-5">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Nombre del proyecto
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                required
-                placeholder="La Cuenteria"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="slug" className="block text-sm font-medium text-gray-700 mb-1">
-                Slug (URL)
-              </label>
-              <input
-                type="text"
-                id="slug"
-                name="slug"
-                placeholder="lacuenteria (se genera automaticamente si se deja vacio)"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none"
-              />
-              <p className="text-xs text-gray-400 mt-1">
-                Se usa en la URL: /projects/slug
-              </p>
-            </div>
-          </div>
-
-          <p className="text-sm text-gray-500">
-            Los archivos de marca (brand.yaml, voice.yaml, etc.) se pueden configurar
-            desde la vista del proyecto despues de crearlo.
-          </p>
-
-          <div className="flex gap-3">
-            <Link
-              href="/projects"
-              className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              Cancelar
-            </Link>
-            <button
-              type="submit"
-              className="px-6 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-colors"
-            >
-              Crear Proyecto
-            </button>
-          </div>
-        </form>
+      <main className="max-w-3xl mx-auto px-6 py-8">
+        <OnboardingWizard />
       </main>
     </div>
   );

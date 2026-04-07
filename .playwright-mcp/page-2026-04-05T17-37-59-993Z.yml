@@ -1,0 +1,37 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e18]
+  - generic [ref=e85]:
+    - banner [ref=e86]:
+      - generic [ref=e87]:
+        - link "← Test Viralscope" [ref=e88] [cursor=pointer]:
+          - /url: /projects/test-viralscope
+        - heading "Nueva Campana" [level=1] [ref=e89]
+    - main [ref=e90]:
+      - generic [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e94]: Nombre de la campana
+            - textbox "Nombre de la campana" [ref=e95]:
+              - /placeholder: Instagram Mayo 2026
+          - generic [ref=e96]:
+            - generic [ref=e97]:
+              - generic [ref=e98]: Inicio del periodo
+              - textbox "Inicio del periodo" [ref=e99]: 2026-04-01
+            - generic [ref=e100]:
+              - generic [ref=e101]: Fin del periodo
+              - textbox "Fin del periodo" [ref=e102]: 2026-04-30
+          - generic [ref=e103]:
+            - generic [ref=e104]: Plataforma
+            - combobox "Plataforma" [ref=e105]:
+              - option "Instagram" [selected]
+              - option "TikTok"
+              - option "LinkedIn"
+              - option "Twitter / X"
+          - generic [ref=e106]:
+            - generic [ref=e107]: Numero de contenidos (slots)
+            - spinbutton "Numero de contenidos (slots)" [ref=e108]: "30"
+            - paragraph [ref=e109]: Se crearan slots vacios distribuidos en el periodo. Puedes dejar 0 para crear slots manualmente.
+        - generic [ref=e110]:
+          - link "Cancelar" [ref=e111] [cursor=pointer]:
+            - /url: /projects/test-viralscope
+          - button "Crear Campana" [ref=e112]

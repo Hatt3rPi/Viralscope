@@ -1,0 +1,78 @@
+- generic [ref=e167]:
+  - banner [ref=e168]:
+    - generic [ref=e170] [cursor=pointer]: MIROFISH
+    - generic [ref=e172]:
+      - button "Grafo" [ref=e173] [cursor=pointer]
+      - button "Dividido" [ref=e174] [cursor=pointer]
+      - button "Panel de Trabajo" [ref=e175] [cursor=pointer]
+    - generic [ref=e176]:
+      - button "Español ▼" [ref=e178] [cursor=pointer]:
+        - text: Español
+        - generic [ref=e179]: ▼
+      - generic [ref=e181]:
+        - generic [ref=e182]: Step 1/5
+        - generic [ref=e183]: Construir Grafo
+      - generic [ref=e185]: Generating Ontology
+  - main [ref=e187]:
+    - generic [ref=e189]:
+      - generic:
+        - generic [ref=e190]: Visualización de Relaciones del Grafo
+        - generic [ref=e191]:
+          - button "↻ Refresh" [ref=e192] [cursor=pointer]:
+            - generic [ref=e193]: ↻
+            - generic [ref=e194]: Refresh
+          - button "⛶" [ref=e195] [cursor=pointer]:
+            - generic [ref=e196]: ⛶
+      - generic [ref=e198]:
+        - generic [ref=e199]: ❖
+        - paragraph [ref=e200]: Esperando generación de ontología...
+    - generic [ref=e202]:
+      - generic [ref=e203]:
+        - generic [ref=e204]:
+          - generic [ref=e205]:
+            - generic [ref=e206]:
+              - generic [ref=e207]: "01"
+              - generic [ref=e208]: Generación de Ontología
+            - generic [ref=e209]: Generando
+          - generic [ref=e210]:
+            - paragraph [ref=e211]: POST /api/graph/ontology/generate
+            - paragraph [ref=e212]: El LLM analiza el contenido del documento y los requisitos de simulación, extrae semillas de realidad y auto-genera una estructura de ontología adecuada
+            - generic [ref=e215]: Uploading and analyzing docs...
+        - generic [ref=e216]:
+          - generic [ref=e217]:
+            - generic [ref=e218]:
+              - generic [ref=e219]: "02"
+              - generic [ref=e220]: Construcción de GraphRAG
+            - generic [ref=e221]: Pendiente
+          - generic [ref=e222]:
+            - paragraph [ref=e223]: POST /api/graph/build
+            - paragraph [ref=e224]: Basado en la ontología generada, los documentos se fragmentan automáticamente y se envían a Zep para construir un grafo de conocimiento, extrayendo entidades y relaciones, formando memoria temporal y resúmenes de comunidad
+            - generic [ref=e225]:
+              - generic [ref=e226]:
+                - generic [ref=e227]: "0"
+                - generic [ref=e228]: Nodos de Entidad
+              - generic [ref=e229]:
+                - generic [ref=e230]: "0"
+                - generic [ref=e231]: Aristas de Relación
+              - generic [ref=e232]:
+                - generic [ref=e233]: "0"
+                - generic [ref=e234]: Tipos de Esquema
+        - generic [ref=e235]:
+          - generic [ref=e237]:
+            - generic [ref=e238]: "03"
+            - generic [ref=e239]: Construcción Completa
+          - generic [ref=e240]:
+            - paragraph [ref=e241]: POST /api/simulation/create
+            - paragraph [ref=e242]: La construcción del grafo está completa. Procede al siguiente paso para configurar el entorno de simulación.
+            - button "Ir a Configuración de Entorno ➝" [disabled] [ref=e243]
+      - generic [ref=e244]:
+        - generic [ref=e245]:
+          - generic [ref=e246]: SYSTEM DASHBOARD
+          - generic [ref=e247]: NO_PROJECT
+        - generic [ref=e248]:
+          - generic [ref=e249]:
+            - generic [ref=e250]: 00:31:28.026
+            - generic [ref=e251]: Project view initialized.
+          - generic [ref=e252]:
+            - generic [ref=e253]: 00:31:28.027
+            - generic [ref=e254]: "Starting ontology generation: Uploading files..."

@@ -11,6 +11,8 @@ import {
   updateSlotStatus,
   addFeedback,
   updateSlotSimulationMd,
+  updateProjectYamls,
+  updateProjectOnboardingStatus,
 } from "@/lib/data";
 import type { ParrillaSlot, WizardConfig } from "@/lib/types";
 
@@ -29,6 +31,45 @@ export async function createProjectAction(formData: FormData) {
     throw new Error(`Error creando proyecto: ${e instanceof Error ? e.message : e}`);
   }
   redirect(`/projects/${projectSlug}`);
+}
+
+export async function createProjectWithOnboardingAction(formData: FormData) {
+  const name = formData.get("name") as string;
+  const websiteUrl = formData.get("website_url") as string;
+  const instagramHandle = formData.get("instagram_handle") as string;
+  const slug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+
+  let projectSlug: string;
+  try {
+    const project = await createProject({
+      name,
+      slug,
+      website_url: websiteUrl || undefined,
+      instagram_handle: instagramHandle || undefined,
+      onboarding_status: "researching",
+    } as Record<string, unknown> & { name: string; slug: string });
+    projectSlug = project.slug;
+  } catch (e) {
+    console.error("createProjectWithOnboardingAction error:", e);
+    throw new Error(`Error creando proyecto: ${e instanceof Error ? e.message : e}`);
+  }
+  redirect(`/projects/${projectSlug}/onboarding`);
+}
+
+export async function updateProjectYamlsAction(
+  projectId: string,
+  yamls: Record<string, Record<string, unknown>>,
+) {
+  await updateProjectYamls(projectId, yamls);
+  revalidatePath("/projects");
+}
+
+export async function updateOnboardingStatusAction(
+  projectId: string,
+  status: "pending" | "researching" | "wizard" | "complete",
+) {
+  await updateProjectOnboardingStatus(projectId, status);
+  revalidatePath("/projects");
 }
 
 // ─── Campaign CRUD ───

@@ -10,7 +10,33 @@ export interface Project {
   platforms_yaml: Record<string, unknown>;
   metrics_yaml: Record<string, unknown>;
   calendar_yaml: Record<string, unknown>;
+  website_url?: string;
+  instagram_handle?: string;
+  onboarding_status: "pending" | "researching" | "wizard" | "complete";
+  research_data: Record<string, unknown>;
   created_at: string;
+}
+
+// ─── Onboarding Types ───
+
+export type OnboardingPhase = "input" | "researching" | "report" | "wizard" | "done";
+
+export interface ResearchReport {
+  website: {
+    title: string;
+    text: string;
+    url: string;
+    pages_fetched: number;
+  } | null;
+  instagram: {
+    bio: string;
+    followers: number;
+    posts_count: number;
+  } | null;
+  social_links: Array<{ platform: string; url: string; handle: string }>;
+  yamls_populated: string[];
+  confidence: Record<string, "high" | "medium" | "low">;
+  summary: string;
 }
 
 export interface Campaign {

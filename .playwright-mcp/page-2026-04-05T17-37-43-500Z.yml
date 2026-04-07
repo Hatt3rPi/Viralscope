@@ -1,0 +1,25 @@
+- generic [ref=e1]:
+  - alert [ref=e18]
+  - generic [ref=e61]:
+    - banner [ref=e62]:
+      - generic [ref=e63]:
+        - link "← Proyectos" [ref=e64] [cursor=pointer]:
+          - /url: /projects
+        - generic [ref=e65]:
+          - generic [ref=e67]: T
+          - heading "Test Viralscope" [level=1] [ref=e68]
+    - main [ref=e69]:
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - button "Brand" [ref=e72]
+          - button "Voice" [ref=e73]
+          - button "Audience" [ref=e74]
+          - button "Pillars" [ref=e75]
+          - button "Competitors" [ref=e76]
+          - button "Campaigns" [active] [ref=e77]
+        - generic [ref=e78]:
+          - generic [ref=e81]:
+            - heading "Campañas" [level=3] [ref=e82]
+            - link "+ Nueva Campana" [ref=e83] [cursor=pointer]:
+              - /url: /projects/test-viralscope/campaigns/new
+          - paragraph [ref=e84]: No hay campañas aún.

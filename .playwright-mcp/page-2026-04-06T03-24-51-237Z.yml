@@ -1,0 +1,130 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]: MIROFISH
+    - generic [ref=e6]:
+      - button "中文 ▼" [ref=e8] [cursor=pointer]:
+        - text: 中文
+        - generic [ref=e9]: ▼
+      - link "访问我们的Github主页 ↗" [ref=e10] [cursor=pointer]:
+        - /url: https://github.com/666ghj/MiroFish
+        - text: 访问我们的Github主页
+        - generic [ref=e11]: ↗
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: 简洁通用的群体智能引擎
+          - generic [ref=e17]: / v0.1-预览版
+        - heading "上传任意报告 即刻推演未来" [level=1] [ref=e18]:
+          - text: 上传任意报告
+          - generic [ref=e19]: 即刻推演未来
+        - generic [ref=e20]:
+          - paragraph [ref=e21]:
+            - generic [ref=e22]: 即使只有一段文字，MiroFish 也能基于其中的现实种子，全自动生成与之对应的至多百万级Agent构成的平行世界。通过上帝视角注入变量，在复杂的群体交互中寻找动态环境下的"局部最优解"
+          - paragraph [ref=e23]: 让未来在 Agent 群中预演，让决策在百战后胜出_
+      - generic [ref=e25]:
+        - img "MiroFish Logo" [ref=e27]
+        - button "↓" [ref=e28] [cursor=pointer]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - generic [ref=e32]: ■
+          - text: 系统状态
+        - heading "准备就绪" [level=2] [ref=e33]
+        - paragraph [ref=e34]: 预测引擎待命中，可上传多份非结构化数据以初始化模拟序列
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - generic [ref=e37]: 低成本
+            - generic [ref=e38]: 常规模拟平均5$/次
+          - generic [ref=e39]:
+            - generic [ref=e40]: 高可用
+            - generic [ref=e41]: 最多百万级Agent模拟
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e44]: ◇
+            - text: 工作流序列
+          - generic [ref=e45]:
+            - generic [ref=e46]:
+              - generic [ref=e47]: "01"
+              - generic [ref=e48]:
+                - generic [ref=e49]: 图谱构建
+                - generic [ref=e50]: 现实种子提取 & 个体与群体记忆注入 & GraphRAG构建
+            - generic [ref=e51]:
+              - generic [ref=e52]: "02"
+              - generic [ref=e53]:
+                - generic [ref=e54]: 环境搭建
+                - generic [ref=e55]: 实体关系抽取 & 人设生成 & 环境配置Agent注入仿真参数
+            - generic [ref=e56]:
+              - generic [ref=e57]: "03"
+              - generic [ref=e58]:
+                - generic [ref=e59]: 开始模拟
+                - generic [ref=e60]: 双平台并行模拟 & 自动解析预测需求 & 动态更新时序记忆
+            - generic [ref=e61]:
+              - generic [ref=e62]: "04"
+              - generic [ref=e63]:
+                - generic [ref=e64]: 报告生成
+                - generic [ref=e65]: ReportAgent拥有丰富的工具集与模拟后环境进行深度交互
+            - generic [ref=e66]:
+              - generic [ref=e67]: "05"
+              - generic [ref=e68]:
+                - generic [ref=e69]: 深度互动
+                - generic [ref=e70]: 与模拟世界中的任意一位进行对话 & 与ReportAgent进行对话
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: 01 / 现实种子
+            - generic [ref=e76]: "支持格式: PDF, MD, TXT"
+          - generic [ref=e78] [cursor=pointer]:
+            - generic [ref=e79]: ↑
+            - generic [ref=e80]: 拖拽文件上传
+            - generic [ref=e81]: 或点击浏览文件系统
+        - generic [ref=e83]: 输入参数
+        - generic [ref=e84]:
+          - generic [ref=e86]: ">_ 02 / 模拟提示词"
+          - generic [ref=e87]:
+            - textbox "// 用自然语言输入模拟或预测需求（例.武大若发布撤销肖某处分的公告，会引发什么舆情走向）" [ref=e88]
+            - generic [ref=e89]: "引擎: MiroFish-V1.0"
+        - button "启动引擎 →" [disabled] [ref=e91]:
+          - generic [ref=e92]: 启动引擎
+          - generic [ref=e93]: →
+    - generic [ref=e94]:
+      - generic [ref=e97]: 推演记录
+      - generic [ref=e99]:
+        - generic [ref=e100] [cursor=pointer]:
+          - generic [ref=e101]:
+            - generic [ref=e102]: SIM_29D8FF
+            - generic [ref=e103]:
+              - generic "图谱构建" [ref=e104]: ◇
+              - generic "环境搭建" [ref=e105]: ◈
+              - generic "分析报告" [ref=e106]: ◆
+          - generic [ref=e109]:
+            - generic [ref=e110]: MD
+            - generic [ref=e111]: seed-lacuenter....md
+          - heading "Simula cómo reaccion..." [level=3] [ref=e112]
+          - paragraph [ref=e113]: Simula cómo reaccionarían 500 padres chilenos (25-45 añ...
+          - generic [ref=e114]:
+            - generic [ref=e115]:
+              - generic [ref=e116]: 2026-03-29
+              - generic [ref=e117]: 00:36
+            - generic [ref=e118]:
+              - generic [ref=e119]: ●
+              - text: 40/40 轮
+        - generic [ref=e121] [cursor=pointer]:
+          - generic [ref=e122]:
+            - generic [ref=e123]: SIM_2ABEAA
+            - generic [ref=e124]:
+              - generic "图谱构建" [ref=e125]: ◇
+              - generic "环境搭建" [ref=e126]: ◈
+              - generic "分析报告" [ref=e127]: ◆
+          - generic [ref=e130]:
+            - generic [ref=e131]: MD
+            - generic [ref=e132]: seed-viralscop....md
+          - heading "# Simulation Require..." [level=3] [ref=e133]
+          - paragraph [ref=e134]: "# Simulation Requirement — Instagram Reel A/B/C Test ..."
+          - generic [ref=e135]:
+            - generic [ref=e136]:
+              - generic [ref=e137]: 2026-04-04
+              - generic [ref=e138]: 07:56
+            - generic [ref=e139]:
+              - generic [ref=e140]: ●
+              - text: 72/72 轮

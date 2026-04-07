@@ -1,0 +1,86 @@
+- generic [ref=e5586]:
+  - banner [ref=e5587]:
+    - generic [ref=e5589] [cursor=pointer]: MIROFISH
+    - generic [ref=e5591]:
+      - button "Grafo" [ref=e5592] [cursor=pointer]
+      - button "Dividido" [ref=e5593] [cursor=pointer]
+      - button "Panel de Trabajo" [ref=e5594] [cursor=pointer]
+    - generic [ref=e5595]:
+      - button "Español ▼" [ref=e5597] [cursor=pointer]:
+        - text: Español
+        - generic [ref=e5598]: ▼
+      - generic [ref=e5600]:
+        - generic [ref=e5601]: Step 4/5
+        - generic [ref=e5602]: Generar Reporte
+      - generic [ref=e5604]: Generating
+  - main [ref=e5606]:
+    - generic [ref=e5607]:
+      - generic:
+        - generic:
+          - generic [ref=e5608]: Visualización de Relaciones del Grafo
+          - generic [ref=e5609]:
+            - button "↻ Refresh" [disabled] [ref=e5610] [cursor=pointer]:
+              - generic [ref=e5611]: ↻
+              - generic [ref=e5612]: Refresh
+            - button "⛶" [ref=e5613] [cursor=pointer]:
+              - generic [ref=e5614]: ⛶
+        - paragraph [ref=e5617]: Cargando datos del grafo...
+    - generic [ref=e5619]:
+      - generic [ref=e5620]:
+        - generic [ref=e5627]: Waiting for Report Agent...
+        - generic [ref=e5628]:
+          - generic [ref=e5629]:
+            - generic [ref=e5631]: PL
+            - generic [ref=e5632]: Planning / Outline
+            - generic [ref=e5633]: IN PROGRESS
+          - generic [ref=e5634]:
+            - generic [ref=e5635]:
+              - generic [ref=e5636]:
+                - generic [ref=e5637]: Sections
+                - generic [ref=e5638]: 0/0
+              - generic [ref=e5639]:
+                - generic [ref=e5640]: Elapsed
+                - generic [ref=e5641]: 0s
+              - generic [ref=e5642]:
+                - generic [ref=e5643]: Tools
+                - generic [ref=e5644]: "0"
+              - generic [ref=e5646]: Generating...
+            - generic [ref=e5647]:
+              - generic [ref=e5653]:
+                - generic [ref=e5654]: PL
+                - generic [ref=e5655]: Planning / Outline
+                - generic [ref=e5656]: IN PROGRESS
+              - generic [ref=e5661]:
+                - generic [ref=e5662]: OK
+                - generic [ref=e5663]: Complete
+          - generic [ref=e5665]:
+            - generic [ref=e5670]:
+              - generic [ref=e5671]:
+                - generic [ref=e5672]: Report Started
+                - generic [ref=e5673]: 08:41:14
+              - generic [ref=e5674]:
+                - generic [ref=e5675]:
+                  - generic [ref=e5676]: Simulation
+                  - generic [ref=e5677]: sim_ec45aa884474
+                - generic [ref=e5678]:
+                  - generic [ref=e5679]: Requirement
+                  - generic [ref=e5680]: Simula como reaccionarian profesores, padres y medios educativos chilenos ante el lanzamiento de EduPlay. Usa solo 5 agentes.
+            - generic [ref=e5684]:
+              - generic [ref=e5685]:
+                - generic [ref=e5686]: Planning
+                - generic [ref=e5687]: 08:41:14
+              - generic [ref=e5689]: Iniciando planificación del esquema del reporte
+      - generic [ref=e5690]:
+        - generic [ref=e5691]:
+          - generic [ref=e5692]: CONSOLE OUTPUT
+          - generic [ref=e5693]: report_3170f248c93f
+        - generic [ref=e5694]:
+          - generic [ref=e5695]: "[08:41:14] INFO: Reporte guardado: report_3170f248c93f"
+          - generic [ref=e5696]: "[08:41:14] INFO: Iniciando planificación del esquema del reporte..."
+          - generic [ref=e5697]: "[08:41:14] INFO: Obteniendo contexto de simulación: Simula como reaccionarian profesores, padres y med..."
+          - generic [ref=e5698]: "[08:41:14] INFO: Búsqueda en grafo: graph_id=mirofish_b920bfb342e549b5, query=Simula como reaccionarian profesores, padres y med..."
+          - generic [ref=e5699]: "[08:41:15] INFO: Búsqueda completa: se encontraron 30 hechos relevantes"
+          - generic [ref=e5700]: "[08:41:15] INFO: Obteniendo estadísticas del grafo mirofish_b920bfb342e549b5..."
+          - generic [ref=e5701]: "[08:41:15] INFO: Obteniendo todos los nodos del grafo mirofish_b920bfb342e549b5..."
+          - generic [ref=e5702]: "[08:41:16] INFO: Se obtuvieron 53 nodos"
+          - generic [ref=e5703]: "[08:41:16] INFO: Obteniendo todas las aristas del grafo mirofish_b920bfb342e549b5..."

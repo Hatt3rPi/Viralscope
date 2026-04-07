@@ -1,0 +1,158 @@
+- generic [ref=e416]:
+  - banner [ref=e417]:
+    - generic [ref=e419] [cursor=pointer]: MIROFISH
+    - generic [ref=e421]:
+      - button "Grafo" [ref=e422] [cursor=pointer]
+      - button "Dividido" [ref=e423] [cursor=pointer]
+      - button "Panel de Trabajo" [ref=e424] [cursor=pointer]
+    - generic [ref=e425]:
+      - button "Español ▼" [ref=e427] [cursor=pointer]:
+        - text: Español
+        - generic [ref=e428]: ▼
+      - generic [ref=e430]:
+        - generic [ref=e431]: Step 2/5
+        - generic [ref=e432]: Config. Entorno
+      - generic [ref=e434]: Preparing
+  - main [ref=e436]:
+    - generic [ref=e438]:
+      - generic:
+        - generic [ref=e439]: Visualización de Relaciones del Grafo
+        - generic [ref=e440]:
+          - button "↻ Refresh" [ref=e441] [cursor=pointer]:
+            - generic [ref=e442]: ↻
+            - generic [ref=e443]: Refresh
+          - button "⛶" [ref=e444] [cursor=pointer]:
+            - generic [ref=e445]: ⛶
+      - img [ref=e448]:
+        - generic [ref=e449]:
+          - generic [ref=e450]:
+            - generic [ref=e463] [cursor=pointer]: CRITIQUES
+            - generic [ref=e464] [cursor=pointer]: COLLABORATES_WITH
+            - generic [ref=e465] [cursor=pointer]: LEADS
+            - generic [ref=e466] [cursor=pointer]: WORKS_FOR
+            - generic [ref=e467] [cursor=pointer]: REPORTS_ON
+            - generic [ref=e468] [cursor=pointer]: LEADS
+          - generic [ref=e469]:
+            - generic: María Go…
+            - generic: Fundació…
+            - generic: Asociaci…
+            - generic: Colegio …
+            - generic: Carolina…
+            - generic: Pedro So…
+            - generic: EduPlay
+      - generic [ref=e477]:
+        - generic [ref=e478]: Entity Types
+        - generic [ref=e479]:
+          - generic [ref=e482]: CompanyExecutive
+          - generic [ref=e485]: NonProfitOrganization
+          - generic [ref=e488]: ProfessionalUnion
+          - generic [ref=e491]: Entity
+          - generic [ref=e494]: Person
+      - generic [ref=e495]:
+        - generic [ref=e496]:
+          - checkbox [checked]
+        - generic [ref=e498]: Show Edge Labels
+    - generic [ref=e500]:
+      - generic [ref=e501]:
+        - generic [ref=e502]:
+          - generic [ref=e503]:
+            - generic [ref=e504]:
+              - generic [ref=e505]: "01"
+              - generic [ref=e506]: Inicialización de Instancia de Simulación
+            - generic [ref=e507]: Completado
+          - generic [ref=e508]:
+            - paragraph [ref=e509]: POST /api/simulation/create
+            - paragraph [ref=e510]: Crear una nueva instancia de simulación y obtener plantillas de parámetros del mundo
+            - generic [ref=e511]:
+              - generic [ref=e512]:
+                - generic [ref=e513]: Project ID
+                - generic [ref=e514]: proj_1c12ce967f2f
+              - generic [ref=e515]:
+                - generic [ref=e516]: Graph ID
+                - generic [ref=e517]: mirofish_d28bc7447bd74b19
+              - generic [ref=e518]:
+                - generic [ref=e519]: Simulation ID
+                - generic [ref=e520]: sim_d5c51b401f8d
+              - generic [ref=e521]:
+                - generic [ref=e522]: Task ID
+                - generic [ref=e523]: 3059f84b-546b-4d62-b558-aab8fcb7e1a4
+        - generic [ref=e524]:
+          - generic [ref=e525]:
+            - generic [ref=e526]:
+              - generic [ref=e527]: "02"
+              - generic [ref=e528]: Generar Personas de Agentes
+            - generic [ref=e529]: 0%
+          - generic [ref=e530]:
+            - paragraph [ref=e531]: POST /api/simulation/prepare
+            - paragraph [ref=e532]: Combinar contexto para auto-extraer entidades y relaciones del grafo de conocimiento, inicializar individuos simulados y asignar comportamientos y memorias únicas basadas en semillas de realidad
+        - generic [ref=e533]:
+          - generic [ref=e534]:
+            - generic [ref=e535]:
+              - generic [ref=e536]: "03"
+              - generic [ref=e537]: Generar Config. Dual de Plataformas
+            - generic [ref=e538]: Pendiente
+          - generic [ref=e539]:
+            - paragraph [ref=e540]: POST /api/simulation/prepare
+            - paragraph [ref=e541]: El LLM configura inteligentemente el flujo temporal del mundo, algoritmos de recomendación, horarios de actividad de cada individuo, frecuencia de publicación, disparadores de eventos y más, basado en requisitos y semillas de realidad
+        - generic [ref=e542]:
+          - generic [ref=e543]:
+            - generic [ref=e544]:
+              - generic [ref=e545]: "04"
+              - generic [ref=e546]: Orquestación de Activación Inicial
+            - generic [ref=e547]: Pendiente
+          - generic [ref=e548]:
+            - paragraph [ref=e549]: POST /api/simulation/prepare
+            - paragraph [ref=e550]: Auto-generar eventos de activación inicial y temas trending basados en la dirección narrativa para guiar el estado inicial del mundo simulado
+        - generic [ref=e551]:
+          - generic [ref=e552]:
+            - generic [ref=e553]:
+              - generic [ref=e554]: "05"
+              - generic [ref=e555]: Configuración Completa
+            - generic [ref=e556]: Pendiente
+          - generic [ref=e557]:
+            - paragraph [ref=e558]: POST /api/simulation/start
+            - paragraph [ref=e559]: El entorno de simulación está listo. Ya puedes iniciar la simulación.
+            - generic [ref=e560]:
+              - button "← Volver a Construir Grafo" [ref=e561] [cursor=pointer]
+              - button "Iniciar Simulación Dual Paralela ➝" [disabled] [ref=e562]
+      - generic [ref=e563]:
+        - generic [ref=e564]:
+          - generic [ref=e565]: SYSTEM DASHBOARD
+          - generic [ref=e566]: sim_d5c51b401f8d
+        - generic [ref=e567]:
+          - generic [ref=e568]:
+            - generic [ref=e569]: 00:34:36.476
+            - generic [ref=e570]: Configuración del entorno del Paso 2 inicializada
+          - generic [ref=e571]:
+            - generic [ref=e572]: 00:34:36.476
+            - generic [ref=e573]: "Instancia de simulación creada: sim_d5c51b401f8d"
+          - generic [ref=e574]:
+            - generic [ref=e575]: 00:34:36.476
+            - generic [ref=e576]: Preparando entorno de simulación...
+          - generic [ref=e577]:
+            - generic [ref=e578]: 00:34:36.476
+            - generic [ref=e579]: SimulationView inicializado
+          - generic [ref=e580]:
+            - generic [ref=e581]: 00:34:37.055
+            - generic [ref=e582]: Tarea de preparación iniciada
+          - generic [ref=e583]:
+            - generic [ref=e584]: 00:34:37.055
+            - generic [ref=e585]: "└─ ID de Tarea: 3059f84b-546b-4d62-b558-aab8fcb7e1a4"
+          - generic [ref=e586]:
+            - generic [ref=e587]: 00:34:37.056
+            - generic [ref=e588]: Se encontraron 5 entidades del grafo de Zep
+          - generic [ref=e589]:
+            - generic [ref=e590]: 00:34:37.056
+            - generic [ref=e591]: "└─ Tipos de entidad: CompanyExecutive, Person, ProfessionalUnion, NonProfitOrganization"
+          - generic [ref=e592]:
+            - generic [ref=e593]: 00:34:37.056
+            - generic [ref=e594]: Consultando progreso de preparación...
+          - generic [ref=e595]:
+            - generic [ref=e596]: 00:34:37.121
+            - generic [ref=e597]: "Cargando datos de simulación: sim_d5c51b401f8d"
+          - generic [ref=e598]:
+            - generic [ref=e599]: 00:34:37.441
+            - generic [ref=e600]: "Proyecto cargado: proj_1c12ce967f2f"
+          - generic [ref=e601]:
+            - generic [ref=e602]: 00:34:38.138
+            - generic [ref=e603]: Datos del grafo cargados exitosamente

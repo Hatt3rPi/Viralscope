@@ -1,0 +1,285 @@
+- generic [ref=e4773]:
+  - banner [ref=e4774]:
+    - generic [ref=e4776] [cursor=pointer]: MIROFISH
+    - generic [ref=e4778]:
+      - button "Grafo" [ref=e4779] [cursor=pointer]
+      - button "Dividido" [ref=e4780] [cursor=pointer]
+      - button "Panel de Trabajo" [ref=e4781] [cursor=pointer]
+    - generic [ref=e4782]:
+      - button "Español ▼" [ref=e4784] [cursor=pointer]:
+        - text: Español
+        - generic [ref=e4785]: ▼
+      - generic [ref=e4787]:
+        - generic [ref=e4788]: Step 4/5
+        - generic [ref=e4789]: Generar Reporte
+      - generic [ref=e4791]: Generating
+  - main [ref=e4793]:
+    - generic [ref=e4794]:
+      - generic:
+        - generic:
+          - generic [ref=e4795]: Visualización de Relaciones del Grafo
+          - generic [ref=e4796]:
+            - button "↻ Refresh" [ref=e4797] [cursor=pointer]:
+              - generic [ref=e4798]: ↻
+              - generic [ref=e4799]: Refresh
+            - button "⛶" [ref=e4800] [cursor=pointer]:
+              - generic [ref=e4801]: ⛶
+        - generic:
+          - generic:
+            - img:
+              - generic [ref=e4802]:
+                - generic [ref=e4803]:
+                  - generic [ref=e5122] [cursor=pointer]: AGREES_WITH
+                  - generic [ref=e5123] [cursor=pointer]: SHARES
+                  - generic [ref=e5124] [cursor=pointer]: AGREES_WITH
+                  - generic [ref=e5125] [cursor=pointer]: USES_FRAMEWORK_FROM
+                  - generic [ref=e5126] [cursor=pointer]: LIKES_POST_FROM
+                  - generic [ref=e5127] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5128] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5129] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5130] [cursor=pointer]: AGREES_WITH
+                  - generic [ref=e5131] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5132] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5133] [cursor=pointer]: LIKES
+                  - generic [ref=e5134] [cursor=pointer]: LIKES
+                  - generic [ref=e5135] [cursor=pointer]: WORKS_FOR
+                  - generic [ref=e5136] [cursor=pointer]: SHARES
+                  - generic [ref=e5137] [cursor=pointer]: SHARES
+                  - generic [ref=e5138] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5139] [cursor=pointer]: FOUNDS
+                  - generic [ref=e5140] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5141] [cursor=pointer]: LIKES_POST_FROM
+                  - generic [ref=e5142] [cursor=pointer]: WORKS_FOR
+                  - generic [ref=e5143] [cursor=pointer]: LIKES
+                  - generic [ref=e5144] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5145] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5146] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5147] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5148] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5149] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5150] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5151] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5152] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5153] [cursor=pointer]: WORKS_FOR
+                  - generic [ref=e5154] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5155] [cursor=pointer]: WORKS_FOR
+                  - generic [ref=e5156] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5157] [cursor=pointer]: INVITES
+                  - generic [ref=e5158] [cursor=pointer]: LIKES_POST
+                  - generic [ref=e5159] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5160] [cursor=pointer]: LIKES_POST
+                  - generic [ref=e5161] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5162] [cursor=pointer]: LIKES
+                  - generic [ref=e5163] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5164] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5165] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5166] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5167] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5168] [cursor=pointer]: LIKES
+                  - generic [ref=e5169] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5170] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5171] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5172] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5173] [cursor=pointer]: RELATED_TO_POST_BY
+                  - generic [ref=e5174] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5175] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5176] [cursor=pointer]: LIKES
+                  - generic [ref=e5177] [cursor=pointer]: AGREES_WITH
+                  - generic [ref=e5178] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5179] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5180] [cursor=pointer]: INTERACTS_WITH
+                  - generic [ref=e5181] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5182] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5183] [cursor=pointer]: LIKES
+                  - generic [ref=e5184] [cursor=pointer]: THANKS
+                  - generic [ref=e5185] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5186] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5187] [cursor=pointer]: WORKS_FOR
+                  - generic [ref=e5188] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5189] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5190] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5191] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5192] [cursor=pointer]: REFERENCES_CONCERN_OF
+                  - generic [ref=e5193] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5194] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5195] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5196] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5197] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5198] [cursor=pointer]: LIKES
+                  - generic [ref=e5199] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5200] [cursor=pointer]: LIKES_POST_FROM
+                  - generic [ref=e5201] [cursor=pointer]: REFERENCES
+                  - generic [ref=e5202] [cursor=pointer]: FOUNDS
+                  - generic [ref=e5203] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5204] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5205] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5206] [cursor=pointer]: OPPOSES
+                  - generic [ref=e5207] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5208] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5209] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5210] [cursor=pointer]: LIKES_POST_FROM
+                  - generic [ref=e5211] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5212] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5213] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5214] [cursor=pointer]: OPPOSES
+                  - generic [ref=e5215] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5216] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5217] [cursor=pointer]: LIKES
+                  - generic [ref=e5218] [cursor=pointer]: REFERENCES_CONCERN_OF
+                  - generic [ref=e5219] [cursor=pointer]: HAS_FOLLOWER
+                  - generic [ref=e5220] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5221] [cursor=pointer]: ACKNOWLEDGES_VISION_OF
+                  - generic [ref=e5222] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5223] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5224] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5225] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5226] [cursor=pointer]: LIKES
+                  - generic [ref=e5227] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5228] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5229] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5230] [cursor=pointer]: LIKES
+                  - generic [ref=e5231] [cursor=pointer]: WORKS_FOR
+                  - generic [ref=e5232] [cursor=pointer]: LIKES_POST_FROM
+                  - generic [ref=e5233] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5234] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5235] [cursor=pointer]: INTERACTS_WITH
+                  - generic [ref=e5236] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5237] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5238] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5239] [cursor=pointer]: FOUNDS
+                  - generic [ref=e5240] [cursor=pointer]: LIKES_POST
+                  - generic [ref=e5241] [cursor=pointer]: OPPOSES
+                  - generic [ref=e5242] [cursor=pointer]: LIKES
+                  - generic [ref=e5243] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5244] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5245] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5246] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5247] [cursor=pointer]: REVIEWS
+                  - generic [ref=e5248] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5249] [cursor=pointer]: LIKES_POST
+                  - generic [ref=e5250] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5251] [cursor=pointer]: LIKES
+                  - generic [ref=e5252] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5253] [cursor=pointer]: OPPOSES
+                  - generic [ref=e5254] [cursor=pointer]: OFFERS_ASSISTANCE
+                  - generic [ref=e5255] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5256] [cursor=pointer]: LIKES
+                  - generic [ref=e5257] [cursor=pointer]: LIKES
+                  - generic [ref=e5258] [cursor=pointer]: OPPOSES
+                  - generic [ref=e5259] [cursor=pointer]: FOLLOWS_MISSION_OF
+                  - generic [ref=e5260] [cursor=pointer]: LIKES_POST
+                  - generic [ref=e5261] [cursor=pointer]: RESPONDS_TO
+                  - generic [ref=e5262] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5263] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5264] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5265] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5266] [cursor=pointer]: MANAGES
+                  - generic [ref=e5267] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5268] [cursor=pointer]: INTERACTS_WITH
+                  - generic [ref=e5269] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5270] [cursor=pointer]: WORKS_FOR
+                  - generic [ref=e5271] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5272] [cursor=pointer]: INVITES
+                  - generic [ref=e5273] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5274] [cursor=pointer]: CONTACTED_FOR_REVIEW
+                  - generic [ref=e5275] [cursor=pointer]: FOLLOWS
+                  - generic [ref=e5276] [cursor=pointer]: COLLABORATES_WITH
+                  - generic [ref=e5277] [cursor=pointer]: WORKS_FOR
+                  - generic [ref=e5278] [cursor=pointer]: SUPPORTS
+                  - generic [ref=e5279] [cursor=pointer]: CONDUCTS_REVIEW_ON
+                  - generic [ref=e5280] [cursor=pointer]: SUGGESTS_PARTICIPATION_IN
+                - generic [ref=e5281]:
+                  - generic: Director…
+                  - generic: 智利南部农村学校
+                  - generic: 索托校长
+                  - generic: 小学教师
+                  - generic: Asociaci…
+                  - generic: 兰卡瓜学校
+                  - generic: Fundació…
+                  - generic: legios r…
+                  - generic: Pedro So…
+                  - generic: Carolina…
+                  - generic: EduPlay
+                  - generic: 玛利亚创始人
+                  - generic: María Go…
+                  - generic: 卡罗琳娜
+                  - generic: 教师协会
+                  - generic: Mamá inf…
+                  - generic: CEO de E…
+                  - generic: Colegio …
+        - generic [ref=e5300]:
+          - generic [ref=e5301]: Entity Types
+          - generic [ref=e5302]:
+            - generic [ref=e5305]: Entity
+            - generic [ref=e5308]: SchoolPrincipal
+            - generic [ref=e5311]: Teacher
+            - generic [ref=e5314]: TeachersUnion
+            - generic [ref=e5317]: EducationNgo
+            - generic [ref=e5320]: Person
+            - generic [ref=e5323]: EdTechCompany
+            - generic [ref=e5326]: StartupFounder
+            - generic [ref=e5329]: SocialInfluencer
+        - generic [ref=e5330]:
+          - generic [ref=e5331]:
+            - checkbox [checked]
+          - generic [ref=e5333]: Show Edge Labels
+    - generic [ref=e5335]:
+      - generic [ref=e5336]:
+        - generic [ref=e5343]: Waiting for Report Agent...
+        - generic [ref=e5344]:
+          - generic [ref=e5345]:
+            - generic [ref=e5347]: PL
+            - generic [ref=e5348]: Planning / Outline
+            - generic [ref=e5349]: IN PROGRESS
+          - generic [ref=e5350]:
+            - generic [ref=e5351]:
+              - generic [ref=e5352]:
+                - generic [ref=e5353]: Sections
+                - generic [ref=e5354]: 0/0
+              - generic [ref=e5355]:
+                - generic [ref=e5356]: Elapsed
+                - generic [ref=e5357]: 0s
+              - generic [ref=e5358]:
+                - generic [ref=e5359]: Tools
+                - generic [ref=e5360]: "0"
+              - generic [ref=e5362]: Generating...
+            - generic [ref=e5363]:
+              - generic [ref=e5369]:
+                - generic [ref=e5370]: PL
+                - generic [ref=e5371]: Planning / Outline
+                - generic [ref=e5372]: IN PROGRESS
+              - generic [ref=e5377]:
+                - generic [ref=e5378]: OK
+                - generic [ref=e5379]: Complete
+          - generic [ref=e5381]:
+            - generic [ref=e5386]:
+              - generic [ref=e5387]:
+                - generic [ref=e5388]: Report Started
+                - generic [ref=e5389]: 23:57:13
+              - generic [ref=e5390]:
+                - generic [ref=e5391]:
+                  - generic [ref=e5392]: Simulation
+                  - generic [ref=e5393]: sim_0e2f3ba0366e
+                - generic [ref=e5394]:
+                  - generic [ref=e5395]: Requirement
+                  - generic [ref=e5396]: Simula como reaccionarian profesores, padres y medios educativos chilenos ante el lanzamiento de EduPlay, una app gratuita de juegos educativos para ninos de 4-8 anos. Usa solo 5 agentes para un test rapido.
+            - generic [ref=e5400]:
+              - generic [ref=e5401]:
+                - generic [ref=e5402]: Planning
+                - generic [ref=e5403]: 23:57:13
+              - generic [ref=e5405]: 开始规划报告大纲
+              - generic [ref=e5407]: +0.0s
+      - generic [ref=e5408]:
+        - generic [ref=e5409]:
+          - generic [ref=e5410]: CONSOLE OUTPUT
+          - generic [ref=e5411]: report_5434b35b4bef
+        - generic [ref=e5412]:
+          - generic [ref=e5413]: "[23:57:13] INFO: 报告已保存: report_5434b35b4bef"
+          - generic [ref=e5414]: "[23:57:13] INFO: 开始规划报告大纲..."
+          - generic [ref=e5415]: "[23:57:13] INFO: 获取模拟上下文: Simula como reaccionarian profesores, padres y med..."
+          - generic [ref=e5416]: "[23:57:13] INFO: 图谱搜索: graph_id=mirofish_042fb7eb9edd4c18, query=Simula como reaccionarian profesores, padres y med..."
+          - generic [ref=e5417]: "[23:57:13] INFO: 搜索完成: 找到 30 条相关事实"
+          - generic [ref=e5418]: "[23:57:13] INFO: 获取图谱 mirofish_042fb7eb9edd4c18 的统计信息..."
+          - generic [ref=e5419]: "[23:57:13] INFO: 获取图谱 mirofish_042fb7eb9edd4c18 的所有节点..."
+          - generic [ref=e5420]: "[23:57:14] INFO: 获取到 18 个节点"
+          - generic [ref=e5421]: "[23:57:14] INFO: 获取图谱 mirofish_042fb7eb9edd4c18 的所有边..."

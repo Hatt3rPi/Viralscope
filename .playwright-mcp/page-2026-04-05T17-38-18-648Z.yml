@@ -1,0 +1,77 @@
+- generic [active] [ref=e1]:
+  - alert [ref=e18]
+  - generic [ref=e113]:
+    - banner [ref=e114]:
+      - generic [ref=e115]:
+        - link "← Test Viralscope" [ref=e116] [cursor=pointer]:
+          - /url: /projects/test-viralscope
+        - heading "Instagram Abril 2026" [level=1] [ref=e117]
+        - generic [ref=e118]: 2026-04-01 → 2026-04-30
+    - main [ref=e119]:
+      - generic [ref=e120]:
+        - generic [ref=e121]:
+          - button "Parrilla" [ref=e122]
+          - button "Objectives" [ref=e123]
+          - button "Calendar" [ref=e124]
+          - button "Metrics" [ref=e125]
+        - table [ref=e128]:
+          - rowgroup [ref=e129]:
+            - row "# Fecha Formato Pilar Tema Estado Paso" [ref=e130]:
+              - columnheader "#" [ref=e131]
+              - columnheader "Fecha" [ref=e132]
+              - columnheader "Formato" [ref=e133]
+              - columnheader "Pilar" [ref=e134]
+              - columnheader "Tema" [ref=e135]
+              - columnheader "Estado" [ref=e136]
+              - columnheader "Paso" [ref=e137]
+          - rowgroup [ref=e138]:
+            - 'link "001 31-mar reel general Contenido #1 Borrador Brief" [ref=e139] [cursor=pointer]':
+              - /url: /projects/test-viralscope/campaigns/06ef5d1c-76b5-4a7d-a6c3-c4a4444b248a/slots/1
+              - 'row "001 31-mar reel general Contenido #1 Borrador Brief" [ref=e140]':
+                - cell "001" [ref=e141]
+                - cell "31-mar" [ref=e142]
+                - cell "reel" [ref=e143]
+                - cell "general" [ref=e144]
+                - 'cell "Contenido #1" [ref=e145]'
+                - cell "Borrador" [ref=e146]
+                - cell "Brief" [ref=e147]
+            - 'link "002 06-abr reel general Contenido #2 Borrador Brief" [ref=e148] [cursor=pointer]':
+              - /url: /projects/test-viralscope/campaigns/06ef5d1c-76b5-4a7d-a6c3-c4a4444b248a/slots/2
+              - 'row "002 06-abr reel general Contenido #2 Borrador Brief" [ref=e149]':
+                - cell "002" [ref=e150]
+                - cell "06-abr" [ref=e151]
+                - cell "reel" [ref=e152]
+                - cell "general" [ref=e153]
+                - 'cell "Contenido #2" [ref=e154]'
+                - cell "Borrador" [ref=e155]
+                - cell "Brief" [ref=e156]
+            - 'link "003 12-abr reel general Contenido #3 Borrador Brief" [ref=e157] [cursor=pointer]':
+              - /url: /projects/test-viralscope/campaigns/06ef5d1c-76b5-4a7d-a6c3-c4a4444b248a/slots/3
+              - 'row "003 12-abr reel general Contenido #3 Borrador Brief" [ref=e158]':
+                - cell "003" [ref=e159]
+                - cell "12-abr" [ref=e160]
+                - cell "reel" [ref=e161]
+                - cell "general" [ref=e162]
+                - 'cell "Contenido #3" [ref=e163]'
+                - cell "Borrador" [ref=e164]
+                - cell "Brief" [ref=e165]
+            - 'link "004 18-abr reel general Contenido #4 Borrador Brief" [ref=e166] [cursor=pointer]':
+              - /url: /projects/test-viralscope/campaigns/06ef5d1c-76b5-4a7d-a6c3-c4a4444b248a/slots/4
+              - 'row "004 18-abr reel general Contenido #4 Borrador Brief" [ref=e167]':
+                - cell "004" [ref=e168]
+                - cell "18-abr" [ref=e169]
+                - cell "reel" [ref=e170]
+                - cell "general" [ref=e171]
+                - 'cell "Contenido #4" [ref=e172]'
+                - cell "Borrador" [ref=e173]
+                - cell "Brief" [ref=e174]
+            - 'link "005 24-abr reel general Contenido #5 Borrador Brief" [ref=e175] [cursor=pointer]':
+              - /url: /projects/test-viralscope/campaigns/06ef5d1c-76b5-4a7d-a6c3-c4a4444b248a/slots/5
+              - 'row "005 24-abr reel general Contenido #5 Borrador Brief" [ref=e176]':
+                - cell "005" [ref=e177]
+                - cell "24-abr" [ref=e178]
+                - cell "reel" [ref=e179]
+                - cell "general" [ref=e180]
+                - 'cell "Contenido #5" [ref=e181]'
+                - cell "Borrador" [ref=e182]
+                - cell "Brief" [ref=e183]

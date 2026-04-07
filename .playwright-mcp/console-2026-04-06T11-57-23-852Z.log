@@ -1,0 +1,15 @@
+[      94ms] [WARNING] [intlify] Not found parent scope. use the global scope. @ http://localhost:3001/node_modules/.vite/deps/vue-i18n.js?v=8ee2b551:26
+[   24484ms] [ERROR] Failed to load resource: the server responded with a status of 500 (INTERNAL SERVER ERROR) @ http://localhost:5001/api/graph/ontology/generate:0
+[   24485ms] [ERROR] Response error: AxiosError: Request failed with status code 500
+    at settle (http://localhost:3001/node_modules/.vite/deps/axios.js?v=95587f69:1319:7)
+    at XMLHttpRequest.onloadend (http://localhost:3001/node_modules/.vite/deps/axios.js?v=95587f69:1682:7) @ http://localhost:3001/src/api/index.js:38
+[   24486ms] [WARNING] Request failed, retrying (1/3)... @ http://localhost:3001/src/api/index.js:62
+[   28240ms] [ERROR] Failed to load resource: the server responded with a status of 500 (INTERNAL SERVER ERROR) @ http://localhost:5001/api/graph/ontology/generate:0
+[   28241ms] [ERROR] Response error: AxiosError: Request failed with status code 500
+    at settle (http://localhost:3001/node_modules/.vite/deps/axios.js?v=95587f69:1319:7)
+    at XMLHttpRequest.onloadend (http://localhost:3001/node_modules/.vite/deps/axios.js?v=95587f69:1682:7) @ http://localhost:3001/src/api/index.js:38
+[   28241ms] [WARNING] Request failed, retrying (2/3)... @ http://localhost:3001/src/api/index.js:62
+[   35729ms] [ERROR] Failed to load resource: the server responded with a status of 500 (INTERNAL SERVER ERROR) @ http://localhost:5001/api/graph/ontology/generate:0
+[   35730ms] [ERROR] Response error: AxiosError: Request failed with status code 500
+    at settle (http://localhost:3001/node_modules/.vite/deps/axios.js?v=95587f69:1319:7)
+    at XMLHttpRequest.onloadend (http://localhost:3001/node_modules/.vite/deps/axios.js?v=95587f69:1682:7) @ http://localhost:3001/src/api/index.js:38

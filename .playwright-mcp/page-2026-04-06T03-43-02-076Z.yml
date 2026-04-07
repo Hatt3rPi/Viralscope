@@ -1,0 +1,136 @@
+- generic [ref=e1574]:
+  - banner [ref=e1575]:
+    - generic [ref=e1577] [cursor=pointer]: MIROFISH
+    - generic [ref=e1579]:
+      - button "Grafo" [ref=e1580] [cursor=pointer]
+      - button "Dividido" [ref=e1581] [cursor=pointer]
+      - button "Panel de Trabajo" [ref=e1582] [cursor=pointer]
+    - generic [ref=e1583]:
+      - button "Español ▼" [ref=e1585] [cursor=pointer]:
+        - text: Español
+        - generic [ref=e1586]: ▼
+      - generic [ref=e1588]:
+        - generic [ref=e1589]: Step 3/5
+        - generic [ref=e1590]: Ejecutar Simulación
+      - generic [ref=e1592]: Running
+  - main [ref=e1594]:
+    - generic [ref=e1596]:
+      - generic:
+        - generic [ref=e1597]: Visualización de Relaciones del Grafo
+        - generic [ref=e1598]:
+          - button "↻ Refresh" [ref=e1599] [cursor=pointer]:
+            - generic [ref=e1600]: ↻
+            - generic [ref=e1601]: Refresh
+          - button "⛶" [ref=e1602] [cursor=pointer]:
+            - generic [ref=e1603]: ⛶
+      - generic [ref=e1605]:
+        - img [ref=e1606]:
+          - generic [ref=e1607]:
+            - generic [ref=e1608]:
+              - generic [ref=e1625] [cursor=pointer]: WORKS_FOR
+              - generic [ref=e1626] [cursor=pointer]: REVIEWS
+              - generic [ref=e1627] [cursor=pointer]: REVIEWS
+              - generic [ref=e1628] [cursor=pointer]: FOUNDS
+              - generic [ref=e1629] [cursor=pointer]: OPPOSES
+              - generic [ref=e1630] [cursor=pointer]: OPPOSES
+              - generic [ref=e1631] [cursor=pointer]: MANAGES
+              - generic [ref=e1632] [cursor=pointer]: CONTACTED_FOR_REVIEW
+            - generic [ref=e1633]:
+              - generic: Director…
+              - generic: Asociaci…
+              - generic: Fundació…
+              - generic: legios r…
+              - generic: Pedro So…
+              - generic: Carolina…
+              - generic: EduPlay
+              - generic: María Go…
+              - generic: Mamá inf…
+              - generic: CEO de E…
+              - generic: Colegio …
+        - generic [ref=e1645]:
+          - img [ref=e1647]
+          - text: Memoria de GraphRAG a corto/largo plazo actualizándose en tiempo real
+      - generic [ref=e1650]:
+        - generic [ref=e1651]: Entity Types
+        - generic [ref=e1652]:
+          - generic [ref=e1655]: Entity
+          - generic [ref=e1658]: TeachersUnion
+          - generic [ref=e1661]: EducationNgo
+          - generic [ref=e1664]: Person
+          - generic [ref=e1667]: EdTechCompany
+          - generic [ref=e1670]: StartupFounder
+          - generic [ref=e1673]: SocialInfluencer
+      - generic [ref=e1674]:
+        - generic [ref=e1675]:
+          - checkbox [checked]
+        - generic [ref=e1677]: Show Edge Labels
+    - generic [ref=e1679]:
+      - generic [ref=e1680]:
+        - generic [ref=e1681]:
+          - generic [ref=e1682] [cursor=pointer]:
+            - generic [ref=e1683]:
+              - img [ref=e1684]
+              - generic [ref=e1687]: Info Plaza
+            - generic [ref=e1688]:
+              - generic [ref=e1689]:
+                - generic [ref=e1690]: ROUND
+                - generic [ref=e1691]: 0/48
+              - generic [ref=e1692]:
+                - generic [ref=e1693]: TIME
+                - generic [ref=e1694]: 0h 0m
+              - generic [ref=e1695]:
+                - generic [ref=e1696]: ACTS
+                - generic [ref=e1697]: "0"
+          - generic [ref=e1698] [cursor=pointer]:
+            - generic [ref=e1699]:
+              - img [ref=e1700]
+              - generic [ref=e1702]: Topic Community
+            - generic [ref=e1703]:
+              - generic [ref=e1704]:
+                - generic [ref=e1705]: ROUND
+                - generic [ref=e1706]: 0/48
+              - generic [ref=e1707]:
+                - generic [ref=e1708]: TIME
+                - generic [ref=e1709]: 0h 0m
+              - generic [ref=e1710]:
+                - generic [ref=e1711]: ACTS
+                - generic [ref=e1712]: "0"
+        - button "Generar Reporte →" [disabled] [ref=e1714]:
+          - text: Generar Reporte
+          - generic [ref=e1715]: →
+      - generic [ref=e1721]: Waiting for agent actions...
+      - generic [ref=e1722]:
+        - generic [ref=e1723]:
+          - generic [ref=e1724]: SIMULATION MONITOR
+          - generic [ref=e1725]: sim_0e2f3ba0366e
+        - generic [ref=e1726]:
+          - generic [ref=e1727]:
+            - generic [ref=e1728]: 23:42:59.229
+            - generic [ref=e1729]: Actualización en tiempo real del grafo activada (30s)
+          - generic [ref=e1730]:
+            - generic [ref=e1731]: 23:42:59.237
+            - generic [ref=e1732]: Ejecución de simulación del Paso 3 inicializada
+          - generic [ref=e1733]:
+            - generic [ref=e1734]: 23:42:59.237
+            - generic [ref=e1735]: Iniciando simulación dual de plataformas...
+          - generic [ref=e1736]:
+            - generic [ref=e1737]: 23:42:59.237
+            - generic [ref=e1738]: Actualización dinámica de memoria del grafo activada
+          - generic [ref=e1739]:
+            - generic [ref=e1740]: 23:42:59.238
+            - generic [ref=e1741]: SimulationRunView inicializado
+          - generic [ref=e1742]:
+            - generic [ref=e1743]: 23:42:59.238
+            - generic [ref=e1744]: "Cargando datos de simulación: sim_0e2f3ba0366e"
+          - generic [ref=e1745]:
+            - generic [ref=e1746]: 23:42:59.598
+            - generic [ref=e1747]: ✓ Motor de simulación iniciado exitosamente
+          - generic [ref=e1748]:
+            - generic [ref=e1749]: 23:42:59.598
+            - generic [ref=e1750]: "├─ PID: 30756"
+          - generic [ref=e1751]:
+            - generic [ref=e1752]: 23:42:59.881
+            - generic [ref=e1753]: "Config. temporal: 60 minutos por ronda"
+          - generic [ref=e1754]:
+            - generic [ref=e1755]: 23:43:00.195
+            - generic [ref=e1756]: "Proyecto cargado: proj_38a98e9d4363"

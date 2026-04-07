@@ -1,0 +1,138 @@
+- generic [ref=e1257]:
+  - banner [ref=e1258]:
+    - generic [ref=e1260] [cursor=pointer]: MIROFISH
+    - generic [ref=e1262]:
+      - button "Grafo" [ref=e1263] [cursor=pointer]
+      - button "Dividido" [ref=e1264] [cursor=pointer]
+      - button "Panel de Trabajo" [ref=e1265] [cursor=pointer]
+    - generic [ref=e1266]:
+      - button "Español ▼" [ref=e1268] [cursor=pointer]:
+        - text: Español
+        - generic [ref=e1269]: ▼
+      - generic [ref=e1271]:
+        - generic [ref=e1272]: Step 3/5
+        - generic [ref=e1273]: Ejecutar Simulación
+      - generic [ref=e1275]: Running
+  - main [ref=e1277]:
+    - generic [ref=e1279]:
+      - generic:
+        - generic [ref=e1280]: Visualización de Relaciones del Grafo
+        - generic [ref=e1281]:
+          - button "↻ Refresh" [ref=e1282] [cursor=pointer]:
+            - generic [ref=e1283]: ↻
+            - generic [ref=e1284]: Refresh
+          - button "⛶" [ref=e1285] [cursor=pointer]:
+            - generic [ref=e1286]: ⛶
+      - generic [ref=e1288]:
+        - img [ref=e1289]:
+          - generic [ref=e1290]:
+            - generic [ref=e1291]:
+              - generic [ref=e1312] [cursor=pointer]: ACTIVE_ON
+              - generic [ref=e1313] [cursor=pointer]: WORKS_FOR
+              - generic [ref=e1314] [cursor=pointer]: ACTIVE_ON
+              - generic [ref=e1315] [cursor=pointer]: OPPOSES
+              - generic [ref=e1316] [cursor=pointer]: COMMENTED_ON
+              - generic [ref=e1317] [cursor=pointer]: WORKS_FOR
+              - generic [ref=e1318] [cursor=pointer]: WORKS_FOR
+              - generic [ref=e1319] [cursor=pointer]: OPPOSES
+              - generic [ref=e1320] [cursor=pointer]: REVIEWS
+              - generic [ref=e1321] [cursor=pointer]: REVIEWS
+            - generic [ref=e1322]:
+              - generic: Director…
+              - generic: EduPlay
+              - generic: LinkedIn
+              - generic: Colegio …
+              - generic: Asociaci…
+              - generic: Fundació…
+              - generic: Carolina…
+              - generic: Mamá inf…
+              - generic: María Go…
+              - generic: Twitter
+              - generic: legios r…
+              - generic: Pedro So…
+        - generic [ref=e1335]:
+          - img [ref=e1337]
+          - text: Memoria de GraphRAG a corto/largo plazo actualizándose en tiempo real
+      - generic [ref=e1340]:
+        - generic [ref=e1341]: Entity Types
+        - generic [ref=e1342]:
+          - generic [ref=e1345]: SchoolAdministrator
+          - generic [ref=e1348]: Entity
+          - generic [ref=e1351]: TeacherUnion
+          - generic [ref=e1354]: EducationNgo
+          - generic [ref=e1357]: ParentInfluencer
+          - generic [ref=e1360]: StartupFounder
+      - generic [ref=e1361]:
+        - generic [ref=e1362]:
+          - checkbox [checked]
+        - generic [ref=e1364]: Show Edge Labels
+    - generic [ref=e1366]:
+      - generic [ref=e1367]:
+        - generic [ref=e1368]:
+          - generic [ref=e1369] [cursor=pointer]:
+            - generic [ref=e1370]:
+              - img [ref=e1371]
+              - generic [ref=e1374]: Info Plaza
+            - generic [ref=e1375]:
+              - generic [ref=e1376]:
+                - generic [ref=e1377]: ROUND
+                - generic [ref=e1378]: 0/72
+              - generic [ref=e1379]:
+                - generic [ref=e1380]: TIME
+                - generic [ref=e1381]: 0h 0m
+              - generic [ref=e1382]:
+                - generic [ref=e1383]: ACTS
+                - generic [ref=e1384]: "0"
+          - generic [ref=e1385] [cursor=pointer]:
+            - generic [ref=e1386]:
+              - img [ref=e1387]
+              - generic [ref=e1389]: Topic Community
+            - generic [ref=e1390]:
+              - generic [ref=e1391]:
+                - generic [ref=e1392]: ROUND
+                - generic [ref=e1393]: 0/72
+              - generic [ref=e1394]:
+                - generic [ref=e1395]: TIME
+                - generic [ref=e1396]: 0h 0m
+              - generic [ref=e1397]:
+                - generic [ref=e1398]: ACTS
+                - generic [ref=e1399]: "0"
+        - button "Generar Reporte →" [disabled] [ref=e1401]:
+          - text: Generar Reporte
+          - generic [ref=e1402]: →
+      - generic [ref=e1408]: Waiting for agent actions...
+      - generic [ref=e1409]:
+        - generic [ref=e1410]:
+          - generic [ref=e1411]: SIMULATION MONITOR
+          - generic [ref=e1412]: sim_ec45aa884474
+        - generic [ref=e1413]:
+          - generic [ref=e1414]:
+            - generic [ref=e1415]: 08:10:56.559
+            - generic [ref=e1416]: Actualización en tiempo real del grafo activada (30s)
+          - generic [ref=e1417]:
+            - generic [ref=e1418]: 08:10:56.564
+            - generic [ref=e1419]: Ejecución de simulación del Paso 3 inicializada
+          - generic [ref=e1420]:
+            - generic [ref=e1421]: 08:10:56.564
+            - generic [ref=e1422]: Iniciando simulación dual de plataformas...
+          - generic [ref=e1423]:
+            - generic [ref=e1424]: 08:10:56.565
+            - generic [ref=e1425]: Actualización dinámica de memoria del grafo activada
+          - generic [ref=e1426]:
+            - generic [ref=e1427]: 08:10:56.565
+            - generic [ref=e1428]: SimulationRunView inicializado
+          - generic [ref=e1429]:
+            - generic [ref=e1430]: 08:10:56.565
+            - generic [ref=e1431]: "Cargando datos de simulación: sim_ec45aa884474"
+          - generic [ref=e1432]:
+            - generic [ref=e1433]: 08:10:57.172
+            - generic [ref=e1434]: ✓ Motor de simulación iniciado exitosamente
+          - generic [ref=e1435]:
+            - generic [ref=e1436]: 08:10:57.172
+            - generic [ref=e1437]: "├─ PID: 33900"
+          - generic [ref=e1438]:
+            - generic [ref=e1439]: 08:10:57.197
+            - generic [ref=e1440]: "Config. temporal: 60 minutos por ronda"
+          - generic [ref=e1441]:
+            - generic [ref=e1442]: 08:10:57.205
+            - generic [ref=e1443]: "Proyecto cargado: proj_ea270c4bc24b"
