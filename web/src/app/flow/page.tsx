@@ -2,18 +2,66 @@ export default function FlowPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-gray-200 py-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-2">Viralscope — Flujo de Produccion</h1>
-        <p className="text-sm text-gray-500 mb-10">Actualizado 2026-04-07</p>
+        <h1 className="text-3xl font-bold text-white mb-2">Viralscope — Flujo E2E</h1>
+        <p className="text-sm text-gray-500 mb-10">Actualizado 2026-04-08</p>
 
-        {/* PASO 0 */}
+        {/* FASE 0: ONBOARDING */}
+        <div className="rounded-xl border border-gray-600 bg-gray-900/60 px-6 py-3 mb-6 text-center">
+          <span className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Fase 0 — Onboarding de Marca</span>
+        </div>
+
         <Step
-          number="0"
+          number="0a"
+          title="Crear Proyecto / Marca"
+          subtitle="Datos del negocio que alimentan todo el sistema"
+          color="slate"
+          items={[
+            "brand_yaml: nombre, descripcion, productos (nombre + precio + formato), valores, mercado (pais, idioma)",
+            "voice_yaml: tono, personalidad, vocabulario, frases ejemplo",
+            "audiences_yaml: 50+ personas con nombre, edad, ciudad, profesion, MBTI, familia, IG behavior, cuentas que siguen",
+            "pillars_yaml: 4-6 pilares de contenido con descripcion",
+            "competitors_yaml: 3-5 competidores con nombre, precio, positioning, fortalezas, debilidades",
+            "platforms_yaml: metricas IG reales (followers, engagement_rate, demographics, peak_hours)",
+            "metrics_yaml: KPIs (follower_growth, engagement_target, save_rate, share_rate)",
+            "calendar_yaml: fechas clave (lanzamientos, eventos, feriados)",
+          ]}
+        />
+
+        <Arrow />
+
+        <Step
+          number="0b"
+          title="Generacion de Audiencia"
+          subtitle="Desde datos reales de plataforma → personas narrativas → Neo4j"
+          color="slate"
+          badge="NUEVO"
+          items={[
+            "Cliente sube datos de: IG Insights, GA4, Meta Audience, CRM/WhatsApp",
+            "persona_builder escribe narrativa rica desde datos reales:",
+            "  'Carolina tiene 38 anos, trabaja en DDB Chile, su hija Emilia de 6...'",
+            "Neo4j extrae entidades organicamente del texto narrativo",
+            "  Cada persona → 3-6 entidades (persona + hijos + empresa + cuentas IG)",
+            "  50 personas → 150-300 entidades en el grafo",
+            "OasisProfileGenerator expande cada entidad en perfil de agente",
+            "Resultado: 100+ agentes Instagram autenticos para simulacion",
+          ]}
+        />
+
+        <Arrow />
+
+        {/* FASE 1: PRODUCCION */}
+        <div className="rounded-xl border border-gray-600 bg-gray-900/60 px-6 py-3 mb-6 text-center">
+          <span className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Fase 1 — Produccion de Contenido</span>
+        </div>
+
+        <Step
+          number="1"
           title="Crear Campana"
-          subtitle="Wizard Conversacional del Estratega"
+          subtitle="Wizard Conversacional del Estratega (1 pregunta por turno)"
           color="purple"
           items={[
             "Config basico: nombre, periodo, plataforma",
-            "Estratega entrevista al usuario (chat conversacional)",
+            "Estratega entrevista al usuario (chat conversacional, 1 pregunta por turno)",
             "Objetivo, mix intencion, fechas clave, formatos, audiencia",
             "Genera parrilla estrategica con N slots",
             "Review editable → Aprobar → Crea campaign + slots + briefs",
@@ -28,9 +76,8 @@ export default function FlowPage() {
 
         <Arrow />
 
-        {/* PASO 1 */}
         <Step
-          number="1"
+          number="2"
           title="Brief"
           subtitle="Creado por el Estratega"
           color="blue"
@@ -44,125 +91,119 @@ export default function FlowPage() {
 
         <Arrow />
 
-        {/* PASO 1.5 */}
         <Step
-          number="1.5"
+          number="2.5"
           title="Hook Funnel"
-          subtitle="NUEVO — Filtro de calidad pre-produccion"
+          subtitle="Filtro de calidad pre-produccion"
           color="amber"
-          badge="NUEVO"
           items={[
-            "Genera 12 hooks rapidos (4 emocional + 4 educativo + 4 directo)",
-            "Auto-scoring 6 dimensiones por hook:",
-            "  → hook_strength, emotional_resonance, cta_potential",
-            "  → value_promise, scroll_stop, brand_fit",
+            "Genera 12 hooks (4 emocional + 4 educativo + 4 directo)",
+            "Auto-scoring 6 dimensiones: hook_strength, emotional_resonance, cta_potential, value_promise, scroll_stop, brand_fit",
             "Ranking automatico — top 3 pre-seleccionados",
-            "Seleccion manual disponible (checkboxes)",
             "[Generar Variantes desde Hooks] →",
           ]}
         />
 
         <Arrow />
 
-        {/* PASO 2 */}
         <Step
-          number="2"
+          number="3"
           title="Contenido"
-          subtitle="gemini-3.1-pro-preview (32K output, thinking: low)"
+          subtitle="3 variantes A/B/C desde los hooks ganadores"
           color="green"
           items={[
-            "3 variantes desarrolladas desde los hooks ganadores:",
-            "  A: Emocional / Storytelling",
-            "  B: Educativo / Datos",
-            "  C: Directo / CTA",
-            "Cada variante: hook, caption, guion/slides, hashtags, CTA, alt text",
-            "Post-scoring: 6 dimensiones por variante completa",
-            "[Continuar a Direccion de Arte] → auto-genera arte A, B, C",
+            "A: Emocional / Storytelling",
+            "B: Educativo / Datos",
+            "C: Directo / CTA",
+            "Cada variante: hook, caption, guion/slides, hashtags, CTA",
+            "[Continuar a Direccion de Arte] →",
           ]}
         />
 
         <Arrow />
 
-        {/* PASO 3 */}
         <Step
-          number="3"
-          title="Direccion de Arte"
-          subtitle="Auto-pipeline: arte → imagenes"
+          number="4"
+          title="Direccion de Arte + Imagenes"
+          subtitle="Auto-pipeline: arte → NanoBanana 2 → imagenes generadas"
           color="pink"
           items={[
-            "3a. Art Direction (generate-art) — paralelo A, B, C",
-            "  Reel/Story: 1 prompt (9:16)",
-            "  Carrusel: 1 prompt POR SLIDE (1:1)",
-            "  Video: manual (oculto en carrusel)",
-            "",
-            "3b. Generacion de Imagenes (NanoBanana 2) — auto-trigger",
+            "Art Direction (generate-art) — paralelo A, B, C",
+            "Generacion de Imagenes (NanoBanana 2) — auto-trigger",
             "  Modelo: gemini-3.1-flash-image-preview",
-            "  Batch: max 3 en paralelo, 2 reintentos automaticos",
             "  Storage: Supabase bucket 'media'",
-            "  [Proximamente: refinamiento via AutoLab]",
-            "",
-            "Vista por variante:",
-            "  Izq: Strategy card (foco, hook/CTA, persona, razonamiento)",
-            "  Der: Smartphone preview (device frame, caption IG completo)",
-            "  Formatos: Reel 9:16 | Story 9:16 | Carrusel 1:1+dots | Post 1:1",
+            "Vista: Strategy card + Smartphone preview por variante",
             "[Continuar a Simulacion] →",
           ]}
         />
 
         <Arrow />
 
-        {/* PASO 4 */}
+        {/* FASE 2: SIMULACION */}
+        <div className="rounded-xl border border-gray-600 bg-gray-900/60 px-6 py-3 mb-6 text-center">
+          <span className="text-sm font-semibold text-gray-300 uppercase tracking-wider">Fase 2 — Simulacion y Prediccion</span>
+        </div>
+
         <Step
-          number="4"
-          title="Panel de Evaluacion"
-          subtitle="panel-seed + panel-evaluate — Edge Functions desplegadas"
+          number="5a"
+          title="Panel de Evaluacion Rapida"
+          subtitle="Supabase Edge Function — panel-evaluate (~45s)"
           color="indigo"
           badge="LIVE"
           items={[
-            "4a. Seed (una vez por proyecto): panel-seed",
-            "  Lee audiences_yaml → Gemini expande a perfiles IG ricos",
-            "  14 agentes con demographics, instagram_behavior, psychology, brand_relationship",
-            "  Persistentes en tabla panel_agents con memoria activable",
-            "",
-            "4b. Evaluacion (por slot): panel-evaluate",
-            "  1 llamada LLM por agente evaluando TODAS las variantes (multimodal)",
-            "  Ejecucion paralela en batches de 5 (Promise.allSettled)",
-            "",
-            "  Encuesta estructurada por agente:",
-            "    Acciones: scroll_past, stop_look, read_caption, like, comment, share, save, follow",
-            "    6 dimensiones (1-10): hook, resonancia, claridad, CTA, brand fit, memorabilidad",
-            "    Cualitativos: attention_seconds, sentiment, best/worst_thing, would_share_with",
-            "    Condicionales: would_buy (commercial), would_repost (viral), notifications (retention)",
-            "",
-            "4c. Composite Score Engine (sin LLM):",
-            "  Pesos por intencion del slot:",
-            "    viral → share 25% + comment 15% + like 10%",
-            "    quality → save 20% + follow 15% + read_caption 15%",
-            "    commercial → cta_action 30% + attention 10% + save 10%",
-            "",
-            "Resultado: ~67K tokens para 14 personas x 3 variantes (~45s)",
-            "Guardado en tabla panel_evaluations",
+            "14 agentes persistentes evaluan variantes con encuesta estructurada",
+            "Acciones: scroll_past, stop_look, read_caption, like, comment, share, save, follow",
+            "Scores 1-10: hook, resonancia, claridad, CTA, brand fit, memorabilidad",
+            "Composite Score ponderado por intencion (viral/quality/commercial)",
+            "Veredicto: winner + confidence + recomendaciones por variante",
+            "~67K tokens, ~45 segundos",
           ]}
         />
 
         <Arrow />
 
-        {/* PASO 5 */}
         <Step
-          number="5"
+          number="5b"
+          title="Simulacion Profunda"
+          subtitle="Railway (MiroShark) — 50-100+ agentes, multiples rondas"
+          color="purple"
+          badge="LIVE"
+          items={[
+            "Viralscope envia 8 YAMLs + variantes → Railway via simulate-deep",
+            "",
+            "Pipeline en Railway:",
+            "  1. persona_builder: narrativa rica desde datos reales",
+            "  2. Neo4j: extrae 150-300 entidades del texto narrativo",
+            "  3. OasisProfileGenerator: perfil detallado por entidad",
+            "  4. Simulacion Instagram multi-ronda (24h simuladas)",
+            "",
+            "Motor Instagram (MiroShark plugin):",
+            "  16 acciones IG nativas (save, share_dm, view_feed, post_reel...)",
+            "  Ranking: Weibull decay + audition system + multi-surface",
+            "  Vision: agentes VEN imagenes y videos (Qwen3.5 Omni multimodal)",
+            "  Sesgos cognitivos: bandwagon, anchoring, social proof, Rinsta/Finsta",
+            "  SEIR: modelo de difusion epidemiologica para predecir viralidad",
+            "  Cross-platform: agentes IG ven actividad de Twitter/Reddit",
+            "",
+            "Resultado: action distribution + SEIR trajectory + engagement predicho",
+          ]}
+        />
+
+        <Arrow />
+
+        <Step
+          number="6"
           title="Veredicto + Aprobacion"
-          subtitle="Ranking automatico + decision humana"
+          subtitle="Panel rapido + Simulacion profunda → decision informada"
           color="emerald"
           items={[
-            "Composite scores por variante (A: 7.2, B: 8.4, C: 6.8)",
-            "Radar chart comparativo de 6 dimensiones",
-            "Tabla: % acciones por variante (stop, like, share, save...)",
-            "Highlights: frases repetidas en best/worst thing",
+            "Composite scores por variante (panel rapido)",
+            "Action distribution + SEIR reach (simulacion profunda)",
+            "Radar chart + tabla de acciones + risk flags",
             "",
             "Recomendacion para CADA variante:",
-            "  Ganadora → publish (publicar como principal)",
+            "  Ganadora → publish",
             "  Perdedoras → story | reserve | repurpose | archive",
-            "  Ej: 'Publicar B, usar A para Story, archivar C'",
             "",
             "[Aprobar para Publicacion]",
             "Status: ready → published",
@@ -178,26 +219,30 @@ export default function FlowPage() {
                 <tr className="bg-gray-800 text-gray-400 text-xs uppercase tracking-wider">
                   <th className="px-4 py-3 text-left">Funcion</th>
                   <th className="px-4 py-3 text-left">Modelo</th>
-                  <th className="px-4 py-3 text-left">Thinking</th>
+                  <th className="px-4 py-3 text-left">Donde</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-800">
                 {[
-                  ["Estratega Chat", "gemini-3.1-pro-preview", "low"],
-                  ["Parrilla", "gemini-3.1-pro-preview", "medium"],
-                  ["Brief", "gemini-3.1-pro-preview", "low"],
-                  ["Hook Funnel", "gemini-3.1-pro-preview", "low"],
-                  ["Variantes", "gemini-3.1-pro-preview", "low"],
-                  ["Art Direction", "gemini-3.1-pro-preview", "low"],
-                  ["Imagenes", "gemini-3.1-flash-image-preview", "—"],
-                  ["Panel Seed", "gemini-3.1-pro-preview", "low"],
-                  ["Panel Evaluate", "gemini-3.1-pro-preview", "low"],
-                  ["Panel Verdict", "gemini-3.1-pro-preview", "low"],
-                ].map(([fn, model, thinking]) => (
+                  ["Estratega Chat", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Parrilla", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Brief", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Hook Funnel", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Variantes", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Art Direction", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Imagenes", "gemini-3.1-flash-image-preview", "Supabase"],
+                  ["Panel Seed", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Panel Evaluate", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Panel Verdict", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Persona Builder", "qwen3.5-omni (OpenRouter)", "Railway"],
+                  ["Simulacion IG", "qwen3.5-omni (OpenRouter)", "Railway"],
+                  ["Vision (img+video)", "qwen3.5-omni (OpenRouter)", "Railway"],
+                  ["Neo4j NER", "qwen3.5-omni (OpenRouter)", "Railway"],
+                ].map(([fn, model, where]) => (
                   <tr key={fn} className="bg-gray-900/50">
                     <td className="px-4 py-2.5 font-medium text-gray-300">{fn}</td>
                     <td className="px-4 py-2.5 font-mono text-xs text-purple-400">{model}</td>
-                    <td className="px-4 py-2.5 text-gray-500">{thinking}</td>
+                    <td className="px-4 py-2.5 text-gray-500">{where}</td>
                   </tr>
                 ))}
               </tbody>
@@ -211,17 +256,44 @@ export default function FlowPage() {
           <div className="grid grid-cols-2 gap-3 text-sm">
             {[
               ["Frontend", "Next.js 16 → Netlify"],
-              ["Backend", "Supabase (PostgreSQL + Edge Functions)"],
+              ["API + DB", "Supabase (PostgreSQL + Edge Functions)"],
               ["Storage", "Supabase bucket 'media'"],
               ["Auth", "Supabase Auth + middleware"],
-              ["Imagenes", "NanoBanana 2 (Google API)"],
-              ["Simulacion", "MiroFish / Panel LLM"],
+              ["Imagenes", "NanoBanana 2 (Gemini Flash)"],
+              ["Simulacion", "MiroShark → Railway (Python + OASIS)"],
+              ["Grafo", "Neo4j Aura (entidades + relaciones)"],
+              ["LLM Cloud", "OpenRouter (Qwen3.5 Omni multimodal)"],
             ].map(([label, value]) => (
               <div key={label} className="rounded-lg bg-gray-800/50 border border-gray-700 px-4 py-3">
                 <span className="text-xs text-gray-500 uppercase">{label}</span>
                 <p className="text-gray-300 mt-0.5">{value}</p>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Architecture diagram */}
+        <div className="mb-8">
+          <h2 className="text-xl font-bold text-white mb-4">Arquitectura</h2>
+          <div className="rounded-xl border border-gray-700 bg-gray-900/50 p-6 font-mono text-xs text-gray-400 whitespace-pre">
+{`Viralscope (Netlify)              Viralscope_sim (Railway)
+┌─────────────────────┐           ┌──────────────────────────┐
+│  Next.js 16 Frontend │           │  MiroShark Backend       │
+│  ┌─────────────────┐ │           │  ┌────────────────────┐  │
+│  │ Slot Timeline   │ │  ──────►  │  │ /api/ig/simulate   │  │
+│  │ Panel Evaluate  │ │           │  │ persona_builder     │  │
+│  │ Deep Simulation │ │  ◄──────  │  │ Neo4j graph_builder │  │
+│  └─────────────────┘ │           │  │ OASIS ProfileGen    │  │
+└──────────┬───────────┘           │  │ Instagram Engine    │  │
+           │                       │  │  ├ 16 IG actions    │  │
+    Supabase                       │  │  ├ Weibull ranking  │  │
+┌──────────┴───────────┐           │  │  ├ SEIR diffusion   │  │
+│  Edge Functions (12)  │           │  │  ├ Multimodal vision│  │
+│  PostgreSQL           │           │  │  └ Cognitive biases │  │
+│  panel_agents table   │           │  └────────────────────┘  │
+│  panel_evaluations    │           │  Neo4j Aura (grafo)      │
+│  Storage bucket       │           │  OpenRouter (LLM)        │
+└───────────────────────┘           └──────────────────────────┘`}
           </div>
         </div>
 
@@ -251,6 +323,7 @@ function Step({
   badge?: string;
 }) {
   const borderColor: Record<string, string> = {
+    slate: "border-gray-500/40",
     purple: "border-purple-500/40",
     blue: "border-blue-500/40",
     amber: "border-amber-500/40",
@@ -260,6 +333,7 @@ function Step({
     emerald: "border-emerald-500/40",
   };
   const numBg: Record<string, string> = {
+    slate: "bg-gray-600",
     purple: "bg-purple-600",
     blue: "bg-blue-600",
     amber: "bg-amber-600",
@@ -271,6 +345,8 @@ function Step({
   const badgeBg: Record<string, string> = {
     amber: "bg-amber-500/20 text-amber-400",
     indigo: "bg-indigo-500/20 text-indigo-400",
+    purple: "bg-purple-500/20 text-purple-400",
+    slate: "bg-gray-500/20 text-gray-400",
   };
 
   return (
