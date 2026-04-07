@@ -152,12 +152,12 @@ MiroFish_es ya funciona en español con qwen3-coder-next (validado E2E). Ahora q
 ```
 Fase 1 (Panel) ──────────► COMPLETADA 2026-04-06
      ↓                      14 agentes, composite scores, verdict LLM
-Fase 2 (Actions) ────────► MiroFish_es puede simular IG básico
-     ↓                      Posts con save/share/scroll → Viralscope_sim
-Fase 3 (Ranking) ─────────► Simulaciones predictivas reales
-     ↓                      Audition system, Weibull decay, SEIR → Viralscope_sim
-Fase 4 (Full IG) ─────────► Producto completo
-                             Visual understanding, SDTs, CIB detection → Viralscope_sim
+Fase 2 (Actions) ────────► COMPLETADA 2026-04-07
+     ↓                      16 acciones IG nativas, MiroShark plugin, loop sincronizado
+Fase 3 (Ranking) ─────────► COMPLETADA 2026-04-07
+     ↓                      Weibull decay, audition system, ranking multi-surface
+Fase 4 (Full IG) ─────────► COMPLETADA 2026-04-07
+                             Cognitive biases, dual beliefs, visual context, social proof
 ```
 
 **Fase 1 y Fase 2 pueden desarrollarse en paralelo** — Fase 1 vive en Viralscope, Fase 2 en MiroFish_es.
