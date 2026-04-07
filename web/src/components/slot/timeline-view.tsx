@@ -991,110 +991,9 @@ export function TimelineView({
                           </div>
                         )}
 
-                        {panelResult?.verdict ? (() => {
-                          const verdict = panelResult.verdict as Record<string, unknown>;
-                          const scores = (verdict.composite_scores || panelResult.composite_scores) as Record<string, number> | undefined;
-                          const recs = verdict.variant_recommendations as Record<string, Record<string, string>> | undefined;
-                          const agentResults = panelResult.agent_results as Array<Record<string, unknown>> | undefined;
-
-                          const actionColorMap: Record<string, string> = {
-                            publish: "bg-green-100 text-green-700",
-                            story: "bg-blue-100 text-blue-700",
-                            reserve: "bg-amber-100 text-amber-700",
-                            repurpose: "bg-orange-100 text-orange-700",
-                            archive: "bg-gray-100 text-gray-500",
-                          };
-
-                          return (
-                            <div className="space-y-4">
-                              {/* Composite Scores */}
-                              {scores && (
-                                <div className="flex gap-3">
-                                  {Object.entries(scores).sort((a, b) => b[1] - a[1]).map(([label, score]) => (
-                                    <div
-                                      key={label}
-                                      className={cn(
-                                        "flex-1 rounded-lg border p-3 text-center",
-                                        label === verdict.winner
-                                          ? "border-indigo-300 bg-indigo-50"
-                                          : "border-gray-200 bg-gray-50"
-                                      )}
-                                    >
-                                      <div className="text-xs text-gray-500 uppercase">Variante {label}</div>
-                                      <div className={cn(
-                                        "text-2xl font-bold mt-1",
-                                        label === verdict.winner ? "text-indigo-700" : "text-gray-700"
-                                      )}>
-                                        {typeof score === "number" ? score.toFixed(2) : score}
-                                      </div>
-                                      {label === verdict.winner && (
-                                        <div className="text-xs text-indigo-600 font-medium mt-1">
-                                          Ganadora ({verdict.confidence as string})
-                                        </div>
-                                      )}
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-
-                              {/* Reasoning */}
-                              {verdict.reasoning && (
-                                <p className="text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-100">
-                                  {verdict.reasoning as string}
-                                </p>
-                              )}
-
-                              {/* Variant Recommendations */}
-                              {recs && (
-                                <div className="space-y-2">
-                                  <span className="text-xs font-semibold uppercase text-gray-400">Recomendaciones</span>
-                                  {Object.entries(recs).map(([label, rec]) => (
-                                    <div key={label} className="flex items-center gap-2 text-sm">
-                                      <span className="font-medium text-gray-700 w-6">
-                                        {label}
-                                      </span>
-                                      <span className={cn(
-                                        "rounded-full px-2 py-0.5 text-xs font-medium",
-                                        actionColorMap[rec.action] || "bg-gray-100 text-gray-500"
-                                      )}>
-                                        {rec.action}
-                                      </span>
-                                      <span className="text-gray-500 truncate">{rec.reason}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-
-                              {/* Risk Flags */}
-                              {Array.isArray(verdict.risk_flags) && (verdict.risk_flags as string[]).length > 0 && (
-                                <div className="space-y-1">
-                                  <span className="text-xs font-semibold uppercase text-gray-400">Riesgos</span>
-                                  {(verdict.risk_flags as string[]).map((flag, i) => (
-                                    <div key={i} className="flex items-start gap-2 text-sm text-amber-700">
-                                      <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
-                                      <span>{flag}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-
-                              {/* Agent count + tokens */}
-                              <div className="flex items-center justify-between text-xs text-gray-400 pt-2 border-t border-gray-100">
-                                <span>{panelResult.agents_evaluated as number} agentes evaluados</span>
-                                <span>{((panelResult.tokens_used as number) / 1000).toFixed(1)}K tokens</span>
-                              </div>
-
-                              {/* Re-evaluate button */}
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => { setPanelResult(null); }}
-                              >
-                                Evaluar de nuevo
-                              </Button>
-                            </div>
-                          );
-                        })() : null}
+                        {panelResult?.verdict ? (
+                          <PanelResultsView panelResult={panelResult} onReset={() => setPanelResult(null)} />
+                        ) : null}
                       </div>
 
                       {Object.keys(simulationData).length > 0 && (
@@ -1226,6 +1125,117 @@ export function TimelineView({
           </div>
         );
       })}
+    </div>
+  );
+}
+
+// ─── Panel Results Component ─────────────────────────────────────────────────
+
+function PanelResultsView({
+  panelResult,
+  onReset,
+}: {
+  panelResult: Record<string, unknown>;
+  onReset: () => void;
+}) {
+  const verdict = panelResult.verdict as Record<string, unknown>;
+  const scores = (verdict.composite_scores || panelResult.composite_scores) as Record<string, number>;
+  const recs = verdict.variant_recommendations as Record<string, Record<string, string>> | undefined;
+  const riskFlags = Array.isArray(verdict.risk_flags) ? (verdict.risk_flags as string[]) : [];
+  const agentsEvaluated = panelResult.agents_evaluated as number;
+  const tokensUsed = panelResult.tokens_used as number;
+  const winnerLabel = String(verdict.winner);
+  const confidence = String(verdict.confidence);
+
+  const actionColorMap: Record<string, string> = {
+    publish: "bg-green-100 text-green-700",
+    story: "bg-blue-100 text-blue-700",
+    reserve: "bg-amber-100 text-amber-700",
+    repurpose: "bg-orange-100 text-orange-700",
+    archive: "bg-gray-100 text-gray-500",
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Composite Scores */}
+      {scores ? (
+        <div className="flex gap-3">
+          {Object.entries(scores).sort((a, b) => b[1] - a[1]).map(([label, score]) => (
+            <div
+              key={label}
+              className={cn(
+                "flex-1 rounded-lg border p-3 text-center",
+                label === winnerLabel
+                  ? "border-indigo-300 bg-indigo-50"
+                  : "border-gray-200 bg-gray-50"
+              )}
+            >
+              <div className="text-xs text-gray-500 uppercase">Variante {label}</div>
+              <div className={cn(
+                "text-2xl font-bold mt-1",
+                label === winnerLabel ? "text-indigo-700" : "text-gray-700"
+              )}>
+                {typeof score === "number" ? score.toFixed(2) : String(score)}
+              </div>
+              {label === winnerLabel ? (
+                <div className="text-xs text-indigo-600 font-medium mt-1">
+                  Ganadora ({confidence})
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {/* Reasoning */}
+      {verdict.reasoning ? (
+        <p className="text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-100">
+          {String(verdict.reasoning)}
+        </p>
+      ) : null}
+
+      {/* Variant Recommendations */}
+      {recs ? (
+        <div className="space-y-2">
+          <span className="text-xs font-semibold uppercase text-gray-400">Recomendaciones</span>
+          {Object.entries(recs).map(([label, rec]) => (
+            <div key={label} className="flex items-center gap-2 text-sm">
+              <span className="font-medium text-gray-700 w-6">{label}</span>
+              <span className={cn(
+                "rounded-full px-2 py-0.5 text-xs font-medium",
+                actionColorMap[rec.action] || "bg-gray-100 text-gray-500"
+              )}>
+                {rec.action}
+              </span>
+              <span className="text-gray-500 truncate">{rec.reason}</span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {/* Risk Flags */}
+      {riskFlags.length > 0 ? (
+        <div className="space-y-1">
+          <span className="text-xs font-semibold uppercase text-gray-400">Riesgos</span>
+          {riskFlags.map((flag, i) => (
+            <div key={i} className="flex items-start gap-2 text-sm text-amber-700">
+              <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+              <span>{flag}</span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {/* Agent count + tokens */}
+      <div className="flex items-center justify-between text-xs text-gray-400 pt-2 border-t border-gray-100">
+        <span>{agentsEvaluated} agentes evaluados</span>
+        <span>{(tokensUsed / 1000).toFixed(1)}K tokens</span>
+      </div>
+
+      {/* Re-evaluate button */}
+      <Button variant="outline" size="sm" onClick={onReset}>
+        Evaluar de nuevo
+      </Button>
     </div>
   );
 }
