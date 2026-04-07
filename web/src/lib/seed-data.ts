@@ -97,6 +97,8 @@ export const seedProject: Project = {
       { date: "04-23", name: "Día del Libro (UNESCO)", relevance: "high" },
     ],
   },
+  onboarding_status: "complete" as const,
+  research_data: {},
   created_at: "2026-03-15T10:00:00Z",
 };
 
