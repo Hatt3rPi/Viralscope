@@ -3,7 +3,7 @@ export default function FlowPage() {
     <div className="min-h-screen bg-[#0a0a0a] text-gray-200 py-12 px-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-2">Viralscope — Flujo de Produccion</h1>
-        <p className="text-sm text-gray-500 mb-10">Actualizado 2026-04-06</p>
+        <p className="text-sm text-gray-500 mb-10">Actualizado 2026-04-07</p>
 
         {/* PASO 0 */}
         <Step
@@ -115,32 +115,33 @@ export default function FlowPage() {
         <Step
           number="4"
           title="Panel de Evaluacion"
-          subtitle="MiroFish — Agentes persistentes evaluan contenido real"
+          subtitle="panel-seed + panel-evaluate — Edge Functions desplegadas"
           color="indigo"
-          badge="UPGRADED"
+          badge="LIVE"
           items={[
-            "Panel de consumidores creado desde audiences_yaml (todas las personas)",
-            "Agentes persistentes con memoria hibrida (historial activable)",
+            "4a. Seed (una vez por proyecto): panel-seed",
+            "  Lee audiences_yaml → Gemini expande a perfiles IG ricos",
+            "  14 agentes con demographics, instagram_behavior, psychology, brand_relationship",
+            "  Persistentes en tabla panel_agents con memoria activable",
             "",
-            "Cada agente recibe contenido REAL:",
-            "  Imagen generada (multimodal) + copy IG completo",
-            "  Contexto: formato, plataforma, pilar, objetivo",
-            "  Su historial de evaluaciones previas",
+            "4b. Evaluacion (por slot): panel-evaluate",
+            "  1 llamada LLM por agente evaluando TODAS las variantes (multimodal)",
+            "  Ejecucion paralela en batches de 5 (Promise.allSettled)",
             "",
-            "Encuesta estructurada por agente (~200 tokens):",
-            "  Acciones multi-select: scroll, stop, read, like, comment, share, save, follow",
-            "  6 dimensiones (1-10): hook, resonancia, claridad, CTA, brand fit, memorabilidad",
-            "  Sentimiento: inspired | informed | entertained | indifferent | annoyed | confused",
-            "  Cualitativos: best_thing, worst_thing, would_share_with, comment_if_any",
-            "  Condicionales: would_buy (commercial), would_repost (viral), notifications (retention)",
-            "  Recall test opcional: que recuerda sin ver el contenido",
+            "  Encuesta estructurada por agente:",
+            "    Acciones: scroll_past, stop_look, read_caption, like, comment, share, save, follow",
+            "    6 dimensiones (1-10): hook, resonancia, claridad, CTA, brand fit, memorabilidad",
+            "    Cualitativos: attention_seconds, sentiment, best/worst_thing, would_share_with",
+            "    Condicionales: would_buy (commercial), would_repost (viral), notifications (retention)",
             "",
-            "Composite Score ponderado por intencion del slot:",
-            "  viral → prioriza share + comment (difusion)",
-            "  quality → prioriza save + read + follow (autoridad)",
-            "  commercial → prioriza cta_action + follow (conversion)",
+            "4c. Composite Score Engine (sin LLM):",
+            "  Pesos por intencion del slot:",
+            "    viral → share 25% + comment 15% + like 10%",
+            "    quality → save 20% + follow 15% + read_caption 15%",
+            "    commercial → cta_action 30% + attention 10% + save 10%",
             "",
-            "~21K tokens para 10 personas x 3 variantes (~30s)",
+            "Resultado: ~67K tokens para 14 personas x 3 variantes (~45s)",
+            "Guardado en tabla panel_evaluations",
           ]}
         />
 
@@ -189,7 +190,9 @@ export default function FlowPage() {
                   ["Variantes", "gemini-3.1-pro-preview", "low"],
                   ["Art Direction", "gemini-3.1-pro-preview", "low"],
                   ["Imagenes", "gemini-3.1-flash-image-preview", "—"],
-                  ["MiroFish Prep", "gemini-3.1-pro-preview", "medium"],
+                  ["Panel Seed", "gemini-3.1-pro-preview", "low"],
+                  ["Panel Evaluate", "gemini-3.1-pro-preview", "low"],
+                  ["Panel Verdict", "gemini-3.1-pro-preview", "low"],
                 ].map(([fn, model, thinking]) => (
                   <tr key={fn} className="bg-gray-900/50">
                     <td className="px-4 py-2.5 font-medium text-gray-300">{fn}</td>
@@ -267,6 +270,7 @@ function Step({
   };
   const badgeBg: Record<string, string> = {
     amber: "bg-amber-500/20 text-amber-400",
+    indigo: "bg-indigo-500/20 text-indigo-400",
   };
 
   return (

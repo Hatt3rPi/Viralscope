@@ -153,3 +153,71 @@ export interface Feedback {
   resolved: boolean;
   created_at: string;
 }
+
+// ─── Panel de Evaluacion Types ───
+
+export interface PanelAgent {
+  id: string;
+  project_id: string;
+  persona_name: string;
+  persona_profile: Record<string, unknown>;
+  history: Record<string, unknown>[];
+  memory_enabled: boolean;
+  created_at: string;
+}
+
+export interface VariantEvaluation {
+  actions: {
+    scroll_past: boolean;
+    stop_look: boolean;
+    read_caption: boolean;
+    like: boolean;
+    comment: boolean;
+    share: boolean;
+    save: boolean;
+    follow: boolean;
+  };
+  scores: {
+    hook_strength: number;
+    emotional_resonance: number;
+    message_clarity: number;
+    cta_effectiveness: number;
+    brand_fit: number;
+    memorability: number;
+  };
+  qualitative: {
+    attention_seconds: number;
+    sentiment: string;
+    best_thing: string;
+    worst_thing: string;
+    would_share_with: string;
+    comment_if_any: string | null;
+    would_buy?: boolean | string;
+    would_repost_story?: boolean;
+    would_enable_notifications?: boolean;
+  };
+}
+
+export interface PanelVerdict {
+  winner: string;
+  composite_scores: Record<string, number>;
+  confidence: "alta" | "media" | "baja";
+  reasoning: string;
+  risk_flags: string[];
+  variant_recommendations: Record<string, { action: string; reason: string }>;
+}
+
+export interface PanelEvaluation {
+  id: string;
+  slot_id: string;
+  intention: string;
+  agent_results: Array<{
+    agent_name: string;
+    agent_id: string;
+    evaluations: Record<string, VariantEvaluation>;
+  }>;
+  composite_scores: Record<string, number>;
+  verdict: PanelVerdict;
+  total_tokens_used: number | null;
+  created_at: string;
+}

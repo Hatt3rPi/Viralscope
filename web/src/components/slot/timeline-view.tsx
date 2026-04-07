@@ -75,6 +75,7 @@ export function TimelineView({
   const [hooks, setHooks] = React.useState<Array<{ id: number; text: string; tone: string; scores: Record<string, number>; total: number; reasoning: string }>>([]);
   const [selectedHooks, setSelectedHooks] = React.useState<number[]>([]);
   const autoImageTriggered = React.useRef(false);
+  const [panelResult, setPanelResult] = React.useState<Record<string, unknown> | null>(null);
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 
@@ -211,6 +212,31 @@ export function TimelineView({
       await saveSimulationMdAction(slot.id, data.simulation_md);
     } catch (e) {
       setError(`Error preparando MiroFish: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handlePanelEvaluate() {
+    setLoading("panel-evaluate");
+    setError(null);
+    try {
+      const data = await callEdgeFunction("panel-evaluate", { slot_id: slot.id });
+      setPanelResult(data);
+    } catch (e) {
+      setError(`Error evaluando panel: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
+  async function handlePanelSeed() {
+    setLoading("panel-seed");
+    setError(null);
+    try {
+      await callEdgeFunction("panel-seed", { project_id: projectId });
+    } catch (e) {
+      setError(`Error creando panel: ${e instanceof Error ? e.message : e}`);
     } finally {
       setLoading(null);
     }
@@ -921,6 +947,156 @@ export function TimelineView({
                   {/* Step 4: Simulation */}
                   {step.key === "4-simulation" && (
                     <div className="space-y-4">
+                      {/* Panel de Evaluacion */}
+                      <div className="rounded-xl border border-indigo-200 bg-white p-6 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-semibold text-gray-900">Panel de Evaluacion</h4>
+                            <p className="text-sm text-gray-500 mt-1">
+                              14 agentes IA evaluan las variantes con encuesta estructurada
+                            </p>
+                          </div>
+                          {panelResult?.verdict && (
+                            <Badge className="bg-indigo-100 text-indigo-700 border-indigo-200">
+                              Ganadora: {(panelResult.verdict as Record<string, unknown>).winner as string}
+                            </Badge>
+                          )}
+                        </div>
+
+                        {!panelResult && (
+                          <div className="flex gap-2">
+                            <Button
+                              onClick={handlePanelEvaluate}
+                              disabled={!!loading}
+                              className="bg-indigo-600 hover:bg-indigo-700"
+                            >
+                              {loading === "panel-evaluate" ? (
+                                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Evaluando con panel (~45s)...</>
+                              ) : (
+                                <><Sparkles className="mr-2 h-4 w-4" /> Evaluar con Panel</>
+                              )}
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={handlePanelSeed}
+                              disabled={!!loading}
+                              size="sm"
+                            >
+                              {loading === "panel-seed" ? (
+                                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creando agentes...</>
+                              ) : (
+                                "Re-seed Agentes"
+                              )}
+                            </Button>
+                          </div>
+                        )}
+
+                        {panelResult?.verdict && (() => {
+                          const verdict = panelResult.verdict as Record<string, unknown>;
+                          const scores = (verdict.composite_scores || panelResult.composite_scores) as Record<string, number> | undefined;
+                          const recs = verdict.variant_recommendations as Record<string, Record<string, string>> | undefined;
+                          const agentResults = panelResult.agent_results as Array<Record<string, unknown>> | undefined;
+
+                          const actionColorMap: Record<string, string> = {
+                            publish: "bg-green-100 text-green-700",
+                            story: "bg-blue-100 text-blue-700",
+                            reserve: "bg-amber-100 text-amber-700",
+                            repurpose: "bg-orange-100 text-orange-700",
+                            archive: "bg-gray-100 text-gray-500",
+                          };
+
+                          return (
+                            <div className="space-y-4">
+                              {/* Composite Scores */}
+                              {scores && (
+                                <div className="flex gap-3">
+                                  {Object.entries(scores).sort((a, b) => b[1] - a[1]).map(([label, score]) => (
+                                    <div
+                                      key={label}
+                                      className={cn(
+                                        "flex-1 rounded-lg border p-3 text-center",
+                                        label === verdict.winner
+                                          ? "border-indigo-300 bg-indigo-50"
+                                          : "border-gray-200 bg-gray-50"
+                                      )}
+                                    >
+                                      <div className="text-xs text-gray-500 uppercase">Variante {label}</div>
+                                      <div className={cn(
+                                        "text-2xl font-bold mt-1",
+                                        label === verdict.winner ? "text-indigo-700" : "text-gray-700"
+                                      )}>
+                                        {typeof score === "number" ? score.toFixed(2) : score}
+                                      </div>
+                                      {label === verdict.winner && (
+                                        <div className="text-xs text-indigo-600 font-medium mt-1">
+                                          Ganadora ({verdict.confidence as string})
+                                        </div>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              {/* Reasoning */}
+                              {verdict.reasoning && (
+                                <p className="text-sm text-gray-700 bg-gray-50 rounded-lg p-3 border border-gray-100">
+                                  {verdict.reasoning as string}
+                                </p>
+                              )}
+
+                              {/* Variant Recommendations */}
+                              {recs && (
+                                <div className="space-y-2">
+                                  <span className="text-xs font-semibold uppercase text-gray-400">Recomendaciones</span>
+                                  {Object.entries(recs).map(([label, rec]) => (
+                                    <div key={label} className="flex items-center gap-2 text-sm">
+                                      <span className="font-medium text-gray-700 w-6">
+                                        {label}
+                                      </span>
+                                      <span className={cn(
+                                        "rounded-full px-2 py-0.5 text-xs font-medium",
+                                        actionColorMap[rec.action] || "bg-gray-100 text-gray-500"
+                                      )}>
+                                        {rec.action}
+                                      </span>
+                                      <span className="text-gray-500 truncate">{rec.reason}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              {/* Risk Flags */}
+                              {Array.isArray(verdict.risk_flags) && (verdict.risk_flags as string[]).length > 0 && (
+                                <div className="space-y-1">
+                                  <span className="text-xs font-semibold uppercase text-gray-400">Riesgos</span>
+                                  {(verdict.risk_flags as string[]).map((flag, i) => (
+                                    <div key={i} className="flex items-start gap-2 text-sm text-amber-700">
+                                      <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+                                      <span>{flag}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              {/* Agent count + tokens */}
+                              <div className="flex items-center justify-between text-xs text-gray-400 pt-2 border-t border-gray-100">
+                                <span>{panelResult.agents_evaluated as number} agentes evaluados</span>
+                                <span>{((panelResult.tokens_used as number) / 1000).toFixed(1)}K tokens</span>
+                              </div>
+
+                              {/* Re-evaluate button */}
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => { setPanelResult(null); }}
+                              >
+                                Evaluar de nuevo
+                              </Button>
+                            </div>
+                          );
+                        })()}
+                      </div>
+
                       {Object.keys(simulationData).length > 0 && (
                         <SimulationCard
                           simulationData={typedSimData}

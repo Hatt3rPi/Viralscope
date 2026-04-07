@@ -7,6 +7,8 @@ import type {
   Brief,
   Variante,
   Feedback,
+  PanelAgent,
+  PanelEvaluation,
 } from "./types";
 
 // Check if Supabase is configured with a real project
@@ -486,4 +488,56 @@ export async function addGenerationLog(data: {
   const supabase = await getSupabaseAdmin();
   const { error } = await supabase.from("generation_logs").insert(data);
   if (error) throw new Error(error.message);
+}
+
+// ─── Panel de Evaluacion ───
+
+export async function getPanelAgents(projectId: string): Promise<PanelAgent[]> {
+  if (isSupabaseConfigured()) {
+    try {
+      const { createClient } = await import("./supabase/server");
+      const supabase = await createClient();
+      const { data, error } = await supabase
+        .from("panel_agents")
+        .select("*")
+        .eq("project_id", projectId)
+        .order("persona_name");
+      if (!error && data) return data as PanelAgent[];
+    } catch { /* fall through */ }
+  }
+  return [];
+}
+
+export async function getPanelEvaluation(slotId: string): Promise<PanelEvaluation | null> {
+  if (isSupabaseConfigured()) {
+    try {
+      const { createClient } = await import("./supabase/server");
+      const supabase = await createClient();
+      const { data, error } = await supabase
+        .from("panel_evaluations")
+        .select("*")
+        .eq("slot_id", slotId)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+      if (!error && data) return data as PanelEvaluation;
+    } catch { /* fall through */ }
+  }
+  return null;
+}
+
+export async function getPanelEvaluations(slotId: string): Promise<PanelEvaluation[]> {
+  if (isSupabaseConfigured()) {
+    try {
+      const { createClient } = await import("./supabase/server");
+      const supabase = await createClient();
+      const { data, error } = await supabase
+        .from("panel_evaluations")
+        .select("*")
+        .eq("slot_id", slotId)
+        .order("created_at", { ascending: false });
+      if (!error && data) return data as PanelEvaluation[];
+    } catch { /* fall through */ }
+  }
+  return [];
 }
