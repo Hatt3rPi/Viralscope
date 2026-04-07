@@ -275,25 +275,44 @@ export default function FlowPage() {
         {/* Architecture diagram */}
         <div className="mb-8">
           <h2 className="text-xl font-bold text-white mb-4">Arquitectura</h2>
-          <div className="rounded-xl border border-gray-700 bg-gray-900/50 p-6 font-mono text-xs text-gray-400 whitespace-pre">
-{`Viralscope (Netlify)              Viralscope_sim (Railway)
-┌─────────────────────┐           ┌──────────────────────────┐
-│  Next.js 16 Frontend │           │  MiroShark Backend       │
-│  ┌─────────────────┐ │           │  ┌────────────────────┐  │
-│  │ Slot Timeline   │ │  ──────►  │  │ /api/ig/simulate   │  │
-│  │ Panel Evaluate  │ │           │  │ persona_builder     │  │
-│  │ Deep Simulation │ │  ◄──────  │  │ Neo4j graph_builder │  │
-│  └─────────────────┘ │           │  │ OASIS ProfileGen    │  │
-└──────────┬───────────┘           │  │ Instagram Engine    │  │
-           │                       │  │  ├ 16 IG actions    │  │
-    Supabase                       │  │  ├ Weibull ranking  │  │
-┌──────────┴───────────┐           │  │  ├ SEIR diffusion   │  │
-│  Edge Functions (12)  │           │  │  ├ Multimodal vision│  │
-│  PostgreSQL           │           │  │  └ Cognitive biases │  │
-│  panel_agents table   │           │  └────────────────────┘  │
-│  panel_evaluations    │           │  Neo4j Aura (grafo)      │
-│  Storage bucket       │           │  OpenRouter (LLM)        │
-└───────────────────────┘           └──────────────────────────┘`}
+          <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-start">
+            {/* Left: Viralscope */}
+            <div className="rounded-xl border border-indigo-500/30 bg-gray-900/50 p-4 space-y-3">
+              <div className="text-xs font-bold text-indigo-400 uppercase tracking-wider">Viralscope (Netlify)</div>
+              <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-3 space-y-1">
+                <div className="text-xs font-semibold text-gray-300">Next.js 16 Frontend</div>
+                <div className="text-xs text-gray-500">Slot Timeline, Panel Evaluate, Deep Simulation</div>
+              </div>
+              <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-3 space-y-1">
+                <div className="text-xs font-semibold text-gray-300">Supabase</div>
+                <div className="text-xs text-gray-500">12 Edge Functions, PostgreSQL, panel_agents, panel_evaluations, Storage</div>
+              </div>
+            </div>
+
+            {/* Center: arrows */}
+            <div className="flex flex-col items-center justify-center gap-2 pt-12">
+              <div className="text-xs text-gray-500">simulate-deep</div>
+              <div className="text-purple-400 text-lg">{"-->"}</div>
+              <div className="text-purple-400 text-lg">{"<--"}</div>
+              <div className="text-xs text-gray-500">results</div>
+            </div>
+
+            {/* Right: Viralscope_sim */}
+            <div className="rounded-xl border border-purple-500/30 bg-gray-900/50 p-4 space-y-3">
+              <div className="text-xs font-bold text-purple-400 uppercase tracking-wider">Viralscope_sim (Railway)</div>
+              <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-3 space-y-1">
+                <div className="text-xs font-semibold text-gray-300">MiroShark Backend</div>
+                <div className="text-xs text-gray-500">persona_builder, Neo4j graph_builder, OASIS ProfileGen</div>
+              </div>
+              <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-3 space-y-1">
+                <div className="text-xs font-semibold text-gray-300">Instagram Engine</div>
+                <div className="text-xs text-gray-500">16 acciones IG, Weibull ranking, SEIR difusion, Vision multimodal, Cognitive biases</div>
+              </div>
+              <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-3 space-y-1">
+                <div className="text-xs font-semibold text-gray-300">Servicios</div>
+                <div className="text-xs text-gray-500">Neo4j Aura (grafo), OpenRouter / Qwen3.5 Omni (LLM multimodal)</div>
+              </div>
+            </div>
           </div>
         </div>
 
