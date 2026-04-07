@@ -956,11 +956,11 @@ export function TimelineView({
                               14 agentes IA evaluan las variantes con encuesta estructurada
                             </p>
                           </div>
-                          {panelResult?.verdict && (
+                          {panelResult?.verdict ? (
                             <Badge className="bg-indigo-100 text-indigo-700 border-indigo-200">
-                              Ganadora: {(panelResult.verdict as Record<string, unknown>).winner as string}
+                              Ganadora: {String((panelResult.verdict as Record<string, unknown>).winner)}
                             </Badge>
-                          )}
+                          ) : null}
                         </div>
 
                         {!panelResult && (
@@ -991,7 +991,7 @@ export function TimelineView({
                           </div>
                         )}
 
-                        {panelResult?.verdict && (() => {
+                        {panelResult?.verdict ? (() => {
                           const verdict = panelResult.verdict as Record<string, unknown>;
                           const scores = (verdict.composite_scores || panelResult.composite_scores) as Record<string, number> | undefined;
                           const recs = verdict.variant_recommendations as Record<string, Record<string, string>> | undefined;
@@ -1094,7 +1094,7 @@ export function TimelineView({
                               </Button>
                             </div>
                           );
-                        })()}
+                        })() : null}
                       </div>
 
                       {Object.keys(simulationData).length > 0 && (
