@@ -47,7 +47,7 @@ export async function createProjectWithOnboardingAction(formData: FormData) {
       website_url: websiteUrl || undefined,
       instagram_handle: instagramHandle || undefined,
       onboarding_status: "researching",
-    } as Record<string, unknown> & { name: string; slug: string });
+    });
     projectSlug = project.slug;
   } catch (e) {
     console.error("createProjectWithOnboardingAction error:", e);
@@ -61,14 +61,16 @@ export async function createProjectForOnboardingAction(
   websiteUrl: string,
   instagramHandle: string,
 ): Promise<{ id: string; slug: string }> {
-  const slug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+  const baseSlug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+  // Add random suffix to avoid slug collisions
+  const slug = `${baseSlug}-${Date.now().toString(36).slice(-4)}`;
   const project = await createProject({
     name,
     slug,
     website_url: websiteUrl || undefined,
     instagram_handle: instagramHandle || undefined,
     onboarding_status: "researching",
-  } as Record<string, unknown> & { name: string; slug: string });
+  });
   return { id: project.id, slug: project.slug };
 }
 
