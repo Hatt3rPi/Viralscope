@@ -83,7 +83,7 @@ Deno.serve(async (req: Request) => {
           {
             text:
               systemPrompt +
-              "\n\n---\nEl usuario acaba de iniciar la creación de una campaña. Preséntate brevemente como el Estratega y haz tus primeras preguntas para entender qué quiere lograr.",
+              "\n\n---\nEl usuario acaba de iniciar la creación de una campaña. Preséntate en 1 oración y haz UNA sola pregunta para empezar.",
           },
         ],
       });
@@ -248,7 +248,7 @@ Debes recopilar esta información del usuario (algunas ya las puedes inferir del
 7. **Prioridades de audiencia** — qué personas target son más importantes ahora?
 
 REGLAS DE CONVERSACIÓN:
-- Haz 1-3 preguntas por turno (NO más).
+- Haz EXACTAMENTE 1 pregunta por turno (NO más de 1). Sé conciso.
 - Cuando ya tengas info del contexto, proponla: "Veo que tu calendario tiene [X], ¿quieres que la ancle como fecha clave?"
 - Ofrece siempre opciones concretas en quick_responses.
 - Después de ~3-5 turnos de conversación (cuando tengas suficiente info), indica ready: true.
