@@ -125,14 +125,22 @@ export function OnboardingWizard({ existingProject }: OnboardingWizardProps) {
     dispatch({ type: "SET_LOADING", loading: true });
 
     try {
+      // Normalize URL: add https:// if missing
+      let url = inputUrl.trim();
+      if (url && !url.match(/^https?:\/\//i)) {
+        url = `https://${url}`;
+      }
+      // Normalize IG handle: remove @ prefix
+      const ig = inputIg.trim().replace(/^@/, "");
+
       const project = await createProjectForOnboardingAction(
         inputName.trim(),
-        inputUrl.trim(),
-        inputIg.trim(),
+        url,
+        ig,
       );
 
       dispatch({ type: "SET_PROJECT", id: project.id, slug: project.slug });
-      handleStartResearch(project.id, inputUrl.trim(), inputIg.trim());
+      handleStartResearch(project.id, url, ig);
     } catch (e) {
       dispatch({ type: "SET_ERROR", error: `Error: ${e instanceof Error ? e.message : e}` });
     }
