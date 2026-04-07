@@ -56,6 +56,22 @@ export async function createProjectWithOnboardingAction(formData: FormData) {
   redirect(`/projects/${projectSlug}/onboarding`);
 }
 
+export async function createProjectForOnboardingAction(
+  name: string,
+  websiteUrl: string,
+  instagramHandle: string,
+): Promise<{ id: string; slug: string }> {
+  const slug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+  const project = await createProject({
+    name,
+    slug,
+    website_url: websiteUrl || undefined,
+    instagram_handle: instagramHandle || undefined,
+    onboarding_status: "researching",
+  } as Record<string, unknown> & { name: string; slug: string });
+  return { id: project.id, slug: project.slug };
+}
+
 export async function updateProjectYamlsAction(
   projectId: string,
   yamls: Record<string, Record<string, unknown>>,

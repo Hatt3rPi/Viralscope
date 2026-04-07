@@ -2,12 +2,12 @@
 
 import { useReducer, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Globe, Instagram, Check, MessageSquare, Sparkles } from "lucide-react";
+import { Loader2, Globe, Camera, Check, MessageSquare, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
-  createProjectWithOnboardingAction,
+  createProjectForOnboardingAction,
   updateProjectYamlsAction,
   updateOnboardingStatusAction,
 } from "@/app/actions";
@@ -125,22 +125,11 @@ export function OnboardingWizard({ existingProject }: OnboardingWizardProps) {
     dispatch({ type: "SET_LOADING", loading: true });
 
     try {
-      // Create project via server action (it redirects, but we catch it)
-      const formData = new FormData();
-      formData.set("name", inputName.trim());
-      formData.set("website_url", inputUrl.trim());
-      formData.set("instagram_handle", inputIg.trim());
-
-      // We can't use the redirect-based action, so call data layer directly
-      const { createProject } = await import("@/lib/data");
-      const slug = inputName.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
-      const project = await createProject({
-        name: inputName.trim(),
-        slug,
-        website_url: inputUrl.trim() || undefined,
-        instagram_handle: inputIg.trim() || undefined,
-        onboarding_status: "researching",
-      } as Record<string, unknown> & { name: string; slug: string });
+      const project = await createProjectForOnboardingAction(
+        inputName.trim(),
+        inputUrl.trim(),
+        inputIg.trim(),
+      );
 
       dispatch({ type: "SET_PROJECT", id: project.id, slug: project.slug });
       handleStartResearch(project.id, inputUrl.trim(), inputIg.trim());
@@ -313,7 +302,7 @@ export function OnboardingWizard({ existingProject }: OnboardingWizardProps) {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Instagram (opcional)</label>
               <div className="flex items-center gap-2">
-                <Instagram className="h-4 w-4 text-gray-400" />
+                <Camera className="h-4 w-4 text-gray-400" />
                 <input
                   type="text"
                   value={inputIg}
@@ -373,7 +362,7 @@ export function OnboardingWizard({ existingProject }: OnboardingWizardProps) {
             {state.report.instagram && (
               <div className="rounded-lg border border-gray-200 p-3">
                 <div className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                  <Instagram className="h-4 w-4" /> Instagram
+                  <Camera className="h-4 w-4" /> Instagram
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
                   {state.report.instagram.followers.toLocaleString()} seguidores
