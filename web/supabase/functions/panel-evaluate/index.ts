@@ -501,9 +501,10 @@ Deno.serve(async (req: Request) => {
       }, 400);
     }
 
-    // ── 4. Evaluate: 1 LLM call per agent, batched ───────────
-    const BATCH_SIZE = 5;
-    const BATCH_DELAY_MS = 500;
+    // ── 4. Evaluate: 1 LLM call per agent, sequential ─────────
+    // Sequential to avoid WORKER_LIMIT on Supabase free tier
+    const BATCH_SIZE = 1;
+    const BATCH_DELAY_MS = 200;
     const allResults: Array<PromiseSettledResult<{
       agent_name: string;
       agent_id: string;
