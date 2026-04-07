@@ -230,6 +230,45 @@ export function TimelineView({
     }
   }
 
+  const [deepSimResult, setDeepSimResult] = React.useState<Record<string, unknown> | null>(null);
+  const deepSimPollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+
+  async function handleDeepSimulation() {
+    setLoading("deep-sim");
+    setError(null);
+    try {
+      const data = await callEdgeFunction("simulate-deep", {
+        slot_id: slot.id,
+        persona_count: 50,
+      });
+      if (data.simulation_id && data.poll_url && data.railway_url) {
+        // Start polling Railway for results
+        const pollUrl = `${data.railway_url}${data.poll_url}`;
+        deepSimPollRef.current = setInterval(async () => {
+          try {
+            const res = await fetch(pollUrl);
+            const status = await res.json();
+            if (!status.running) {
+              if (deepSimPollRef.current) clearInterval(deepSimPollRef.current);
+              setDeepSimResult(status);
+              setLoading(null);
+            }
+          } catch { /* keep polling */ }
+        }, 10000);
+      }
+    } catch (e) {
+      setError(`Error lanzando simulacion: ${e instanceof Error ? e.message : e}`);
+      setLoading(null);
+    }
+  }
+
+  // Cleanup poll on unmount
+  React.useEffect(() => {
+    return () => {
+      if (deepSimPollRef.current) clearInterval(deepSimPollRef.current);
+    };
+  }, []);
+
   async function handlePanelSeed() {
     setLoading("panel-seed");
     setError(null);
@@ -1002,6 +1041,88 @@ export function TimelineView({
                           variantes={variantes}
                         />
                       )}
+                      {/* Deep Simulation (Railway) */}
+                      <div className="rounded-xl border border-purple-200 bg-white p-6 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <h4 className="font-semibold text-gray-900">Simulacion Profunda</h4>
+                            <p className="text-sm text-gray-500 mt-1">
+                              50+ agentes IG simulan engagement en multiples rondas con ranking algoritmico
+                            </p>
+                          </div>
+                          {deepSimResult ? (
+                            <Badge className="bg-purple-100 text-purple-700 border-purple-200">
+                              {String(deepSimResult.action_count || 0)} acciones
+                            </Badge>
+                          ) : null}
+                        </div>
+
+                        {!deepSimResult ? (
+                          <Button
+                            onClick={handleDeepSimulation}
+                            disabled={!!loading}
+                            className="bg-purple-600 hover:bg-purple-700"
+                          >
+                            {loading === "deep-sim" ? (
+                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Simulando (~3-5 min)...</>
+                            ) : (
+                              <><Sparkles className="mr-2 h-4 w-4" /> Lanzar Simulacion Profunda</>
+                            )}
+                          </Button>
+                        ) : (
+                          <div className="space-y-3">
+                            <div className="grid grid-cols-3 gap-2 text-sm">
+                              <div className="rounded-lg bg-purple-50 border border-purple-100 p-3 text-center">
+                                <div className="text-xs text-gray-500">Agentes</div>
+                                <div className="text-lg font-bold text-purple-700">{String(deepSimResult.persona_count || 0)}</div>
+                              </div>
+                              <div className="rounded-lg bg-purple-50 border border-purple-100 p-3 text-center">
+                                <div className="text-xs text-gray-500">Acciones</div>
+                                <div className="text-lg font-bold text-purple-700">{String(deepSimResult.action_count || 0)}</div>
+                              </div>
+                              <div className="rounded-lg bg-purple-50 border border-purple-100 p-3 text-center">
+                                <div className="text-xs text-gray-500">Variantes</div>
+                                <div className="text-lg font-bold text-purple-700">{String(deepSimResult.variant_count || 0)}</div>
+                              </div>
+                            </div>
+
+                            {deepSimResult.action_types ? (
+                              <div className="space-y-1">
+                                <span className="text-xs font-semibold uppercase text-gray-400">Acciones por tipo</span>
+                                {Object.entries(deepSimResult.action_types as Record<string, number>)
+                                  .sort(([, a], [, b]) => (b as number) - (a as number))
+                                  .map(([type, count]) => (
+                                    <div key={type} className="flex justify-between text-sm">
+                                      <span className="text-gray-600">{type}</span>
+                                      <span className="font-medium text-gray-900">{String(count)}</span>
+                                    </div>
+                                  ))}
+                              </div>
+                            ) : null}
+
+                            {deepSimResult.seir ? (
+                              <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
+                                <span className="text-xs font-semibold uppercase text-gray-400 block mb-1">Difusion SEIR</span>
+                                {(() => {
+                                  const s = (deepSimResult.seir as Record<string, unknown>)?.summary as Record<string, unknown> | undefined;
+                                  if (!s) return null;
+                                  return (
+                                    <>
+                                      Alcance: {String(s.final_reach)}/{String(s.total_agents)} ({String(s.final_reach_pct)}%)
+                                      {s.tipping_point_round ? ` — Punto viral: ronda ${String(s.tipping_point_round)}` : ""}
+                                    </>
+                                  );
+                                })()}
+                              </div>
+                            ) : null}
+
+                            <Button variant="outline" size="sm" onClick={() => setDeepSimResult(null)}>
+                              Simular de nuevo
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+
                       <div className="rounded-xl border border-gray-200 bg-white p-6 space-y-4">
                         <h4 className="font-semibold text-gray-900">Preparar para MiroFish</h4>
                         <p className="text-sm text-gray-500">
