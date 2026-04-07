@@ -3,7 +3,7 @@ export default function FlowPage() {
     <div className="min-h-screen bg-[#0a0a0a] text-gray-200 py-12 px-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-2">Viralscope — Flujo E2E</h1>
-        <p className="text-sm text-gray-500 mb-10">Actualizado 2026-04-08</p>
+        <p className="text-sm text-gray-500 mb-10">Actualizado 2026-04-08 v2</p>
 
         {/* FASE 0: ONBOARDING */}
         <div className="rounded-xl border border-gray-600 bg-gray-900/60 px-6 py-3 mb-6 text-center">
@@ -12,18 +12,14 @@ export default function FlowPage() {
 
         <Step
           number="0a"
-          title="Crear Proyecto / Marca"
-          subtitle="Datos del negocio que alimentan todo el sistema"
+          title="Input: URL + Instagram"
+          subtitle="El usuario solo ingresa nombre, URL web y @instagram"
           color="slate"
+          badge="LIVE"
           items={[
-            "brand_yaml: nombre, descripcion, productos (nombre + precio + formato), valores, mercado (pais, idioma)",
-            "voice_yaml: tono, personalidad, vocabulario, frases ejemplo",
-            "audiences_yaml: 50+ personas con nombre, edad, ciudad, profesion, MBTI, familia, IG behavior, cuentas que siguen",
-            "pillars_yaml: 4-6 pilares de contenido con descripcion",
-            "competitors_yaml: 3-5 competidores con nombre, precio, positioning, fortalezas, debilidades",
-            "platforms_yaml: metricas IG reales (followers, engagement_rate, demographics, peak_hours)",
-            "metrics_yaml: KPIs (follower_growth, engagement_target, save_rate, share_rate)",
-            "calendar_yaml: fechas clave (lanzamientos, eventos, feriados)",
+            "Formulario minimo: nombre de la marca, URL del sitio web, @instagram (opcional)",
+            "Crea proyecto en Supabase con onboarding_status: 'researching'",
+            "Redirige a /projects/[slug]/onboarding",
           ]}
         />
 
@@ -31,19 +27,39 @@ export default function FlowPage() {
 
         <Step
           number="0b"
-          title="Generacion de Audiencia"
-          subtitle="Desde datos reales de plataforma → personas narrativas → Neo4j"
+          title="Research Automatico"
+          subtitle="brand-researcher — crawl web + IG + analisis LLM"
           color="slate"
-          badge="NUEVO"
+          badge="LIVE"
           items={[
-            "Cliente sube datos de: IG Insights, GA4, Meta Audience, CRM/WhatsApp",
-            "persona_builder escribe narrativa rica desde datos reales:",
-            "  'Carolina tiene 38 anos, trabaja en DDB Chile, su hija Emilia de 6...'",
-            "Neo4j extrae entidades organicamente del texto narrativo",
-            "  Cada persona → 3-6 entidades (persona + hijos + empresa + cuentas IG)",
-            "  50 personas → 150-300 entidades en el grafo",
-            "OasisProfileGenerator expande cada entidad en perfil de agente",
-            "Resultado: 100+ agentes Instagram autenticos para simulacion",
+            "1. Crawl sitio web via Railway /fetch-url (JS rendering, SSRF protection)",
+            "2. Extrae links de redes sociales del contenido (IG, TikTok, FB, Twitter, YouTube, LinkedIn)",
+            "3. Instagram: scrape perfil publico (bio, followers, posts desde meta tags og:description)",
+            "4. Gemini analiza todo → genera version inicial de 8 YAMLs:",
+            "  brand_yaml (ALTA), voice_yaml (MEDIA), audiences_yaml (BAJA)",
+            "  pillars_yaml (MEDIA), competitors_yaml (BAJA), platforms_yaml (MEDIA)",
+            "  metrics_yaml (BAJA), calendar_yaml (MEDIA)",
+            "5. Muestra Reporte de Research con confianza por seccion",
+          ]}
+        />
+
+        <Arrow />
+
+        <Step
+          number="0c"
+          title="Wizard Conversacional"
+          subtitle="brand-wizard — refina YAMLs, 1 pregunta por turno"
+          color="slate"
+          badge="LIVE"
+          items={[
+            "Agente tiene todo el research como contexto",
+            "Prioriza secciones con confianza BAJA",
+            "Valida lo encontrado: 'Encontre estos productos: X, Y, Z. Correcto?'",
+            "Expande audiencias: de 2-4 segmentos basicos a 50+ personas detalladas",
+            "Cada respuesta incluye yaml_updates → deep merge progresivo en Supabase",
+            "Barra de progreso + sidebar con estado de cada YAML",
+            "Al completar: 8 YAMLs listos → onboarding_status: 'complete'",
+            "Auto-trigger panel-seed para crear agentes de evaluacion",
           ]}
         />
 
@@ -231,6 +247,8 @@ export default function FlowPage() {
                   ["Variantes", "gemini-3.1-pro-preview", "Supabase"],
                   ["Art Direction", "gemini-3.1-pro-preview", "Supabase"],
                   ["Imagenes", "gemini-3.1-flash-image-preview", "Supabase"],
+                  ["Brand Researcher", "gemini-3.1-pro-preview", "Supabase"],
+                  ["Brand Wizard", "gemini-3.1-pro-preview", "Supabase"],
                   ["Panel Seed", "gemini-3.1-pro-preview", "Supabase"],
                   ["Panel Evaluate", "gemini-3.1-pro-preview", "Supabase"],
                   ["Panel Verdict", "gemini-3.1-pro-preview", "Supabase"],
