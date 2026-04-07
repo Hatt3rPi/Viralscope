@@ -177,22 +177,29 @@ export async function createProject(data: {
   platforms_yaml?: Record<string, unknown>;
   metrics_yaml?: Record<string, unknown>;
   calendar_yaml?: Record<string, unknown>;
+  website_url?: string;
+  instagram_handle?: string;
+  onboarding_status?: string;
 }): Promise<Project> {
   const supabase = await getSupabaseAdmin();
+  const insertData: Record<string, unknown> = {
+    name: data.name,
+    slug: data.slug,
+    brand_yaml: data.brand_yaml || {},
+    voice_yaml: data.voice_yaml || {},
+    audiences_yaml: data.audiences_yaml || {},
+    pillars_yaml: data.pillars_yaml || {},
+    competitors_yaml: data.competitors_yaml || {},
+    platforms_yaml: data.platforms_yaml || {},
+    metrics_yaml: data.metrics_yaml || {},
+    calendar_yaml: data.calendar_yaml || {},
+  };
+  if (data.website_url) insertData.website_url = data.website_url;
+  if (data.instagram_handle) insertData.instagram_handle = data.instagram_handle;
+  if (data.onboarding_status) insertData.onboarding_status = data.onboarding_status;
   const { data: row, error } = await supabase
     .from("projects")
-    .insert({
-      name: data.name,
-      slug: data.slug,
-      brand_yaml: data.brand_yaml || {},
-      voice_yaml: data.voice_yaml || {},
-      audiences_yaml: data.audiences_yaml || {},
-      pillars_yaml: data.pillars_yaml || {},
-      competitors_yaml: data.competitors_yaml || {},
-      platforms_yaml: data.platforms_yaml || {},
-      metrics_yaml: data.metrics_yaml || {},
-      calendar_yaml: data.calendar_yaml || {},
-    })
+    .insert(insertData)
     .select()
     .single();
   if (error) throw new Error(error.message);
