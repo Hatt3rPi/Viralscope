@@ -20,8 +20,11 @@ import {
   deleteBrandAsset,
   upsertVisualSpec,
   deleteVisualSpec,
+  createContentTemplate,
+  updateContentTemplate,
+  deleteContentTemplate,
 } from "@/lib/data";
-import type { ParrillaSlot, WizardConfig, BrandAsset } from "@/lib/types";
+import type { ParrillaSlot, WizardConfig, BrandAsset, ContentTemplate } from "@/lib/types";
 
 // ─── Project CRUD ───
 
@@ -237,7 +240,48 @@ export async function saveSimulationMdAction(slotId: string, md: string) {
   return { success: true };
 }
 
-// ─── Templates ───
+// ─── Content Templates (system-wide CRUD) ───
+
+export async function createContentTemplateAction(data: {
+  slug: string;
+  name: string;
+  format: string;
+  tone: string;
+  structure_json: Record<string, unknown>;
+  composition_rules: Record<string, unknown>;
+  prompt_injection: string;
+}): Promise<{ success: boolean; template?: ContentTemplate; error?: string }> {
+  try {
+    const template = await createContentTemplate(data);
+    revalidatePath("/templates");
+    return { success: true, template };
+  } catch (e) {
+    return { success: false, error: e instanceof Error ? e.message : String(e) };
+  }
+}
+
+export async function updateContentTemplateAction(
+  id: string,
+  data: Partial<{
+    name: string;
+    structure_json: Record<string, unknown>;
+    composition_rules: Record<string, unknown>;
+    prompt_injection: string;
+    is_active: boolean;
+  }>,
+) {
+  await updateContentTemplate(id, data);
+  revalidatePath("/templates");
+  return { success: true };
+}
+
+export async function deleteContentTemplateAction(id: string) {
+  await deleteContentTemplate(id);
+  revalidatePath("/templates");
+  return { success: true };
+}
+
+// ─── Project Templates (per-project assignment) ───
 
 export async function assignDefaultTemplatesAction(projectId: string) {
   const count = await assignDefaultTemplates(projectId);

@@ -17,12 +17,20 @@ export default async function ProjectsPage() {
               <p className="text-xs text-gray-500">Content Engine</p>
             </div>
           </div>
-          <Link
-            href="/login"
-            className="text-sm text-gray-500 hover:text-gray-700"
-          >
-            Salir
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/templates"
+              className="text-sm text-purple-600 hover:text-purple-800 font-medium"
+            >
+              Templates
+            </Link>
+            <Link
+              href="/login"
+              className="text-sm text-gray-500 hover:text-gray-700"
+            >
+              Salir
+            </Link>
+          </div>
         </div>
       </header>
 

@@ -625,6 +625,52 @@ export async function getAllContentTemplates(): Promise<ContentTemplate[]> {
   return [];
 }
 
+export async function createContentTemplate(data: {
+  slug: string;
+  name: string;
+  format: string;
+  tone: string;
+  structure_json: Record<string, unknown>;
+  composition_rules: Record<string, unknown>;
+  prompt_injection: string;
+}): Promise<ContentTemplate> {
+  const supabase = await getSupabaseAdmin();
+  const { data: row, error } = await supabase
+    .from("content_templates")
+    .insert(data)
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as ContentTemplate;
+}
+
+export async function updateContentTemplate(
+  id: string,
+  data: Partial<{
+    name: string;
+    structure_json: Record<string, unknown>;
+    composition_rules: Record<string, unknown>;
+    prompt_injection: string;
+    is_active: boolean;
+  }>,
+): Promise<void> {
+  const supabase = await getSupabaseAdmin();
+  const { error } = await supabase
+    .from("content_templates")
+    .update(data)
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
+export async function deleteContentTemplate(id: string): Promise<void> {
+  const supabase = await getSupabaseAdmin();
+  const { error } = await supabase
+    .from("content_templates")
+    .delete()
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
 export async function assignDefaultTemplates(projectId: string): Promise<number> {
   const supabase = await getSupabaseAdmin();
   // Get all active templates

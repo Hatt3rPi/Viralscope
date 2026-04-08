@@ -99,9 +99,15 @@ alter table project_templates enable row level security;
 alter table brand_assets enable row level security;
 alter table visual_specs enable row level security;
 
--- content_templates: read-only for authenticated (system-managed)
+-- content_templates: full CRUD for authenticated
 create policy "Authenticated users can read content_templates"
   on content_templates for select to authenticated using (true);
+create policy "Authenticated users can insert content_templates"
+  on content_templates for insert to authenticated with check (true);
+create policy "Authenticated users can update content_templates"
+  on content_templates for update to authenticated using (true);
+create policy "Authenticated users can delete content_templates"
+  on content_templates for delete to authenticated using (true);
 
 -- project_templates: full CRUD
 create policy "Authenticated users can read project_templates"
