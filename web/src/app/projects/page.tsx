@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getProjects } from "@/lib/data";
+import { getProjectsLight } from "@/lib/data";
 
 export default async function ProjectsPage() {
-  const projects = await getProjects();
+  const projects = await getProjectsLight();
 
   return (
     <div className="min-h-screen bg-[#F7F0FF]">
@@ -20,13 +20,13 @@ export default async function ProjectsPage() {
           <div className="flex items-center gap-4">
             <Link
               href="/templates"
-              className="text-sm text-purple-600 hover:text-purple-800 font-medium"
+              className="text-sm text-purple-600 hover:text-purple-800 active:text-purple-900 active:scale-95 transition-all font-medium"
             >
-              Templates
+              Plantillas
             </Link>
             <Link
               href="/login"
-              className="text-sm text-gray-500 hover:text-gray-700"
+              className="text-sm text-gray-500 hover:text-gray-700 active:text-gray-900 active:scale-95 transition-all"
             >
               Salir
             </Link>

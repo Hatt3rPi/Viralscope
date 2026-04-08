@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Check, Circle, Loader2, Sparkles, AlertTriangle, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -64,6 +65,7 @@ export function TimelineView({
   projectId,
   campaignId,
 }: TimelineViewProps) {
+  const router = useRouter();
   const [expandedSteps, setExpandedSteps] = React.useState<Set<string>>(() => {
     return new Set([slot.current_step]);
   });
@@ -101,7 +103,7 @@ export function TimelineView({
         campaign_id: campaignId,
         slot_id: slot.id,
       });
-      window.location.reload();
+      router.refresh();
     } catch (e) {
       setError(`Error generando brief: ${e instanceof Error ? e.message : e}`);
     } finally {
@@ -115,7 +117,7 @@ export function TimelineView({
     setError(null);
     try {
       await approveBriefAction(brief.id, slot.id, "usuario@viralscope.dev");
-      window.location.reload();
+      router.refresh();
     } catch (e) {
       setError(`Error aprobando brief: ${e instanceof Error ? e.message : e}`);
     } finally {
@@ -132,7 +134,7 @@ export function TimelineView({
         campaign_id: campaignId,
         slot_id: slot.id,
       });
-      window.location.reload();
+      router.refresh();
     } catch (e) {
       setError(`Error regenerando brief: ${e instanceof Error ? e.message : e}`);
     } finally {
@@ -145,7 +147,7 @@ export function TimelineView({
     setError(null);
     try {
       await callEdgeFunction("generate-variantes", { slot_id: slot.id });
-      window.location.reload();
+      router.refresh();
     } catch (e) {
       setError(`Error generando variantes: ${e instanceof Error ? e.message : e}`);
     } finally {
@@ -179,7 +181,7 @@ export function TimelineView({
         slot_id: slot.id,
         selected_hooks: hookTexts,
       });
-      window.location.reload();
+      router.refresh();
     } catch (e) {
       setError(`Error generando variantes: ${e instanceof Error ? e.message : e}`);
     } finally {
@@ -195,7 +197,7 @@ export function TimelineView({
         slot_id: slot.id,
         variant_label: variantLabel,
       });
-      window.location.reload();
+      router.refresh();
     } catch (e) {
       setError(`Error generando arte ${variantLabel}: ${e instanceof Error ? e.message : e}`);
     } finally {
@@ -231,10 +233,24 @@ export function TimelineView({
   }
 
   const [deepSimResult, setDeepSimResult] = React.useState<Record<string, unknown> | null>(null);
+  const [deepSimPhase, setDeepSimPhase] = React.useState<string | null>(null);
   const deepSimPollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const PHASE_LABELS: Record<string, string> = {
+    queued: "En cola...",
+    building_personas: "Generando personas...",
+    building_graph: "Construyendo grafo Neo4j...",
+    extracting_entities: "Extrayendo entidades...",
+    generating_profiles: "Generando perfiles OASIS...",
+    building_config: "Configurando simulacion...",
+    launching_simulation: "Lanzando simulacion...",
+    simulating: "Simulando engagement...",
+    failed: "Error en setup",
+  };
 
   async function handleDeepSimulation() {
     setLoading("deep-sim");
+    setDeepSimPhase("queued");
     setError(null);
     try {
       const data = await callEdgeFunction("simulate-deep", {
@@ -248,16 +264,25 @@ export function TimelineView({
           try {
             const res = await fetch(pollUrl);
             const status = await res.json();
-            if (!status.running) {
+            // Update phase for UI feedback
+            if (status.phase) setDeepSimPhase(status.phase);
+            if (status.status === "error") {
+              if (deepSimPollRef.current) clearInterval(deepSimPollRef.current);
+              setError(`Error en simulacion: ${status.error || "Unknown error"}`);
+              setDeepSimPhase(null);
+              setLoading(null);
+            } else if (!status.running) {
               if (deepSimPollRef.current) clearInterval(deepSimPollRef.current);
               setDeepSimResult(status);
+              setDeepSimPhase(null);
               setLoading(null);
             }
           } catch { /* keep polling */ }
-        }, 10000);
+        }, 5000);
       }
     } catch (e) {
       setError(`Error lanzando simulacion: ${e instanceof Error ? e.message : e}`);
+      setDeepSimPhase(null);
       setLoading(null);
     }
   }
@@ -286,7 +311,7 @@ export function TimelineView({
     setError(null);
     try {
       await advanceSlotAction(slot.id, "ready", "5-approved");
-      window.location.reload();
+      router.refresh();
     } catch (e) {
       setError(`Error aprobando: ${e instanceof Error ? e.message : e}`);
     } finally {
@@ -341,8 +366,9 @@ export function TimelineView({
         setError(`${artFailed} variante(s) fallaron al generar arte. Las imagenes se generaran para las exitosas.`);
       }
 
-      // 3. Auto-generate images (reload page first to get updated art_direction data, then trigger images)
-      window.location.reload();
+      // 3. Refresh server data so useEffect auto-triggers image generation
+      autoImageTriggered.current = false;
+      router.refresh();
     } catch (e) {
       setError(`Error generando arte: ${e instanceof Error ? e.message : e}`);
     } finally {
@@ -462,7 +488,7 @@ export function TimelineView({
     }
 
     setLoading(null);
-    window.location.reload();
+    router.refresh();
   }
 
   function toggleStep(stepKey: string) {
@@ -961,7 +987,7 @@ export function TimelineView({
                                 setError(null);
                                 try {
                                   await advanceSlotAction(slot.id, "simulating", "4-simulation");
-                                  window.location.reload();
+                                  router.refresh();
                                 } catch (e) {
                                   setError(`Error avanzando: ${e instanceof Error ? e.message : e}`);
                                 } finally {
@@ -1064,7 +1090,7 @@ export function TimelineView({
                             className="bg-purple-600 hover:bg-purple-700"
                           >
                             {loading === "deep-sim" ? (
-                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Simulando (~3-5 min)...</>
+                              <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {deepSimPhase ? PHASE_LABELS[deepSimPhase] || deepSimPhase : "Iniciando..."}</>
                             ) : (
                               <><Sparkles className="mr-2 h-4 w-4" /> Lanzar Simulacion Profunda</>
                             )}

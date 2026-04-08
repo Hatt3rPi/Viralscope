@@ -9,10 +9,11 @@ export default async function CampaignPage({
   params: Promise<{ slug: string; id: string }>;
 }) {
   const { slug, id } = await params;
-  const project = await getProject(slug);
+  const [project, campaign] = await Promise.all([
+    getProject(slug),
+    getCampaign(id),
+  ]);
   if (!project) notFound();
-
-  const campaign = await getCampaign(id);
   if (!campaign) notFound();
 
   const slots = await getSlots(campaign.id);
@@ -23,7 +24,7 @@ export default async function CampaignPage({
         <div className="max-w-7xl mx-auto flex items-center gap-4">
           <Link
             href={`/projects/${slug}`}
-            className="text-purple-600 hover:text-purple-800 text-sm"
+            className="text-purple-600 hover:text-purple-800 active:text-purple-900 active:scale-95 transition-all text-sm"
           >
             &larr; {project.name}
           </Link>

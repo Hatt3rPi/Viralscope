@@ -34,7 +34,7 @@ export default async function ProjectPage({
         <div className="max-w-7xl mx-auto flex items-center gap-4">
           <Link
             href="/projects"
-            className="text-purple-600 hover:text-purple-800 text-sm"
+            className="text-purple-600 hover:text-purple-800 active:text-purple-900 active:scale-95 transition-all text-sm"
           >
             &larr; Proyectos
           </Link>

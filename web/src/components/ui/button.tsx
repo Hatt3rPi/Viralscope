@@ -2,10 +2,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const variantStyles = {
-  default: "bg-purple-600 text-white hover:bg-purple-700",
-  outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50",
-  ghost: "text-gray-700 hover:bg-gray-100",
-  destructive: "bg-red-600 text-white hover:bg-red-700",
+  default: "bg-purple-600 text-white hover:bg-purple-700 active:bg-purple-800 active:scale-95",
+  outline: "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 active:bg-gray-100 active:scale-95",
+  ghost: "text-gray-700 hover:bg-gray-100 active:bg-gray-200 active:scale-95",
+  destructive: "bg-red-600 text-white hover:bg-red-700 active:bg-red-800 active:scale-95",
 };
 
 const sizeStyles = {
@@ -25,7 +25,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          "inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center justify-center rounded-lg font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
           variantStyles[variant],
           sizeStyles[size],
           className

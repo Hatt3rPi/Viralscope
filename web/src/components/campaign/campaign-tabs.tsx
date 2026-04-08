@@ -35,9 +35,9 @@ const STEP_LABELS: Record<string, string> = {
 
 const TABS = [
   { id: "parrilla", label: "Parrilla" },
-  { id: "objectives", label: "Objectives" },
-  { id: "calendar", label: "Calendar" },
-  { id: "metrics", label: "Metrics" },
+  { id: "objectives", label: "Objetivos" },
+  { id: "calendar", label: "Calendario" },
+  { id: "metrics", label: "Métricas" },
 ] as const;
 
 export function CampaignTabs({
@@ -66,10 +66,10 @@ export function CampaignTabs({
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all active:scale-95 ${
               activeTab === tab.id
-                ? "bg-purple-600 text-white"
-                : "text-gray-600 hover:bg-purple-50"
+                ? "bg-purple-600 text-white shadow-sm"
+                : "text-gray-600 hover:bg-purple-50 active:bg-purple-100"
             }`}
           >
             {tab.label}

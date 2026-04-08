@@ -16,15 +16,15 @@ import { VisualSpecsTab } from "./visual-specs-tab";
 import { TemplatesTab } from "./templates-tab";
 
 const TABS = [
-  { id: "brand", label: "Brand" },
-  { id: "voice", label: "Voice" },
-  { id: "audience", label: "Audience" },
-  { id: "pillars", label: "Pillars" },
-  { id: "competitors", label: "Competitors" },
-  { id: "assets", label: "Assets" },
-  { id: "visual-specs", label: "Visual Specs" },
-  { id: "templates", label: "Templates" },
-  { id: "campaigns", label: "Campaigns" },
+  { id: "brand", label: "Marca" },
+  { id: "voice", label: "Voz" },
+  { id: "audience", label: "Audiencia" },
+  { id: "pillars", label: "Pilares" },
+  { id: "competitors", label: "Competencia" },
+  { id: "assets", label: "Recursos" },
+  { id: "visual-specs", label: "Specs Visuales" },
+  { id: "templates", label: "Plantillas" },
+  { id: "campaigns", label: "Campañas", highlight: true },
 ] as const;
 
 export function ProjectTabs({
@@ -61,10 +61,14 @@ export function ProjectTabs({
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all active:scale-95 ${
               activeTab === tab.id
-                ? "bg-purple-600 text-white"
-                : "text-gray-600 hover:bg-purple-50"
+                ? "highlight" in tab && tab.highlight
+                  ? "bg-purple-700 text-white shadow-md ring-2 ring-purple-300"
+                  : "bg-purple-600 text-white shadow-sm"
+                : "highlight" in tab && tab.highlight
+                  ? "text-purple-700 font-semibold bg-purple-50 hover:bg-purple-100 active:bg-purple-200"
+                  : "text-gray-600 hover:bg-purple-50 active:bg-purple-100"
             }`}
           >
             {tab.label}
@@ -98,9 +102,9 @@ export function ProjectTabs({
             <h3 className="text-lg font-semibold text-gray-900">Campañas</h3>
             <Link
               href={`/projects/${slug}/campaigns/new`}
-              className="px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 transition-colors"
+              className="px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 active:bg-purple-800 active:scale-95 transition-all"
             >
-              + Nueva Campana
+              + Nueva Campaña
             </Link>
           </div>
           {campaigns.length === 0 ? (

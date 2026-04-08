@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  getProject,
+  getProjectLight,
   getCampaign,
   getSlot,
   getBrief,
@@ -17,13 +17,13 @@ export default async function SlotPage({
   params: Promise<{ slug: string; id: string; num: string }>;
 }) {
   const { slug, id, num } = await params;
-  const project = await getProject(slug);
+  const [project, campaign, slot] = await Promise.all([
+    getProjectLight(slug),
+    getCampaign(id),
+    getSlot(id, parseInt(num, 10)),
+  ]);
   if (!project) notFound();
-
-  const campaign = await getCampaign(id);
   if (!campaign) notFound();
-
-  const slot = await getSlot(id, parseInt(num, 10));
   if (!slot) notFound();
 
   const [brief, variantes, feedbackItems, simulationData] = await Promise.all([

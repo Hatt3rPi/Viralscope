@@ -45,6 +45,20 @@ export async function getProjects(): Promise<Project[]> {
   return [seed.seedProject];
 }
 
+export async function getProjectsLight(): Promise<Pick<Project, "id" | "name" | "slug" | "brand_yaml">[]> {
+  if (isSupabaseConfigured()) {
+    try {
+      const { createClient } = await import("./supabase/server");
+      const supabase = await createClient();
+      const { data, error } = await supabase.from("projects").select("id, name, slug, brand_yaml");
+      if (!error && data && data.length > 0) return data as Pick<Project, "id" | "name" | "slug" | "brand_yaml">[];
+    } catch { /* fall through */ }
+  }
+  const seed = await getSeedData();
+  const { id, name, slug, brand_yaml } = seed.seedProject;
+  return [{ id, name, slug, brand_yaml }];
+}
+
 export async function getProject(slug: string): Promise<Project | null> {
   if (isSupabaseConfigured()) {
     try {
@@ -56,6 +70,23 @@ export async function getProject(slug: string): Promise<Project | null> {
   }
   const seed = await getSeedData();
   return seed.seedProject.slug === slug ? seed.seedProject : null;
+}
+
+export async function getProjectLight(slug: string): Promise<Pick<Project, "id" | "name" | "slug"> | null> {
+  if (isSupabaseConfigured()) {
+    try {
+      const { createClient } = await import("./supabase/server");
+      const supabase = await createClient();
+      const { data, error } = await supabase.from("projects").select("id, name, slug").eq("slug", slug).single();
+      if (!error && data) return data as Pick<Project, "id" | "name" | "slug">;
+    } catch { /* fall through */ }
+  }
+  const seed = await getSeedData();
+  if (seed.seedProject.slug === slug) {
+    const { id, name, slug: s } = seed.seedProject;
+    return { id, name, slug: s };
+  }
+  return null;
 }
 
 export async function getCampaigns(projectId: string): Promise<Campaign[]> {
