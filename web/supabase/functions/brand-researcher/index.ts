@@ -39,23 +39,27 @@ Deno.serve(async (req: Request) => {
     const { project_id, website_url, instagram_handle } = await req.json();
     if (!project_id) return jsonResponse({ error: "project_id required" }, 400);
 
-    // ── 1. Crawl website via Railway /fetch-url ───────────────
+    // ── 1. Crawl website via Railway Playwright (JS rendering) ─
     let websiteData: { title: string; text: string; url: string } | null = null;
     if (website_url) {
-      try {
-        const fetchRes = await fetch(`${railwayUrl}/api/graph/fetch-url`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url: website_url }),
-        });
-        if (fetchRes.ok) {
-          const fetchData = await fetchRes.json();
-          if (fetchData.success) {
-            websiteData = fetchData.data;
+      // Try rendered endpoint first (Playwright), then plain fetch
+      for (const endpoint of ["/api/graph/fetch-url-rendered", "/api/graph/fetch-url"]) {
+        try {
+          const fetchRes = await fetch(`${railwayUrl}${endpoint}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url: website_url }),
+          });
+          if (fetchRes.ok) {
+            const fetchData = await fetchRes.json();
+            if (fetchData.success && fetchData.data?.text?.length > 50) {
+              websiteData = fetchData.data;
+              break;
+            }
           }
+        } catch (e) {
+          console.error(`Fetch via ${endpoint} failed:`, e);
         }
-      } catch (e) {
-        console.error("Website fetch failed:", e);
       }
     }
 
