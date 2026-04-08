@@ -222,13 +222,13 @@ export function ReviewPhase({
         <Button
           onClick={onApprove}
           disabled={isLoading || parrilla.length === 0}
-          className="bg-green-600 hover:bg-green-700"
+          className={isLoading ? "bg-gray-400 cursor-wait min-w-[280px]" : "bg-green-600 hover:bg-green-700 min-w-[280px]"}
           size="lg"
         >
           {isLoading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creando campana...
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              Creando campana y {parrilla.length} slots...
             </>
           ) : (
             `Aprobar y Crear Campana (${parrilla.length} slots)`
