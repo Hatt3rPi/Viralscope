@@ -76,6 +76,7 @@ function buildNetworkData(actions: Action[], maxRound: number) {
     else if (a.action_type === "SAVE_POST" && args.post_author_name) target = args.post_author_name as string;
     else if (a.action_type === "SHARE_POST" && args.post_author_name) target = args.post_author_name as string;
     else if (a.action_type === "REPOST" && args.original_author_name) target = args.original_author_name as string;
+    else if (a.action_type === "REPOST_FEED" && args.post_author_name) target = args.post_author_name as string;
     else if (a.action_type === "FOLLOW" && args.target_user_name) target = args.target_user_name as string;
     else if (a.action_type === "LIKE_COMMENT" && args.comment_author_name) target = args.comment_author_name as string;
 
