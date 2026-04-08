@@ -82,7 +82,7 @@ export function ProjectTabs({
         <div>
           {(project.sim_personas as Record<string, unknown>[] | null)?.length ? (
             <PersonaGraph
-              personas={project.sim_personas as Record<string, unknown>[]}
+              personas={project.sim_personas as never[]}
             />
           ) : (
             <div className="bg-white rounded-xl border border-purple-100 p-8 text-center">
