@@ -11,6 +11,7 @@ import { VarianteTabs } from "@/components/slot/variante-tabs";
 import { ArtDirectionCard } from "@/components/slot/art-direction-card";
 import { InstagramPreview } from "@/components/slot/instagram-preview";
 import { SimulationCard } from "@/components/slot/simulation-card";
+import { NetworkGraph } from "@/components/slot/network-graph";
 import { FeedbackPanel } from "@/components/feedback/feedback-panel";
 import { approveBriefAction, advanceSlotAction, saveSimulationMdAction } from "@/app/actions";
 import type { Slot, Brief, Variante, Feedback, SlotStep } from "@/lib/types";
@@ -234,6 +235,7 @@ export function TimelineView({
 
   const [deepSimResult, setDeepSimResult] = React.useState<Record<string, unknown> | null>(null);
   const [deepSimPhase, setDeepSimPhase] = React.useState<string | null>(null);
+  const [deepSimMeta, setDeepSimMeta] = React.useState<{ railwayUrl: string; simulationId: string } | null>(null);
   const deepSimPollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
   const PHASE_LABELS: Record<string, string> = {
@@ -258,6 +260,8 @@ export function TimelineView({
         persona_count: 50,
       });
       if (data.simulation_id && data.poll_url && data.railway_url) {
+        // Save meta for NetworkGraph
+        setDeepSimMeta({ railwayUrl: data.railway_url, simulationId: data.simulation_id });
         // Start polling Railway for results
         const pollUrl = `${data.railway_url}${data.poll_url}`;
         deepSimPollRef.current = setInterval(async () => {
@@ -1142,10 +1146,19 @@ export function TimelineView({
                               </div>
                             ) : null}
 
-                            <Button variant="outline" size="sm" onClick={() => setDeepSimResult(null)}>
+                            <Button variant="outline" size="sm" onClick={() => { setDeepSimResult(null); setDeepSimMeta(null); }}>
                               Simular de nuevo
                             </Button>
                           </div>
+                        )}
+
+                        {/* Network Graph — shown during/after deep sim */}
+                        {deepSimMeta && (
+                          <NetworkGraph
+                            railwayUrl={deepSimMeta.railwayUrl}
+                            simulationId={deepSimMeta.simulationId}
+                            isRunning={loading === "deep-sim"}
+                          />
                         )}
                       </div>
 
