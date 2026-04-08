@@ -12,6 +12,7 @@ import { ArtDirectionCard } from "@/components/slot/art-direction-card";
 import { InstagramPreview } from "@/components/slot/instagram-preview";
 import { SimulationCard } from "@/components/slot/simulation-card";
 import { NetworkGraph } from "@/components/slot/network-graph";
+import { SeirChart } from "@/components/slot/seir-chart";
 import { FeedbackPanel } from "@/components/feedback/feedback-panel";
 import { approveBriefAction, advanceSlotAction, saveSimulationMdAction } from "@/app/actions";
 import type { Slot, Brief, Variante, Feedback, SlotStep } from "@/lib/types";
@@ -233,7 +234,9 @@ export function TimelineView({
     }
   }
 
-  const [deepSimResult, setDeepSimResult] = React.useState<Record<string, unknown> | null>(null);
+  const [deepSimResult, setDeepSimResult] = React.useState<Record<string, unknown> | null>(
+    slot.deep_sim_result ?? null
+  );
   const [deepSimPhase, setDeepSimPhase] = React.useState<string | null>(null);
   const [deepSimMeta, setDeepSimMeta] = React.useState<{ railwayUrl: string; simulationId: string } | null>(null);
   const deepSimPollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
@@ -280,6 +283,10 @@ export function TimelineView({
             const status = await res.json();
             // Update phase for UI feedback
             if (status.phase) setDeepSimPhase(status.phase);
+            // Update chart in real time while running
+            if (status.seir?.trajectory) {
+              setDeepSimResult((prev) => ({ ...(prev ?? {}), ...status }));
+            }
             if (status.status === "error") {
               if (deepSimPollRef.current) clearInterval(deepSimPollRef.current);
               setError(`Error en simulacion: ${status.error || "Unknown error"}`);
@@ -1141,19 +1148,19 @@ export function TimelineView({
                             ) : null}
 
                             {deepSimResult.seir ? (
-                              <div className="text-sm text-gray-600 bg-gray-50 rounded-lg p-3">
-                                <span className="text-xs font-semibold uppercase text-gray-400 block mb-1">Difusion SEIR</span>
-                                {(() => {
-                                  const s = (deepSimResult.seir as Record<string, unknown>)?.summary as Record<string, unknown> | undefined;
-                                  if (!s) return null;
-                                  return (
-                                    <>
-                                      Alcance: {String(s.final_reach)}/{String(s.total_agents)} ({String(s.final_reach_pct)}%)
-                                      {s.tipping_point_round ? ` — Punto viral: ronda ${String(s.tipping_point_round)}` : ""}
-                                    </>
-                                  );
-                                })()}
-                              </div>
+                              (() => {
+                                const seir = deepSimResult.seir as Record<string, unknown>;
+                                const traj = seir?.trajectory as Array<Record<string, number>> | undefined;
+                                const total = (deepSimResult.persona_count as number) ?? 50;
+                                if (!traj || traj.length === 0) return null;
+                                return (
+                                  <SeirChart
+                                    trajectory={traj as Parameters<typeof SeirChart>[0]["trajectory"]}
+                                    totalAgents={total}
+                                    isLive={loading === "deep-sim"}
+                                  />
+                                );
+                              })()
                             ) : null}
 
                             <Button variant="outline" size="sm" onClick={() => { setDeepSimResult(null); setDeepSimMeta(null); }}>

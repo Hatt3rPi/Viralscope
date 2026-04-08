@@ -142,6 +142,8 @@ export interface Slot {
   status: SlotStatus;
   current_step: SlotStep;
   simulation_md: string | null;
+  deep_sim_result: Record<string, unknown> | null;
+  deep_sim_id: string | null;
   created_at: string;
 }
 
