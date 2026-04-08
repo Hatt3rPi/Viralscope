@@ -140,18 +140,14 @@ export function SeirChart({ trajectory, totalAgents, isLive = false }: SeirChart
           strokeLinecap="round"
         />
 
-        {/* Live pulse dot */}
-        {isLive && (
+        {/* Live / static end dot */}
+        {isLive ? (
           <>
-            <circle cx={lastR[0]} cy={lastR[1]} r={6} fill="#16a34a" fillOpacity={0.25}>
-              <animate attributeName="r" values="4;9;4" dur="1.5s" repeatCount="indefinite" />
-              <animate attributeName="fill-opacity" values="0.25;0;0.25" dur="1.5s" repeatCount="indefinite" />
-            </circle>
+            <circle cx={lastR[0]} cy={lastR[1]} r={5} fill="#16a34a" fillOpacity={0.25} />
             <circle cx={lastR[0]} cy={lastR[1]} r={3.5} fill="#16a34a" />
             <circle cx={lastE[0]} cy={lastE[1]} r={3} fill="#f97316" />
           </>
-        )}
-        {!isLive && (
+        ) : (
           <circle cx={lastR[0]} cy={lastR[1]} r={3} fill="#16a34a" />
         )}
 
