@@ -150,7 +150,14 @@ export function NetworkGraph({
     try {
       const res = await fetch(`${railwayUrl}/api/simulation/${simulationId}/actions?limit=5000`);
       const data = await res.json();
-      const acts: Action[] = Array.isArray(data) ? data : (data.actions || data.data || []);
+      // Railway returns { success, data: { count, actions: [...] } }
+      const raw = Array.isArray(data)
+        ? data
+        : (Array.isArray(data.actions) ? data.actions
+          : Array.isArray(data.data?.actions) ? data.data.actions
+          : Array.isArray(data.data) ? data.data
+          : []);
+      const acts: Action[] = raw;
       setActions(acts);
       const rounds = acts.map((a) => a.round_num || 0);
       setMaxRound(rounds.length > 0 ? Math.max(...rounds) : 0);

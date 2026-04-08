@@ -142,11 +142,11 @@ export function SeirChart({ trajectory, totalAgents, isLive = false }: SeirChart
 
         {/* Live / static end dot */}
         {isLive ? (
-          <>
+          <g>
             <circle cx={lastR[0]} cy={lastR[1]} r={5} fill="#16a34a" fillOpacity={0.25} />
             <circle cx={lastR[0]} cy={lastR[1]} r={3.5} fill="#16a34a" />
             <circle cx={lastE[0]} cy={lastE[1]} r={3} fill="#f97316" />
-          </>
+          </g>
         ) : (
           <circle cx={lastR[0]} cy={lastR[1]} r={3} fill="#16a34a" />
         )}
