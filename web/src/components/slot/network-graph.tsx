@@ -169,6 +169,8 @@ export function NetworkGraph({
   useEffect(() => {
     if (!svgRef.current || actions.length === 0) return;
 
+    let cleanup: (() => void) | undefined;
+    try {
     const { width, height } = dimensions;
     const { nodes, edges } = buildNetworkData(actions, currentRound);
     if (nodes.length === 0) return;
@@ -239,7 +241,11 @@ export function NetworkGraph({
 
     svg.on("click", () => setSelectedAgent(null));
 
-    return () => { sim.stop(); };
+    cleanup = () => { sim.stop(); };
+    } catch (err) {
+      console.error("[NetworkGraph] D3 error:", err);
+    }
+    return cleanup;
   }, [actions, currentRound, dimensions]);
 
   // Play/pause
