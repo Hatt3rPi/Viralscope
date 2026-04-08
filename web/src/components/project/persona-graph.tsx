@@ -155,25 +155,27 @@ export function PersonaGraph({ personas }: { personas: Persona[] }) {
       .attr("stroke", "#fff")
       .attr("stroke-width", 1.5)
       .attr("cursor", "pointer")
-      .on("click", (_event, d) => setSelected(d.persona))
-      .call(
-        d3
-          .drag<SVGCircleElement, GraphNode>()
-          .on("start", (event, d) => {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-          })
-          .on("drag", (event, d) => {
-            d.fx = event.x;
-            d.fy = event.y;
-          })
-          .on("end", (event, d) => {
-            if (!event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-          })
-      );
+      .on("click", (_event, d) => setSelected(d.persona));
+
+    // Apply drag behavior (cast needed for D3 type compatibility)
+    const dragBehavior = d3
+      .drag<SVGCircleElement, GraphNode>()
+      .on("start", (event, d) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      })
+      .on("drag", (event, d) => {
+        d.fx = event.x;
+        d.fy = event.y;
+      })
+      .on("end", (event, d) => {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    node.call(dragBehavior as any);
 
     // Labels
     const labels = g
