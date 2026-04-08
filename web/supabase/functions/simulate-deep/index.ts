@@ -140,6 +140,7 @@ Deno.serve(async (req: Request) => {
       // Callback URL for results
       callback_url: `${supabaseUrl}/functions/v1/simulate-deep-callback`,
       callback_slot_id: slot_id,
+      callback_railway_url: railwayUrl,
     };
 
     // ── 3. Send to Railway ────────────────────────────────────

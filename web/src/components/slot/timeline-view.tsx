@@ -238,7 +238,13 @@ export function TimelineView({
     slot.deep_sim_result ?? null
   );
   const [deepSimPhase, setDeepSimPhase] = React.useState<string | null>(null);
-  const [deepSimMeta, setDeepSimMeta] = React.useState<{ railwayUrl: string; simulationId: string } | null>(null);
+  const [deepSimMeta, setDeepSimMeta] = React.useState<{ railwayUrl: string; simulationId: string } | null>(() => {
+    const r = slot.deep_sim_result;
+    if (r?.railway_url && slot.deep_sim_id) {
+      return { railwayUrl: r.railway_url as string, simulationId: slot.deep_sim_id };
+    }
+    return null;
+  });
   const deepSimPollRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
   const PHASE_LABELS: Record<string, string> = {
@@ -1162,6 +1168,48 @@ export function TimelineView({
                                 );
                               })()
                             ) : null}
+
+                            {/* Interpretation */}
+                            {deepSimResult.seir && (() => {
+                              const seir = deepSimResult.seir as Record<string, unknown>;
+                              const s = seir?.summary as Record<string, unknown> | undefined;
+                              if (!s) return null;
+                              const reach_pct = s.final_reach_pct as number;
+                              const total = (deepSimResult.persona_count as number) ?? 50;
+                              const actionTypes = deepSimResult.action_types as Record<string, number> | undefined;
+                              const followCount = actionTypes?.FOLLOW ?? 0;
+                              const viewCount = (actionTypes?.VIEW_FEED ?? 0) + (actionTypes?.VIEW_STORIES ?? 0);
+                              const isViral = reach_pct >= 80;
+                              const followRatePct = total > 0 ? Math.round((followCount / total) * 100) : 0;
+                              const passiveRatio = followCount > 0 ? viewCount / followCount : 999;
+
+                              return (
+                                <div className="rounded-lg bg-gray-50 border border-gray-100 p-4 space-y-2">
+                                  <p className="text-xs font-semibold uppercase text-gray-400">Interpretación</p>
+                                  <ul className="space-y-1.5 text-sm text-gray-700">
+                                    <li>
+                                      <span className="font-medium">Alcance simulado:</span>{" "}
+                                      {reach_pct}% de la audiencia recibió el contenido
+                                      {isViral ? " — propagación viral confirmada." : "."}
+                                    </li>
+                                    {followCount > 0 && (
+                                      <li>
+                                        <span className="font-medium">Intención de seguir:</span>{" "}
+                                        {followCount} de {total} agentes hicieron follow ({followRatePct}%) — señal de interés en la marca.
+                                      </li>
+                                    )}
+                                    <li>
+                                      <span className="font-medium">Patrón de consumo:</span>{" "}
+                                      {passiveRatio > 10
+                                        ? "Mayoritariamente pasivo (scroll + views). Para activar follows, añadir CTA directo al perfil."
+                                        : passiveRatio > 4
+                                        ? "Balance entre consumo y acción. El hook genera interés pero la conversión es moderada."
+                                        : "Alto nivel de interacción activa respecto al consumo pasivo — buen indicador de conversión."}
+                                    </li>
+                                  </ul>
+                                </div>
+                              );
+                            })()}
 
                             <Button variant="outline" size="sm" onClick={() => { setDeepSimResult(null); setDeepSimMeta(null); }}>
                               Simular de nuevo
