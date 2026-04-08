@@ -64,8 +64,42 @@ Deno.serve(async (req: Request) => {
       .limit(1)
       .single();
 
-    // ── 2. Build payload for Railway ──────────────────────────
+    // ── 2. Load or generate pre-built personas ─────────────────
+    let prebuilt_personas = project.sim_personas ?? null;
+
+    if (!prebuilt_personas && project.sim_personas_status !== "generating") {
+      // No personas cached — trigger on-demand generation and wait
+      try {
+        const personaRes = await fetch(
+          `${supabaseUrl}/functions/v1/persona-generate`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${supabaseKey}`,
+            },
+            body: JSON.stringify({ project_id: project.id }),
+          }
+        );
+        if (personaRes.ok) {
+          // Reload personas from project
+          const { data: refreshed } = await sb
+            .from("projects")
+            .select("sim_personas")
+            .eq("id", project.id)
+            .single();
+          prebuilt_personas = refreshed?.sim_personas ?? null;
+        }
+      } catch {
+        // Fallback: Railway will generate personas from scratch
+      }
+    }
+
+    // ── 3. Build payload for Railway ──────────────────────────
     const payload = {
+      // Pre-built personas (skip generation on Railway if present)
+      prebuilt_personas,
+
       // Project context (8 YAMLs)
       brand_yaml: project.brand_yaml ?? {},
       voice_yaml: project.voice_yaml ?? {},

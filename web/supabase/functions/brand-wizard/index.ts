@@ -129,9 +129,21 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    // If ready, mark onboarding complete
+    // If ready, mark onboarding complete and trigger persona generation
     if (parsed.ready) {
       await sb.from("projects").update({ onboarding_status: "complete" }).eq("id", project_id);
+
+      // Fire-and-forget: generate simulation personas in background
+      const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+      const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+      fetch(`${supabaseUrl}/functions/v1/persona-generate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${supabaseKey}`,
+        },
+        body: JSON.stringify({ project_id }),
+      }).catch(() => {});
     }
 
     const tokensUsed = geminiData?.usageMetadata?.totalTokenCount ?? null;

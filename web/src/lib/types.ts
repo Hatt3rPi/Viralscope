@@ -14,6 +14,8 @@ export interface Project {
   instagram_handle?: string;
   onboarding_status: "pending" | "researching" | "wizard" | "complete";
   research_data: Record<string, unknown>;
+  sim_personas: Record<string, unknown>[] | null;
+  sim_personas_status: "generating" | "ready" | "error" | null;
   created_at: string;
 }
 
