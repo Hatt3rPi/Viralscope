@@ -262,9 +262,19 @@ export function TimelineView({
       if (data.simulation_id && data.poll_url && data.railway_url) {
         // Save meta for NetworkGraph
         setDeepSimMeta({ railwayUrl: data.railway_url, simulationId: data.simulation_id });
-        // Start polling Railway for results
+        // Start polling Railway for results (max 20 min timeout)
         const pollUrl = `${data.railway_url}${data.poll_url}`;
+        const pollStart = Date.now();
+        const MAX_POLL_MS = 20 * 60 * 1000; // 20 minutes
         deepSimPollRef.current = setInterval(async () => {
+          // Stop polling after timeout
+          if (Date.now() - pollStart > MAX_POLL_MS) {
+            if (deepSimPollRef.current) clearInterval(deepSimPollRef.current);
+            setError("Simulacion excedio el tiempo maximo (20 min). Revisa los logs en Railway.");
+            setDeepSimPhase(null);
+            setLoading(null);
+            return;
+          }
           try {
             const res = await fetch(pollUrl);
             const status = await res.json();
@@ -282,7 +292,7 @@ export function TimelineView({
               setLoading(null);
             }
           } catch { /* keep polling */ }
-        }, 5000);
+        }, 10000);
       }
     } catch (e) {
       setError(`Error lanzando simulacion: ${e instanceof Error ? e.message : e}`);
