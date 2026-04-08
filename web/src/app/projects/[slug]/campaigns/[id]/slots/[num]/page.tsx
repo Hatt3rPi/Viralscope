@@ -7,7 +7,6 @@ import {
   getBrief,
   getVariantes,
   getFeedback,
-  getSimulationData,
 } from "@/lib/data";
 import { TimelineView } from "@/components/slot/timeline-view";
 
@@ -26,12 +25,15 @@ export default async function SlotPage({
   if (!campaign) notFound();
   if (!slot) notFound();
 
-  const [brief, variantes, feedbackItems, simulationData] = await Promise.all([
+  const [brief, variantes, feedbackItems] = await Promise.all([
     getBrief(slot.id),
     getVariantes(slot.id),
     getFeedback(slot.id),
-    getSimulationData(),
   ]);
+
+  const simulationData = (slot.deep_sim_result as Record<string, unknown>)?.survey
+    ? ((slot.deep_sim_result as Record<string, unknown>).survey as Record<string, unknown>)
+    : {};
 
   return (
     <div className="min-h-screen bg-[#F7F0FF]">

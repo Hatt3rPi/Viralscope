@@ -321,6 +321,19 @@ export function TimelineView({
     };
   }, []);
 
+  async function handleSurveyAgents() {
+    setLoading("survey");
+    setError(null);
+    try {
+      await callEdgeFunction("simulate-deep-survey", { slot_id: slot.id });
+      router.refresh();
+    } catch (e) {
+      setError(`Error en encuesta: ${e instanceof Error ? e.message : String(e)}`);
+    } finally {
+      setLoading(null);
+    }
+  }
+
   async function handlePanelSeed() {
     setLoading("panel-seed");
     setError(null);
@@ -1211,6 +1224,25 @@ export function TimelineView({
                                 </div>
                               );
                             })()}
+
+                            {/* Encuesta post-sim: solo si sim completó y no tiene survey aún */}
+                            {!deepSimResult.survey ? (
+                              <Button
+                                onClick={handleSurveyAgents}
+                                disabled={!!loading}
+                                className="bg-indigo-600 hover:bg-indigo-700 text-white"
+                              >
+                                {loading === "survey" ? (
+                                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Encuestando agentes (~30s)...</>
+                                ) : (
+                                  <><Sparkles className="mr-2 h-4 w-4" /> Encuestar Agentes (6 ejes)</>
+                                )}
+                              </Button>
+                            ) : (
+                              <p className="text-xs text-indigo-600 font-medium">
+                                ✓ Encuesta completada · ver comparación de variantes arriba
+                              </p>
+                            )}
 
                             <Button variant="outline" size="sm" onClick={() => { setDeepSimResult(null); setDeepSimMeta(null); }}>
                               Simular de nuevo
