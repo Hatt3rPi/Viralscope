@@ -99,6 +99,8 @@ export const seedProject: Project = {
   },
   onboarding_status: "complete" as const,
   research_data: {},
+  sim_personas: null,
+  sim_personas_status: null,
   created_at: "2026-03-15T10:00:00Z",
 };
 
