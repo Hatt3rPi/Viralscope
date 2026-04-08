@@ -135,6 +135,8 @@ export const seedSlot: Slot = {
   status: "art_review",
   current_step: "3-art",
   simulation_md: null,
+  deep_sim_result: null,
+  deep_sim_id: null,
   created_at: "2026-03-25T09:00:00Z",
 };
 
