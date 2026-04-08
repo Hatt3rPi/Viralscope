@@ -1155,7 +1155,7 @@ export function TimelineView({
                                 if (!traj || traj.length === 0) return null;
                                 return (
                                   <SeirChart
-                                    trajectory={traj as Parameters<typeof SeirChart>[0]["trajectory"]}
+                                    trajectory={traj as unknown as Parameters<typeof SeirChart>[0]["trajectory"]}
                                     totalAgents={total}
                                     isLive={loading === "deep-sim"}
                                   />
