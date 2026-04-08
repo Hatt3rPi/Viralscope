@@ -1170,7 +1170,8 @@ export function TimelineView({
                             ) : null}
 
                             {/* Interpretation */}
-                            {deepSimResult.seir && (() => {
+                            {(() => {
+                              if (!deepSimResult.seir) return null;
                               const seir = deepSimResult.seir as Record<string, unknown>;
                               const s = seir?.summary as Record<string, unknown> | undefined;
                               if (!s) return null;
