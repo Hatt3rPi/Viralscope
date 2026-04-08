@@ -13,8 +13,15 @@ import {
   updateSlotSimulationMd,
   updateProjectYamls,
   updateProjectOnboardingStatus,
+  assignDefaultTemplates,
+  toggleProjectTemplate,
+  removeProjectTemplate,
+  createBrandAsset,
+  deleteBrandAsset,
+  upsertVisualSpec,
+  deleteVisualSpec,
 } from "@/lib/data";
-import type { ParrillaSlot, WizardConfig } from "@/lib/types";
+import type { ParrillaSlot, WizardConfig, BrandAsset } from "@/lib/types";
 
 // ─── Project CRUD ───
 
@@ -227,5 +234,138 @@ export async function addFeedbackAction(
 export async function saveSimulationMdAction(slotId: string, md: string) {
   await updateSlotSimulationMd(slotId, md);
   revalidatePath("/", "layout");
+  return { success: true };
+}
+
+// ─── Templates ───
+
+export async function assignDefaultTemplatesAction(projectId: string) {
+  const count = await assignDefaultTemplates(projectId);
+  revalidatePath("/projects");
+  return { success: true, count };
+}
+
+export async function toggleProjectTemplateAction(
+  projectId: string,
+  templateId: string,
+  isDefault: boolean,
+) {
+  await toggleProjectTemplate(projectId, templateId, isDefault);
+  revalidatePath("/projects");
+  return { success: true };
+}
+
+export async function removeProjectTemplateAction(
+  projectId: string,
+  templateId: string,
+) {
+  await removeProjectTemplate(projectId, templateId);
+  revalidatePath("/projects");
+  return { success: true };
+}
+
+// ─── Brand Assets ───
+
+export async function uploadBrandAssetAction(
+  projectId: string,
+  formData: FormData,
+): Promise<{ success: boolean; asset?: BrandAsset; error?: string }> {
+  const file = formData.get("file") as File | null;
+  const name = formData.get("name") as string;
+  const assetType = formData.get("asset_type") as BrandAsset["asset_type"];
+  const description = formData.get("description") as string | null;
+
+  if (!file || !name || !assetType) {
+    return { success: false, error: "Faltan campos requeridos (file, name, asset_type)" };
+  }
+
+  try {
+    // Upload to Supabase Storage
+    const { createAdminClient } = await import("@/lib/supabase/admin");
+    const supabase = createAdminClient();
+
+    const ext = file.name.split(".").pop() || "bin";
+    const storagePath = `brand-assets/${projectId}/${assetType}/${Date.now()}.${ext}`;
+
+    const arrayBuffer = await file.arrayBuffer();
+    const { error: uploadError } = await supabase.storage
+      .from("media")
+      .upload(storagePath, arrayBuffer, {
+        contentType: file.type,
+        upsert: false,
+      });
+
+    if (uploadError) {
+      return { success: false, error: `Error subiendo archivo: ${uploadError.message}` };
+    }
+
+    // Get public URL
+    const { data: urlData } = supabase.storage.from("media").getPublicUrl(storagePath);
+    const publicUrl = urlData.publicUrl;
+
+    // Create DB record
+    const asset = await createBrandAsset({
+      project_id: projectId,
+      asset_type: assetType,
+      name,
+      description: description || undefined,
+      storage_path: storagePath,
+      public_url: publicUrl,
+      mime_type: file.type,
+      metadata_json: { original_name: file.name, size_bytes: file.size },
+    });
+
+    revalidatePath("/projects");
+    return { success: true, asset };
+  } catch (e) {
+    return { success: false, error: `Error: ${e instanceof Error ? e.message : e}` };
+  }
+}
+
+export async function deleteBrandAssetAction(
+  assetId: string,
+  storagePath: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    // Delete from Storage
+    const { createAdminClient } = await import("@/lib/supabase/admin");
+    const supabase = createAdminClient();
+    await supabase.storage.from("media").remove([storagePath]);
+
+    // Delete DB record (trigger cleans asset_references in visual_specs)
+    await deleteBrandAsset(assetId);
+
+    revalidatePath("/projects");
+    return { success: true };
+  } catch (e) {
+    return { success: false, error: `Error: ${e instanceof Error ? e.message : e}` };
+  }
+}
+
+// ─── Visual Specs ───
+
+export async function upsertVisualSpecAction(
+  projectId: string,
+  specKey: string,
+  specValue: Record<string, unknown>,
+  assetReferences: string[],
+  promptText: string,
+  priority?: number,
+) {
+  await upsertVisualSpec({
+    project_id: projectId,
+    spec_key: specKey,
+    spec_value: specValue,
+    asset_references: assetReferences,
+    prompt_text: promptText,
+    priority,
+  });
+  revalidatePath("/projects");
+  return { success: true };
+}
+
+export async function deleteVisualSpecAction(specId: string) {
+  await deleteVisualSpec(specId);
+  revalidatePath("/projects");
   return { success: true };
 }

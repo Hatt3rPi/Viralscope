@@ -2,8 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import type { Project, Campaign } from "@/lib/types";
+import type {
+  Project,
+  Campaign,
+  ContentTemplate,
+  ProjectTemplate,
+  BrandAsset,
+  VisualSpec,
+} from "@/lib/types";
 import { YamlRenderer } from "./yaml-renderer";
+import { BrandAssetsTab } from "./brand-assets-tab";
+import { VisualSpecsTab } from "./visual-specs-tab";
+import { TemplatesTab } from "./templates-tab";
 
 const TABS = [
   { id: "brand", label: "Brand" },
@@ -11,6 +21,9 @@ const TABS = [
   { id: "audience", label: "Audience" },
   { id: "pillars", label: "Pillars" },
   { id: "competitors", label: "Competitors" },
+  { id: "assets", label: "Assets" },
+  { id: "visual-specs", label: "Visual Specs" },
+  { id: "templates", label: "Templates" },
   { id: "campaigns", label: "Campaigns" },
 ] as const;
 
@@ -18,10 +31,18 @@ export function ProjectTabs({
   project,
   campaigns,
   slug,
+  allTemplates = [],
+  projectTemplates = [],
+  brandAssets = [],
+  visualSpecs = [],
 }: {
   project: Project;
   campaigns: Campaign[];
   slug: string;
+  allTemplates?: ContentTemplate[];
+  projectTemplates?: (ProjectTemplate & { template?: ContentTemplate })[];
+  brandAssets?: BrandAsset[];
+  visualSpecs?: VisualSpec[];
 }) {
   const [activeTab, setActiveTab] = useState<string>("brand");
 
@@ -51,7 +72,27 @@ export function ProjectTabs({
         ))}
       </div>
 
-      {activeTab === "campaigns" ? (
+      {activeTab === "assets" ? (
+        <div className="bg-white rounded-xl border border-purple-100 p-6">
+          <BrandAssetsTab projectId={project.id} initialAssets={brandAssets} />
+        </div>
+      ) : activeTab === "visual-specs" ? (
+        <div className="bg-white rounded-xl border border-purple-100 p-6">
+          <VisualSpecsTab
+            projectId={project.id}
+            initialSpecs={visualSpecs}
+            brandAssets={brandAssets}
+          />
+        </div>
+      ) : activeTab === "templates" ? (
+        <div className="bg-white rounded-xl border border-purple-100 p-6">
+          <TemplatesTab
+            projectId={project.id}
+            allTemplates={allTemplates}
+            initialProjectTemplates={projectTemplates}
+          />
+        </div>
+      ) : activeTab === "campaigns" ? (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900">Campañas</h3>

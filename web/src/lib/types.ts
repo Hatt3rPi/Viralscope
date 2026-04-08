@@ -17,6 +17,66 @@ export interface Project {
   created_at: string;
 }
 
+// ─── Templates, Assets & Visual Specs Types ───
+
+export interface ContentTemplate {
+  id: string;
+  slug: string;
+  name: string;
+  format: string;
+  tone: "emocional" | "educativo" | "directo";
+  structure_json: Record<string, unknown>;
+  composition_rules: Record<string, unknown>;
+  prompt_injection: string;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface ProjectTemplate {
+  id: string;
+  project_id: string;
+  template_id: string;
+  pillar_affinity: string[] | null;
+  is_default: boolean;
+  overrides_json: Record<string, unknown>;
+  created_at: string;
+  template?: ContentTemplate;
+}
+
+export interface BrandAsset {
+  id: string;
+  project_id: string;
+  asset_type:
+    | "logo"
+    | "background"
+    | "texture"
+    | "icon"
+    | "font"
+    | "photo"
+    | "pattern"
+    | "other";
+  name: string;
+  description: string | null;
+  storage_path: string;
+  public_url: string;
+  mime_type: string | null;
+  metadata_json: Record<string, unknown>;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface VisualSpec {
+  id: string;
+  project_id: string;
+  spec_key: string;
+  spec_value: Record<string, unknown>;
+  asset_references: string[];
+  prompt_text: string;
+  priority: number;
+  is_active: boolean;
+  created_at: string;
+}
+
 // ─── Onboarding Types ───
 
 export type OnboardingPhase = "input" | "researching" | "report" | "wizard" | "done";

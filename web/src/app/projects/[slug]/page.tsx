@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProject, getCampaigns } from "@/lib/data";
+import {
+  getProject,
+  getCampaigns,
+  getAllContentTemplates,
+  getTemplatesForProject,
+  getBrandAssets,
+  getVisualSpecs,
+} from "@/lib/data";
 import { ProjectTabs } from "@/components/project/project-tabs";
 
 export default async function ProjectPage({
@@ -12,7 +19,14 @@ export default async function ProjectPage({
   const project = await getProject(slug);
   if (!project) notFound();
 
-  const campaigns = await getCampaigns(project.id);
+  const [campaigns, allTemplates, projectTemplates, brandAssets, visualSpecs] =
+    await Promise.all([
+      getCampaigns(project.id),
+      getAllContentTemplates(),
+      getTemplatesForProject(project.id),
+      getBrandAssets(project.id),
+      getVisualSpecs(project.id),
+    ]);
 
   return (
     <div className="min-h-screen bg-[#F7F0FF]">
@@ -40,6 +54,10 @@ export default async function ProjectPage({
           project={project}
           campaigns={campaigns}
           slug={slug}
+          allTemplates={allTemplates}
+          projectTemplates={projectTemplates}
+          brandAssets={brandAssets}
+          visualSpecs={visualSpecs}
         />
       </main>
     </div>

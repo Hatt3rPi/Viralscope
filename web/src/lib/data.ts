@@ -9,6 +9,10 @@ import type {
   Feedback,
   PanelAgent,
   PanelEvaluation,
+  ContentTemplate,
+  ProjectTemplate,
+  BrandAsset,
+  VisualSpec,
 } from "./types";
 
 // Check if Supabase is configured with a real project
@@ -547,6 +551,242 @@ export async function getPanelEvaluations(slotId: string): Promise<PanelEvaluati
     } catch { /* fall through */ }
   }
   return [];
+}
+
+// ─── Templates, Brand Assets & Visual Specs ───
+
+export async function getTemplatesForProject(
+  projectId: string,
+): Promise<(ProjectTemplate & { template: ContentTemplate })[]> {
+  if (!isSupabaseConfigured()) return [];
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("project_templates")
+      .select("*, template:content_templates(*)")
+      .eq("project_id", projectId);
+    if (!error && data) return data as (ProjectTemplate & { template: ContentTemplate })[];
+  } catch { /* fall through */ }
+  return [];
+}
+
+export async function resolveTemplate(
+  projectId: string,
+  format: string,
+  tone: string,
+  pillar?: string,
+): Promise<(ProjectTemplate & { template: ContentTemplate }) | null> {
+  if (!isSupabaseConfigured()) return null;
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    let query = supabase
+      .from("project_templates")
+      .select("*, template:content_templates(*)")
+      .eq("project_id", projectId)
+      .eq("is_default", true);
+
+    const { data, error } = await query;
+    if (error || !data) return null;
+
+    // Filter by format + tone from the joined template
+    const candidates = (data as (ProjectTemplate & { template: ContentTemplate })[]).filter(
+      (pt) => pt.template?.format === format && pt.template?.tone === tone && pt.template?.is_active,
+    );
+
+    // If pillar specified, prefer templates with matching pillar_affinity
+    if (pillar && candidates.length > 1) {
+      const pillarMatch = candidates.find(
+        (pt) => pt.pillar_affinity && pt.pillar_affinity.includes(pillar),
+      );
+      if (pillarMatch) return pillarMatch;
+    }
+
+    // Return first match (null-affinity = universal)
+    return candidates.find((pt) => !pt.pillar_affinity || pt.pillar_affinity.length === 0) || candidates[0] || null;
+  } catch { /* fall through */ }
+  return null;
+}
+
+export async function getAllContentTemplates(): Promise<ContentTemplate[]> {
+  if (!isSupabaseConfigured()) return [];
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("content_templates")
+      .select("*")
+      .eq("is_active", true)
+      .order("format")
+      .order("tone");
+    if (!error && data) return data as ContentTemplate[];
+  } catch { /* fall through */ }
+  return [];
+}
+
+export async function assignDefaultTemplates(projectId: string): Promise<number> {
+  const supabase = await getSupabaseAdmin();
+  // Get all active templates
+  const { data: templates, error: tErr } = await supabase
+    .from("content_templates")
+    .select("id")
+    .eq("is_active", true);
+  if (tErr || !templates) return 0;
+
+  // Build rows, marking all as default
+  const rows = templates.map((t: { id: string }) => ({
+    project_id: projectId,
+    template_id: t.id,
+    is_default: true,
+  }));
+
+  const { data: inserted, error } = await supabase
+    .from("project_templates")
+    .upsert(rows, { onConflict: "project_id,template_id" })
+    .select("id");
+  if (error) throw new Error(error.message);
+  return inserted?.length ?? 0;
+}
+
+export async function toggleProjectTemplate(
+  projectId: string,
+  templateId: string,
+  isDefault: boolean,
+): Promise<void> {
+  const supabase = await getSupabaseAdmin();
+  const { error } = await supabase
+    .from("project_templates")
+    .upsert(
+      { project_id: projectId, template_id: templateId, is_default: isDefault },
+      { onConflict: "project_id,template_id" },
+    );
+  if (error) throw new Error(error.message);
+}
+
+export async function removeProjectTemplate(
+  projectId: string,
+  templateId: string,
+): Promise<void> {
+  const supabase = await getSupabaseAdmin();
+  const { error } = await supabase
+    .from("project_templates")
+    .delete()
+    .eq("project_id", projectId)
+    .eq("template_id", templateId);
+  if (error) throw new Error(error.message);
+}
+
+// ── Brand Assets ──
+
+export async function getBrandAssets(projectId: string): Promise<BrandAsset[]> {
+  if (!isSupabaseConfigured()) return [];
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("brand_assets")
+      .select("*")
+      .eq("project_id", projectId)
+      .eq("is_active", true)
+      .order("asset_type")
+      .order("name");
+    if (!error && data) return data as BrandAsset[];
+  } catch { /* fall through */ }
+  return [];
+}
+
+export async function createBrandAsset(data: {
+  project_id: string;
+  asset_type: BrandAsset["asset_type"];
+  name: string;
+  description?: string;
+  storage_path: string;
+  public_url: string;
+  mime_type?: string;
+  metadata_json?: Record<string, unknown>;
+}): Promise<BrandAsset> {
+  const supabase = await getSupabaseAdmin();
+  const { data: row, error } = await supabase
+    .from("brand_assets")
+    .insert({
+      project_id: data.project_id,
+      asset_type: data.asset_type,
+      name: data.name,
+      description: data.description || null,
+      storage_path: data.storage_path,
+      public_url: data.public_url,
+      mime_type: data.mime_type || null,
+      metadata_json: data.metadata_json || {},
+    })
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as BrandAsset;
+}
+
+export async function deleteBrandAsset(assetId: string): Promise<void> {
+  const supabase = await getSupabaseAdmin();
+  const { error } = await supabase
+    .from("brand_assets")
+    .delete()
+    .eq("id", assetId);
+  if (error) throw new Error(error.message);
+}
+
+// ── Visual Specs ──
+
+export async function getVisualSpecs(projectId: string): Promise<VisualSpec[]> {
+  if (!isSupabaseConfigured()) return [];
+  try {
+    const { createClient } = await import("./supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("visual_specs")
+      .select("*")
+      .eq("project_id", projectId)
+      .eq("is_active", true)
+      .order("priority", { ascending: false });
+    if (!error && data) return data as VisualSpec[];
+  } catch { /* fall through */ }
+  return [];
+}
+
+export async function upsertVisualSpec(data: {
+  project_id: string;
+  spec_key: string;
+  spec_value: Record<string, unknown>;
+  asset_references?: string[];
+  prompt_text: string;
+  priority?: number;
+}): Promise<VisualSpec> {
+  const supabase = await getSupabaseAdmin();
+  const { data: row, error } = await supabase
+    .from("visual_specs")
+    .upsert(
+      {
+        project_id: data.project_id,
+        spec_key: data.spec_key,
+        spec_value: data.spec_value,
+        asset_references: data.asset_references || [],
+        prompt_text: data.prompt_text,
+        priority: data.priority ?? 0,
+      },
+      { onConflict: "project_id,spec_key" },
+    )
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return row as VisualSpec;
+}
+
+export async function deleteVisualSpec(specId: string): Promise<void> {
+  const supabase = await getSupabaseAdmin();
+  const { error } = await supabase
+    .from("visual_specs")
+    .delete()
+    .eq("id", specId);
+  if (error) throw new Error(error.message);
 }
 
 // ─── Project Onboarding ───

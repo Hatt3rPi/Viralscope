@@ -86,6 +86,39 @@ Deno.serve(async (req: Request) => {
       .limit(1)
       .single();
 
+    // ── 2b. Load template, visual specs & brand assets ─────────
+    const toneMap: Record<string, string> = { A: "emocional", B: "educativo", C: "directo" };
+    const variantTone = toneMap[variant_label] || "emocional";
+
+    // Template for this format+tone
+    const { data: ptRows } = await sb
+      .from("project_templates")
+      .select("*, template:content_templates(*)")
+      .eq("project_id", project.id)
+      .eq("is_default", true);
+
+    const matchedPt = (ptRows || []).find(
+      (pt: { template?: { format?: string; tone?: string; is_active?: boolean } }) =>
+        pt.template?.format === slot.format && pt.template?.tone === variantTone && pt.template?.is_active,
+    );
+    const template = matchedPt?.template ?? null;
+    const templateOverrides = matchedPt?.overrides_json ?? {};
+
+    // Visual specs
+    const { data: visualSpecs } = await sb
+      .from("visual_specs")
+      .select("*")
+      .eq("project_id", project.id)
+      .eq("is_active", true)
+      .order("priority", { ascending: false });
+
+    // Brand assets
+    const { data: brandAssets } = await sb
+      .from("brand_assets")
+      .select("*")
+      .eq("project_id", project.id)
+      .eq("is_active", true);
+
     // ── 3. Build the Gemini prompt ─────────────────────────────
     const brandVisual = project.brand_yaml?.visual ?? {};
     const brandName = project.brand_yaml?.name ?? project.name;
@@ -105,6 +138,18 @@ Your mission: generate TWO art direction JSON objects — one for IMAGE and one 
 - Typography: headings=${brandVisual.typography?.headings ?? "N/A"}, body=${brandVisual.typography?.body ?? "N/A"}
 - Never do: ${JSON.stringify(brandRestrictions.never_do ?? [])}
 
+${template ? `## Template de Layout (OBLIGATORIO)
+${template.prompt_injection}
+
+## Reglas de Composición del Template
+${JSON.stringify(templateOverrides && Object.keys(templateOverrides).length > 0 ? { ...template.composition_rules, ...templateOverrides } : template.composition_rules)}
+` : ""}${visualSpecs && visualSpecs.length > 0 ? `## Especificaciones Visuales del Proyecto (OBLIGATORIO)
+${visualSpecs.map((s: { prompt_text: string }) => s.prompt_text).filter(Boolean).join("\n")}
+` : ""}${brandAssets && brandAssets.length > 0 ? `## Assets de Marca Disponibles
+${brandAssets.map((a: { name: string; asset_type: string; public_url: string; description?: string }) => `- ${a.name} (${a.asset_type}): ${a.public_url} — ${a.description || "sin restricciones"}`).join("\n")}
+
+IMPORTANTE: Si hay assets de marca, referéncialos en un campo "brand_assets_overlay" dentro del JSON de art_direction_image_json. Cada entrada debe tener: asset_url, placement (posición), slide_numbers (array, -1 = último), size_hint.
+` : ""}
 ## Anti-AI Directives (CRITICAL)
 Every piece of art direction MUST embed anti-AI aesthetics:
 - Include organic imperfections: dust, grain, micro scratches, slight asymmetry
@@ -358,7 +403,7 @@ Generate the two art direction JSONs now. The image art direction must be highly
     await sb.from("generation_logs").insert({
       slot_id,
       step: "generate-art",
-      input_json: { slot_id, variant_label, slot_context: slot, brief_yaml: brief?.brief_yaml },
+      input_json: { slot_id, variant_label, slot_context: slot, brief_yaml: brief?.brief_yaml, template_slug: template?.slug ?? null, visual_specs_count: visualSpecs?.length ?? 0, brand_assets_count: brandAssets?.length ?? 0 },
       output_json: { art_direction_image_json, art_direction_video_json },
       model_used: "gemini-3.1-pro-preview",
       tokens_used: tokensUsed,

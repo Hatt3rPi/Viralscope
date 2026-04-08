@@ -30,6 +30,11 @@ function buildPrompt(
   voice: Record<string, unknown>,
   slot: Record<string, unknown>,
   platform: string,
+  templates?: {
+    emocional: Record<string, unknown> | null;
+    educativo: Record<string, unknown> | null;
+    directo: Record<string, unknown> | null;
+  },
 ): string {
   const format = (brief.format || slot.format || "post") as string;
   const formatLower = format.toLowerCase();
@@ -92,6 +97,31 @@ En la sección "## Caption" incluye las 3 versiones claramente separadas.
 `;
   }
 
+  // Build template structure section if templates available
+  const hasTemplates = templates && (templates.emocional || templates.educativo || templates.directo);
+  let templateSection = "";
+  if (hasTemplates) {
+    templateSection = `
+---
+
+## Templates de Estructura (POR VARIANTE — OBLIGATORIO)
+
+Cada variante DEBE seguir la estructura definida por su template. Respeta el número de slides/escenas, distribución de texto, y reglas específicas.
+
+${templates!.emocional ? `### Template para Variante A (Emocional)
+${templates!.emocional.prompt_injection || ""}
+Estructura: ${JSON.stringify(templates!.emocional.structure_json)}
+` : ""}
+${templates!.educativo ? `### Template para Variante B (Educativo)
+${templates!.educativo.prompt_injection || ""}
+Estructura: ${JSON.stringify(templates!.educativo.structure_json)}
+` : ""}
+${templates!.directo ? `### Template para Variante C (Directo)
+${templates!.directo.prompt_injection || ""}
+Estructura: ${JSON.stringify(templates!.directo.structure_json)}
+` : ""}`;
+  }
+
   return `
 Eres el **Generador de Contenido** de un Content Engine profesional para redes sociales.
 Tu trabajo: crear 3 variantes completas de contenido para una publicación, cada una con un tono diferente.
@@ -119,7 +149,7 @@ Tu trabajo: crear 3 variantes completas de contenido para una publicación, cada
 **Intención:** ${brief.intention || slot.intention || "quality"}
 **Fecha de publicación:** ${slot.date || "No definida"}
 **Notas adicionales:** ${brief.notes || brief.additional_notes || "Ninguna"}
-
+${templateSection}
 ---
 
 ## Tu tarea
@@ -315,6 +345,27 @@ Deno.serve(async (req: Request) => {
     }
 
     // -----------------------------------------------------------------------
+    // 5b. Load templates for this format
+    // -----------------------------------------------------------------------
+    const { data: ptRows } = await supabase
+      .from("project_templates")
+      .select("*, template:content_templates(*)")
+      .eq("project_id", project.id)
+      .eq("is_default", true);
+
+    const findTemplate = (tone: string) =>
+      (ptRows || []).find(
+        (pt: { template?: { format?: string; tone?: string; is_active?: boolean } }) =>
+          pt.template?.format === slot.format && pt.template?.tone === tone && pt.template?.is_active,
+      )?.template ?? null;
+
+    const templates = {
+      emocional: findTemplate("emocional"),
+      educativo: findTemplate("educativo"),
+      directo: findTemplate("directo"),
+    };
+
+    // -----------------------------------------------------------------------
     // 6. Build the prompt
     // -----------------------------------------------------------------------
     const briefData = brief.brief_yaml || {};
@@ -322,7 +373,7 @@ Deno.serve(async (req: Request) => {
     const voiceData = project.voice_yaml || {};
     const platform = campaign.platform || "instagram";
 
-    let prompt = buildPrompt(briefData, brandData, voiceData, slot, platform);
+    let prompt = buildPrompt(briefData, brandData, voiceData, slot, platform, templates);
 
     // Inject pre-selected hooks if available
     if (hookTexts.length === 3) {
@@ -498,6 +549,11 @@ El JSON de cada variante debe incluir: label, tone, copy_md, scores, scores_tota
         brief_id: brief.id,
         platform,
         format: briefData.format || slot.format,
+        templates_used: {
+          emocional: templates.emocional?.slug ?? null,
+          educativo: templates.educativo?.slug ?? null,
+          directo: templates.directo?.slug ?? null,
+        },
       },
       output_json: {
         variants_count: variants.length,
