@@ -14,11 +14,13 @@ import { YamlRenderer } from "./yaml-renderer";
 import { BrandAssetsTab } from "./brand-assets-tab";
 import { VisualSpecsTab } from "./visual-specs-tab";
 import { TemplatesTab } from "./templates-tab";
+import { PersonaGraph } from "./persona-graph";
 
 const TABS = [
   { id: "brand", label: "Marca" },
   { id: "voice", label: "Voz" },
   { id: "audience", label: "Audiencia" },
+  { id: "publico", label: "Publico" },
   { id: "pillars", label: "Pilares" },
   { id: "competitors", label: "Competencia" },
   { id: "assets", label: "Recursos" },
@@ -76,7 +78,25 @@ export function ProjectTabs({
         ))}
       </div>
 
-      {activeTab === "assets" ? (
+      {activeTab === "publico" ? (
+        <div>
+          {(project.sim_personas as Record<string, unknown>[] | null)?.length ? (
+            <PersonaGraph
+              personas={project.sim_personas as Record<string, unknown>[]}
+            />
+          ) : (
+            <div className="bg-white rounded-xl border border-purple-100 p-8 text-center">
+              <p className="text-gray-500">
+                {project.sim_personas_status === "generating"
+                  ? "Generando publico simulado..."
+                  : project.sim_personas_status === "error"
+                    ? "Error generando publico. Intenta de nuevo."
+                    : "No hay publico generado aun. Se genera automaticamente al completar el onboarding."}
+              </p>
+            </div>
+          )}
+        </div>
+      ) : activeTab === "assets" ? (
         <div className="bg-white rounded-xl border border-purple-100 p-6">
           <BrandAssetsTab projectId={project.id} initialAssets={brandAssets} />
         </div>
