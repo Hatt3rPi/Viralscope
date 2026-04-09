@@ -7,7 +7,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const GEMINI_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -59,13 +59,13 @@ async function surveyPersona(
   slot: Record<string, unknown>,
   geminiKey: string,
 ): Promise<Record<string, Record<string, number>>> {
-  const name = (persona.name as string) || (persona.persona_name as string) || "Agente";
+  const name = (persona.display_name as string) || (persona.name as string) || "Agente";
   const age = (persona.age as number) || "";
-  const bio = (persona.bio as string) || (persona.description as string) || "";
-  const interests = Array.isArray(persona.interests)
-    ? (persona.interests as string[]).join(", ")
-    : (persona.interests as string) || "";
-  const behavior = (persona.behavior as string) || (persona.social_behavior as string) || "";
+  const bio = (persona.description as string) || "";
+  const interests = Array.isArray(persona.interested_topics)
+    ? (persona.interested_topics as string[]).join(", ")
+    : (persona.interested_topics as string) || "";
+  const behavior = (persona.interaction_style as string) || "";
 
   const variantBlocks = variantes
     .map((v) => {
@@ -109,6 +109,7 @@ Responde SOLO con JSON válido:
         temperature: 1.0,
         maxOutputTokens: 1024,
         responseMimeType: "application/json",
+        thinkingConfig: { thinkingLevel: "low" },
       },
     }),
   });
@@ -220,16 +221,27 @@ Deno.serve(async (req: Request) => {
 
     // ── 2. Load sim personas (up to 20 to avoid timeout) ─────
     const simPersonas = (project.sim_personas as Array<Record<string, unknown>>) ?? [];
-    const personas = simPersonas.slice(0, 20);
+    const personas = simPersonas.slice(0, 3); // debug: start small
 
     if (personas.length === 0) {
       return jsonResponse({ error: "No sim_personas found on project. Run persona-generate first." }, 400);
     }
 
-    // ── 3. Survey each persona in parallel ───────────────────
-    const results = await Promise.allSettled(
-      personas.map((persona) => surveyPersona(persona, variantes, slot, geminiKey))
-    );
+    // ── 3. Survey personas in batches of 3 (avoid worker limits) ──
+    const BATCH_SIZE = 3;
+    const BATCH_DELAY_MS = 300;
+    const results: PromiseSettledResult<Record<string, Record<string, number>>>[] = [];
+
+    for (let i = 0; i < personas.length; i += BATCH_SIZE) {
+      const batch = personas.slice(i, i + BATCH_SIZE);
+      const batchResults = await Promise.allSettled(
+        batch.map((persona) => surveyPersona(persona, variantes, slot, geminiKey))
+      );
+      results.push(...batchResults);
+      if (i + BATCH_SIZE < personas.length) {
+        await new Promise((r) => setTimeout(r, BATCH_DELAY_MS));
+      }
+    }
 
     // ── 4. Build survey object (SimulationCard format) ────────
     const survey: Record<string, { weight: number; scores: Record<string, Record<string, number>> }> = {};
@@ -237,7 +249,7 @@ Deno.serve(async (req: Request) => {
 
     results.forEach((result, i) => {
       const persona = personas[i];
-      const name = ((persona.name as string) || (persona.persona_name as string) || `Persona_${i}`)
+      const name = ((persona.display_name as string) || (persona.name as string) || `Persona_${i}`)
         .replace(/\s+/g, "_");
 
       if (result.status === "fulfilled") {

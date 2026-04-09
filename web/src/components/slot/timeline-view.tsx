@@ -325,7 +325,14 @@ export function TimelineView({
     setLoading("survey");
     setError(null);
     try {
-      await callEdgeFunction("simulate-deep-survey", { slot_id: slot.id });
+      const data = await callEdgeFunction("simulate-deep-survey", { slot_id: slot.id });
+      // Update local state so UI reflects survey completion
+      setDeepSimResult((prev) => ({
+        ...(prev ?? {}),
+        survey: true,
+        survey_scores: data.scores,
+        survey_winner: data.winner,
+      }));
       router.refresh();
     } catch (e) {
       setError(`Error en encuesta: ${e instanceof Error ? e.message : String(e)}`);
