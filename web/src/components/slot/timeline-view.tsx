@@ -1240,14 +1240,14 @@ export function TimelineView({
                                 className="bg-indigo-600 hover:bg-indigo-700 text-white"
                               >
                                 {loading === "survey" ? (
-                                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Encuestando agentes (~30s)...</>
+                                  <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Evaluando contenido (~45s)...</>
                                 ) : (
-                                  <><Sparkles className="mr-2 h-4 w-4" /> Encuestar Agentes (6 ejes)</>
+                                  <><Sparkles className="mr-2 h-4 w-4" /> Evaluar Contenido</>
                                 )}
                               </Button>
                             ) : (
                               <p className="text-xs text-indigo-600 font-medium">
-                                ✓ Encuesta completada · ver comparación de variantes arriba
+                                ✓ Evaluacion completada · ver resultados arriba
                               </p>
                             )}
 
