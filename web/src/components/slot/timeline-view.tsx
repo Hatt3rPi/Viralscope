@@ -1160,17 +1160,32 @@ export function TimelineView({
                             </div>
 
                             {deepSimResult.action_types ? (
-                              <div className="space-y-1">
-                                <span className="text-xs font-semibold uppercase text-gray-400">Acciones por tipo</span>
-                                {Object.entries(deepSimResult.action_types as Record<string, number>)
-                                  .sort(([, a], [, b]) => (b as number) - (a as number))
-                                  .map(([type, count]) => (
-                                    <div key={type} className="flex justify-between text-sm">
-                                      <span className="text-gray-600">{type}</span>
-                                      <span className="font-medium text-gray-900">{String(count)}</span>
-                                    </div>
-                                  ))}
-                              </div>
+                              (() => {
+                                const ACTION_LABELS: Record<string, string> = {
+                                  VIEW_FEED: "Vieron el feed",
+                                  VIEW_STORIES: "Vieron stories",
+                                  FOLLOW: "Siguieron la cuenta",
+                                  LIKE: "Dieron like",
+                                  COMMENT: "Comentaron",
+                                  SHARE: "Compartieron",
+                                  SAVE: "Guardaron",
+                                  REPOST: "Repostearon",
+                                  UNKNOWN: "Otras interacciones",
+                                };
+                                return (
+                                  <div className="space-y-1">
+                                    <span className="text-xs font-semibold uppercase text-gray-400">Acciones por tipo</span>
+                                    {Object.entries(deepSimResult.action_types as Record<string, number>)
+                                      .sort(([, a], [, b]) => (b as number) - (a as number))
+                                      .map(([type, count]) => (
+                                        <div key={type} className="flex justify-between text-sm">
+                                          <span className="text-gray-600">{ACTION_LABELS[type] || type}</span>
+                                          <span className="font-medium text-gray-900">{String(count)}</span>
+                                        </div>
+                                      ))}
+                                  </div>
+                                );
+                              })()
                             ) : null}
 
                             {deepSimResult.seir ? (
@@ -1257,12 +1272,12 @@ export function TimelineView({
                           </div>
                         )}
 
-                        {/* Network Graph — shown during/after deep sim */}
-                        {deepSimMeta && (
+                        {/* Network Graph — only while sim is running */}
+                        {deepSimMeta && loading === "deep-sim" && (
                           <NetworkGraph
                             railwayUrl={deepSimMeta.railwayUrl}
                             simulationId={deepSimMeta.simulationId}
-                            isRunning={loading === "deep-sim"}
+                            isRunning={true}
                           />
                         )}
                       </div>
