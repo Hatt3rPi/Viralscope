@@ -24,11 +24,15 @@ const axisLabel: Record<string, string> = {
   memorabilidad: "Memorabilidad",
 };
 
+interface PersonaData {
+  weight: number;
+  scores: Record<string, Record<string, number>>;
+  age?: number;
+  gender?: string;
+}
+
 interface SimulationCardProps {
-  simulationData: Record<
-    string,
-    { weight: number; scores: Record<string, Record<string, number>> }
-  >;
+  simulationData: Record<string, PersonaData>;
   variantes: Variante[];
 }
 
@@ -293,65 +297,111 @@ export function SimulationCard({
           </table>
         </div>
 
-        {/* Per-persona breakdown */}
-        <div className="space-y-4">
-          <h4 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
-            Detalle por Persona
-          </h4>
-          {Object.entries(simulationData).map(([personaName, persona]) => (
-            <div
-              key={personaName}
-              className="rounded-lg border border-gray-100 bg-gray-50 p-4"
-            >
-              <div className="mb-2 flex items-center gap-2">
-                <span className="font-semibold text-gray-800">
-                  {personaName}
-                </span>
-                <Badge variant="info">Peso: {persona.weight}</Badge>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="px-2 py-1 text-left text-gray-500">
-                        Eje
-                      </th>
-                      {labels.map((label) => (
-                        <th
-                          key={label}
-                          className="px-2 py-1 text-center text-gray-500"
-                        >
-                          {label}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {scoringAxes.map((axis) => (
-                      <tr key={axis} className="border-b border-gray-100">
-                        <td className="px-2 py-1 text-gray-600">
-                          {axisLabel[axis] || axis}
-                        </td>
-                        {labels.map((label) => {
-                          const score =
-                            persona.scores?.[label]?.[axis] ?? 0;
-                          return (
-                            <td
-                              key={label}
-                              className="px-2 py-1 text-center font-mono"
-                            >
-                              {score.toFixed(1)}
-                            </td>
-                          );
-                        })}
-                      </tr>
+        {/* Audience Insights */}
+        {(() => {
+          const personas = Object.values(simulationData);
+          const n = personas.length;
+          if (n === 0) return null;
+
+          // Gender distribution
+          const genderCounts: Record<string, number> = {};
+          for (const p of personas) {
+            const g = (p.gender || "otro").toLowerCase();
+            const key = g.startsWith("m") && !g.startsWith("mu") ? "Hombres"
+              : g.startsWith("f") || g.startsWith("mu") ? "Mujeres"
+              : "Otro";
+            genderCounts[key] = (genderCounts[key] || 0) + 1;
+          }
+
+          // Age ranges (IG-style buckets)
+          const ageBuckets: Record<string, number> = {
+            "13-17": 0, "18-24": 0, "25-34": 0, "35-44": 0, "45-54": 0, "55-64": 0, "65+": 0,
+          };
+          for (const p of personas) {
+            const age = p.age || 0;
+            if (age < 18) ageBuckets["13-17"]++;
+            else if (age < 25) ageBuckets["18-24"]++;
+            else if (age < 35) ageBuckets["25-34"]++;
+            else if (age < 45) ageBuckets["35-44"]++;
+            else if (age < 55) ageBuckets["45-54"]++;
+            else if (age < 65) ageBuckets["55-64"]++;
+            else ageBuckets["65+"]++;
+          }
+          // Filter out empty buckets
+          const activeAgeBuckets = Object.entries(ageBuckets).filter(([, count]) => count > 0);
+          const maxAgeCount = Math.max(...activeAgeBuckets.map(([, c]) => c));
+
+          const genderColors: Record<string, string> = {
+            Hombres: "#3b82f6",
+            Mujeres: "#ec4899",
+            Otro: "#9ca3af",
+          };
+
+          return (
+            <div className="space-y-4">
+              <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                Audiencia encuestada
+              </h4>
+
+              {/* N + Gender row */}
+              <div className="flex items-start gap-6">
+                {/* N */}
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-gray-900">{n}</div>
+                  <div className="text-[10px] text-gray-500 uppercase">Encuestados</div>
+                </div>
+
+                {/* Gender donut-style bars */}
+                <div className="flex-1 space-y-1.5">
+                  <div className="text-[10px] font-semibold text-gray-500 uppercase">Sexo</div>
+                  {/* Stacked bar */}
+                  <div className="flex h-4 w-full overflow-hidden rounded-full bg-gray-100">
+                    {Object.entries(genderCounts).map(([label, count]) => (
+                      <div
+                        key={label}
+                        className="h-full transition-all"
+                        style={{
+                          width: `${(count / n) * 100}%`,
+                          backgroundColor: genderColors[label] || "#9ca3af",
+                        }}
+                      />
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                  <div className="flex gap-3 text-[11px] text-gray-600">
+                    {Object.entries(genderCounts).map(([label, count]) => (
+                      <span key={label} className="flex items-center gap-1">
+                        <span
+                          className="inline-block h-2 w-2 rounded-full"
+                          style={{ backgroundColor: genderColors[label] || "#9ca3af" }}
+                        />
+                        {label} {Math.round((count / n) * 100)}%
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Age distribution bars (IG style) */}
+              <div className="space-y-1.5">
+                <div className="text-[10px] font-semibold text-gray-500 uppercase">Rango etario</div>
+                <div className="space-y-1">
+                  {activeAgeBuckets.map(([range, count]) => (
+                    <div key={range} className="flex items-center gap-2">
+                      <span className="w-10 text-right text-[11px] text-gray-500 font-mono">{range}</span>
+                      <div className="flex-1 h-3 rounded-full bg-gray-100 overflow-hidden">
+                        <div
+                          className="h-full rounded-full bg-purple-500 transition-all"
+                          style={{ width: `${(count / maxAgeCount) * 100}%` }}
+                        />
+                      </div>
+                      <span className="w-6 text-[11px] text-gray-500 font-mono">{count}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+          );
+        })()}
       </CardContent>
     </Card>
   );

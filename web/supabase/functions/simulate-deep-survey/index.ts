@@ -253,7 +253,12 @@ Deno.serve(async (req: Request) => {
         .replace(/\s+/g, "_");
 
       if (result.status === "fulfilled") {
-        survey[name] = { weight: 1, scores: result.value };
+        survey[name] = {
+          weight: 1,
+          scores: result.value,
+          age: (persona.age as number) || 0,
+          gender: (persona.gender as string) || "otro",
+        };
       } else {
         failed.push(`${name}: ${result.reason?.message ?? String(result.reason)}`);
       }
