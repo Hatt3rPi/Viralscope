@@ -80,14 +80,50 @@ const CHECKLIST_CRITERIA = [
   { key: "organic_brand", label: "Marca organica", group: "Marca" },
 ];
 
+// ── Helper: build rich variant description ──────────────────
+function describeVariant(v: Record<string, unknown>): string {
+  const label = v.variant_label as string;
+  const copy = (v.copy_md as string) || "";
+  const artJson = v.art_direction_image_json as Record<string, unknown> | null;
+  const artDir = artJson?.art_direction as Record<string, unknown> | null;
+  const visualConcept = (artDir?.concept as string) || "";
+
+  // Extract caption parts from copy_md structure
+  const lines: string[] = [];
+
+  if (visualConcept) {
+    lines.push(`CONCEPTO VISUAL: ${visualConcept}`);
+  }
+
+  // Try to extract structured sections (Hook, Caption Corto, Caption Completo)
+  const hookMatch = copy.match(/##\s*Hook\s*\n([\s\S]*?)(?=\n##|\n\*\*|$)/i);
+  const cortoMatch = copy.match(/\*\*Corto:\*\*\s*\n?([\s\S]*?)(?=\n\*\*|$)/i);
+
+  if (hookMatch) {
+    lines.push(`HOOK: ${hookMatch[1].trim()}`);
+  }
+
+  if (cortoMatch) {
+    const comprimido = cortoMatch[1].trim().slice(0, 150);
+    lines.push(`CAPTION VISIBLE (antes de "...mas"): ${comprimido}`);
+  }
+
+  // Full copy for expanded analysis
+  if (copy) {
+    lines.push(`CAPTION COMPLETO:\n${copy}`);
+  } else {
+    lines.push("(sin texto, contenido solo visual)");
+  }
+
+  return `VARIANTE ${label}:\n${lines.join("\n")}`;
+}
+
 async function runChecklist(
   variantes: Array<Record<string, unknown>>,
   slot: Record<string, unknown>,
   geminiKey: string,
 ): Promise<Record<string, Record<string, boolean>>> {
-  const variantBlocks = variantes
-    .map((v) => `VARIANTE ${v.variant_label}:\n${(v.copy_md as string) || "(sin copy)"}`)
-    .join("\n\n");
+  const variantBlocks = variantes.map(describeVariant).join("\n\n");
 
   const criteriaList = CHECKLIST_CRITERIA
     .map((c, i) => `${i + 1}. ${c.key}: ${c.label}`)
@@ -133,7 +169,8 @@ Responde SOLO JSON: {${variantExample}}`;
     const raw = parsed[label] as Record<string, unknown> | undefined;
     result[label] = {};
     for (const c of CHECKLIST_CRITERIA) {
-      result[label][c.key] = raw?.[c.key] === true;
+      const val = raw?.[c.key];
+      result[label][c.key] = val === true || val === "true" || val === "True" || val === "TRUE";
     }
   }
   return result;
@@ -163,9 +200,7 @@ async function surveyPersonaBehavioral(
     : (persona.interested_topics as string) || "";
   const behavior = (persona.interaction_style as string) || "";
 
-  const variantBlocks = variantes
-    .map((v) => `VARIANTE ${v.variant_label}:\n${(v.copy_md as string) || "(sin copy)"}`)
-    .join("\n\n");
+  const variantBlocks = variantes.map(describeVariant).join("\n\n");
 
   const variantExample = variantes
     .map((v) => `"${v.variant_label}":{"stop":true,"send_to":"mi hermana","save":false,"comment":null,"emotion":"curiosidad","improve":"agregar CTA"}`)
@@ -314,7 +349,7 @@ Deno.serve(async (req: Request) => {
 
     const { data: variantes, error: varErr } = await sb
       .from("variantes")
-      .select("id, variant_label, copy_md")
+      .select("id, variant_label, copy_md, art_direction_image_json")
       .eq("slot_id", slot_id)
       .order("variant_label", { ascending: true });
 
