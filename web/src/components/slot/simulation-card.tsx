@@ -61,12 +61,156 @@ export function SimulationCard({
     return totalWeight > 0 ? weightedSum / totalWeight : 0;
   }
 
+  // Radar chart helpers
+  const RADAR_SIZE = 280;
+  const RADAR_CENTER = RADAR_SIZE / 2;
+  const RADAR_RADIUS = 100;
+  const ANGLE_OFFSET = -Math.PI / 2; // start from top
+
+  function polarToXY(axisIndex: number, value: number): [number, number] {
+    const angle = ANGLE_OFFSET + (2 * Math.PI * axisIndex) / scoringAxes.length;
+    const r = (value / 10) * RADAR_RADIUS;
+    return [RADAR_CENTER + r * Math.cos(angle), RADAR_CENTER + r * Math.sin(angle)];
+  }
+
+  function polygonPoints(variantLabel: string): string {
+    return scoringAxes
+      .map((axis, i) => {
+        const score = getAxisScore(axis, variantLabel);
+        const [x, y] = polarToXY(i, score);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      })
+      .join(" ");
+  }
+
+  const variantColors: Record<string, { stroke: string; fill: string }> = {
+    A: { stroke: "#16a34a", fill: "rgba(22,163,74,0.15)" },
+    B: { stroke: "#f97316", fill: "rgba(249,115,22,0.15)" },
+    C: { stroke: "#8b5cf6", fill: "rgba(139,92,246,0.15)" },
+  };
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Simulación de Engagement</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
+        {/* Radar Chart */}
+        <div className="flex flex-col items-center gap-3">
+          <svg
+            viewBox={`0 0 ${RADAR_SIZE} ${RADAR_SIZE}`}
+            className="w-full max-w-xs"
+            style={{ height: "280px" }}
+          >
+            {/* Grid circles */}
+            {[2, 4, 6, 8, 10].map((level) => (
+              <circle
+                key={level}
+                cx={RADAR_CENTER}
+                cy={RADAR_CENTER}
+                r={(level / 10) * RADAR_RADIUS}
+                fill="none"
+                stroke="#e5e7eb"
+                strokeWidth={level === 10 ? 1.5 : 0.5}
+              />
+            ))}
+            {/* Grid scale labels */}
+            {[2, 4, 6, 8, 10].map((level) => {
+              const [, y] = polarToXY(0, level);
+              return (
+                <text
+                  key={level}
+                  x={RADAR_CENTER + 4}
+                  y={y - 2}
+                  fontSize={8}
+                  fill="#9ca3af"
+                >
+                  {level}
+                </text>
+              );
+            })}
+            {/* Axis lines + labels */}
+            {scoringAxes.map((axis, i) => {
+              const [x, y] = polarToXY(i, 10);
+              const [lx, ly] = polarToXY(i, 12.5);
+              return (
+                <g key={axis}>
+                  <line
+                    x1={RADAR_CENTER}
+                    y1={RADAR_CENTER}
+                    x2={x}
+                    y2={y}
+                    stroke="#e5e7eb"
+                    strokeWidth={0.5}
+                  />
+                  <text
+                    x={lx}
+                    y={ly}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fontSize={9}
+                    fontWeight={600}
+                    fill="#6b7280"
+                  >
+                    {axisLabel[axis]}
+                  </text>
+                </g>
+              );
+            })}
+            {/* Variant polygons */}
+            {labels.map((label) => {
+              const colors = variantColors[label] || { stroke: "#6b7280", fill: "rgba(107,114,128,0.1)" };
+              return (
+                <polygon
+                  key={label}
+                  points={polygonPoints(label)}
+                  fill={colors.fill}
+                  stroke={colors.stroke}
+                  strokeWidth={2}
+                  strokeLinejoin="round"
+                />
+              );
+            })}
+            {/* Score dots */}
+            {labels.map((label) => {
+              const colors = variantColors[label] || { stroke: "#6b7280", fill: "rgba(107,114,128,0.1)" };
+              return scoringAxes.map((axis, i) => {
+                const score = getAxisScore(axis, label);
+                const [x, y] = polarToXY(i, score);
+                return (
+                  <circle
+                    key={`${label}-${axis}`}
+                    cx={x}
+                    cy={y}
+                    r={3}
+                    fill={colors.stroke}
+                  />
+                );
+              });
+            })}
+          </svg>
+          {/* Legend */}
+          <div className="flex items-center gap-4 text-xs text-gray-600">
+            {labels.map((label) => {
+              const colors = variantColors[label] || { stroke: "#6b7280" };
+              return (
+                <span key={label} className="flex items-center gap-1.5">
+                  <span
+                    className="inline-block h-2 w-2 rounded-full"
+                    style={{ backgroundColor: colors.stroke }}
+                  />
+                  Variante {label}
+                  {label === winnerLabel && (
+                    <Badge variant="success" className="ml-0.5 text-[10px] px-1 py-0">
+                      Ganadora
+                    </Badge>
+                  )}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Main comparison table */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm">

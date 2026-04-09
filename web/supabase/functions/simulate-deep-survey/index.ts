@@ -221,7 +221,7 @@ Deno.serve(async (req: Request) => {
 
     // ── 2. Load sim personas (up to 20 to avoid timeout) ─────
     const simPersonas = (project.sim_personas as Array<Record<string, unknown>>) ?? [];
-    const personas = simPersonas.slice(0, 3); // debug: start small
+    const personas = simPersonas.slice(0, 20);
 
     if (personas.length === 0) {
       return jsonResponse({ error: "No sim_personas found on project. Run persona-generate first." }, 400);
