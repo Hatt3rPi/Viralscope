@@ -14,6 +14,7 @@ import type {
   BrandAsset,
   VisualSpec,
 } from "./types";
+import { createClient } from "./supabase/server";
 
 // Check if Supabase is configured with a real project
 function isSupabaseConfigured(): boolean {
@@ -33,7 +34,6 @@ async function getSeedData() {
 export async function getProjects(): Promise<Project[]> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("projects").select("*");
       if (!error && data && data.length > 0) return data as Project[];
@@ -48,7 +48,6 @@ export async function getProjects(): Promise<Project[]> {
 export async function getProjectsLight(): Promise<Pick<Project, "id" | "name" | "slug" | "brand_yaml">[]> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("projects").select("id, name, slug, brand_yaml");
       if (!error && data && data.length > 0) return data as Pick<Project, "id" | "name" | "slug" | "brand_yaml">[];
@@ -62,7 +61,6 @@ export async function getProjectsLight(): Promise<Pick<Project, "id" | "name" | 
 export async function getProject(slug: string): Promise<Project | null> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("projects").select("*").eq("slug", slug).single();
       if (!error && data) return data as Project;
@@ -75,7 +73,6 @@ export async function getProject(slug: string): Promise<Project | null> {
 export async function getProjectLight(slug: string): Promise<Pick<Project, "id" | "name" | "slug"> | null> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("projects").select("id, name, slug").eq("slug", slug).single();
       if (!error && data) return data as Pick<Project, "id" | "name" | "slug">;
@@ -92,7 +89,6 @@ export async function getProjectLight(slug: string): Promise<Pick<Project, "id" 
 export async function getCampaigns(projectId: string): Promise<Campaign[]> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("campaigns").select("*").eq("project_id", projectId);
       if (!error && data && data.length > 0) return data as Campaign[];
@@ -105,7 +101,6 @@ export async function getCampaigns(projectId: string): Promise<Campaign[]> {
 export async function getCampaign(id: string): Promise<Campaign | null> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("campaigns").select("*").eq("id", id).single();
       if (!error && data) return data as Campaign;
@@ -118,7 +113,6 @@ export async function getCampaign(id: string): Promise<Campaign | null> {
 export async function getSlots(campaignId: string): Promise<Slot[]> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("slots").select("*").eq("campaign_id", campaignId).order("slot_number");
       if (!error && data && data.length > 0) return data as Slot[];
@@ -131,7 +125,6 @@ export async function getSlots(campaignId: string): Promise<Slot[]> {
 export async function getSlot(campaignId: string, slotNumber: number): Promise<Slot | null> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("slots").select("*").eq("campaign_id", campaignId).eq("slot_number", slotNumber).single();
       if (!error && data) return data as Slot;
@@ -144,7 +137,6 @@ export async function getSlot(campaignId: string, slotNumber: number): Promise<S
 export async function getBrief(slotId: string): Promise<Brief | null> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("briefs").select("*").eq("slot_id", slotId).order("version", { ascending: false }).limit(1).single();
       if (!error && data) return data as Brief;
@@ -157,7 +149,6 @@ export async function getBrief(slotId: string): Promise<Brief | null> {
 export async function getVariantes(slotId: string): Promise<Variante[]> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("variantes").select("*").eq("slot_id", slotId).order("variant_label");
       if (!error && data && data.length > 0) return data as Variante[];
@@ -170,7 +161,6 @@ export async function getVariantes(slotId: string): Promise<Variante[]> {
 export async function getFeedback(slotId: string): Promise<Feedback[]> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase.from("feedback").select("*").eq("slot_id", slotId).order("created_at");
       if (!error && data && data.length > 0) return data as Feedback[];
@@ -196,7 +186,6 @@ async function getSupabaseAdmin() {
     const { createAdminClient } = await import("./supabase/admin");
     return createAdminClient();
   } catch {
-    const { createClient } = await import("./supabase/server");
     return createClient();
   }
 }
@@ -537,7 +526,6 @@ export async function addGenerationLog(data: {
 export async function getPanelAgents(projectId: string): Promise<PanelAgent[]> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase
         .from("panel_agents")
@@ -553,7 +541,6 @@ export async function getPanelAgents(projectId: string): Promise<PanelAgent[]> {
 export async function getPanelEvaluation(slotId: string): Promise<PanelEvaluation | null> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase
         .from("panel_evaluations")
@@ -571,7 +558,6 @@ export async function getPanelEvaluation(slotId: string): Promise<PanelEvaluatio
 export async function getPanelEvaluations(slotId: string): Promise<PanelEvaluation[]> {
   if (isSupabaseConfigured()) {
     try {
-      const { createClient } = await import("./supabase/server");
       const supabase = await createClient();
       const { data, error } = await supabase
         .from("panel_evaluations")
@@ -591,7 +577,6 @@ export async function getTemplatesForProject(
 ): Promise<(ProjectTemplate & { template: ContentTemplate })[]> {
   if (!isSupabaseConfigured()) return [];
   try {
-    const { createClient } = await import("./supabase/server");
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("project_templates")
@@ -610,7 +595,6 @@ export async function resolveTemplate(
 ): Promise<(ProjectTemplate & { template: ContentTemplate }) | null> {
   if (!isSupabaseConfigured()) return null;
   try {
-    const { createClient } = await import("./supabase/server");
     const supabase = await createClient();
     let query = supabase
       .from("project_templates")
@@ -643,7 +627,6 @@ export async function resolveTemplate(
 export async function getAllContentTemplates(): Promise<ContentTemplate[]> {
   if (!isSupabaseConfigured()) return [];
   try {
-    const { createClient } = await import("./supabase/server");
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("content_templates")
@@ -759,7 +742,6 @@ export async function removeProjectTemplate(
 export async function getBrandAssets(projectId: string): Promise<BrandAsset[]> {
   if (!isSupabaseConfigured()) return [];
   try {
-    const { createClient } = await import("./supabase/server");
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("brand_assets")
@@ -816,7 +798,6 @@ export async function deleteBrandAsset(assetId: string): Promise<void> {
 export async function getVisualSpecs(projectId: string): Promise<VisualSpec[]> {
   if (!isSupabaseConfigured()) return [];
   try {
-    const { createClient } = await import("./supabase/server");
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("visual_specs")

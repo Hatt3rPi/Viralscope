@@ -20,12 +20,14 @@ export default async function ProjectsPage() {
           <div className="flex items-center gap-4">
             <Link
               href="/templates"
+              prefetch={false}
               className="text-sm text-purple-600 hover:text-purple-800 active:text-purple-900 active:scale-95 transition-all font-medium"
             >
               Plantillas
             </Link>
             <Link
               href="/login"
+              prefetch={false}
               className="text-sm text-gray-500 hover:text-gray-700 active:text-gray-900 active:scale-95 transition-all"
             >
               Salir
@@ -39,7 +41,7 @@ export default async function ProjectsPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <Link key={project.id} href={`/projects/${project.slug}`}>
+            <Link key={project.id} href={`/projects/${project.slug}`} prefetch={false}>
               <div className="bg-white rounded-2xl border border-purple-100 p-6 hover:shadow-lg hover:border-purple-300 transition-all group cursor-pointer">
                 <div className="w-14 h-14 rounded-2xl bg-purple-100 flex items-center justify-center mb-4 group-hover:bg-purple-200 transition-colors">
                   <span className="text-purple-600 text-xl font-bold">

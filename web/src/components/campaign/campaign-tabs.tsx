@@ -105,6 +105,7 @@ export function CampaignTabs({
                   <Link
                     key={slot.id}
                     href={`/projects/${projectSlug}/campaigns/${campaign.id}/slots/${slot.slot_number}`}
+                    prefetch={false}
                     className="contents"
                   >
                     <tr className="border-t border-gray-100 hover:bg-purple-50/50 cursor-pointer transition-colors">

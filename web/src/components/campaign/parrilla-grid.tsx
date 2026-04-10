@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import type { Slot, SlotStatus } from "@/lib/types";
 
@@ -47,6 +47,8 @@ export function ParrillaGrid({
   projectSlug,
   campaignId,
 }: ParrillaGridProps) {
+  const router = useRouter();
+
   return (
     <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white">
       <table className="w-full text-left text-sm">
@@ -63,79 +65,33 @@ export function ParrillaGrid({
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100">
-          {slots.map((slot) => (
-            <tr
-              key={slot.id}
-              className="transition-colors hover:bg-purple-50/50"
-            >
-              <td className="px-4 py-3">
-                <Link
-                  href={`/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`}
-                  className="block font-medium text-purple-700 hover:underline"
-                >
+          {slots.map((slot) => {
+            const href = `/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`;
+            return (
+              <tr
+                key={slot.id}
+                className="transition-colors hover:bg-purple-50/50 cursor-pointer"
+                onClick={() => router.push(href)}
+              >
+                <td className="px-4 py-3 font-medium text-purple-700">
                   {slot.slot_number}
-                </Link>
-              </td>
-              <td className="px-4 py-3 text-gray-600">
-                <Link
-                  href={`/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`}
-                  className="block"
-                >
-                  {slot.date}
-                </Link>
-              </td>
-              <td className="px-4 py-3 text-gray-600">
-                <Link
-                  href={`/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`}
-                  className="block"
-                >
-                  {slot.format}
-                </Link>
-              </td>
-              <td className="px-4 py-3 text-gray-600">
-                <Link
-                  href={`/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`}
-                  className="block"
-                >
-                  {slot.pillar}
-                </Link>
-              </td>
-              <td className="px-4 py-3 text-gray-600">
-                <Link
-                  href={`/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`}
-                  className="block"
-                >
-                  {slot.objective}
-                </Link>
-              </td>
-              <td className="px-4 py-3 text-gray-600">
-                <Link
-                  href={`/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`}
-                  className="block"
-                >
-                  {slot.topic}
-                </Link>
-              </td>
-              <td className="px-4 py-3">
-                <Link
-                  href={`/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`}
-                  className="block"
-                >
+                </td>
+                <td className="px-4 py-3 text-gray-600">{slot.date}</td>
+                <td className="px-4 py-3 text-gray-600">{slot.format}</td>
+                <td className="px-4 py-3 text-gray-600">{slot.pillar}</td>
+                <td className="px-4 py-3 text-gray-600">{slot.objective}</td>
+                <td className="px-4 py-3 text-gray-600">{slot.topic}</td>
+                <td className="px-4 py-3">
                   <Badge variant={statusBadgeVariant[slot.status]}>
                     {statusLabel[slot.status]}
                   </Badge>
-                </Link>
-              </td>
-              <td className="px-4 py-3 text-gray-600">
-                <Link
-                  href={`/projects/${projectSlug}/campaigns/${campaignId}/slots/${slot.slot_number}`}
-                  className="block"
-                >
+                </td>
+                <td className="px-4 py-3 text-gray-600">
                   {stepLabel[slot.current_step] || slot.current_step}
-                </Link>
-              </td>
-            </tr>
-          ))}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

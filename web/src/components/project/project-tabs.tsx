@@ -122,6 +122,7 @@ export function ProjectTabs({
             <h3 className="text-lg font-semibold text-gray-900">Campañas</h3>
             <Link
               href={`/projects/${slug}/campaigns/new`}
+              prefetch={false}
               className="px-4 py-2 rounded-lg bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 active:bg-purple-800 active:scale-95 transition-all"
             >
               + Nueva Campaña
@@ -135,6 +136,7 @@ export function ProjectTabs({
                 <Link
                   key={campaign.id}
                   href={`/projects/${slug}/campaigns/${campaign.id}`}
+                  prefetch={false}
                 >
                   <div className="bg-white rounded-xl border border-purple-100 p-5 hover:shadow-md hover:border-purple-300 transition-all cursor-pointer">
                     <div className="flex items-center justify-between">
