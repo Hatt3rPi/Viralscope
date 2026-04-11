@@ -564,6 +564,28 @@ export function TimelineView({
 
   return (
     <div className="relative space-y-0">
+      {/* Global loading overlay */}
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+          <div className="flex items-center gap-3 rounded-xl bg-white px-6 py-4 shadow-2xl">
+            <Loader2 className="h-6 w-6 animate-spin text-purple-600" />
+            <span className="text-sm font-medium text-gray-700">
+              {loading === "brief" && "Generando Brief..."}
+              {loading === "approve-brief" && "Aprobando Brief..."}
+              {loading === "regen-brief" && "Regenerando Brief..."}
+              {loading === "hooks" && "Generando 12 hooks..."}
+              {loading === "variantes" && "Generando Variantes A, B, C..."}
+              {loading === "auto-art" && "Generando Dirección de Arte..."}
+              {loading === "images" && "Generando imágenes..."}
+              {loading === "panel-seed" && "Creando panel de evaluación..."}
+              {loading === "approve-final" && "Aprobando..."}
+              {loading?.startsWith("art-") && `Generando arte ${loading.replace("art-", "")}...`}
+              {loading?.startsWith("sim") && "Ejecutando simulación..."}
+              {!["brief", "approve-brief", "regen-brief", "hooks", "variantes", "auto-art", "images", "panel-seed", "approve-final"].includes(loading) && !loading?.startsWith("art-") && !loading?.startsWith("sim") && "Procesando..."}
+            </span>
+          </div>
+        </div>
+      )}
       {stepsConfig.map((step, idx) => {
         const status = getStepStatus(step.key, slot.current_step);
         const isExpanded = expandedSteps.has(step.key);

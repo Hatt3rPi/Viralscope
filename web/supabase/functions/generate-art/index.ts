@@ -1,11 +1,16 @@
 // Supabase Edge Function: Generate Art Direction via Gemini (Director de Arte)
 // Deploy: supabase functions deploy generate-art
 // Env vars needed: GEMINI_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+//
+// Carousel mode: slide-by-slide prompt generation with flash-lite (fast, no timeout)
+// Other formats: single-call with gemini-pro (original behavior)
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const GEMINI_URL =
+const GEMINI_PRO =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent";
+const GEMINI_FLASH_LITE =
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -18,6 +23,83 @@ function jsonResponse(body: unknown, status = 200) {
     status,
     headers: { "Content-Type": "application/json", ...corsHeaders },
   });
+}
+
+// ── Parse slides from copy_md ─────────────────────────────────
+function parseSlides(copyMd: string): { number: number; content: string }[] {
+  const slideRegex = /### Slide (\d+)[^\n]*\n([\s\S]*?)(?=### Slide \d|## Hashtags|## CTA|## Alt|$)/gi;
+  const slides: { number: number; content: string }[] = [];
+  let match;
+  while ((match = slideRegex.exec(copyMd)) !== null) {
+    slides.push({ number: parseInt(match[1]), content: match[2].trim() });
+  }
+  return slides;
+}
+
+// ── Generate prompt for a single slide via flash-lite ──────────
+async function generateSlidePrompt(
+  geminiKey: string,
+  slideContent: string,
+  slideNumber: number,
+  totalSlides: number,
+  brandContext: string,
+  visualRules: string,
+): Promise<{ slide_number: number; concept: string; prompt_string: string; negative_prompt: string }> {
+  const prompt = `Generate a single image prompt for slide ${slideNumber}/${totalSlides} of an Instagram carousel.
+
+## Brand
+${brandContext}
+
+## Slide ${slideNumber} Content
+${slideContent}
+
+## Design Rules
+${visualRules}
+
+CRITICAL: The prompt_string must NEVER include instructions to draw dimension markers, pixel measurements, arrows, rulers, or safe zone indicators on the image. Those are composition guidelines, not visual elements.
+
+Return ONLY a JSON: {"concept": "one line description", "prompt_string": "full image generation prompt including text rendering on the image, 80-150 words. Must specify 3:4 vertical portrait aspect ratio.", "negative_prompt": "what to avoid, must include: dimension markers, pixel measurements, rulers, arrows, safe zone indicators"}`;
+
+  const res = await fetch(`${GEMINI_FLASH_LITE}?key=${geminiKey}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: { responseMimeType: "application/json", temperature: 0.8 },
+    }),
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Gemini flash-lite error ${res.status}: ${errText}`);
+  }
+
+  const data = await res.json();
+  const parts = data?.candidates?.[0]?.content?.parts ?? [];
+  const text = parts.find((p: { text?: string }) => typeof p.text === "string")?.text || "";
+
+  const parsed = JSON.parse(text);
+  return {
+    slide_number: slideNumber,
+    concept: parsed.concept || `Slide ${slideNumber}`,
+    prompt_string: parsed.prompt_string || "",
+    negative_prompt: parsed.negative_prompt || "plastic skin, AI look, uncanny valley",
+  };
+}
+
+// ── Process slides in batches of N ────────────────────────────
+async function processInBatches<T>(
+  items: T[],
+  batchSize: number,
+  fn: (item: T) => Promise<unknown>,
+): Promise<unknown[]> {
+  const results: unknown[] = [];
+  for (let i = 0; i < items.length; i += batchSize) {
+    const batch = items.slice(i, i + batchSize);
+    const batchResults = await Promise.allSettled(batch.map(fn));
+    results.push(...batchResults);
+  }
+  return results;
 }
 
 Deno.serve(async (req: Request) => {
@@ -90,7 +172,6 @@ Deno.serve(async (req: Request) => {
     const toneMap: Record<string, string> = { A: "emocional", B: "educativo", C: "directo" };
     const variantTone = toneMap[variant_label] || "emocional";
 
-    // Template for this format+tone
     const { data: ptRows } = await sb
       .from("project_templates")
       .select("*, template:content_templates(*)")
@@ -104,7 +185,6 @@ Deno.serve(async (req: Request) => {
     const template = matchedPt?.template ?? null;
     const templateOverrides = matchedPt?.overrides_json ?? {};
 
-    // Visual specs
     const { data: visualSpecs } = await sb
       .from("visual_specs")
       .select("*")
@@ -112,14 +192,13 @@ Deno.serve(async (req: Request) => {
       .eq("is_active", true)
       .order("priority", { ascending: false });
 
-    // Brand assets
     const { data: brandAssets } = await sb
       .from("brand_assets")
       .select("*")
       .eq("project_id", project.id)
       .eq("is_active", true);
 
-    // ── 3. Build the Gemini prompt ─────────────────────────────
+    // ── 3. Build brand context ────────────────────────────────
     const brandVisual = project.brand_yaml?.visual ?? {};
     const brandName = project.brand_yaml?.name ?? project.name;
     const brandStyle = brandVisual.style ?? "";
@@ -127,16 +206,129 @@ Deno.serve(async (req: Request) => {
     const brandColors = brandVisual.colors ?? {};
     const brandRestrictions = project.brand_yaml?.restrictions ?? {};
 
+    const brandContext = `- Name: ${brandName}
+- Style: ${brandStyle}
+- Mood: ${brandMood}
+- Colors: primary=${brandColors.primary ?? "N/A"}, secondary=${brandColors.secondary ?? "N/A"}, accent=${brandColors.accent ?? "N/A"}, background=${brandColors.background ?? "N/A"}
+- Typography: headings=${brandVisual.typography?.headings ?? "N/A"}, body=${brandVisual.typography?.body ?? "N/A"}
+- Never do: ${JSON.stringify(brandRestrictions.never_do ?? [])}`;
+
+    const visualRules = `- Aspect ratio: 3:4 portrait (taller than wide). CRITICAL: generate a VERTICAL image, not square.
+- Keep all text and key elements away from the edges of the image. Leave generous margins on all sides.
+- DO NOT draw dimension markers, arrows, rulers, or pixel measurements on the image. No "180px" or "50px" labels.
+- Slide text (title, body) MUST be rendered directly on the image as part of the design
+- Title: bold, large, high contrast against background
+- Body: smaller, clear readable font
+- Max 2 fonts, max 3 colors
+- Style: warm editorial, natural lighting, organic grain, slight asymmetry
+- Anti-AI: natural skin texture, tactile textures (linen, paper, wood), no plastic skin
+${template ? `- Template: ${template.prompt_injection}` : ""}
+${visualSpecs?.length ? visualSpecs.map((s: { prompt_text: string }) => `- ${s.prompt_text}`).filter(Boolean).join("\n") : ""}`;
+
+    // ══════════════════════════════════════════════════════════
+    // CAROUSEL: slide-by-slide with flash-lite
+    // ══════════════════════════════════════════════════════════
+    if (slot.format === "carrusel") {
+      const slides = parseSlides(variante.copy_md || "");
+
+      if (slides.length === 0) {
+        return jsonResponse({ error: "No slides found in copy_md" }, 400);
+      }
+
+      // Generate prompts: 3 slides in parallel per batch
+      const slideResults: { slide_number: number; concept: string; prompt_string: string; negative_prompt: string }[] = [];
+
+      const batchResults = await processInBatches(slides, 3, (slide) =>
+        generateSlidePrompt(
+          geminiKey,
+          slide.content,
+          slide.number,
+          slides.length,
+          brandContext,
+          visualRules,
+        ),
+      );
+
+      for (const result of batchResults) {
+        if ((result as PromiseSettledResult<unknown>).status === "fulfilled") {
+          slideResults.push((result as PromiseFulfilledResult<typeof slideResults[0]>).value);
+        }
+      }
+
+      // Build carousel JSON (same schema the frontend expects)
+      const art_direction_image_json = {
+        type: "carousel",
+        generator: "nanobanana_2",
+        settings: { aspect_ratio: "3:4", quality: "2k_unlimited" },
+        art_direction: {
+          style: brandStyle || "warm editorial",
+          mood: brandMood || "emotional, warm",
+          color_palette: {
+            dominant: brandColors.primary || "#F5E6D3",
+            accents: [brandColors.accent || "#D4956A"],
+            temperature: "warm",
+          },
+          anti_ai_directives: ["organic grain", "natural skin texture", "slight asymmetry"],
+          reference_styles: ["Kinfolk editorial", "analog film"],
+        },
+        slides: slideResults.sort((a, b) => a.slide_number - b.slide_number),
+      };
+
+      // Minimal video placeholder for carousels
+      const art_direction_video_json = {
+        type: "video",
+        generator: "manual",
+        settings: { aspect_ratio: "9:16", duration_seconds: 15 },
+        art_direction: {
+          concept: `Video version of carousel: ${brief?.brief_yaml?.topic || slot.topic || "content"}`,
+          style: brandStyle || "warm editorial",
+          mood: brandMood || "emotional",
+          scenes: [{ scene_number: 1, description: "Derived from carousel slides", duration_seconds: 15 }],
+        },
+        prompt_string: "Video to be created manually from carousel content.",
+        negative_prompt: "text on screen, subtitles",
+      };
+
+      // Save
+      const { error: updateErr } = await sb
+        .from("variantes")
+        .update({ art_direction_image_json, art_direction_video_json, status: "art_review" })
+        .eq("id", variante.id);
+
+      if (updateErr) {
+        return jsonResponse({ error: "Failed to update variante", details: updateErr.message }, 500);
+      }
+
+      await sb.from("slots").update({ status: "art_review", current_step: "3-art" }).eq("id", slot_id);
+
+      await sb.from("generation_logs").insert({
+        slot_id,
+        step: "generate-art",
+        input_json: { slot_id, variant_label, mode: "carousel-slide-by-slide", slides_parsed: slides.length, slides_generated: slideResults.length },
+        output_json: { art_direction_image_json },
+        model_used: "gemini-3.1-flash-lite-preview",
+        tokens_used: null,
+      });
+
+      return jsonResponse({
+        ok: true,
+        variant_label,
+        mode: "carousel-slide-by-slide",
+        slides_parsed: slides.length,
+        slides_generated: slideResults.length,
+        art_direction_image_json,
+        art_direction_video_json,
+      });
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // NON-CAROUSEL: original single-call with gemini-pro
+    // ══════════════════════════════════════════════════════════
     const systemPrompt = `You are an elite Art Director ("Director de Arte") for social media content.
 Your mission: generate TWO art direction JSON objects — one for IMAGE and one for VIDEO — for a single content variant.
 
 ## Brand Context
-- Brand: ${brandName}
-- Visual style: ${brandStyle}
-- Mood: ${brandMood}
-- Colors: primary=${brandColors.primary ?? "N/A"}, secondary=${brandColors.secondary ?? "N/A"}, accent=${brandColors.accent ?? "N/A"}, background=${brandColors.background ?? "N/A"}
-- Typography: headings=${brandVisual.typography?.headings ?? "N/A"}, body=${brandVisual.typography?.body ?? "N/A"}
-- Never do: ${JSON.stringify(brandRestrictions.never_do ?? [])}
+${brandContext}
 
 ${template ? `## Template de Layout (OBLIGATORIO)
 ${template.prompt_injection}
@@ -166,35 +358,6 @@ Every piece of art direction MUST embed anti-AI aesthetics:
 - The negative_prompt MUST always include: "text on screen, subtitles, captions, written words, perfect symmetry, plastic skin, AI look, uncanny valley, oversaturated"
 - ASPECT RATIO: ${slot.format === "reel" || slot.format === "story" ? "9:16 (vertical)" : "1:1 (square)"}
 
-${slot.format === "carrusel" ? `
-## CAROUSEL FORMAT — CRITICAL
-This is a CAROUSEL format. You MUST generate a SEPARATE image prompt for EACH slide.
-Analyze the copy/content to determine how many slides the carousel has (look for ## Slide or numbered sections).
-If unclear, default to 5 slides.
-Each slide must have its own unique visual concept that tells a progressive story.
-
-The art_direction_image_json must use this CAROUSEL schema:
-{
-  "type": "carousel",
-  "generator": "nanobanana_2",
-  "settings": { "aspect_ratio": "1:1", "quality": "2k_unlimited" },
-  "art_direction": {
-    "style": "visual style description",
-    "mood": "emotional tone",
-    "color_palette": { "dominant": "#hex", "accents": ["#hex"], "temperature": "warm/cool/neutral" },
-    "anti_ai_directives": ["specific imperfections"],
-    "reference_styles": ["editorial references"]
-  },
-  "slides": [
-    {
-      "slide_number": 1,
-      "concept": "what this specific slide shows",
-      "prompt_string": "NanoBanana-optimized prompt for THIS slide. 100-200 words.",
-      "negative_prompt": "text on screen, subtitles, ..."
-    }
-  ]
-}
-` : `
 ## Output Schema — SINGLE IMAGE
 Return a JSON object with exactly two keys:
 
@@ -241,7 +404,6 @@ Return a JSON object with exactly two keys:
     "prompt_string": "Complete NanoBanana-optimized prompt. 150-300 words.",
     "negative_prompt": "text on screen, subtitles, captions, written words, perfect symmetry, plastic skin, AI look, uncanny valley, oversaturated, [plus brand-specific negatives]"
   },
-`}
   "art_direction_video_json": {
     "type": "video",
     "generator": "manual",
@@ -308,8 +470,8 @@ ${variante.copy_md || "No copy yet — infer from brief and slot context."}
 
 Generate the two art direction JSONs now. The image art direction must be highly specific and ready for NanoBanana 2 generation. The video art direction should have 3-5 scenes covering a ${slot.format === "reel" ? "15-second vertical video" : "short video"}.`;
 
-    // ── 4. Call Gemini API ──────────────────────────────────────
-    const geminiResponse = await fetch(`${GEMINI_URL}?key=${geminiKey}`, {
+    // ── Call Gemini Pro ────────────────────────────────────────
+    const geminiResponse = await fetch(`${GEMINI_PRO}?key=${geminiKey}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -371,7 +533,7 @@ Generate the two art direction JSONs now. The image art direction must be highly
       );
     }
 
-    // ── 5. Update variante with art direction ──────────────────
+    // ── Save & respond ────────────────────────────────────────
     const { error: updateErr } = await sb
       .from("variantes")
       .update({
@@ -388,13 +550,11 @@ Generate the two art direction JSONs now. The image art direction must be highly
       );
     }
 
-    // ── 6. Update slot status ──────────────────────────────────
     await sb
       .from("slots")
       .update({ status: "art_review", current_step: "3-art" })
       .eq("id", slot_id);
 
-    // ── 7. Log to generation_logs ──────────────────────────────
     const tokensUsed =
       geminiData?.usageMetadata?.totalTokenCount ??
       geminiData?.usageMetadata?.candidatesTokenCount ??
@@ -409,7 +569,6 @@ Generate the two art direction JSONs now. The image art direction must be highly
       tokens_used: tokensUsed,
     });
 
-    // ── 8. Return both JSONs ───────────────────────────────────
     return jsonResponse({
       ok: true,
       variant_label,
