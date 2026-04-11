@@ -1,10 +1,70 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Send, Loader2, Sparkles, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { ChatMessage } from "@/lib/types";
+
+// ─── Multi-phase progress indicator ─────────────────────────────────────────
+
+const GENERATION_PHASES = [
+  { label: "Analizando estrategia...", target: 30 },
+  { label: "Disenando calendario...", target: 70 },
+  { label: "Asignando contenidos...", target: 95 },
+];
+
+function useGenerationProgress(isGenerating: boolean) {
+  const [progress, setProgress] = useState(0);
+  const [phaseIdx, setPhaseIdx] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const start = useCallback(() => {
+    setProgress(0);
+    setPhaseIdx(0);
+    intervalRef.current = setInterval(() => {
+      setProgress((prev) => {
+        const currentPhase = GENERATION_PHASES.find((_, i) => {
+          const target = GENERATION_PHASES[i].target;
+          return prev < target;
+        });
+        if (!currentPhase) return prev;
+        const target = currentPhase.target;
+        const increment = Math.random() * 3 + 0.5;
+        const next = Math.min(prev + increment, target - 1);
+        // Update phase index
+        const newPhaseIdx = GENERATION_PHASES.findIndex(
+          (p) => next < p.target
+        );
+        if (newPhaseIdx >= 0) setPhaseIdx(newPhaseIdx);
+        return next;
+      });
+    }, 400);
+  }, []);
+
+  const complete = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setProgress(100);
+    setPhaseIdx(GENERATION_PHASES.length - 1);
+  }, []);
+
+  useEffect(() => {
+    if (isGenerating) {
+      start();
+    } else if (progress > 0 && progress < 100) {
+      complete();
+    }
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGenerating]);
+
+  return {
+    progress,
+    phaseLabel: GENERATION_PHASES[phaseIdx]?.label ?? "",
+  };
+}
 
 interface ChatPhaseProps {
   messages: ChatMessage[];
@@ -28,6 +88,9 @@ export function ChatPhase({
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const isGeneratingParrilla = isReady && isLoading;
+  const { progress: genProgress, phaseLabel: genPhaseLabel } =
+    useGenerationProgress(isGeneratingParrilla);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -155,10 +218,19 @@ export function ChatPhase({
                   </p>
                 </div>
                 <p className="text-sm text-purple-700">
-                  El Estratega esta disenando tu calendario de contenidos. Esto puede tomar unos segundos.
+                  {genPhaseLabel}
                 </p>
-                <div className="h-1.5 w-full rounded-full bg-purple-100 overflow-hidden">
-                  <div className="h-full w-2/3 rounded-full bg-purple-500 animate-pulse" />
+                <div className="space-y-1.5">
+                  <div className="h-2 w-full rounded-full bg-purple-100 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-purple-600 transition-all duration-700 ease-out"
+                      style={{ width: `${genProgress}%` }}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-purple-500">
+                    <span>{genPhaseLabel}</span>
+                    <span>{Math.round(genProgress)}%</span>
+                  </div>
                 </div>
               </>
             ) : (

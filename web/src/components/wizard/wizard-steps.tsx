@@ -27,7 +27,7 @@ export function WizardSteps({ currentPhase }: { currentPhase: WizardPhase }) {
             <div className="flex flex-col items-center gap-1.5">
               <div
                 className={cn(
-                  "flex h-9 w-9 items-center justify-center rounded-full border-2 text-sm font-semibold transition-all",
+                  "flex h-9 w-9 items-center justify-center rounded-full border-2 text-sm font-semibold transition-all duration-300",
                   isCompleted && "border-green-500 bg-green-500 text-white",
                   isActive &&
                     "border-purple-600 bg-purple-50 text-purple-700 ring-4 ring-purple-100",
@@ -56,7 +56,7 @@ export function WizardSteps({ currentPhase }: { currentPhase: WizardPhase }) {
             {idx < steps.length - 1 && (
               <div
                 className={cn(
-                  "h-0.5 flex-1 mx-3 mt-[-1.25rem]",
+                  "h-0.5 flex-1 mx-3 mt-[-1.25rem] transition-colors duration-500",
                   idx < currentIdx ? "bg-green-400" : "bg-gray-200"
                 )}
               />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ToastProvider } from "@/components/ui/toast";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -33,7 +34,9 @@ export default function RootLayout({
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
-      <body className="min-h-full bg-[#F7F0FF]">{children}</body>
+      <body className="min-h-full bg-[#F7F0FF]">
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }

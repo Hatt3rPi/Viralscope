@@ -282,46 +282,54 @@ export function CampaignWizard({ project, projectSlug }: CampaignWizardProps) {
       <WizardSteps currentPhase={state.phase} />
 
       {state.phase === "config" && (
-        <ConfigPhase
-          onSubmit={(config) => dispatch({ type: "SET_CONFIG", config })}
-        />
+        <div key="config" className="animate-[fade-slide-in_0.3s_ease-out]">
+          <ConfigPhase
+            onSubmit={(config) => dispatch({ type: "SET_CONFIG", config })}
+          />
+        </div>
       )}
 
       {state.phase === "chat" && (
-        <ChatPhase
-          messages={state.messages}
-          isLoading={state.isLoading}
-          isReady={state.isReady}
-          error={state.error}
-          onSendMessage={handleSendMessage}
-          onGenerateParrilla={handleGenerateParrilla}
-          onContinueChat={() => dispatch({ type: "CLEAR_READY" })}
-        />
+        <div key="chat" className="animate-[fade-slide-in_0.3s_ease-out]">
+          <ChatPhase
+            messages={state.messages}
+            isLoading={state.isLoading}
+            isReady={state.isReady}
+            error={state.error}
+            onSendMessage={handleSendMessage}
+            onGenerateParrilla={handleGenerateParrilla}
+            onContinueChat={() => dispatch({ type: "CLEAR_READY" })}
+          />
+        </div>
       )}
 
       {state.phase === "review" && (
-        <ReviewPhase
-          summary={state.parrillaSummary}
-          parrilla={state.parrilla}
-          isLoading={state.isLoading}
-          error={state.error}
-          onUpdateSlot={(idx, slot) =>
-            dispatch({ type: "UPDATE_SLOT", index: idx, slot })
-          }
-          onRemoveSlot={(idx) => dispatch({ type: "REMOVE_SLOT", index: idx })}
-          onRegenerate={handleGenerateParrilla}
-          onApprove={handleApprove}
-          onBackToChat={() => dispatch({ type: "BACK_TO_CHAT" })}
-        />
+        <div key="review" className="animate-[fade-slide-in_0.3s_ease-out]">
+          <ReviewPhase
+            summary={state.parrillaSummary}
+            parrilla={state.parrilla}
+            isLoading={state.isLoading}
+            error={state.error}
+            onUpdateSlot={(idx, slot) =>
+              dispatch({ type: "UPDATE_SLOT", index: idx, slot })
+            }
+            onRemoveSlot={(idx) => dispatch({ type: "REMOVE_SLOT", index: idx })}
+            onRegenerate={handleGenerateParrilla}
+            onApprove={handleApprove}
+            onBackToChat={() => dispatch({ type: "BACK_TO_CHAT" })}
+          />
+        </div>
       )}
 
       {state.phase === "done" && state.config && state.campaignId && (
-        <DonePhase
-          campaignId={state.campaignId}
-          projectSlug={projectSlug}
-          campaignName={state.config.name}
-          slotsCount={state.parrilla.length}
-        />
+        <div key="done" className="animate-[fade-slide-in_0.3s_ease-out]">
+          <DonePhase
+            campaignId={state.campaignId}
+            projectSlug={projectSlug}
+            campaignName={state.config.name}
+            slotsCount={state.parrilla.length}
+          />
+        </div>
       )}
     </div>
   );
