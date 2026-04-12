@@ -74,6 +74,16 @@ export function TimelineView({
   const [expandedSteps, setExpandedSteps] = React.useState<Set<string>>(() => {
     return new Set([slot.current_step]);
   });
+
+  // Auto-expand current step when it changes (e.g. after approve brief, advance to art)
+  React.useEffect(() => {
+    setExpandedSteps((prev) => {
+      if (prev.has(slot.current_step)) return prev;
+      const next = new Set(prev);
+      next.add(slot.current_step);
+      return next;
+    });
+  }, [slot.current_step]);
   const [loading, setLoading] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [mirofishMd, setMirofishMd] = React.useState<string | null>(null);
@@ -143,6 +153,13 @@ export function TimelineView({
     setError(null);
     try {
       await approveBriefAction(brief.id, slot.id, "usuario@viralscope.dev");
+      // Expand next step and collapse brief
+      setExpandedSteps((prev) => {
+        const next = new Set(prev);
+        next.delete("1-brief");
+        next.add("2-content");
+        return next;
+      });
       router.refresh();
     } catch (e) {
       setError(`Error aprobando brief: ${e instanceof Error ? e.message : e}`);
@@ -415,6 +432,14 @@ export function TimelineView({
     const progress: Record<string, "pending" | "generating" | "done" | "error"> = {};
     labels.forEach((l) => (progress[l] = "pending"));
     setArtProgress({ ...progress });
+
+    // Expand art step
+    setExpandedSteps((prev) => {
+      const next = new Set(prev);
+      next.delete("2-content");
+      next.add("3-art");
+      return next;
+    });
 
     try {
       // 1. Advance slot
@@ -1085,6 +1110,12 @@ export function TimelineView({
                                 setError(null);
                                 try {
                                   await advanceSlotAction(slot.id, "simulating", "4-simulation");
+                                  setExpandedSteps((prev) => {
+                                    const next = new Set(prev);
+                                    next.delete("3-art");
+                                    next.add("4-simulation");
+                                    return next;
+                                  });
                                   router.refresh();
                                 } catch (e) {
                                   setError(`Error avanzando: ${e instanceof Error ? e.message : e}`);
