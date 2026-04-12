@@ -20,6 +20,7 @@ export function VideoPromptCard({ variante, brandLogoUrl, onUploadVideo }: Video
 
   const promptString = typeof videoDir.prompt_string === "string" ? videoDir.prompt_string : "";
   const negativePrompt = typeof videoDir.negative_prompt === "string" ? videoDir.negative_prompt : "";
+  const referencePhotoUrl = typeof videoDir.reference_photo_url === "string" ? videoDir.reference_photo_url : null;
   const concept = typeof artDir.concept === "string" ? artDir.concept : "";
   const aspectRatio = typeof settings.aspect_ratio === "string" ? settings.aspect_ratio : "9:16";
   const duration = settings.duration_seconds ?? 15;
@@ -35,7 +36,7 @@ export function VideoPromptCard({ variante, brandLogoUrl, onUploadVideo }: Video
       negative_prompt: negativePrompt,
       aspect_ratio: aspectRatio,
       duration_seconds: duration,
-      reference_image: variante.image_url || null,
+      reference_image: referencePhotoUrl || variante.image_url || null,
       logo: brandLogoUrl || null,
       scenes: scenes.map((s) => ({
         number: s.scene_number,
@@ -178,10 +179,22 @@ export function VideoPromptCard({ variante, brandLogoUrl, onUploadVideo }: Video
             </div>
           )}
 
-          {/* Reference image */}
+          {/* Reference photo (real product) */}
+          {referencePhotoUrl && (
+            <div>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1.5">Foto de referencia (producto real)</p>
+              <div className="bg-white rounded-lg p-3 border border-gray-100 space-y-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={referencePhotoUrl} alt="Producto real" className="w-32 rounded-lg" />
+                <p className="text-xs text-blue-600 font-mono break-all">{referencePhotoUrl}</p>
+              </div>
+            </div>
+          )}
+
+          {/* Preview image */}
           {variante.image_url && (
             <div>
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1.5">Imagen de referencia</p>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.08em] mb-1.5">Preview generado</p>
               <p className="text-xs text-blue-600 font-mono break-all bg-white rounded-lg p-3 border border-gray-100">
                 {variante.image_url}
               </p>
