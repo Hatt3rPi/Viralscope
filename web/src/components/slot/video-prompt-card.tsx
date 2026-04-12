@@ -1,17 +1,18 @@
 "use client";
 
 import * as React from "react";
-import { Copy, Check, ChevronDown, ChevronUp, Film, Upload } from "lucide-react";
+import { Copy, Check, ChevronDown, ChevronUp, Film, Upload, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Variante } from "@/lib/types";
 
 interface VideoPromptCardProps {
   variante: Variante;
   brandLogoUrl?: string;
-  onUploadVideo?: (varianteId: string, file: File) => void;
+  onUploadVideo?: (varianteId: string, file: File) => Promise<void>;
+  uploading?: boolean;
 }
 
-export function VideoPromptCard({ variante, brandLogoUrl, onUploadVideo }: VideoPromptCardProps) {
+export function VideoPromptCard({ variante, brandLogoUrl, onUploadVideo, uploading = false }: VideoPromptCardProps) {
   const videoDir = (variante.art_direction_video_json as Record<string, unknown>) || {};
   const artDir = (videoDir.art_direction as Record<string, unknown>) || {};
   const settings = (videoDir.settings as Record<string, unknown>) || {};
@@ -206,7 +207,26 @@ export function VideoPromptCard({ variante, brandLogoUrl, onUploadVideo }: Video
       {/* Video player or upload area */}
       <div className="px-5 py-4 border-t border-gray-50">
         {variante.video_url ? (
-          <video src={variante.video_url} controls className="w-full rounded-lg" />
+          <div className="space-y-2">
+            <video src={variante.video_url} controls className="w-full rounded-lg" />
+            <div className="relative">
+              <label className="text-[10px] text-gray-400 cursor-pointer hover:text-purple-600">
+                Reemplazar video
+                <input
+                  type="file"
+                  accept="video/*"
+                  className="hidden"
+                  onChange={handleFileSelect}
+                  disabled={uploading}
+                />
+              </label>
+            </div>
+          </div>
+        ) : uploading ? (
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-purple-300 bg-purple-50/30 p-6 text-center">
+            <Loader2 className="mb-1.5 h-6 w-6 text-purple-500 animate-spin" />
+            <p className="text-xs font-medium text-purple-600">Subiendo video...</p>
+          </div>
         ) : (
           <div
             onDragOver={(e) => e.preventDefault()}

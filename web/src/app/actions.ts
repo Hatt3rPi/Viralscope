@@ -413,3 +413,52 @@ export async function deleteVisualSpecAction(specId: string) {
   revalidatePath("/projects");
   return { success: true };
 }
+
+// ─── Video Upload ───
+
+export async function uploadVideoAction(
+  varianteId: string,
+  slotId: string,
+  variantLabel: string,
+  formData: FormData,
+): Promise<{ success: boolean; video_url?: string; error?: string }> {
+  const file = formData.get("file") as File | null;
+  if (!file) return { success: false, error: "No file provided" };
+
+  try {
+    const { createAdminClient } = await import("@/lib/supabase/admin");
+    const supabase = createAdminClient();
+
+    const ext = file.name.split(".").pop() || "mp4";
+    const storagePath = `videos/${slotId}/${variantLabel}/${Date.now()}.${ext}`;
+
+    const arrayBuffer = await file.arrayBuffer();
+    const { error: uploadError } = await supabase.storage
+      .from("media")
+      .upload(storagePath, arrayBuffer, {
+        contentType: file.type,
+        upsert: false,
+      });
+
+    if (uploadError) {
+      return { success: false, error: `Upload error: ${uploadError.message}` };
+    }
+
+    const { data: urlData } = supabase.storage.from("media").getPublicUrl(storagePath);
+    const videoUrl = urlData.publicUrl;
+
+    const { error: dbError } = await supabase
+      .from("variantes")
+      .update({ video_url: videoUrl })
+      .eq("id", varianteId);
+
+    if (dbError) {
+      return { success: false, error: `DB error: ${dbError.message}` };
+    }
+
+    revalidatePath("/projects");
+    return { success: true, video_url: videoUrl };
+  } catch (e) {
+    return { success: false, error: `Error: ${e instanceof Error ? e.message : e}` };
+  }
+}

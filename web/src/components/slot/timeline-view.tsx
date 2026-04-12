@@ -15,7 +15,7 @@ import { SimulationCard } from "@/components/slot/simulation-card";
 import { NetworkGraph } from "@/components/slot/network-graph";
 import { SeirChart } from "@/components/slot/seir-chart";
 import { FeedbackPanel } from "@/components/feedback/feedback-panel";
-import { approveBriefAction, advanceSlotAction, saveSimulationMdAction } from "@/app/actions";
+import { approveBriefAction, advanceSlotAction, saveSimulationMdAction, uploadVideoAction } from "@/app/actions";
 import type { Slot, Brief, Variante, Feedback, SlotStep } from "@/lib/types";
 
 interface TimelineViewProps {
@@ -78,6 +78,27 @@ export function TimelineView({
   const [error, setError] = React.useState<string | null>(null);
   const [mirofishMd, setMirofishMd] = React.useState<string | null>(null);
   const [artProgress, setArtProgress] = React.useState<Record<string, "pending" | "generating" | "done" | "error">>({});
+  const [uploadingVideo, setUploadingVideo] = React.useState<string | null>(null);
+
+  async function handleUploadVideo(varianteId: string, file: File) {
+    const variante = variantes.find((v) => v.id === varianteId);
+    if (!variante) return;
+    setUploadingVideo(varianteId);
+    setError(null);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const result = await uploadVideoAction(varianteId, slot.id, variante.variant_label, fd);
+      if (!result.success) {
+        setError(result.error || "Error subiendo video");
+      }
+      router.refresh();
+    } catch (e) {
+      setError(`Error: ${e instanceof Error ? e.message : e}`);
+    } finally {
+      setUploadingVideo(null);
+    }
+  }
   const [imgProgress, setImgProgress] = React.useState<Record<string, "pending" | "generating" | "retrying" | "done" | "error">>({});
   const [hooks, setHooks] = React.useState<Array<{ id: number; text: string; tone: string; scores: Record<string, number>; total: number; reasoning: string }>>([]);
   const [selectedHooks, setSelectedHooks] = React.useState<number[]>([]);
@@ -1031,7 +1052,7 @@ export function TimelineView({
 
                             {/* Video prompt card for reels */}
                             {slot.format === "reel" && v.art_direction_video_json && Object.keys(v.art_direction_video_json as Record<string, unknown>).length > 0 && (
-                              <VideoPromptCard variante={v} brandLogoUrl={brandLogoUrl} />
+                              <VideoPromptCard variante={v} brandLogoUrl={brandLogoUrl} onUploadVideo={handleUploadVideo} uploading={uploadingVideo === v.id} />
                             )}
                           </div>
                         );
