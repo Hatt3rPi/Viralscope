@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { BriefCard } from "@/components/slot/brief-card";
 import { VarianteTabs } from "@/components/slot/variante-tabs";
 import { ArtDirectionCard } from "@/components/slot/art-direction-card";
+import { VideoPromptCard } from "@/components/slot/video-prompt-card";
 import { InstagramPreview } from "@/components/slot/instagram-preview";
 import { SimulationCard } from "@/components/slot/simulation-card";
 import { NetworkGraph } from "@/components/slot/network-graph";
@@ -25,6 +26,7 @@ interface TimelineViewProps {
   simulationData: Record<string, unknown>;
   projectId: string;
   campaignId: string;
+  brandLogoUrl?: string;
 }
 
 const stepsConfig: {
@@ -66,6 +68,7 @@ export function TimelineView({
   simulationData,
   projectId,
   campaignId,
+  brandLogoUrl,
 }: TimelineViewProps) {
   const router = useRouter();
   const [expandedSteps, setExpandedSteps] = React.useState<Set<string>>(() => {
@@ -1025,6 +1028,11 @@ export function TimelineView({
                                 <InstagramPreview variante={v} format={slot.format} />
                               </div>
                             </div>
+
+                            {/* Video prompt card for reels */}
+                            {slot.format === "reel" && v.art_direction_video_json && Object.keys(v.art_direction_video_json as Record<string, unknown>).length > 0 && (
+                              <VideoPromptCard variante={v} brandLogoUrl={brandLogoUrl} />
+                            )}
                           </div>
                         );
                       })}

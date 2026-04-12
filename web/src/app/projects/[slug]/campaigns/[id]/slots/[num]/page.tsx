@@ -7,6 +7,7 @@ import {
   getBrief,
   getVariantes,
   getFeedback,
+  getBrandAssets,
 } from "@/lib/data";
 import { TimelineView } from "@/components/slot/timeline-view";
 
@@ -25,11 +26,14 @@ export default async function SlotPage({
   if (!campaign) notFound();
   if (!slot) notFound();
 
-  const [brief, variantes, feedbackItems] = await Promise.all([
+  const [brief, variantes, feedbackItems, brandAssets] = await Promise.all([
     getBrief(slot.id),
     getVariantes(slot.id),
     getFeedback(slot.id),
+    getBrandAssets(project.id),
   ]);
+
+  const brandLogoUrl = brandAssets.find((a) => a.asset_type === "logo")?.public_url ?? undefined;
 
   const simulationData = (slot.deep_sim_result as Record<string, unknown>)?.survey
     ? ((slot.deep_sim_result as Record<string, unknown>).survey as Record<string, unknown>)
@@ -79,6 +83,7 @@ export default async function SlotPage({
           simulationData={simulationData}
           projectId={project.id}
           campaignId={campaign.id}
+          brandLogoUrl={brandLogoUrl}
         />
       </main>
     </div>
