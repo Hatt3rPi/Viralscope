@@ -200,6 +200,18 @@ export async function approveBriefAction(briefId: string, slotId: string, approv
   return { success: true };
 }
 
+export async function updateBriefAction(briefId: string, briefYaml: Record<string, unknown>) {
+  const { createAdminClient } = await import("@/lib/supabase/admin");
+  const supabase = createAdminClient();
+  const { error } = await supabase
+    .from("briefs")
+    .update({ brief_yaml: briefYaml })
+    .eq("id", briefId);
+  if (error) return { success: false, error: error.message };
+  revalidatePath("/", "layout");
+  return { success: true };
+}
+
 // ─── Slot Status ───
 
 export async function advanceSlotAction(slotId: string, status: string, step: string) {

@@ -11,12 +11,15 @@ import {
   Calendar,
   Target,
   MessageSquare,
+  Pencil,
+  X,
+  Loader2,
 } from "lucide-react";
 import type { Brief } from "@/lib/types";
 
 interface BriefCardProps {
   brief: Brief;
-  onEdit?: () => void;
+  onSave?: (briefYaml: Record<string, unknown>) => Promise<void>;
   onRegenerate?: () => void;
   onApprove?: () => void;
 }
@@ -27,7 +30,7 @@ const CONFIDENCE_STYLES: Record<string, { bg: string; text: string; label: strin
   baja: { bg: "bg-red-50", text: "text-red-700", label: "Confianza baja" },
 };
 
-export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardProps) {
+export function BriefCard({ brief, onSave, onRegenerate, onApprove }: BriefCardProps) {
   const isApproved = !!brief.approved_at;
   const data = brief.brief_yaml as Record<string, unknown>;
 
@@ -49,6 +52,37 @@ export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardP
 
   const confStyle = CONFIDENCE_STYLES[confidence] || CONFIDENCE_STYLES.media;
 
+  const [editing, setEditing] = React.useState(false);
+  const [saving, setSaving] = React.useState(false);
+  const [editData, setEditData] = React.useState({
+    topic_angle: topicAngle,
+    hook_direction: hookDirection,
+    cta_direction: ctaDirection,
+    reasoning: reasoning,
+  });
+
+  function handleStartEdit() {
+    setEditData({
+      topic_angle: topicAngle,
+      hook_direction: hookDirection,
+      cta_direction: ctaDirection,
+      reasoning: reasoning,
+    });
+    setEditing(true);
+  }
+
+  async function handleSave() {
+    if (!onSave) return;
+    setSaving(true);
+    try {
+      const updatedYaml = { ...data, ...editData };
+      await onSave(updatedYaml);
+      setEditing(false);
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -68,12 +102,19 @@ export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardP
         </div>
       </CardHeader>
       <CardContent className="space-y-5">
-        {/* Topic — the main decision */}
+        {/* Topic */}
         <div>
           <h3 className="text-lg font-semibold text-gray-900">{topic}</h3>
-          {topicAngle && (
+          {editing ? (
+            <textarea
+              value={editData.topic_angle}
+              onChange={(e) => setEditData({ ...editData, topic_angle: e.target.value })}
+              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 leading-relaxed focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+              rows={3}
+            />
+          ) : topicAngle ? (
             <p className="mt-1 text-sm text-gray-600 leading-relaxed">{topicAngle}</p>
-          )}
+          ) : null}
         </div>
 
         {/* Key attributes as compact badges */}
@@ -109,7 +150,7 @@ export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardP
           )}
           {personaTarget && (
             <span className="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-medium">
-              → {personaTarget}
+              &rarr; {personaTarget}
             </span>
           )}
           {dateReference && (
@@ -120,29 +161,43 @@ export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardP
         </div>
 
         {/* Hook & CTA direction */}
-        {(hookDirection || ctaDirection) && (
+        {(hookDirection || ctaDirection || editing) && (
           <div className="grid gap-3 sm:grid-cols-2">
-            {hookDirection && (
-              <div className="rounded-lg bg-gray-50 p-3">
-                <span className="block text-xs font-semibold uppercase tracking-wide text-gray-400 mb-1">
-                  Dirección del Hook
-                </span>
+            <div className="rounded-lg bg-gray-50 p-3">
+              <span className="block text-xs font-semibold uppercase tracking-wide text-gray-400 mb-1">
+                Direccion del Hook
+              </span>
+              {editing ? (
+                <textarea
+                  value={editData.hook_direction}
+                  onChange={(e) => setEditData({ ...editData, hook_direction: e.target.value })}
+                  className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm text-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                  rows={3}
+                />
+              ) : (
                 <p className="text-sm text-gray-700">{hookDirection}</p>
-              </div>
-            )}
-            {ctaDirection && (
-              <div className="rounded-lg bg-gray-50 p-3">
-                <span className="block text-xs font-semibold uppercase tracking-wide text-gray-400 mb-1">
-                  Dirección del CTA
-                </span>
+              )}
+            </div>
+            <div className="rounded-lg bg-gray-50 p-3">
+              <span className="block text-xs font-semibold uppercase tracking-wide text-gray-400 mb-1">
+                Direccion del CTA
+              </span>
+              {editing ? (
+                <textarea
+                  value={editData.cta_direction}
+                  onChange={(e) => setEditData({ ...editData, cta_direction: e.target.value })}
+                  className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm text-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                  rows={3}
+                />
+              ) : (
                 <p className="text-sm text-gray-700">{ctaDirection}</p>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
 
-        {/* Reasoning — the WHY behind the decision */}
-        {reasoning && (
+        {/* Reasoning */}
+        {(reasoning || editing) && (
           <div className="rounded-lg bg-purple-50 border border-purple-100 p-4">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="h-4 w-4 text-purple-600" />
@@ -150,11 +205,20 @@ export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardP
                 Razonamiento del Estratega
               </span>
             </div>
-            <p className="text-sm text-gray-700 leading-relaxed">{reasoning}</p>
+            {editing ? (
+              <textarea
+                value={editData.reasoning}
+                onChange={(e) => setEditData({ ...editData, reasoning: e.target.value })}
+                className="w-full rounded border border-gray-300 px-2 py-1.5 text-sm text-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                rows={3}
+              />
+            ) : (
+              <p className="text-sm text-gray-700 leading-relaxed">{reasoning}</p>
+            )}
           </div>
         )}
 
-        {/* Tensions — where data conflicts with weights */}
+        {/* Tensions */}
         {tensions.length > 0 && (
           <div className="rounded-lg bg-yellow-50 border border-yellow-200 p-4">
             <div className="flex items-center gap-2 mb-2">
@@ -166,14 +230,14 @@ export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardP
             <ul className="space-y-1">
               {tensions.map((t, i) => (
                 <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
-                  <span className="text-yellow-500 mt-0.5">•</span>{t}
+                  <span className="text-yellow-500 mt-0.5">&bull;</span>{t}
                 </li>
               ))}
             </ul>
           </div>
         )}
 
-        {/* Uncertainties — where data is insufficient */}
+        {/* Uncertainties */}
         {uncertainties.length > 0 && (
           <div className="rounded-lg bg-gray-50 border border-gray-200 p-4">
             <div className="flex items-center gap-2 mb-2">
@@ -185,7 +249,7 @@ export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardP
             <ul className="space-y-1">
               {uncertainties.map((u, i) => (
                 <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
-                  <span className="text-gray-400 mt-0.5">•</span>{u}
+                  <span className="text-gray-400 mt-0.5">&bull;</span>{u}
                 </li>
               ))}
             </ul>
@@ -195,20 +259,49 @@ export function BriefCard({ brief, onEdit, onRegenerate, onApprove }: BriefCardP
         {/* Action buttons */}
         {!isApproved && (
           <div className="flex gap-2 pt-2">
-            <Button variant="outline" size="sm" onClick={onEdit}>
-              Editar
-            </Button>
-            <Button variant="outline" size="sm" onClick={onRegenerate}>
-              Regenerar
-            </Button>
-            <Button
-              size="sm"
-              className="bg-green-600 hover:bg-green-700"
-              onClick={onApprove}
-            >
-              <Check className="mr-1.5 h-3.5 w-3.5" />
-              Aprobar Brief
-            </Button>
+            {editing ? (
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditing(false)}
+                  disabled={saving}
+                >
+                  <X className="mr-1.5 h-3.5 w-3.5" />
+                  Cancelar
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-purple-600 hover:bg-purple-700"
+                  onClick={handleSave}
+                  disabled={saving}
+                >
+                  {saving ? (
+                    <><Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> Guardando...</>
+                  ) : (
+                    <><Check className="mr-1.5 h-3.5 w-3.5" /> Guardar</>
+                  )}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" size="sm" onClick={handleStartEdit}>
+                  <Pencil className="mr-1.5 h-3.5 w-3.5" />
+                  Editar
+                </Button>
+                <Button variant="outline" size="sm" onClick={onRegenerate}>
+                  Regenerar
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-green-600 hover:bg-green-700"
+                  onClick={onApprove}
+                >
+                  <Check className="mr-1.5 h-3.5 w-3.5" />
+                  Aprobar Brief
+                </Button>
+              </>
+            )}
           </div>
         )}
       </CardContent>

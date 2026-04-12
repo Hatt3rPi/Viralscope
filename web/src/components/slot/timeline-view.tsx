@@ -15,7 +15,7 @@ import { SimulationCard } from "@/components/slot/simulation-card";
 import { NetworkGraph } from "@/components/slot/network-graph";
 import { SeirChart } from "@/components/slot/seir-chart";
 import { FeedbackPanel } from "@/components/feedback/feedback-panel";
-import { approveBriefAction, advanceSlotAction, saveSimulationMdAction, uploadVideoAction } from "@/app/actions";
+import { approveBriefAction, advanceSlotAction, saveSimulationMdAction, uploadVideoAction, updateBriefAction } from "@/app/actions";
 import type { Slot, Brief, Variante, Feedback, SlotStep } from "@/lib/types";
 
 interface TimelineViewProps {
@@ -739,6 +739,10 @@ export function TimelineView({
                           brief={brief}
                           onApprove={handleApproveBrief}
                           onRegenerate={handleRegenerateBrief}
+                          onSave={async (briefYaml) => {
+                            await updateBriefAction(brief.id, briefYaml);
+                            router.refresh();
+                          }}
                         />
                       ) : (
                         <div className="rounded-xl border border-gray-200 bg-white p-6 text-center space-y-3">
