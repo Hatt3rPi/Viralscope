@@ -120,25 +120,27 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // Extract base64 image from response
+    // Extract base64 image from response (accept both inlineData and inline_data)
     const responseParts = geminiData?.candidates?.[0]?.content?.parts ?? [];
     const imagePart = responseParts.find(
-      (p: Record<string, unknown>) => p.inline_data
+      (p: Record<string, unknown>) => p.inlineData || p.inline_data
     );
+    const inlineData = (imagePart?.inlineData || imagePart?.inline_data) as
+      | { data?: string; mimeType?: string; mime_type?: string }
+      | undefined;
 
-    if (!imagePart?.inline_data?.data) {
+    if (!inlineData?.data) {
       return jsonResponse(
         {
           error: "No image in response",
           finishReason: finishReason || "unknown",
-          raw: geminiData,
         },
         502
       );
     }
 
-    const base64Data = imagePart.inline_data.data as string;
-    const mimeType = (imagePart.inline_data.mime_type as string) || "image/png";
+    const base64Data = inlineData.data as string;
+    const mimeType = (inlineData.mimeType || inlineData.mime_type || "image/png") as string;
     const extension = mimeType.includes("jpeg") ? "jpg" : "png";
 
     // Upload to Supabase Storage
