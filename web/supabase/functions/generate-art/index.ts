@@ -44,7 +44,7 @@ async function generateSlidePrompt(
   totalSlides: number,
   brandContext: string,
   visualRules: string,
-): Promise<{ slide_number: number; concept: string; prompt_string: string; negative_prompt: string }> {
+): Promise<{ slide_number: number; concept: string; prompt_string: string; negative_prompt: string; reference_image_urls?: string[] }> {
   const prompt = `Generate a single image prompt for slide ${slideNumber}/${totalSlides} of an Instagram carousel.
 
 ## Brand
@@ -235,10 +235,18 @@ ${visualSpecs?.length ? visualSpecs.map((s: { prompt_text: string }) => `- ${s.p
         return jsonResponse({ error: "No slides found in copy_md" }, 400);
       }
 
-      // Generate prompts: 3 slides in parallel per batch
-      const slideResults: { slide_number: number; concept: string; prompt_string: string; negative_prompt: string }[] = [];
+      // Pick a brand logo for the closing slide (prefer color, fallback to white)
+      const logos = (brandAssets ?? []).filter((a: { asset_type: string }) => a.asset_type === "logo");
+      const logoColor = logos.find((a: { name: string }) => a.name?.toLowerCase().includes("color")) ?? logos[0];
+      const logoAsset = logoColor as { public_url?: string; name?: string } | undefined;
 
-      const batchResults = await processInBatches(slides, 3, (slide) =>
+      // Generate LLM prompts only for non-closing slides when logo exists
+      const lastSlideNumber = slides[slides.length - 1].number;
+      const slidesForLLM = logoAsset ? slides.slice(0, -1) : slides;
+
+      const slideResults: { slide_number: number; concept: string; prompt_string: string; negative_prompt: string; reference_image_urls?: string[] }[] = [];
+
+      const batchResults = await processInBatches(slidesForLLM, 3, (slide) =>
         generateSlidePrompt(
           geminiKey,
           slide.content,
@@ -253,6 +261,18 @@ ${visualSpecs?.length ? visualSpecs.map((s: { prompt_text: string }) => `- ${s.p
         if ((result as PromiseSettledResult<unknown>).status === "fulfilled") {
           slideResults.push((result as PromiseFulfilledResult<typeof slideResults[0]>).value);
         }
+      }
+
+      // Deterministic closing slide with brand logo
+      if (logoAsset?.public_url) {
+        const lastSlideContent = slides[slides.length - 1].content;
+        slideResults.push({
+          slide_number: lastSlideNumber,
+          concept: "Closing brand slide with logo",
+          prompt_string: `Final closing slide of a 3:4 vertical Instagram carousel. Warm editorial photograph background with muted earth tones (amber, cream, soft purple accent), soft natural afternoon light, Kinfolk magazine aesthetic. The provided brand logo image must appear prominently centered with generous whitespace around it — preserve its exact shape, proportions and colors, do NOT recreate or restyle it. Include a short elegant tagline text below the logo derived from this content: "${lastSlideContent.replace(/"/g, "'").slice(0, 200)}". Clean minimal composition, Instagram-ready.`,
+          negative_prompt: "distorted logo, recreated logo, stylized logo, multiple logos, text on logo, dimension markers, pixel measurements, rulers, arrows, safe zone indicators, cartoon, clip art",
+          reference_image_urls: [logoAsset.public_url],
+        });
       }
 
       // Build carousel JSON (same schema the frontend expects)

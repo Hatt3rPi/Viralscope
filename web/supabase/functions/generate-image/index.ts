@@ -24,8 +24,15 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    const { prompt_string, negative_prompt, aspect_ratio, image_size, slot_id, variant_label } =
-      await req.json();
+    const {
+      prompt_string,
+      negative_prompt,
+      aspect_ratio,
+      image_size,
+      slot_id,
+      variant_label,
+      reference_image_urls,
+    } = await req.json();
 
     if (!prompt_string) {
       return jsonResponse({ error: "prompt_string required" }, 400);
@@ -41,12 +48,38 @@ Deno.serve(async (req: Request) => {
       ? `${prompt_string}\n\nIMPORTANT: Avoid the following in the image: ${negative_prompt}`
       : prompt_string;
 
+    // Build parts: text + any reference images as inlineData
+    const parts: Array<Record<string, unknown>> = [{ text: fullPrompt }];
+
+    if (Array.isArray(reference_image_urls) && reference_image_urls.length > 0) {
+      for (const refUrl of reference_image_urls as string[]) {
+        try {
+          const refRes = await fetch(refUrl);
+          if (!refRes.ok) {
+            console.warn(`Reference image fetch failed ${refRes.status}: ${refUrl}`);
+            continue;
+          }
+          const refBuf = await refRes.arrayBuffer();
+          const refMime = refRes.headers.get("content-type") || "image/png";
+          const refBytes = new Uint8Array(refBuf);
+          let binary = "";
+          for (let i = 0; i < refBytes.byteLength; i++) {
+            binary += String.fromCharCode(refBytes[i]);
+          }
+          const refBase64 = btoa(binary);
+          parts.push({ inlineData: { mimeType: refMime, data: refBase64 } });
+        } catch (e) {
+          console.warn(`Reference image error: ${e}`);
+        }
+      }
+    }
+
     // Call NanoBanana 2 (Gemini 3.1 Flash Image)
     const geminiBody = {
       contents: [
         {
           role: "user",
-          parts: [{ text: fullPrompt }],
+          parts,
         },
       ],
       generationConfig: {
@@ -88,8 +121,8 @@ Deno.serve(async (req: Request) => {
     }
 
     // Extract base64 image from response
-    const parts = geminiData?.candidates?.[0]?.content?.parts ?? [];
-    const imagePart = parts.find(
+    const responseParts = geminiData?.candidates?.[0]?.content?.parts ?? [];
+    const imagePart = responseParts.find(
       (p: Record<string, unknown>) => p.inline_data
     );
 

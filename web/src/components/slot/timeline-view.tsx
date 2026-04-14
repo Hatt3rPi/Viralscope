@@ -474,7 +474,7 @@ export function TimelineView({
 
   // ── Batch image generation with retry ─────────────────────────────
   async function generateWithRetry(
-    job: { prompt_string: string; negative_prompt: string; aspect_ratio: string; slot_id: string; variant_label: string; slideKey?: string },
+    job: { prompt_string: string; negative_prompt: string; aspect_ratio: string; slot_id: string; variant_label: string; slideKey?: string; reference_image_urls?: string[] },
     maxRetries: number
   ): Promise<{ image_url: string }> {
     for (let attempt = 0; attempt <= maxRetries; attempt++) {
@@ -505,6 +505,7 @@ export function TimelineView({
       variant_label: string;
       slide_number?: number;
       slideKey?: string;
+      reference_image_urls?: string[];
     };
 
     // Collect all image jobs from all variants
@@ -526,6 +527,9 @@ export function TimelineView({
             variant_label: v.variant_label,
             slide_number: slideNum,
             slideKey: key,
+            reference_image_urls: Array.isArray(slide.reference_image_urls)
+              ? (slide.reference_image_urls as string[])
+              : undefined,
           });
         }
       } else {
