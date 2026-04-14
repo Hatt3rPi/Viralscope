@@ -2,6 +2,8 @@
 // Deploy: supabase functions deploy generate-image
 // Env vars needed: GEMINI_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
 
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
 const NANOBANANA_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent";
 
@@ -31,6 +33,7 @@ Deno.serve(async (req: Request) => {
       image_size,
       slot_id,
       variant_label,
+      slide_number,
       reference_image_urls,
     } = await req.json();
 
@@ -183,6 +186,36 @@ Deno.serve(async (req: Request) => {
       } catch (storageErr) {
         console.error("Storage error:", storageErr);
         imageUrl = `data:${mimeType};base64,${base64Data}`;
+      }
+    }
+
+    // Persist image_url to variante DB row
+    if (supabaseUrl && supabaseKey && slot_id && variant_label) {
+      try {
+        const sb = createClient(supabaseUrl, supabaseKey);
+        const { data: variante } = await sb
+          .from("variantes")
+          .select("id, art_direction_image_json")
+          .eq("slot_id", slot_id)
+          .eq("variant_label", variant_label)
+          .single();
+
+        if (variante) {
+          const imgJson = variante.art_direction_image_json as Record<string, unknown> | null;
+          if (imgJson && imgJson.type === "carousel" && Array.isArray(imgJson.slides) && typeof slide_number === "number") {
+            const slides = (imgJson.slides as Array<Record<string, unknown>>).map((s) =>
+              s.slide_number === slide_number ? { ...s, image_url: imageUrl } : s
+            );
+            await sb
+              .from("variantes")
+              .update({ art_direction_image_json: { ...imgJson, slides } })
+              .eq("id", variante.id);
+          } else {
+            await sb.from("variantes").update({ image_url: imageUrl }).eq("id", variante.id);
+          }
+        }
+      } catch (persistErr) {
+        console.error("Failed to persist image_url:", persistErr);
       }
     }
 
