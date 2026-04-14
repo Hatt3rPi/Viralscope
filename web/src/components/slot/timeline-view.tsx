@@ -407,18 +407,33 @@ export function TimelineView({
     }
   }
 
-  // ── Auto-trigger image generation when art exists but images don't ──
+  // ── Auto-trigger image generation only when images are genuinely missing ──
   React.useEffect(() => {
     if (
-      slot.current_step === "3-art" &&
-      !autoImageTriggered.current &&
-      variantes.length > 0 &&
-      variantes.some((v) => v.art_direction_image_json && Object.keys(v.art_direction_image_json).length > 0) &&
-      !variantes.some((v) => v.image_url)
-    ) {
-      autoImageTriggered.current = true;
-      handleGenerateAllImages();
-    }
+      slot.current_step !== "3-art" ||
+      autoImageTriggered.current ||
+      variantes.length === 0
+    )
+      return;
+
+    const hasArt = variantes.some(
+      (v) => v.art_direction_image_json && Object.keys(v.art_direction_image_json).length > 0
+    );
+    if (!hasArt) return;
+
+    // Count missing images: for carousel variants inspect each slide, for single formats use v.image_url
+    const missing = variantes.some((v) => {
+      const imgJson = v.art_direction_image_json as Record<string, unknown> | null;
+      if (imgJson && imgJson.type === "carousel" && Array.isArray(imgJson.slides)) {
+        return (imgJson.slides as Array<Record<string, unknown>>).some((s) => !s.image_url);
+      }
+      return !v.image_url;
+    });
+
+    if (!missing) return;
+
+    autoImageTriggered.current = true;
+    handleGenerateAllImages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slot.current_step, variantes]);
 
@@ -515,8 +530,9 @@ export function TimelineView({
       if (!imgJson) continue;
 
       if (imgJson.type === "carousel" && Array.isArray(imgJson.slides)) {
-        // Carousel: one job per slide
+        // Carousel: one job per slide that doesn't have an image yet
         for (const slide of imgJson.slides as Array<Record<string, unknown>>) {
+          if (slide.image_url) continue;
           const slideNum = slide.slide_number as number;
           const key = `${v.variant_label}-s${slideNum}`;
           jobs.push({
@@ -533,7 +549,8 @@ export function TimelineView({
           });
         }
       } else {
-        // Single image
+        // Single image — skip if already generated
+        if (v.image_url) continue;
         const prompt = (imgJson.prompt_string as string) || "";
         if (!prompt) continue;
         jobs.push({
