@@ -128,20 +128,29 @@ Deno.serve(async (req: Request) => {
       return errorResponse("Empty response from Gemini", 502, geminiData);
     }
 
-    let briefYaml: Record<string, unknown>;
+    let parsed: unknown;
     try {
-      briefYaml = JSON.parse(rawText);
+      parsed = JSON.parse(rawText);
     } catch {
-      // Gemini sometimes wraps JSON in markdown fences — try to extract
       const match = rawText.match(/```(?:json)?\s*([\s\S]*?)```/);
       if (match) {
-        briefYaml = JSON.parse(match[1].trim());
+        parsed = JSON.parse(match[1].trim());
       } else {
         return errorResponse("Failed to parse Gemini response as JSON", 502, {
           raw: rawText,
         });
       }
     }
+
+    if (Array.isArray(parsed)) {
+      parsed = parsed[0];
+    }
+
+    if (!parsed || typeof parsed !== "object" || !("topic" in parsed)) {
+      return errorResponse("Gemini returned unexpected shape", 502, { parsed });
+    }
+
+    const briefYaml = parsed as Record<string, unknown>;
 
     // ── Determine next version ──────────────────────────────────────────
     const { data: existingBriefs } = await supabase
@@ -299,7 +308,7 @@ Genera un brief de contenido que:
 8. ASIGNE un nivel de confianza (alta/media/baja) basado en cuánto contexto tienes.
 9. Si la fecha de publicación coincide con alguna fecha relevante del calendario, mencionalo en date_reference.
 
-Responde con un JSON con exactamente esta estructura:
+Responde con un JSON (un OBJETO, NO un array) con exactamente esta estructura:
 
 {
   "topic": "string — tema refinado y específico",
@@ -327,5 +336,5 @@ REGLAS:
 - En reasoning, explica el POR QUÉ de cada decisión importante.
 - tensions debe tener al menos 1 item si la confianza no es "alta".
 - uncertainties puede estar vacío solo si tienes datos completos.
-- Devuelve SOLO el JSON, sin texto adicional.`;
+- Devuelve SOLO el JSON (objeto), sin texto adicional y SIN envolver en un array.`;
 }
